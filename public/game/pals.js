@@ -51,27 +51,31 @@ export const PALS = [
       <ellipse cx="100" cy="112" rx="52" ry="44" fill="#f3dfbf" stroke="#8a5a2b" stroke-width="4" />
       <ellipse cx="80" cy="86" rx="9" ry="5" fill="#fbf3e4" transform="rotate(-25 80 86)" />
       <!-- bud scars, one for each daughter she's had -->
-      <ellipse cx="62" cy="128" rx="6" ry="4" fill="none" stroke="#b08250" stroke-width="2.5" />
-      <ellipse cx="138" cy="136" rx="5" ry="3.5" fill="none" stroke="#b08250" stroke-width="2.5" />
+      <ellipse cx="62" cy="132" rx="6" ry="4" fill="none" stroke="#b08250" stroke-width="2.5" />
+      <ellipse cx="138" cy="132" rx="6" ry="4" fill="none" stroke="#b08250" stroke-width="2.5" />
       ${face(100, 112, '#5b3a1e')}
     `,
   },
   // Candi: Candida albicans, a creamy white oval yeast cell with lavender
-  // edges, sprouting a germ tube: the start of a hypha
+  // edges, a bud growing out of her upper left and two bud scars
   {
     id: 'candi',
     name: 'Candi',
-    looks: 'a creamy white Candida albicans yeast cell with a thread-like germ tube sprouting from her',
+    looks: 'a creamy white oval Candida albicans yeast cell with a little bud growing from her side',
     motion: 'bob',
-    frames: { home: '28 16 166 166', picker: '36 26 150 150', dish: '40 30 144 144' },
+    frames: { home: '12 20 160 160', picker: '20 28 144 144', dish: '24 32 136 136' },
     art: `
-      <!-- the germ tube, curling up and out to her right: outline, then fill -->
-      <path d="M130 96 C150 84 160 70 176 48" stroke="#7c3aed" stroke-width="20" fill="none" stroke-linecap="round" />
-      <path d="M130 96 C150 84 160 70 176 48" stroke="#faf5ff" stroke-width="12" fill="none" stroke-linecap="round" />
-      <!-- the yeast cell -->
-      <ellipse cx="96" cy="116" rx="50" ry="42" fill="#faf5ff" stroke="#7c3aed" stroke-width="4" />
-      <ellipse cx="76" cy="91" rx="9" ry="5" fill="#ffffff" transform="rotate(-25 76 91)" />
-      ${face(96, 116, '#4c1d95')}
+      <!-- the bud, swelling out of her upper left: Sasha's bud, mirrored, so
+           both attach the same way -->
+      <circle cx="50" cy="62" r="20" fill="#faf5ff" stroke="#7c3aed" stroke-width="4" />
+      <circle cx="44" cy="55" r="4" fill="#ffffff" />
+      <!-- the mother cell, the same size as Sasha's -->
+      <ellipse cx="100" cy="112" rx="52" ry="44" fill="#faf5ff" stroke="#7c3aed" stroke-width="4" />
+      <ellipse cx="80" cy="86" rx="9" ry="5" fill="#ffffff" transform="rotate(-25 80 86)" />
+      <!-- bud scars, one for each daughter she's had, like Sasha's -->
+      <ellipse cx="62" cy="132" rx="6" ry="4" fill="none" stroke="#a78bfa" stroke-width="2.5" />
+      <ellipse cx="138" cy="132" rx="6" ry="4" fill="none" stroke="#a78bfa" stroke-width="2.5" />
+      ${face(100, 112, '#4c1d95')}
     `,
   },
 ];
