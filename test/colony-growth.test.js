@@ -226,7 +226,7 @@ describe('moving the groups in the dish', () => {
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     mover.appendChild(svg);
     document.querySelector('.agar').appendChild(mover);
-    const group = yeastGroup({ mover, svg, species: SPECIES.sacchi, isPlayer });
+    const group = yeastGroup({ mover, svg, species: SPECIES.sasha, isPlayer });
     Object.assign(group, { x, y, vx: 0, vy: 0 });
     group.update(0);
     return group;

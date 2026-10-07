@@ -100,9 +100,9 @@ describe('the pop-up line', () => {
   const line = () => document.querySelector('.fun-fact');
 
   it('shows one of the pal\'s facts', () => {
-    showFact('sacchi', SPECIES.sacchi);
+    showFact('sasha', SPECIES.sasha);
     expect(line().hidden).toBe(false);
-    expect(SPECIES.sacchi.facts).toContain(line().querySelector('.fun-fact-text').textContent);
+    expect(SPECIES.sasha.facts).toContain(line().querySelector('.fun-fact-text').textContent);
   });
 
   it('shows the names of other species in italics, without the asterisks', () => {
@@ -129,9 +129,9 @@ describe('the pop-up line', () => {
     vi.spyOn(Storage.prototype, 'getItem').mockImplementation(blocked);
     vi.spyOn(Storage.prototype, 'setItem').mockImplementation(blocked);
     try {
-      expect(() => showFact('sacchi', SPECIES.sacchi)).not.toThrow();
+      expect(() => showFact('sasha', SPECIES.sasha)).not.toThrow();
       expect(line().hidden).toBe(false);
-      expect(SPECIES.sacchi.facts).toContain(line().querySelector('.fun-fact-text').textContent);
+      expect(SPECIES.sasha.facts).toContain(line().querySelector('.fun-fact-text').textContent);
     } finally {
       vi.restoreAllMocks();
     }
@@ -139,14 +139,14 @@ describe('the pop-up line', () => {
 
   it('does nothing on a page without the fact line', () => {
     document.body.innerHTML = '';
-    expect(() => showFact('sacchi', SPECIES.sacchi)).not.toThrow();
+    expect(() => showFact('sasha', SPECIES.sasha)).not.toThrow();
     expect(() => hideFact()).not.toThrow();
   });
 
   it('stays hidden for a pal with no facts, and hides on a game over', () => {
     showFact('nobody', {});
     expect(line().hidden).toBe(true);
-    showFact('sacchi', SPECIES.sacchi);
+    showFact('sasha', SPECIES.sasha);
     hideFact();
     expect(line().hidden).toBe(true);
   });

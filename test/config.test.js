@@ -17,7 +17,7 @@ function contrast(a, b) {
 }
 
 describe('pals', () => {
-  it('keys every pal by a short lowercase id, used in addresses like ?pal=sacchi', () => {
+  it('keys every pal by a short lowercase id, used in addresses like ?pal=sasha', () => {
     expect(PALS.length).toBeGreaterThan(1);
     for (const pal of PALS) expect(pal).toMatch(/^[a-z]+$/);
   });

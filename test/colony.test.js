@@ -44,7 +44,7 @@ function makeGroup(name, { isPlayer = false, x = 0, y = 0 } = {}) {
 
 // A colony led by a player far off to the side, with these offspring and disks.
 function colonyWith(offspring, disks, onPop = vi.fn()) {
-  const leader = makeGroup('sacchi', { isPlayer: true, x: -150, y: 0 });
+  const leader = makeGroup('sasha', { isPlayer: true, x: -150, y: 0 });
   const colony = makeColony({
     leader, nutrients: {}, disks, dishRadius: () => RADIUS, target: 64, onPop,
   });
@@ -62,7 +62,7 @@ function diskWithEdgeAt(px) {
 
 describe('popping in an antifungal zone', () => {
   it('pops a one-cell offspring that touches a zone, taking it off the plate', () => {
-    const cell = makeGroup('sacchi', { x: 40 });
+    const cell = makeGroup('sasha', { x: 40 });
     const [, , reach] = cell.body()[0];
     const onPop = vi.fn();
     const colony = colonyWith([cell], [diskWithEdgeAt(40 + reach / 2)], onPop);
@@ -75,8 +75,8 @@ describe('popping in an antifungal zone', () => {
   });
 
   it("shows one pop in the pal's color where the cell was", () => {
-    const cell = makeGroup('sacchi', { x: 40 });
-    const leader = makeGroup('sacchi', { isPlayer: true, x: -150 });
+    const cell = makeGroup('sasha', { x: 40 });
+    const leader = makeGroup('sasha', { isPlayer: true, x: -150 });
     const colony = makeColony({
       leader, nutrients: {}, disks: [diskWithEdgeAt(40)], dishRadius: () => RADIUS, target: 64, color: '#15803d',
     });
@@ -98,7 +98,7 @@ describe('popping in an antifungal zone', () => {
   });
 
   it('never pops the pal you steer (touching a zone is game over instead)', () => {
-    const leader = makeGroup('sacchi', { isPlayer: true, x: 100 });
+    const leader = makeGroup('sasha', { isPlayer: true, x: 100 });
     const colony = makeColony({
       leader, nutrients: {}, disks: [diskWithEdgeAt(100)], dishRadius: () => RADIUS, target: 64,
     });
@@ -118,7 +118,7 @@ describe('popping in an antifungal zone', () => {
 describe('popping part of a cluster', () => {
   // A cluster of `count` touching cells, laid out in a row along x.
   function chainOf(count) {
-    const chain = makeGroup('sacchi', { x: 0 });
+    const chain = makeGroup('sasha', { x: 0 });
     chain.cells = Array.from({ length: count }, (_, i) => ({
       x: i * 18, y: 0, fromX: i * 18, fromY: 0, toX: i * 18, toY: 0, face: false,
     }));

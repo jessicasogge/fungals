@@ -18,7 +18,7 @@ describe('newMover', () => {
   function makeArt() {
     const svg = document.createElementNS(SVG, 'svg');
     svg.setAttribute('role', 'img');
-    svg.setAttribute('aria-label', 'Sacchi, a wheat-colored yeast cell');
+    svg.setAttribute('aria-label', 'Sasha, a wheat-colored yeast cell');
     return svg;
   }
 
@@ -96,7 +96,7 @@ describe('idlePose', () => {
   });
 
   it('follows a squish around the bottom of the drawing, using the bigger stretch for size', () => {
-    // scale(1.08, 0.92) pivoting on the bottom center, like Sacchi's squish.
+    // scale(1.08, 0.92) pivoting on the bottom center, like Sasha's squish.
     const pose = posed({ transform: 'matrix(1.08, 0, 0, 0.92, 0, 0)', origin: '50px 100px' });
     const [x, y, r] = pose(10, 0, 10);
     expect(x).toBeCloseTo(10.8); // wider

@@ -21,14 +21,14 @@ Tap **Who’s That Gal?** on the home page for a quiz on the pals' fun facts, li
 
 | Pal | Species | Looks |
 |---|---|---|
-| **Sacchi** | *Saccharomyces cerevisiae* | Wheat-colored oval yeast with a bud and two bud scars |
+| **Sasha** | *Saccharomyces cerevisiae* | Wheat-colored oval yeast with a bud and two bud scars |
 | **Candi** | *Candida albicans* | Creamy white yeast with a germ tube sprouting from her |
 
 ## The real science
 
-- **Budding:** yeasts don't split in two like bacteria do. A small bud swells out of the mother cell and pinches off, which is why each daughter starts small in the dish and grows. Every bud leaves a ring-shaped scar on the mother, like the two on Sacchi's picture.
+- **Budding:** yeasts don't split in two like bacteria do. A small bud swells out of the mother cell and pinches off, which is why each daughter starts small in the dish and grows. Every bud leaves a ring-shaped scar on the mother, like the two on Sasha's picture.
 - **Candi's germ tube** is the start of a hypha, a long thread-like cell. *Candida albicans* can switch between budding yeast and hyphae, and in the lab, sprouting germ tubes in serum is a classic test for her.
-- **The antifungal disks** work like the Kirby-Bauer disk test for bacteria. *Candida* has a standard disk test (CLSI M44), so Candi's zones are ballpark sizes for a susceptible strain. *Saccharomyces* has no standard disk sizes, so Sacchi's are estimates from how well each drug works on her. Fluconazole only weakly holds *Saccharomyces* back, so her fluconazole zone is small.
+- **The antifungal disks** work like the Kirby-Bauer disk test for bacteria. *Candida* has a standard disk test (CLSI M44), so Candi's zones are ballpark sizes for a susceptible strain. *Saccharomyces* has no standard disk sizes, so Sasha's are estimates from how well each drug works on her. Fluconazole only weakly holds *Saccharomyces* back, so her fluconazole zone is small.
 - **The disk codes** are the standard ones: FLC (fluconazole), VOR (voriconazole), CAS (caspofungin), MCF (micafungin), AMB (amphotericin B) and NY (nystatin).
 - **The zones spread** because the drug diffuses outward from the disk into the agar: fast at first, then more slowly. On a real plate this takes hours of incubation; the game speeds it up to a few seconds.
 

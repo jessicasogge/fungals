@@ -4,7 +4,7 @@ import { GAME } from './config.js';
 import { idlePose, newMover } from './mover.js';
 import { coaster } from './physics.js';
 
-// A budding yeast (Sacchi, Candi). The player is always a single cell. Each
+// A budding yeast (Sasha, Candi). The player is always a single cell. Each
 // time a cell eats, it buds: a small daughter swells out of its side and
 // grows to full size. Daughters stay stuck together in little clusters, up to
 // GROUP_CAP cells, the way budding yeast often does on a plate. A cluster
