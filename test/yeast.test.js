@@ -1,0 +1,355 @@
+// @vitest-environment jsdom
+// yeast.js draws cells into the page, so these tests run in jsdom, a
+// simulated browser page.
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { R, SPACING } from '../public/game/attach.js';
+import { yeastGroup } from '../public/game/yeast.js';
+import { GAME, SPECIES } from '../public/game/config.js';
+
+// jsdom doesn't lay anything out, so every width reads as 0. Give the dish a
+// fixed size and work out each mover's width from its percent width, the way
+// the browser would.
+const DISH_WIDTH = 400;
+const DISH_RADIUS = DISH_WIDTH / 2;
+const CELL_PX = 0.05 * DISH_WIDTH; // CELL_SIZE is 5% of the dish
+const UNIT = CELL_PX / (2 * R); // pixels per SVG unit
+
+let saved;
+beforeEach(() => {
+  document.body.innerHTML = '<div class="agar"></div>';
+  saved = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'offsetWidth');
+  Object.defineProperty(HTMLElement.prototype, 'offsetWidth', {
+    configurable: true,
+    get() {
+      return ((parseFloat(this.style.width) || 0) / 100) * DISH_WIDTH;
+    },
+  });
+});
+afterEach(() => {
+  if (saved) Object.defineProperty(HTMLElement.prototype, 'offsetWidth', saved);
+  else delete HTMLElement.prototype.offsetWidth;
+});
+
+// A group in the dish at (x, y) px from the center, like the game makes.
+function makeGroup(name, { isPlayer = false, x = 0, y = 0 } = {}) {
+  const mover = document.createElement('div');
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  mover.appendChild(svg);
+  document.querySelector('.agar').appendChild(mover);
+  const group = yeastGroup({ mover, svg, species: SPECIES[name], isPlayer });
+  group.x = x;
+  group.y = y;
+  return group;
+}
+
+// Grow an offspring group to `size` cells by budding from a player next to it.
+function grow(group, size) {
+  const player = makeGroup('sacchi', { isPlayer: true, x: group.x, y: group.y });
+  while (group.cellCount() < size) {
+    player.divide([group], DISH_RADIUS);
+    group.update(1); // finish sliding the new cell into place
+  }
+}
+
+const cellCenters = (group) => group.body().map(([x, y]) => [x, y]);
+const distance = ([ax, ay], [bx, by]) => Math.hypot(ax - bx, ay - by);
+
+describe('a new yeast cell', () => {
+  it('starts as a single cell', () => {
+    const player = makeGroup('sacchi', { isPlayer: true });
+    expect(player.cellCount()).toBe(1);
+  });
+
+  it('only the player has a face', () => {
+    const player = makeGroup('sacchi', { isPlayer: true });
+    const offspring = makeGroup('sacchi');
+    expect(player.svg.querySelectorAll('ellipse:not(.cell-body)')).toHaveLength(2); // cheeks
+    expect(offspring.svg.querySelectorAll('ellipse:not(.cell-body)')).toHaveLength(0);
+  });
+
+  it('draws in its species colors', () => {
+    const candi = makeGroup('candi');
+    expect(candi.svg.querySelector('.cell-body').getAttribute('fill'))
+      .toBe(SPECIES.candi.colors.fill);
+  });
+
+  it('has a body of one circle, one cell wide plus its outline, where the group is', () => {
+    const group = makeGroup('sacchi', { x: 30, y: -40 });
+    const [[x, y, r]] = group.body();
+    expect(x).toBeCloseTo(30);
+    expect(y).toBeCloseTo(-40);
+    const OUTLINE = 1.7;
+    expect(r).toBeCloseTo((R + OUTLINE / 2) * UNIT);
+  });
+});
+
+describe('budding with no group nearby', () => {
+  it('starts a new offspring group where the player is', () => {
+    const player = makeGroup('sacchi', { isPlayer: true, x: 20, y: 10 });
+    const child = player.divide([], DISH_RADIUS);
+    expect(child).not.toBeNull();
+    expect(child.isPlayer).toBe(false);
+    expect(child.cellCount()).toBe(1);
+    expect([child.x, child.y]).toEqual([20, 10]);
+  });
+
+  it('sends the new group off with a push', () => {
+    const player = makeGroup('sacchi', { isPlayer: true });
+    const child = player.divide([], DISH_RADIUS);
+    expect(Math.hypot(child.vx, child.vy)).toBeCloseTo(GAME.BURST_SPEED * DISH_RADIUS * 0.5);
+  });
+
+  it('adds the new group to the dish as a faceless, hidden-from-screen-readers copy', () => {
+    const player = makeGroup('sacchi', { isPlayer: true });
+    const child = player.divide([], DISH_RADIUS);
+    expect(child.mover.parentElement).toBe(document.querySelector('.agar'));
+    expect(child.mover.classList.contains('offspring')).toBe(true);
+    expect(child.svg.getAttribute('aria-hidden')).toBe('true');
+    expect(child.svg.querySelectorAll('ellipse:not(.cell-body)')).toHaveLength(0);
+  });
+
+  it('leaves the player a single cell', () => {
+    const player = makeGroup('sacchi', { isPlayer: true });
+    player.divide([], DISH_RADIUS);
+    expect(player.cellCount()).toBe(1);
+  });
+});
+
+describe('budding next to a group', () => {
+  it('adds the daughter to the group instead of starting a new one', () => {
+    const group = makeGroup('sacchi', { x: 30 });
+    const player = makeGroup('sacchi', { isPlayer: true, x: 50 });
+    expect(player.divide([group], DISH_RADIUS)).toBeNull();
+    expect(group.cellCount()).toBe(2);
+  });
+
+  it('slides the new cell from the player into place, touching its neighbor', () => {
+    const group = makeGroup('sacchi', { x: 0 });
+    const player = makeGroup('sacchi', { isPlayer: true, x: 50 });
+    player.divide([group], DISH_RADIUS);
+
+    // It starts where the player is...
+    group.update(0);
+    expect(cellCenters(group)[1][0]).toBeCloseTo(50);
+
+    // ...and ends up touching the first cell, on the player's side.
+    group.update(GAME.DIVIDE_MS / 1000);
+    const [first, second] = cellCenters(group);
+    expect(distance(first, second)).toBeCloseTo(SPACING * 0.95 * UNIT); // snug in a cluster
+    expect(second[0]).toBeGreaterThan(first[0]);
+  });
+
+  it('starts a new group if the nearest one is out of reach', () => {
+    const group = makeGroup('sacchi', { x: 0 });
+    const player = makeGroup('sacchi', { isPlayer: true, x: GAME.SNAP_REACH * DISH_RADIUS + 40 });
+    expect(player.divide([group], DISH_RADIUS)).not.toBeNull();
+    expect(group.cellCount()).toBe(1);
+  });
+
+  it('joins whichever group is nearest', () => {
+    const near = makeGroup('sacchi', { x: 20 });
+    const far = makeGroup('sacchi', { x: -45 });
+    const player = makeGroup('sacchi', { isPlayer: true, x: 0 });
+    player.divide([far, near], DISH_RADIUS);
+    expect(near.cellCount()).toBe(2);
+    expect(far.cellCount()).toBe(1);
+  });
+
+  it(`stops growing a group at ${GAME.GROUP_CAP} cells`, () => {
+    const group = makeGroup('sacchi');
+    grow(group, GAME.GROUP_CAP);
+    const player = makeGroup('sacchi', { isPlayer: true, x: 5 });
+    expect(group.attachSpot(5, 0, [], DISH_RADIUS)).toBeNull();
+    expect(player.divide([group], DISH_RADIUS)).not.toBeNull();
+    expect(group.cellCount()).toBe(GAME.GROUP_CAP);
+  });
+
+  it('never lets two cells in a grown cluster sit on top of each other', () => {
+    const group = makeGroup('sacchi');
+    grow(group, GAME.GROUP_CAP);
+    const centers = cellCenters(group);
+    for (let i = 0; i < centers.length; i++) {
+      for (let j = i + 1; j < centers.length; j++) {
+        expect(distance(centers[i], centers[j])).toBeGreaterThan(R * UNIT);
+      }
+    }
+  });
+
+  it('works out the right spot when the group is flipped to face left', () => {
+    const group = makeGroup('sacchi', { x: 0 });
+    group.facing = -1;
+    const spot = group.attachSpot(50, 0, [], DISH_RADIUS);
+    expect(spot.world[0]).toBeGreaterThan(0); // still on the player's side
+    expect(distance(spot.world, [0, 0])).toBeCloseTo(SPACING * 0.95 * UNIT);
+  });
+});
+
+describe('sliding a new cell into place', () => {
+  // A group that has just had a cell join it from the player 50px away.
+  function joining() {
+    const group = makeGroup('sacchi');
+    const player = makeGroup('sacchi', { isPlayer: true, x: 50 });
+    player.divide([group], DISH_RADIUS);
+    const cell = group.cells.find((c) => c.fromX !== c.toX || c.fromY !== c.toY);
+    return { group, cell };
+  }
+
+  it('glides partway there midway through, fast at first and slowing as it arrives', () => {
+    const { group, cell } = joining();
+    const half = GAME.DIVIDE_MS / 2000; // half the slide, in seconds
+    group.update(half);
+    // Halfway through the time it's already 7/8 of the way (an ease-out).
+    expect(cell.x).toBeCloseTo(cell.fromX + (cell.toX - cell.fromX) * 0.875);
+    expect(cell.y).toBeCloseTo(cell.fromY + (cell.toY - cell.fromY) * 0.875);
+    expect(group.moveFor).not.toBeNull(); // still sliding
+  });
+
+  it('adds up the time across frames, landing exactly in place and stopping', () => {
+    const { group, cell } = joining();
+    const frame = GAME.DIVIDE_MS / 1000 / 10;
+    for (let i = 0; i < 9; i++) group.update(frame);
+    expect(group.moveFor).not.toBeNull();
+    group.update(frame * 2); // a slow last frame overshoots the time, not the spot
+    expect([cell.x, cell.y]).toEqual([cell.toX, cell.toY]);
+    expect(group.moveFor).toBeNull();
+  });
+
+  it("stops redrawing once everything is still, since that's slow with many cells", () => {
+    const { group } = joining();
+    group.update(1); // finish the slide
+    group.svg.innerHTML = '<g class="marker" />'; // anything a redraw would replace
+    group.update(1);
+    expect(group.svg.querySelector('.marker')).not.toBeNull();
+  });
+});
+
+describe('size and position', () => {
+  it('reaches one cell\'s radius from its middle when it is a single cell', () => {
+    expect(makeGroup('sacchi').reach()).toBeCloseTo(R * UNIT);
+  });
+
+  it('reaches to the edge of its farthest cell as it grows', () => {
+    const group = makeGroup('sacchi', { x: 40, y: -10 });
+    grow(group, 5);
+    const farthest = Math.max(...cellCenters(group).map((c) => distance(c, [40, -10])));
+    expect(group.reach()).toBeCloseTo(farthest + R * UNIT);
+    expect(group.reach()).toBeGreaterThan(R * UNIT);
+  });
+
+  it('is drawn where it is in the dish, flipped to face the way it is going', () => {
+    const group = makeGroup('sacchi', { x: -25, y: 60 });
+    group.facing = -1;
+    group.place();
+    expect(group.mover.style.transform).toBe('translate(-25px, 60px) scaleX(-1)');
+  });
+});
+
+describe('an offspring cell budding', () => {
+  it('adds the daughter to its own group, next to the cell that divided', () => {
+    const group = makeGroup('sacchi');
+    grow(group, 3);
+    const before = cellCenters(group);
+    const [cx, cy] = before[2];
+    expect(group.divide([group], DISH_RADIUS, [], [cx, cy])).toBeNull();
+    expect(group.cellCount()).toBe(4);
+    group.update(1);
+    const newest = cellCenters(group).find((c) => before.every((b) => distance(b, c) > 0.01));
+    expect(distance(newest, [cx, cy])).toBeLessThan(2 * SPACING * UNIT);
+  });
+
+  it('starts the daughter sliding in from the cell that divided', () => {
+    const group = makeGroup('sacchi');
+    grow(group, 2);
+    const [ex, ey] = group.body()[1];
+    group.divide([group], DISH_RADIUS, [], [ex, ey]);
+    group.update(0);
+    const centers = cellCenters(group);
+    // The new cell starts on top of the cell that divided...
+    expect(centers.some(([x, y]) => distance([x, y], [ex, ey]) < 0.01 &&
+      centers.filter((c) => distance(c, [ex, ey]) < 0.01).length === 2)).toBe(true);
+    // ...and ends up next to it.
+    group.update(1);
+    const newest = cellCenters(group)[2];
+    expect(distance(newest, [ex, ey])).toBeLessThan(2 * SPACING * UNIT);
+  });
+
+  it('starts a new group at the cell that divided when its own group is full', () => {
+    const group = makeGroup('sacchi');
+    grow(group, GAME.GROUP_CAP);
+    const [cx, cy] = group.body()[0];
+    const child = group.divide([group], DISH_RADIUS, [], [cx, cy]);
+    expect(child).not.toBeNull();
+    expect([child.x, child.y]).toEqual([cx, cy]);
+    expect(child.isPlayer).toBe(false);
+    expect(group.cellCount()).toBe(GAME.GROUP_CAP);
+  });
+});
+
+describe('antifungal disks', () => {
+  // A disk to the right of a cell at the center, as the game stores it
+  // (fractions of the dish radius), with a zone of inhibition around it. The
+  // usual spot for a new cell on that side is just clear of the disk itself
+  // but inside its zone, so the zone is the only thing keeping a cell out.
+  const ZONE = 0.045;
+  const clearOfDisk = SPACING * UNIT + (GAME.DISK_RADIUS + ZONE / 2) * DISH_RADIUS + CELL_PX / 2;
+  const diskRight = { fx: clearOfDisk / DISH_RADIUS, fy: 0, r: GAME.DISK_RADIUS, zone: ZONE };
+
+  it('keeps every cell it does attach clear of the disk and its zone', () => {
+    const reach = (diskRight.r + ZONE) * DISH_RADIUS + CELL_PX / 2;
+    const diskCenter = [diskRight.fx * DISH_RADIUS, 0];
+    for (let angle = 0; angle < 6.28; angle += 0.4) {
+      const group = makeGroup('sacchi');
+      grow(group, 3);
+      const spot = group.attachSpot(Math.cos(angle) * 50, Math.sin(angle) * 50, [diskRight], DISH_RADIUS);
+      if (spot) expect(distance(spot.world, diskCenter)).toBeGreaterThanOrEqual(reach);
+    }
+  });
+
+  it('starts a new group instead when the only spots are on a disk', () => {
+    const group = makeGroup('sacchi');
+    const player = makeGroup('sacchi', { isPlayer: true, x: 20 });
+    const covering = { fx: 0, fy: 0, r: 0.5 };
+    expect(group.attachSpot(20, 0, [covering], DISH_RADIUS)).toBeNull();
+    expect(player.divide([group], DISH_RADIUS, [covering])).not.toBeNull();
+    expect(group.cellCount()).toBe(1);
+  });
+});
+
+describe('a bud', () => {
+  // The size of the newest cell's oval, as a fraction of a full-grown cell.
+  const budSize = (group) => {
+    const ovals = group.svg.querySelectorAll('.cell-body');
+    const sizes = [...ovals].map((oval) => Number(oval.getAttribute('rx')) / R);
+    return Math.min(...sizes);
+  };
+
+  it('starts small and swells to full size as it slides into place', () => {
+    const group = makeGroup('sacchi');
+    const player = makeGroup('sacchi', { isPlayer: true, x: 30 });
+    player.divide([group], DISH_RADIUS);
+    group.update(0);
+    expect(budSize(group)).toBeCloseTo(0.4);
+    group.update(GAME.DIVIDE_MS / 2000);
+    expect(budSize(group)).toBeGreaterThan(0.4);
+    expect(budSize(group)).toBeLessThan(1);
+    group.update(1);
+    expect(budSize(group)).toBeCloseTo(1);
+    expect(group.bud).toBeNull();
+  });
+
+  it("leaves the cells that are already grown at full size", () => {
+    const group = makeGroup('sacchi');
+    grow(group, 3);
+    const player = makeGroup('sacchi', { isPlayer: true, x: 30 });
+    player.divide([group], DISH_RADIUS);
+    group.update(0);
+    const full = [...group.svg.querySelectorAll('.cell-body')]
+      .filter((oval) => Number(oval.getAttribute('rx')) === R);
+    expect(full).toHaveLength(3);
+  });
+
+  it('is a little oval, a bit wider than it is tall', () => {
+    const oval = makeGroup('sacchi').svg.querySelector('.cell-body');
+    expect(Number(oval.getAttribute('ry'))).toBeLessThan(Number(oval.getAttribute('rx')));
+  });
+});

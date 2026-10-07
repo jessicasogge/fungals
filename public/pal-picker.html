@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FunGals | Pal Picker</title>
+    <meta name="description" content="Pick your FunGal: real fungi, from baker’s yeast to Candida, drawn as cute cartoons." />
+    <link rel="canonical" href="https://jessicasogge.github.io/fungals/pal-picker.html" />
+    <!-- How the link looks when it's shared (iMessage, Slack, Discord, social media) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="FunGals" />
+    <meta property="og:title" content="FunGals | Pal Picker" />
+    <meta property="og:description" content="Pick your FunGal: real fungi, from baker’s yeast to Candida, drawn as cute cartoons." />
+    <meta property="og:url" content="https://jessicasogge.github.io/fungals/pal-picker.html" />
+    <meta name="twitter:card" content="summary" />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="./favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body class="picker-page">
+    <!-- "Growing the colony…" covers the page until game/pal-picker.js has
+         filled it in (see game/loading.js). -->
+    <div class="loading-overlay arriving">
+      <div class="loading-card" role="status">
+        <span class="loading-cells" aria-hidden="true"><span></span><span></span></span>
+        <span class="loading-text">Growing the colony…</span>
+      </div>
+    </div>
+    <main class="picker-shell picker-wide">
+      <h1>Pick a Pal</h1>
+
+      <!-- A page of cards for each page of pals, made by game/pal-picker.js
+           from game/pals.js. One page shows at a time. -->
+      <div class="picker-pages"></div>
+
+      <!-- Paging between the pages of pals (hidden by game/pal-picker.js when
+           there's nowhere to go that way). -->
+      <nav class="picker-pager" aria-label="More pals">
+        <button class="pager-btn pager-back" type="button">← Back</button>
+        <button class="pager-btn pager-more" type="button">More pals →</button>
+      </nav>
+
+      <a class="back-link" href="./index.html">Back to home</a>
+    </main>
+    <footer class="signature">jsogge 2026</footer>
+    <script type="module" src="./game/pal-picker.js"></script>
+  </body>
+</html>
