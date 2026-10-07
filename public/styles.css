@@ -27,9 +27,10 @@
   box-sizing: border-box;
 }
 
+/* The page: a warm apricot, so FunGals doesn't look like PetriPals' mint. */
 body {
   margin: 0;
-  background: #ccfbf1;
+  background: #fde4cf;
   color: #134e4a;
   font-family: system-ui, sans-serif;
   text-align: center;
@@ -791,7 +792,7 @@ body:not(.picker-page) .signature {
   align-items: center;
   justify-content: center;
   padding: 1rem;
-  background: rgba(204, 251, 241, 0.55);
+  background: rgba(253, 228, 207, 0.55);
   animation: loading-in 0.2s ease-out 0.15s both;
 }
 
@@ -804,7 +805,7 @@ body:not(.picker-page) .signature {
    done (an error, say), give up after a while rather than block the page
    forever. */
 .loading-overlay.arriving {
-  background: #ccfbf1;
+  background: #fde4cf;
   animation: loading-give-up 0s linear 8s forwards;
 }
 
