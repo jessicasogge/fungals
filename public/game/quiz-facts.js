@@ -25,7 +25,6 @@ export const QUIZ_FACTS = {
     "Olive has a little collar at her budding site, called a collarette.",
     "*Malassezia* yeasts like Olive play a part in dandruff.",
     "Olive can cause pityriasis versicolor: patches of skin that turn lighter or darker.",
-    "Scraped from her rash, Olive's hyphae and yeasts look like \"spaghetti and meatballs.\"",
     "Olive is a basidiomycete yeast, on the same big fungal branch as cap-and-stem mushrooms.",
   ],
 };
