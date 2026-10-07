@@ -63,15 +63,16 @@ export const PALS = [
     name: 'Candi',
     looks: 'a creamy white oval Candida albicans yeast cell with a little bud growing from her side',
     motion: 'bob',
-    frames: { home: '18 25 160 160', picker: '28 35 140 140', dish: '34 40 128 128' },
+    frames: { home: '12 20 160 160', picker: '20 28 144 144', dish: '24 32 136 136' },
     art: `
-      <!-- the bud, swelling out of her upper left -->
-      <ellipse cx="60" cy="74" rx="21" ry="19" fill="#faf5ff" stroke="#7c3aed" stroke-width="4" transform="rotate(-20 60 74)" />
-      <circle cx="53" cy="66" r="4" fill="#ffffff" />
-      <!-- the mother cell -->
-      <ellipse cx="104" cy="112" rx="50" ry="42" fill="#faf5ff" stroke="#7c3aed" stroke-width="4" />
-      <ellipse cx="86" cy="88" rx="9" ry="5" fill="#ffffff" transform="rotate(-25 86 88)" />
-      ${face(104, 112, '#4c1d95')}
+      <!-- the bud, swelling out of her upper left: Sasha's bud, mirrored, so
+           both attach the same way -->
+      <circle cx="50" cy="62" r="20" fill="#faf5ff" stroke="#7c3aed" stroke-width="4" />
+      <circle cx="44" cy="55" r="4" fill="#ffffff" />
+      <!-- the mother cell, the same size as Sasha's -->
+      <ellipse cx="100" cy="112" rx="52" ry="44" fill="#faf5ff" stroke="#7c3aed" stroke-width="4" />
+      <ellipse cx="80" cy="86" rx="9" ry="5" fill="#ffffff" transform="rotate(-25 80 86)" />
+      ${face(100, 112, '#4c1d95')}
     `,
   },
 ];
