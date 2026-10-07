@@ -337,6 +337,10 @@ body {
   background: rgba(191, 219, 254, 0.55);
 }
 
+.olive {
+  background: rgba(226, 234, 194, 0.7);
+}
+
 .pick-btn {
   margin-top: 0.75rem;
   padding: 0.7rem 1rem;

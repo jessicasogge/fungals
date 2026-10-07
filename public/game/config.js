@@ -6,8 +6,9 @@
 // Each antifungal's `zone` is the zone of inhibition around its disk, as the
 // diameter in millimeters a lab would measure for a susceptible strain of
 // that species. Candida has a standard disk test (CLSI M44), so Candi's are
-// ballpark figures from it. Saccharomyces has no standard disk sizes, so
-// Sasha's are estimates from how well each drug works on her. The game
+// ballpark figures from it. Saccharomyces and Malassezia have no standard
+// disk sizes, so Sasha's and Olive's are estimates from how well each drug
+// works on them. A drug she's resistant to has `zone: null`: no clear zone. The game
 // scales these down to fit the dish (see ZONE_* below).
 //
 // `antifungals` are the disks placed in each pal's dish, in order (level 1
@@ -79,6 +80,41 @@ export const SPECIES = {
       { code: 'VOR', name: 'voriconazole', zone: 31 },
       { code: 'MCF', name: 'micafungin', zone: 27 },
       { code: 'CAS', name: 'caspofungin', zone: 22 },
+    ],
+  },
+  olive: {
+    facts: [
+      "Olive's genus, *Malassezia*, is named for Louis-Charles Malassez, a French scientist.",
+      "Olive's species name, *furfur*, is Latin for \"bran,\" after the flaky scales she causes.",
+      "Yeasts in Olive's genus were once called *Pityrosporum*, a name meaning \"bran spore.\"",
+      "Yeasts in Olive's genus live on most people's skin, especially oily spots like the scalp.",
+      "Olive can't make her own fatty acids, so she eats the oils on your skin.",
+      "One way to grow Olive in the lab is to add a thin layer of olive oil to her culture plate.",
+      "Olive buds again and again from one end, so her cells can look like little bowling pins.",
+      "Olive has a little collar at her budding site, called a collarette.",
+      "*Malassezia* yeasts like Olive play a part in dandruff.",
+      "Olive can cause pityriasis versicolor: patches of skin that turn lighter or darker.",
+      "Scraped from her rash, Olive's hyphae and yeasts look like \"spaghetti and meatballs.\"",
+      "Olive can infect preemies' blood via IV lines that feed them fats, which help her grow.",
+      "Olive is a basidiomycete yeast, on the same big fungal branch as cap-and-stem mushrooms.",
+    ],
+    scientific: 'Malassezia furfur',
+    color: '#556b14', // for her name above the dish
+    kind: 'yeast',
+    // She buds again and again from the same end of her cell (monopolar
+    // budding), so her bud always grows from the top.
+    budsFromOneEnd: true,
+    colors: { fill: '#d9e6a6', stroke: '#6b7a2a', highlight: '#f7faea', dark: '#3a4410' },
+    // Malassezia has no standard disk sizes, so these are estimates from how
+    // well each drug works on her: the azoles work best (ketoconazole is the
+    // classic dandruff shampoo), and like other Malassezia she's naturally
+    // resistant to echinocandins, so caspofungin has no zone at all.
+    antifungals: [
+      { code: 'KCA', name: 'ketoconazole', zone: 32 },
+      { code: 'CAS', name: 'caspofungin', zone: null },
+      { code: 'ITC', name: 'itraconazole', zone: 28 },
+      { code: 'VOR', name: 'voriconazole', zone: 26 },
+      { code: 'AMB', name: 'amphotericin B', zone: 17 },
     ],
   },
 };

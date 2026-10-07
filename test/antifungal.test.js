@@ -187,3 +187,15 @@ describe('zone of inhibition', () => {
     expect(touchesDisk(disk, [[66, 0, 5]], 200)).toBe(true);
   });
 });
+
+describe("Olive's drugs", () => {
+  it('give caspofungin no zone, since Malassezia is naturally resistant to echinocandins', () => {
+    const resistant = Object.entries(SPECIES).flatMap(([pal, s]) =>
+      s.antifungals.filter((a) => a.zone === null).map((a) => `${pal} ${a.code}`));
+    expect(resistant).toEqual(['olive CAS']);
+  });
+
+  it('start with ketoconazole, the classic dandruff-shampoo azole', () => {
+    expect(SPECIES.olive.antifungals[0].code).toBe('KCA');
+  });
+});

@@ -361,6 +361,26 @@ describe('a daughter cell', () => {
   });
 });
 
+describe('a pal who buds from one end (Olive)', () => {
+  it('always grows her bud from the top', () => {
+    for (let i = 0; i < 5; i++) {
+      const player = makeGroup('olive', { isPlayer: true });
+      player.startBud();
+      expect(player.budding.angle).toBeCloseTo(-Math.PI / 2);
+    }
+  });
+
+  it('leaves the others budding any which way', () => {
+    const angles = new Set();
+    for (let i = 0; i < 5; i++) {
+      const player = makeGroup('sasha', { isPlayer: true });
+      player.startBud();
+      angles.add(player.budding.angle);
+    }
+    expect(angles.size).toBeGreaterThan(1);
+  });
+});
+
 describe("the player's bud", () => {
   const bud = (player) => player.svg.querySelector('.bud');
   const budSize = (player) => Number(bud(player).getAttribute('rx')) / R;

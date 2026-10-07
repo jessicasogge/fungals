@@ -17,4 +17,15 @@ export const QUIZ_FACTS = {
     "Candi makes a toxin called candidalysin that punches holes in human cells.",
     "On cornmeal agar, Candi makes chlamydospores: big, round, thick-walled cells.",
   ],
+  olive: [
+    "Olive's genus, *Malassezia*, is named for Louis-Charles Malassez, a French scientist.",
+    "Olive can't make her own fatty acids, so she eats the oils on your skin.",
+    "One way to grow Olive in the lab is to add a thin layer of olive oil to her culture plate.",
+    "Olive buds again and again from one end, so her cells can look like little bowling pins.",
+    "Olive has a little collar at her budding site, called a collarette.",
+    "*Malassezia* yeasts like Olive play a part in dandruff.",
+    "Olive can cause pityriasis versicolor: patches of skin that turn lighter or darker.",
+    "Scraped from her rash, Olive's hyphae and yeasts look like \"spaghetti and meatballs.\"",
+    "Olive is a basidiomycete yeast, on the same big fungal branch as cap-and-stem mushrooms.",
+  ],
 };
