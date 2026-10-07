@@ -16,7 +16,7 @@
 //           <g class="face">.
 //
 // To add a pal: add her to the end of this list and to SPECIES in config.js,
-// and give her tile a color in styles.css (.<id> next to .sacchi and the
+// and give her tile a color in styles.css (.<id> next to .sasha and the
 // others).
 
 const SVG = 'http://www.w3.org/2000/svg';
@@ -35,11 +35,11 @@ const face = (x, y, dark) => `
       </g>`;
 
 export const PALS = [
-  // Sacchi: Saccharomyces cerevisiae, a wheat-colored oval yeast cell with a
+  // Sasha: Saccharomyces cerevisiae, a wheat-colored oval yeast cell with a
   // bud growing out of her side and two bud scars from daughters she's had
   {
-    id: 'sacchi',
-    name: 'Sacchi',
+    id: 'sasha',
+    name: 'Sasha',
     looks: 'a wheat-colored oval Saccharomyces yeast cell with a little bud growing from her side',
     motion: 'squish',
     frames: { home: '28 20 160 160', picker: '36 28 144 144', dish: '40 32 136 136' },

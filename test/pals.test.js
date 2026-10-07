@@ -75,34 +75,34 @@ describe('the pals', () => {
 });
 
 describe('her drawing', () => {
-  const sacchi = palById('sacchi');
+  const sasha = palById('sasha');
 
   it('is real SVG, not just text', () => {
-    const svg = homePal(sacchi);
+    const svg = homePal(sasha);
     expect(svg.namespaceURI).toBe('http://www.w3.org/2000/svg');
     expect(svg.querySelector('ellipse').namespaceURI).toBe('http://www.w3.org/2000/svg');
   });
 
   it('on the home page, animates and says who she is', () => {
-    const svg = homePal(sacchi);
-    expect(svg.getAttribute('viewBox')).toBe(sacchi.frames.home);
+    const svg = homePal(sasha);
+    expect(svg.getAttribute('viewBox')).toBe(sasha.frames.home);
     expect(svg.getAttribute('class')).toBe('pal squish');
     expect(svg.getAttribute('role')).toBe('img');
-    expect(svg.getAttribute('aria-label')).toBe(`Sacchi, ${sacchi.looks}`);
+    expect(svg.getAttribute('aria-label')).toBe(`Sasha, ${sasha.looks}`);
   });
 
   it('on a tile, has her tile color and is hidden from screen readers', () => {
-    const tile = palTile(sacchi);
-    expect(tile.className).toBe('pal-icon sacchi');
-    expect(tile.firstChild.getAttribute('viewBox')).toBe(sacchi.frames.picker);
+    const tile = palTile(sasha);
+    expect(tile.className).toBe('pal-icon sasha');
+    expect(tile.firstChild.getAttribute('viewBox')).toBe(sasha.frames.picker);
     expect(tile.firstChild.getAttribute('aria-hidden')).toBe('true');
   });
 
   it('in the dish, starts hidden and carries her id and name', () => {
-    const svg = dishPal(sacchi);
-    expect(svg.getAttribute('viewBox')).toBe(sacchi.frames.dish);
+    const svg = dishPal(sasha);
+    expect(svg.getAttribute('viewBox')).toBe(sasha.frames.dish);
     expect(svg.getAttribute('class')).toBe('dish-pal squish');
-    expect(svg.dataset).toMatchObject({ pal: 'sacchi', name: 'Sacchi' });
+    expect(svg.dataset).toMatchObject({ pal: 'sasha', name: 'Sasha' });
     expect(svg.hasAttribute('hidden')).toBe(true);
   });
 });

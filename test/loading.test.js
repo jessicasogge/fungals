@@ -98,11 +98,11 @@ describe('a page that starts covered', () => {
 
 describe('goTo', () => {
   it('shows the card, then goes to the address', () => {
-    const location = { href: 'http://localhost/petri-dish.html?pal=sacchi' };
+    const location = { href: 'http://localhost/petri-dish.html?pal=sasha' };
     vi.stubGlobal('location', location);
-    loading.goTo('./petri-dish.html?pal=sacchi&level=2');
+    loading.goTo('./petri-dish.html?pal=sasha&level=2');
     expect(card().hidden).toBe(false);
-    expect(location.href).toBe('./petri-dish.html?pal=sacchi&level=2');
+    expect(location.href).toBe('./petri-dish.html?pal=sasha&level=2');
   });
 });
 

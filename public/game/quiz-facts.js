@@ -1,12 +1,12 @@
 // Fun facts for Who’s That Gal? (whos-that-gal.js), picked so each is specific to just that gal
 
 export const QUIZ_FACTS = {
-  sacchi: [
-    "Sacchi makes bread rise: the carbon dioxide she gives off puffs the dough up with bubbles.",
-    "Sacchi turns sugar into alcohol and carbon dioxide, which is how beer and wine are made.",
-    "In 1996, Sacchi became the first eukaryote to have her whole genome sequenced.",
-    "When glucose is plentiful, Sacchi can make ethanol even with oxygen around—a behavior called the Crabtree effect.",
-    "Engineered cells of Sacchi's species help make insulin for people with diabetes.",
+  sasha: [
+    "Sasha makes bread rise: the carbon dioxide she gives off puffs the dough up with bubbles.",
+    "Sasha turns sugar into alcohol and carbon dioxide, which is how beer and wine are made.",
+    "In 1996, Sasha became the first eukaryote to have her whole genome sequenced.",
+    "When glucose is plentiful, Sasha can make ethanol even with oxygen around—a behavior called the Crabtree effect.",
+    "Engineered cells of Sasha's species help make insulin for people with diabetes.",
   ],
   candi: [
     "Candi can live harmlessly in the mouth, gut, and on the skin of many people.",

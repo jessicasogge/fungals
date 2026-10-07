@@ -51,14 +51,14 @@ describe('swapping her name for "this gal"', () => {
   });
 
   it('starts every sentence with a capital', () => {
-    expect(shown('Sacchi buds. Sacchi bakes! "Sacchi" is a name.', 'Sacchi').textContent)
+    expect(shown('Sasha buds. Sasha bakes! "Sasha" is a name.', 'Sasha').textContent)
       .toBe('This gal buds. This gal bakes! "This gal" is a name.');
-    expect(shown('In bread dough, Sacchi makes bubbles.', 'Sacchi').textContent)
+    expect(shown('In bread dough, Sasha makes bubbles.', 'Sasha').textContent)
       .toBe('In bread dough, this gal makes bubbles.');
   });
 
   it('is plain text, with no question mark', () => {
-    const p = shown('Sacchi buds.', 'Sacchi');
+    const p = shown('Sasha buds.', 'Sasha');
     expect(p.querySelector('.fact-blank').textContent).toBe('This gal');
     expect(p.textContent).not.toContain('?');
   });
@@ -69,9 +69,9 @@ describe('swapping her name for "this gal"', () => {
   });
 
   it('says "strains of this gal", not "this gal strains"', () => {
-    expect(shown('Some Candi strains resist fluconazole, unlike most Sacchi cells.', 'Candi').textContent)
-      .toBe('Some strains of this gal resist fluconazole, unlike most Sacchi cells.');
-    expect(shown('Labs grow the Sacchi types they need.', 'Sacchi').textContent)
+    expect(shown('Some Candi strains resist fluconazole, unlike most Sasha cells.', 'Candi').textContent)
+      .toBe('Some strains of this gal resist fluconazole, unlike most Sasha cells.');
+    expect(shown('Labs grow the Sasha types they need.', 'Sasha').textContent)
       .toBe('Labs grow the types of this gal they need.');
   });
 
@@ -95,9 +95,9 @@ describe('swapping her name for "this gal"', () => {
 describe('filling the blanks', () => {
   it('puts her name in every blank, in her color', () => {
     const p = document.createElement('p');
-    p.append(...withBlanks("Sacchi's bubbles help Sacchi bake.", 'Sacchi'));
-    fillBlanks(p, 'Sacchi', '#15803d');
-    expect(p.textContent).toBe("Sacchi's bubbles help Sacchi bake.");
+    p.append(...withBlanks("Sasha's bubbles help Sasha bake.", 'Sasha'));
+    fillBlanks(p, 'Sasha', '#15803d');
+    expect(p.textContent).toBe("Sasha's bubbles help Sasha bake.");
     for (const gap of p.querySelectorAll('.fact-blank')) {
       expect(gap.classList).toContain('filled');
       expect(gap.style.color).toBe('rgb(21, 128, 61)');

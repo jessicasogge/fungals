@@ -7,7 +7,7 @@
 // diameter in millimeters a lab would measure for a susceptible strain of
 // that species. Candida has a standard disk test (CLSI M44), so Candi's are
 // ballpark figures from it. Saccharomyces has no standard disk sizes, so
-// Sacchi's are estimates from how well each drug works on her. The game
+// Sasha's are estimates from how well each drug works on her. The game
 // scales these down to fit the dish (see ZONE_* below).
 //
 // `antifungals` are the disks placed in each pal's dish, in order (level 1
@@ -23,22 +23,22 @@
 // other species' scientific names between asterisks (*Candida auris*) and
 // the pop-up shows them in italics.
 export const SPECIES = {
-  sacchi: {
+  sasha: {
     facts: [
-      "Sacchi's genus name, Saccharomyces, means \"sugar fungus.\"",
-      "Sacchi makes bread rise: the carbon dioxide she gives off puffs the dough up with bubbles.",
-      "Sacchi turns sugar into alcohol and carbon dioxide, which is how beer and wine are made.",
-      "Sacchi reproduces by budding: a small daughter swells out of her side and pinches off.",
-      "Each time Sacchi buds, she gets a ring-shaped bud scar, so you can count her daughters.",
-      "In 1996, Sacchi became the first eukaryote to have her whole genome sequenced.",
-      "Unlike bacteria, Sacchi keeps her DNA in a nucleus, just like your cells do.",
-      "Fungi like Sacchi are more closely related to animals than to plants.",
-      "In the 1850s, Louis Pasteur showed that living yeast like Sacchi causes fermentation.",
-      "Scientists study Sacchi to learn how cell division, aging and DNA repair work in us.",
-      "Sacchi's cell wall has a little chitin in it, the same tough stuff as insect shells.",
-      "Sacchi can live with one set of chromosomes (haploid) or two (diploid).",
-      "Sacchi makes alcohol from sugar even with oxygen around, called the Crabtree effect.",
-      "Engineered cells of Sacchi's species help make insulin for people with diabetes.",
+      "Sasha's genus name, Saccharomyces, means \"sugar fungus.\"",
+      "Sasha makes bread rise: the carbon dioxide she gives off puffs the dough up with bubbles.",
+      "Sasha turns sugar into alcohol and carbon dioxide, which is how beer and wine are made.",
+      "Sasha reproduces by budding: a small daughter swells out of her side and pinches off.",
+      "Each time Sasha buds, she gets a ring-shaped bud scar, so you can count her daughters.",
+      "In 1996, Sasha became the first eukaryote to have her whole genome sequenced.",
+      "Unlike bacteria, Sasha keeps her DNA in a nucleus, just like your cells do.",
+      "Fungi like Sasha are more closely related to animals than to plants.",
+      "In the 1850s, Louis Pasteur showed that living yeast like Sasha causes fermentation.",
+      "Scientists study Sasha to learn how cell division, aging and DNA repair work in us.",
+      "Sasha's cell wall has a little chitin in it, the same tough stuff as insect shells.",
+      "Sasha can live with one set of chromosomes (haploid) or two (diploid).",
+      "Sasha makes alcohol from sugar even with oxygen around, called the Crabtree effect.",
+      "Engineered cells of Sasha's species help make insulin for people with diabetes.",
     ],
     scientific: 'Saccharomyces cerevisiae',
     color: '#8a5a2b', // for her name above the dish

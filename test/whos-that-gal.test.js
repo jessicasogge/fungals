@@ -43,7 +43,7 @@ describe('Who’s That Gal?', () => {
     await open();
     expect(button('candi').querySelector('.guess-species').textContent).toBe('C. albicans');
     expect(button('candi').querySelector('.guess-species i').textContent).toBe('C. albicans');
-    expect(button('sacchi').querySelector('.guess-species').textContent).toBe('S. cerevisiae');
+    expect(button('sasha').querySelector('.guess-species').textContent).toBe('S. cerevisiae');
     for (const pal of PALS) expect(button(pal.id).querySelector('.guess-species').textContent).toMatch(/^[A-Z]\.\s\S+$/);
   });
 

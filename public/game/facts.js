@@ -18,7 +18,7 @@ export function pickFact(facts = [], last = null, random = Math.random) {
   return choices[Math.floor(random() * choices.length)];
 }
 
-// Show a random fact about `pal` (her key, e.g. "sacchi") in the pop-up, or
+// Show a random fact about `pal` (her key, e.g. "sasha") in the pop-up, or
 // hide the fact line if `species` has none. Remembers the fact for the rest
 // of the visit, since every level loads a fresh page.
 export function showFact(pal, species) {

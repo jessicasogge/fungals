@@ -1,6 +1,6 @@
 // Entry point for the petri dish page: find the pal and level picked in the
 // URL and start the game with them:
-//   petri-dish.html?pal=sacchi&level=2
+//   petri-dish.html?pal=sasha&level=2
 import { antifungalsFor, placeAntifungals } from './antifungal.js';
 import { LEVELS, SPECIES } from './config.js';
 import { playGame } from './game.js';
@@ -21,7 +21,7 @@ document.querySelector('.pal-mover').append(...PALS.map(dishPal));
 const params = new URLSearchParams(window.location.search);
 const choice = params.get('pal');
 // Compare names rather than building a CSS selector from the address, so a
-// mangled link (e.g. ?pal=sacchi"]) can't crash the page.
+// mangled link (e.g. ?pal=sasha"]) can't crash the page.
 const pal = [...document.querySelectorAll('.dish-pal')].find((el) => el.dataset.pal === choice);
 // Level 1 unless the URL says otherwise.
 const levelNumber = Math.min(Math.max(parseInt(params.get('level'), 10) || 1, 1), LEVELS.length);

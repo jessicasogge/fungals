@@ -59,8 +59,8 @@ function makeFakeColony() {
   };
 }
 
-// Start a level as Sacchi (or `pal`) and return the pop-up.
-function start({ level = 1, target = LEVELS[level - 1].target, pal = 'sacchi', disks = [] } = {}) {
+// Start a level as Sasha (or `pal`) and return the pop-up.
+function start({ level = 1, target = LEVELS[level - 1].target, pal = 'sasha', disks = [] } = {}) {
   const palEl = document.createElement('div');
   palEl.dataset.pal = pal;
   palEl.dataset.name = pal[0].toUpperCase() + pal.slice(1);
@@ -87,7 +87,7 @@ beforeEach(() => {
   fake.hit = null;
   nutrients = { stop: vi.fn() };
   sessionStorage.clear();
-  location = { href: 'http://localhost/petri-dish.html?pal=sacchi&level=3' };
+  location = { href: 'http://localhost/petri-dish.html?pal=sasha&level=3' };
   vi.stubGlobal('location', location);
   vi.stubGlobal('requestAnimationFrame', (run) => frames.push(run));
   vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] });
@@ -171,7 +171,7 @@ describe('beating a level', () => {
     banner.querySelector('.play-again').click();
     const url = new URL(location.href);
     expect(url.searchParams.get('level')).toBe('4');
-    expect(url.searchParams.get('pal')).toBe('sacchi');
+    expect(url.searchParams.get('pal')).toBe('sasha');
   });
 
   it('stops play once the target is reached', () => {
@@ -221,7 +221,7 @@ describe('touching a disk', () => {
     expect(banner.hidden).toBe(false);
     expect(banner.querySelector('h2').textContent).toBe('Game over');
     expect(banner.querySelector('.win-message').textContent)
-      .toBe('Sacchi swam into the fluconazole zone of inhibition. Antifungals kill fungi!');
+      .toBe('Sasha swam into the fluconazole zone of inhibition. Antifungals kill fungi!');
   });
 
   it('says the disk still counts when she is resistant (no zone)', () => {
@@ -229,7 +229,7 @@ describe('touching a disk', () => {
     fake.hit = disk(0);
     frame();
     vi.runAllTimers();
-    expect(document.querySelector('.win-message').textContent).toMatch(/^Sacchi bumped into the fluconazole disk/);
+    expect(document.querySelector('.win-message').textContent).toMatch(/^Sasha bumped into the fluconazole disk/);
   });
 
   it('waits a moment before the pop-up, so the pop can be seen', () => {
@@ -304,11 +304,11 @@ describe('the fun fact', () => {
   });
 
   it("shows one of the pal's facts on a game over", () => {
-    start({ level: 2, pal: 'sacchi' });
+    start({ level: 2, pal: 'sasha' });
     fake.hit = disk(0.05);
     frame();
     vi.runAllTimers();
-    expect(SPECIES.sacchi.facts.map(plainText)).toContain(factShown());
+    expect(SPECIES.sasha.facts.map(plainText)).toContain(factShown());
   });
 });
 

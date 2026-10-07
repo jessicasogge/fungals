@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 // main.js starts the petri dish page from its address, e.g.
-// petri-dish.html?pal=sacchi&level=2. These tests load the real page into
+// petri-dish.html?pal=sasha&level=2. These tests load the real page into
 // jsdom, a simulated browser page, and check it picks the right pal and
 // level, and copes with addresses that are broken or made up.
 import { readFileSync } from 'node:fs';
@@ -17,7 +17,7 @@ const body = page.slice(page.indexOf('<body'), page.indexOf('</body>'));
 
 let location;
 
-// Open the dish page at `search` (like '?pal=sacchi&level=2') and run main.js.
+// Open the dish page at `search` (like '?pal=sasha&level=2') and run main.js.
 async function open(search) {
   location = { search, href: `http://localhost/petri-dish.html${search}`, replace: vi.fn() };
   vi.stubGlobal('location', location);
@@ -55,8 +55,8 @@ describe('picking the pal', () => {
   });
 
   it('names the pal and level in the tab title', async () => {
-    await open('?pal=sacchi&level=3');
-    expect(document.title).toBe('FunGals | Sacchi | Level 3');
+    await open('?pal=sasha&level=3');
+    expect(document.title).toBe('FunGals | Sasha | Level 3');
   });
 
   it.each(Object.keys(SPECIES))('starts the game for %s with her own species settings', async (pal) => {
@@ -76,13 +76,13 @@ describe('picking the level', () => {
   }
 
   it('starts at level 1 when the address has no level', async () => {
-    expect(await startedAt('?pal=sacchi')).toEqual({ level: 1, target: LEVELS[0].target });
+    expect(await startedAt('?pal=sasha')).toEqual({ level: 1, target: LEVELS[0].target });
   });
 
   it.each(LEVELS.map((level, i) => [i + 1, level]))(
     'level %i uses its own cell target and number of disks',
     async (n, level) => {
-      expect(await startedAt(`?pal=sacchi&level=${n}`)).toEqual({ level: n, target: level.target });
+      expect(await startedAt(`?pal=sasha&level=${n}`)).toEqual({ level: n, target: level.target });
       expect(document.querySelectorAll('.agar .antifungal')).toHaveLength(level.disks);
     },
   );
@@ -95,7 +95,7 @@ describe('picking the level', () => {
     ['empty', '', 1],
     ['a decimal', '2.7', 2],
   ])('a level that is %s ("%s") becomes level %i', async (_, value, expected) => {
-    const { level } = await startedAt(`?pal=sacchi&level=${value}`);
+    const { level } = await startedAt(`?pal=sasha&level=${value}`);
     expect(level).toBe(expected);
   });
 });
@@ -104,7 +104,7 @@ describe('a broken address', () => {
   it.each([
     ['no pal', ''],
     ['an unknown pal', '?pal=bogus'],
-    ['a pal with the wrong capitals', '?pal=Sacchi'],
+    ['a pal with the wrong capitals', '?pal=Sasha'],
   ])('with %s, sends them back to pick a pal instead of starting', async (_, search) => {
     const playGame = await open(search);
     expect(location.replace).toHaveBeenCalledWith('./pal-picker.html');
@@ -114,7 +114,7 @@ describe('a broken address', () => {
 
   it('with a mangled pal name, still sends them back instead of crashing', async () => {
     // A stray quote or bracket once broke the page before it could redirect.
-    const playGame = await open('?pal=sacchi"]');
+    const playGame = await open('?pal=sasha"]');
     expect(location.replace).toHaveBeenCalledWith('./pal-picker.html');
     expect(playGame).not.toHaveBeenCalled();
   });
