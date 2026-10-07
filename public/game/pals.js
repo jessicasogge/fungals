@@ -51,13 +51,13 @@ export const PALS = [
       <ellipse cx="100" cy="112" rx="52" ry="44" fill="#f3dfbf" stroke="#8a5a2b" stroke-width="4" />
       <ellipse cx="80" cy="86" rx="9" ry="5" fill="#fbf3e4" transform="rotate(-25 80 86)" />
       <!-- bud scars, one for each daughter she's had -->
-      <ellipse cx="62" cy="128" rx="6" ry="4" fill="none" stroke="#b08250" stroke-width="2.5" />
-      <ellipse cx="138" cy="136" rx="5" ry="3.5" fill="none" stroke="#b08250" stroke-width="2.5" />
+      <ellipse cx="62" cy="132" rx="6" ry="4" fill="none" stroke="#b08250" stroke-width="2.5" />
+      <ellipse cx="138" cy="132" rx="6" ry="4" fill="none" stroke="#b08250" stroke-width="2.5" />
       ${face(100, 112, '#5b3a1e')}
     `,
   },
   // Candi: Candida albicans, a creamy white oval yeast cell with lavender
-  // edges and a bud growing out of her upper left
+  // edges, a bud growing out of her upper left and two bud scars
   {
     id: 'candi',
     name: 'Candi',
@@ -72,6 +72,9 @@ export const PALS = [
       <!-- the mother cell, the same size as Sasha's -->
       <ellipse cx="100" cy="112" rx="52" ry="44" fill="#faf5ff" stroke="#7c3aed" stroke-width="4" />
       <ellipse cx="80" cy="86" rx="9" ry="5" fill="#ffffff" transform="rotate(-25 80 86)" />
+      <!-- bud scars, one for each daughter she's had, like Sasha's -->
+      <ellipse cx="62" cy="132" rx="6" ry="4" fill="none" stroke="#a78bfa" stroke-width="2.5" />
+      <ellipse cx="138" cy="132" rx="6" ry="4" fill="none" stroke="#a78bfa" stroke-width="2.5" />
       ${face(100, 112, '#4c1d95')}
     `,
   },
