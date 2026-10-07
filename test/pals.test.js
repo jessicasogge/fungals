@@ -162,7 +162,10 @@ describe('the pages', () => {
     await open('index.html', 'script.js');
     const labels = [...document.querySelectorAll('.friends svg')].map((s) => s.getAttribute('aria-label'));
     expect(labels).toEqual(HOME_PALS.map((pal) => `${pal.name}, ${pal.looks}`));
-    expect(HOME_PALS).toEqual(PALS);
+    // Every pal, each once, with Olive in the middle.
+    expect(HOME_PALS.map((pal) => pal.id)).toEqual(['sasha', 'olive', 'candi']);
+    expect([...HOME_PALS].sort((a, b) => a.id.localeCompare(b.id))).toEqual(
+      [...PALS].sort((a, b) => a.id.localeCompare(b.id)));
   });
 
   it('the picker has a card for every pal, each once, linking to her dish', async () => {

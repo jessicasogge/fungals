@@ -23,13 +23,15 @@ Tap **Who’s That Gal?** on the home page for a quiz on the pals' fun facts, li
 |---|---|---|
 | **Sasha** | *Saccharomyces cerevisiae* | Wheat-colored oval yeast with a bud and two bud scars |
 | **Candi** | *Candida albicans* | Sky-blue oval yeast with a bud and two bud scars |
+| **Olive** | *Malassezia furfur* | Olive-green bowling pin: a broad-based bud on one end, with a collarette at the neck |
 
 ## The real science
 
 - **Budding:** yeasts don't split in two like bacteria do. A small bud swells out of the mother cell and pinches off, which is why each daughter starts small in the dish and grows. Every bud leaves a ring-shaped scar on the mother, like the two on Sasha's and Candi's pictures.
+- **Olive buds from one end:** *Malassezia furfur* buds again and again from the same end, on a wide base, so mother and bud make a bowling pin. Each bud leaves a collar there, the collarette, instead of scattered bud scars, and in the dish her buds always grow from the top. She's olive green for the olive oil labs pour over her plates: she can't make her own fatty acids, so she needs oil to grow.
 - **Candi buds too**, but *Candida albicans* can also switch from budding yeast to hyphae, long thread-like cells. In the lab, sprouting germ tubes (the start of a hypha) in serum is a classic test for her.
-- **The antifungal disks** work like the Kirby-Bauer disk test for bacteria. *Candida* has a standard disk test (CLSI M44), so Candi's zones are ballpark sizes for a susceptible strain. *Saccharomyces* has no standard disk sizes, so Sasha's are estimates from how well each drug works on her. Fluconazole only weakly holds *Saccharomyces* back, so her fluconazole zone is small.
-- **The disk codes** are the standard ones: FLC (fluconazole), VOR (voriconazole), CAS (caspofungin), MCF (micafungin), AMB (amphotericin B) and NY (nystatin).
+- **The antifungal disks** work like the Kirby-Bauer disk test for bacteria. *Candida* has a standard disk test (CLSI M44), so Candi's zones are ballpark sizes for a susceptible strain. *Saccharomyces* and *Malassezia* have no standard disk sizes, so Sasha's and Olive's are estimates from how well each drug works on them. Fluconazole only weakly holds *Saccharomyces* back, so Sasha's fluconazole zone is small. *Malassezia* is naturally resistant to echinocandins, so Olive's caspofungin disk has **no zone at all**: you can swim right up to it, but don't touch the disk itself.
+- **The disk codes** are the standard ones: FLC (fluconazole), VOR (voriconazole), KCA (ketoconazole), ITC (itraconazole), CAS (caspofungin), MCF (micafungin), AMB (amphotericin B) and NY (nystatin).
 - **The zones spread** because the drug diffuses outward from the disk into the agar: fast at first, then more slowly. On a real plate this takes hours of incubation; the game speeds it up to a few seconds.
 
 ## Coming next

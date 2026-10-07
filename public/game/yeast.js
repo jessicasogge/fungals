@@ -4,7 +4,7 @@ import { GAME } from './config.js';
 import { idlePose, newMover } from './mover.js';
 import { coaster } from './physics.js';
 
-// A budding yeast (Sasha, Candi). The player is always a single cell. Each
+// A budding yeast (Sasha, Candi, Olive). The player is always a single cell. Each
 // time she eats, a small bud swells out of her side, pinches off, and the
 // daughter keeps growing until she's full size. (Offspring that eat bud
 // too, without the swelling first.) Daughters stay stuck together in little clusters, up to
@@ -170,10 +170,12 @@ export function yeastGroup({ mover, svg, species, isPlayer }) {
       }
       if (changed) draw();
     },
-    // Start a bud swelling on the player's side, pointing a random way (if
-    // one isn't already growing).
+    // Start a bud swelling on the player's side (if one isn't already
+    // growing): from the top for a pal who always buds from the same end
+    // (Olive), or else pointing a random way.
     startBud() {
-      group.budding ??= { ms: 0, angle: Math.random() * Math.PI * 2 };
+      const angle = species.budsFromOneEnd ? -Math.PI / 2 : Math.random() * Math.PI * 2;
+      group.budding ??= { ms: 0, angle };
     },
     // Whether her bud has swelled enough to pinch off.
     budReady() {

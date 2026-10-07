@@ -187,3 +187,9 @@ describe('zone of inhibition', () => {
     expect(touchesDisk(disk, [[66, 0, 5]], 200)).toBe(true);
   });
 });
+
+describe("Olive's drugs", () => {
+  it('start with ketoconazole, the classic dandruff-shampoo azole', () => {
+    expect(SPECIES.olive.antifungals[0].code).toBe('KCA');
+  });
+});

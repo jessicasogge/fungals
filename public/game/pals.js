@@ -2,8 +2,8 @@
 // petri dish all draw the pals from here, so a change to how a pal looks
 // only has to be made once.
 //
-// The list is in the order the pals appear on the home page (the picker
-// shuffles them).
+// The home page shows them in its own order (HOME below), and the picker
+// shuffles them.
 // Each pal has:
 //   id      her key, matching SPECIES in config.js and ?pal= in addresses
 //   name    what she's called
@@ -78,10 +78,37 @@ export const PALS = [
       ${face(100, 112, '#1e3a8a')}
     `,
   },
+  // Olive: Malassezia furfur, an olive-green yeast shaped like a bowling pin:
+  // a broad-based bud on top of her mother cell, with a lighter collarette
+  // across the neck where her buds pinch off
+  {
+    id: 'olive',
+    name: 'Olive',
+    looks: 'an olive-green Malassezia furfur yeast cell shaped like a bowling pin, budding from one end',
+    motion: 'wobble',
+    frames: { home: '16 22 168 168', picker: '22 28 156 156', dish: '26 32 148 148' },
+    art: `
+      <!-- one bowling-pin outline: both cells' outlines first, then both
+           fills on top, so the outline runs smoothly round the neck -->
+      <ellipse cx="100" cy="72" rx="34" ry="38" fill="#6b7a2a" stroke="#6b7a2a" stroke-width="4" />
+      <ellipse cx="100" cy="134" rx="49" ry="44" fill="#6b7a2a" stroke="#6b7a2a" stroke-width="4" />
+      <!-- the bud, growing on a wide base from the top of her -->
+      <ellipse cx="100" cy="72" rx="32" ry="36" fill="#d9e6a6" />
+      <!-- the mother cell -->
+      <ellipse cx="100" cy="134" rx="47" ry="42" fill="#d9e6a6" />
+      <!-- the collarette, the collar left where each bud pinches off -->
+      <path d="M71 101 Q100 112 129 101" stroke="#a3b553" stroke-width="4" fill="none" stroke-linecap="round" />
+      <circle cx="88" cy="56" r="5" fill="#f7faea" />
+      <ellipse cx="78" cy="118" rx="8" ry="4.5" fill="#f7faea" transform="rotate(-30 78 118)" />
+      ${face(100, 140, '#3a4410')}
+    `,
+  },
 ];
 
-// Both pals fit in the home page's row.
-export const HOME_PALS = PALS;
+// The home page's row, in its own order: Olive in the middle, between
+// Sasha and Candi.
+const HOME = ['sasha', 'olive', 'candi'];
+export const HOME_PALS = HOME.map((id) => PALS.find((pal) => pal.id === id));
 
 // How many pals fit on one page of the picker: four across, two down.
 export const PAGE_SIZE = 8;
