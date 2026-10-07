@@ -72,7 +72,7 @@ export const SPECIES = {
     scientific: 'Candida albicans',
     color: '#6d28d9', // for her name above the dish
     kind: 'yeast',
-    colors: { fill: '#e4d3ff', stroke: '#7c3aed', highlight: '#ffffff', dark: '#4c1d95' },
+    colors: { fill: '#e8d9ff', stroke: '#7c3aed', highlight: '#ffffff', dark: '#4c1d95' },
     antifungals: [
       { code: 'FLC', name: 'fluconazole', zone: 30 },
       { code: 'NY', name: 'nystatin', zone: 21 },
