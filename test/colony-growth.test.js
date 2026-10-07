@@ -100,6 +100,38 @@ describe('your pal dividing', () => {
   });
 });
 
+describe('your pal growing a bud first', () => {
+  // A stand-in yeast leader whose bud is ready when the test says so.
+  function budder() {
+    const leader = cell();
+    let ready = false;
+    leader.startBud = vi.fn();
+    leader.budReady = () => ready;
+    leader.finishBud = () => { ready = true; };
+    return leader;
+  }
+
+  it("starts a bud once she's eaten, but doesn't divide until it's ready to pinch off", () => {
+    const leader = budder();
+    const colony = colonyOf(leader, food(1));
+    colony.eat(0.016, RADIUS);
+    colony.divideLeader();
+    expect(leader.startBud).toHaveBeenCalledTimes(1);
+    expect(leader.divide).not.toHaveBeenCalled();
+
+    leader.finishBud();
+    colony.divideLeader();
+    expect(leader.divide).toHaveBeenCalledTimes(1);
+    expect(colony.cellCount()).toBe(2);
+  });
+
+  it("doesn't start a bud before she's eaten anything", () => {
+    const leader = budder();
+    colonyOf(leader, food(0)).divideLeader();
+    expect(leader.startBud).not.toHaveBeenCalled();
+  });
+});
+
 describe('a division', () => {
   it('adds the new cell, sized and placed right away so it never flashes in the middle', () => {
     const leader = cell();

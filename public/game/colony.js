@@ -98,8 +98,14 @@ export function makeColony({
     },
 
     // Bud from the leader if it has eaten enough and isn't still mid-division.
+    // A leader that can show a bud first grows one on her side, and only
+    // divides once it's swelled enough to pinch off.
     divideLeader() {
       if (pending < GAME.NUTRIENTS_PER_DIVISION || sinceDivision <= GAME.DIVIDE_MS) return;
+      if (leader.startBud) {
+        leader.startBud();
+        if (!leader.budReady()) return;
+      }
       pending -= GAME.NUTRIENTS_PER_DIVISION;
       sinceDivision = 0;
       colony.divide(leader);

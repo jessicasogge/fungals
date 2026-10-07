@@ -216,7 +216,7 @@ describe('sliding a new cell into place', () => {
 
   it("stops redrawing once everything is still, since that's slow with many cells", () => {
     const { group } = joining();
-    group.update(1); // finish the slide
+    group.update(5); // finish the slide, and the daughter growing
     group.svg.innerHTML = '<g class="marker" />'; // anything a redraw would replace
     group.update(1);
     expect(group.svg.querySelector('.marker')).not.toBeNull();
@@ -315,41 +315,139 @@ describe('antifungal disks', () => {
   });
 });
 
-describe('a bud', () => {
-  // The size of the newest cell's oval, as a fraction of a full-grown cell.
-  const budSize = (group) => {
-    const ovals = group.svg.querySelectorAll('.cell-body');
-    const sizes = [...ovals].map((oval) => Number(oval.getAttribute('rx')) / R);
-    return Math.min(...sizes);
-  };
+describe('a daughter cell', () => {
+  // The size of each cell's oval, as a fraction of a full-grown cell.
+  const sizes = (group) => [...group.svg.querySelectorAll('.cell-body')]
+    .map((oval) => Number(oval.getAttribute('rx')) / R);
+  const smallest = (group) => Math.min(...sizes(group));
 
-  it('starts small and swells to full size as it slides into place', () => {
+  it('starts at a quarter of full size and grows slowly, after she has slid into place', () => {
     const group = makeGroup('sasha');
     const player = makeGroup('sasha', { isPlayer: true, x: 30 });
     player.divide([group], DISH_RADIUS);
     group.update(0);
-    expect(budSize(group)).toBeCloseTo(0.4);
-    group.update(GAME.DIVIDE_MS / 2000);
-    expect(budSize(group)).toBeGreaterThan(0.4);
-    expect(budSize(group)).toBeLessThan(1);
-    group.update(1);
-    expect(budSize(group)).toBeCloseTo(1);
-    expect(group.bud).toBeNull();
+    expect(smallest(group)).toBeCloseTo(0.25);
+    group.update(GAME.DIVIDE_MS / 1000); // the slide is done...
+    expect(group.moveFor).toBeNull();
+    expect(smallest(group)).toBeLessThan(0.75); // ...but she's still small
+    group.update(1.5);
+    expect(smallest(group)).toBeCloseTo(1);
+  });
+
+  it('starts small even when she starts a new group of her own', () => {
+    const player = makeGroup('sasha', { isPlayer: true });
+    const child = player.divide([], DISH_RADIUS);
+    child.update(0); // the game sizes a new group before it's first drawn
+    expect(sizes(child)).toEqual([0.25]);
+    child.update(0.75);
+    expect(sizes(child)[0]).toBeCloseTo(0.625);
+    child.update(5);
+    expect(sizes(child)).toEqual([1]);
   });
 
   it("leaves the cells that are already grown at full size", () => {
     const group = makeGroup('sasha');
     grow(group, 3);
+    group.update(5); // let them all grow up
     const player = makeGroup('sasha', { isPlayer: true, x: 30 });
     player.divide([group], DISH_RADIUS);
     group.update(0);
-    const full = [...group.svg.querySelectorAll('.cell-body')]
-      .filter((oval) => Number(oval.getAttribute('rx')) === R);
-    expect(full).toHaveLength(3);
+    expect(sizes(group).filter((size) => size === 1)).toHaveLength(3);
   });
 
   it('is a little oval, a bit wider than it is tall', () => {
     const oval = makeGroup('sasha').svg.querySelector('.cell-body');
     expect(Number(oval.getAttribute('ry'))).toBeLessThan(Number(oval.getAttribute('rx')));
+  });
+});
+
+describe("the player's bud", () => {
+  const bud = (player) => player.svg.querySelector('.bud');
+  const budSize = (player) => Number(bud(player).getAttribute('rx')) / R;
+  const budCenter = (player) => {
+    const [, x, y] = bud(player).getAttribute('transform').match(/translate\((\S+) (\S+)\)/).map(Number);
+    return [x, y];
+  };
+
+  it("isn't there until she starts one", () => {
+    const player = makeGroup('sasha', { isPlayer: true });
+    expect(bud(player)).toBeNull();
+    expect(player.budReady()).toBe(false);
+  });
+
+  it('swells on her side, joined to her at a neck, until it is ready to pinch off', () => {
+    const player = makeGroup('sasha', { isPlayer: true });
+    player.startBud();
+    player.update(0);
+    expect(budSize(player)).toBeCloseTo(0.25);
+    // Drawn behind her, and overlapping her outline a little.
+    expect(player.svg.firstElementChild.classList.contains('bud')).toBe(true);
+    const gap = Math.hypot(...budCenter(player));
+    expect(gap).toBeGreaterThan(R * 0.8);
+    expect(gap).toBeLessThan(R + R * budSize(player));
+    expect(player.budReady()).toBe(false);
+
+    player.update(0.35);
+    expect(budSize(player)).toBeCloseTo(0.4);
+    player.update(0.35);
+    expect(budSize(player)).toBeCloseTo(0.55);
+    expect(player.budReady()).toBe(true);
+    player.update(1);
+    expect(budSize(player)).toBeCloseTo(0.55); // it doesn't keep growing on her
+  });
+
+  it("keeps the same bud if she's asked to start one again", () => {
+    const player = makeGroup('sasha', { isPlayer: true });
+    player.startBud();
+    const first = player.budding;
+    player.update(0.2);
+    player.startBud();
+    expect(player.budding).toBe(first);
+  });
+
+  it("makes room in her drawing for the bud, and doesn't count it as part of her body", () => {
+    const player = makeGroup('sasha', { isPlayer: true });
+    const width = player.mover.style.width;
+    const body = player.body();
+    player.startBud();
+    player.budding.angle = 0; // pointing right, so she gets wider
+    player.update(1);
+    expect(parseFloat(player.mover.style.width)).toBeGreaterThan(parseFloat(width));
+    expect(player.body()).toHaveLength(1);
+    expect(player.body()[0][2]).toBeCloseTo(body[0][2]);
+  });
+
+  it('pinches off into a daughter where the bud was, as big as the bud, and leaves her round again', () => {
+    const player = makeGroup('sasha', { isPlayer: true, x: 20, y: -10 });
+    player.startBud();
+    player.update(1);
+    const spot = player.budSpot();
+    const child = player.divide([], DISH_RADIUS);
+    child.update(0);
+    expect(bud(player)).toBeNull();
+    expect(player.budding).toBeNull();
+    expect([child.x, child.y]).toEqual(spot);
+    expect(Number(child.svg.querySelector('.cell-body').getAttribute('rx')) / R).toBeCloseTo(0.55);
+  });
+
+  it('works out where the bud is when she faces left', () => {
+    const player = makeGroup('sasha', { isPlayer: true });
+    player.startBud();
+    player.budding.angle = 0; // pointing right in her own drawing
+    player.update(1);
+    expect(player.budSpot()[0]).toBeGreaterThan(0);
+    player.facing = -1;
+    expect(player.budSpot()[0]).toBeLessThan(0);
+  });
+
+  it('sends a daughter that joins a cluster in from the bud, at the bud\'s size', () => {
+    const group = makeGroup('sasha', { x: 30 });
+    const player = makeGroup('sasha', { isPlayer: true });
+    player.startBud();
+    player.update(1);
+    player.divide([group], DISH_RADIUS);
+    group.update(0);
+    const sizes = [...group.svg.querySelectorAll('.cell-body')].map((oval) => Number(oval.getAttribute('rx')) / R);
+    expect(Math.min(...sizes)).toBeCloseTo(0.55);
   });
 });
