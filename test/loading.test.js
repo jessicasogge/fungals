@@ -59,7 +59,7 @@ describe('the loading card', () => {
 });
 
 describe('a page that starts covered', () => {
-  // The picker and dish pages start with the card in their HTML.
+  // The picker, dish and quiz pages start with the card in their HTML.
   const pageHtml = (name) => {
     const page = readFileSync(resolve(process.cwd(), 'public', name), 'utf8');
     return page.slice(page.indexOf('<body'), page.indexOf('</body>'));
@@ -78,7 +78,7 @@ describe('a page that starts covered', () => {
     expect(card().hidden).toBe(false);
   });
 
-  it.each(['pal-picker.html', 'petri-dish.html'])(
+  it.each(['pal-picker.html', 'petri-dish.html', 'whos-that-gal.html'])(
     '%s starts with the same card the script makes',
     (page) => {
       document.body.outerHTML = pageHtml(page);
@@ -194,6 +194,7 @@ describe('every page', () => {
     ['script.js'],
     ['game/pal-picker.js'],
     ['game/main.js'],
+    ['game/whos-that-gal.js'],
   ])('%s shows the card while the next screen loads', (file) => {
     const code = readFileSync(resolve(process.cwd(), 'public', file), 'utf8');
     expect(code).toContain('watchLoading();');
@@ -206,6 +207,7 @@ describe('every page', () => {
   it.each([
     ['game/pal-picker.js'],
     ['game/main.js'],
+    ['game/whos-that-gal.js'],
   ])('%s takes the starting card away once the page is filled in', (file) => {
     const code = readFileSync(resolve(process.cwd(), 'public', file), 'utf8');
     expect(code).toContain('pageReady();');

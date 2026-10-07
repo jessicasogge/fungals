@@ -13,6 +13,10 @@ A cute mycology game for the browser, and the sister game to [PetriPals](https:/
 
 There are five levels. Each one adds another antifungal disk and doubles the colony you need to grow, from 4 cells up to 64.
 
+### Who’s That Gal?
+
+Tap **Who’s That Gal?** on the home page for a quiz on the pals' fun facts, like PetriPals' Who’s That Pal?. You get one fact with "this gal" in place of her name: tap the pal it's about. A wrong guess greys that pal out so you can try again, and the right one puts her name back in and shows her species. There's no score, so it's just for learning. The quiz skips facts that fit any yeast (like having a nucleus); the ones it uses are listed in `public/game/quiz-facts.js`.
+
 ## The pals
 
 | Pal | Species | Looks |
@@ -63,7 +67,8 @@ FunGals started as a copy of the PetriPals engine (steering, nutrients, disks an
 | `public/index.html` | Home page |
 | `public/pal-picker.html` | Pick a pal |
 | `public/petri-dish.html` | The game |
-| `public/game/` | Game code: the game loop (`game.js`), a colony eating and budding (`colony.js`), how yeast cells bud and cluster (`yeast.js`, with the cluster math in `attach.js`), steering (`keyboard.js`, `touch.js`), antifungal disks and zones (`antifungal.js`), nutrients, physics, settings and fun facts (`config.js`), the fun-fact pop-up (`facts.js`, with italics for scientific names from `italics.js`) and the win spores (`spores.js`) |
+| `public/whos-that-gal.html` | Who’s That Gal?, a quiz: which pal is this fact about? |
+| `public/game/` | Game code: the game loop (`game.js`), a colony eating and budding (`colony.js`), how yeast cells bud and cluster (`yeast.js`, with the cluster math in `attach.js`), steering (`keyboard.js`, `touch.js`), antifungal disks and zones (`antifungal.js`), nutrients, physics, settings and fun facts (`config.js`), the fun-fact pop-up (`facts.js`, with italics for scientific names from `italics.js`) the win spores (`spores.js`), and Who’s That Gal? (`whos-that-gal.js`, with the facts' "this gal" swap in `guess.js` and the facts it asks about in `quiz-facts.js`) |
 | `public/game/pals.js` | Every pal's name and drawing, in one place. To add a pal, see the notes at the top. |
 | `test/` | Tests |
 | `src/index.ts` | Small Express server for local development |
