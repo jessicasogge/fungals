@@ -19,6 +19,15 @@ describe('tab icon', () => {
   });
 });
 
+describe('visit counting', () => {
+  // GoatCounter counts page visits (no cookies, nothing personal), on the
+  // same dashboard as PetriPals. FunGals' pages show up there under /fungals/.
+  it.each(PAGES)('%s loads the GoatCounter script', (page) => {
+    const html = readFileSync(file(page), 'utf8');
+    expect(html).toContain('<script data-goatcounter="https://petripals.goatcounter.com/count"\n            async src="https://gc.zgo.at/count.js"></script>');
+  });
+});
+
 describe('signature', () => {
   it.each(PAGES)('%s is signed at the foot', (page) => {
     const html = readFileSync(file(page), 'utf8');
