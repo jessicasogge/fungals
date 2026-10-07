@@ -70,9 +70,9 @@ export const SPECIES = {
       "Candi's cousin *Candida auris* was first described in 2009 and resists many antifungals.",
     ],
     scientific: 'Candida albicans',
-    color: '#6d28d9', // for her name above the dish
+    color: '#1d4ed8', // for her name above the dish
     kind: 'yeast',
-    colors: { fill: '#faf5ff', stroke: '#7c3aed', highlight: '#ffffff', dark: '#4c1d95' },
+    colors: { fill: '#d6e8ff', stroke: '#2563eb', highlight: '#ffffff', dark: '#1e3a8a' },
     antifungals: [
       { code: 'FLC', name: 'fluconazole', zone: 30 },
       { code: 'NY', name: 'nystatin', zone: 21 },
@@ -90,6 +90,8 @@ export const LEVELS = [
   { disks: 3, target: 16 },
   { disks: 4, target: 32 },
   { disks: 5, target: 64 },
+  { disks: 6, target: 128 },
+  { disks: 7, target: 256 },
 ];
 
 export const GAME = {

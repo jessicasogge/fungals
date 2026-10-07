@@ -5,8 +5,9 @@ import { idlePose, newMover } from './mover.js';
 import { coaster } from './physics.js';
 
 // A budding yeast (Sasha, Candi). The player is always a single cell. Each
-// time a cell eats, it buds: a small daughter swells out of its side and
-// grows to full size. Daughters stay stuck together in little clusters, up to
+// time she eats, a small bud swells out of her side, pinches off, and the
+// daughter keeps growing until she's full size. (Offspring that eat bud
+// too, without the swelling first.) Daughters stay stuck together in little clusters, up to
 // GROUP_CAP cells, the way budding yeast often does on a plate. A cluster
 // grows on the side facing the cell that budded, so the player builds bunches
 // wherever she lingers.
@@ -27,10 +28,40 @@ export function yeastGroup({ mover, svg, species, isPlayer }) {
     // Cells in SVG units around the group's origin.
     cells: [{ x: 0, y: 0, fromX: 0, fromY: 0, toX: 0, toY: 0, face: isPlayer }],
     moveFor: null, // ms into sliding a new cell into place, or null
-    bud: null, // the cell that's sliding into place and swelling, if any
+    // The player's bud, while it swells on her side before pinching off:
+    // { ms, angle }, how long it's been growing and which way it points.
+    budding: null,
     twist: Math.random() * Math.PI * 2, // each cluster packs at its own angle
     cellCount: () => group.cells.length,
   };
+
+  // Yeast cells are a little oval, each tipped its own way.
+  const OVAL = 0.86; // height over width
+  // A daughter starts as a bud BUD_START of full size. On the player it
+  // swells on her side for BUD_SWELL_MS, to BUD_PINCH of full size, then
+  // pinches off. Every daughter then grows to full size at a steady pace,
+  // taking GROW_MS from BUD_START to full, so you can watch her grow.
+  const BUD_START = 0.25;
+  const BUD_PINCH = 0.55;
+  const BUD_SWELL_MS = 700;
+  const GROW_MS = 1500;
+
+  // How big the player's bud is right now, as a fraction of a full cell.
+  function budSize() {
+    const t = Math.min(1, group.budding.ms / BUD_SWELL_MS);
+    return BUD_START + (BUD_PINCH - BUD_START) * t;
+  }
+
+  // Where the player's bud is, in SVG units: just outside her outline in the
+  // bud's direction, overlapping it a little so the two look joined at a neck.
+  function budCenter() {
+    const { angle } = group.budding;
+    const r = R * budSize();
+    const sin = Math.sin(angle);
+    const edge = R * (1 - (1 - OVAL) * sin * sin); // roughly her oval's edge
+    const d = edge + r * 0.55;
+    return [Math.cos(angle) * d, sin * d, r];
+  }
 
   // Half the drawing's width and height in SVG units, centered on (0, 0).
   function extent() {
@@ -39,6 +70,11 @@ export function yeastGroup({ mover, svg, species, isPlayer }) {
     for (const c of group.cells) {
       mx = Math.max(mx, Math.abs(c.x) + R);
       my = Math.max(my, Math.abs(c.y) + R);
+    }
+    if (group.budding) {
+      const [bx, by, br] = budCenter();
+      mx = Math.max(mx, Math.abs(bx) + br);
+      my = Math.max(my, Math.abs(by) + br);
     }
     return [mx + 2, my + 2];
   }
@@ -55,15 +91,10 @@ export function yeastGroup({ mover, svg, species, isPlayer }) {
     return [group.x + lx * unit * group.facing, group.y + ly * unit];
   }
 
-  // Yeast cells are a little oval, each tipped its own way. A bud starts at
-  // BUD_START of full size and swells to full size as it slides into place.
-  const OVAL = 0.86; // height over width
-  const BUD_START = 0.4;
-
   function cellBody(c) {
     const paint = `fill="${colors.fill}" stroke="${colors.stroke}" stroke-width="${OUTLINE}"`;
     const size = c.grow ?? 1;
-    return `<ellipse class="cell-body" cx="0" cy="0" rx="${R * size}" ry="${R * OVAL * size}" ` +
+    return `<ellipse class="${c.bud ? 'bud' : 'cell-body'}" cx="0" cy="0" rx="${R * size}" ry="${R * OVAL * size}" ` +
       `transform="translate(${c.x} ${c.y}) rotate(${c.tilt ?? 0})" ${paint} />`;
   }
 
@@ -86,13 +117,21 @@ export function yeastGroup({ mover, svg, species, isPlayer }) {
     return out;
   }
 
+  // The player's swelling bud, drawn behind her so her outline crosses it,
+  // like the pals' pictures.
+  function budMarkup() {
+    if (!group.budding) return '';
+    const [bx, by] = budCenter();
+    return cellMarkup({ x: bx, y: by, grow: budSize(), tilt: 0, bud: true });
+  }
+
   function draw() {
     const [mx, my] = extent();
     svg.setAttribute('viewBox', `${-mx} ${-my} ${2 * mx} ${2 * my}`);
     mover.style.width = `${(mx / R) * CELL_SIZE}%`;
     // Cells higher up sit behind lower ones.
     const order = [...group.cells].sort((a, b) => a.y - b.y);
-    svg.innerHTML = order.map(cellMarkup).join('');
+    svg.innerHTML = budMarkup() + order.map(cellMarkup).join('');
   }
 
   Object.assign(group, {
@@ -101,12 +140,15 @@ export function yeastGroup({ mover, svg, species, isPlayer }) {
       for (const c of group.cells) farthest = Math.max(farthest, Math.hypot(c.x, c.y) + R);
       return farthest * pxPerUnit();
     },
-    // Redraw only while a new cell is sliding into place; a still group
+    // Redraw only while something is changing (a new cell sliding into
+    // place, a daughter growing, the player's bud swelling); a still group
     // looks the same every frame, and with hundreds of cells redrawing them
     // all slows the game down.
     update(seconds) {
+      const ms = seconds * 1000;
+      let changed = false;
       if (group.moveFor !== null) {
-        group.moveFor += seconds * 1000;
+        group.moveFor += ms;
         const t = Math.min(1, group.moveFor / GAME.DIVIDE_MS);
         const ease = 1 - (1 - t) ** 3;
         for (const c of group.cells) {
@@ -114,13 +156,33 @@ export function yeastGroup({ mover, svg, species, isPlayer }) {
           c.x = t >= 1 ? c.toX : c.fromX + (c.toX - c.fromX) * ease;
           c.y = t >= 1 ? c.toY : c.fromY + (c.toY - c.fromY) * ease;
         }
-        if (group.bud) group.bud.grow = BUD_START + (1 - BUD_START) * ease;
-        if (t >= 1) {
-          group.moveFor = null;
-          group.bud = null;
-        }
-        draw();
+        if (t >= 1) group.moveFor = null;
+        changed = true;
       }
+      for (const c of group.cells) {
+        if (c.grow === undefined || c.grow >= 1) continue;
+        c.grow = Math.min(1, c.grow + (ms / GROW_MS) * (1 - BUD_START));
+        changed = true;
+      }
+      if (group.budding) {
+        group.budding.ms += ms;
+        changed = true;
+      }
+      if (changed) draw();
+    },
+    // Start a bud swelling on the player's side, pointing a random way (if
+    // one isn't already growing).
+    startBud() {
+      group.budding ??= { ms: 0, angle: Math.random() * Math.PI * 2 };
+    },
+    // Whether her bud has swelled enough to pinch off.
+    budReady() {
+      return group.budding !== null && group.budding.ms >= BUD_SWELL_MS;
+    },
+    // Where her bud is in the dish, for the daughter to start from.
+    budSpot() {
+      const [bx, by] = budCenter();
+      return toWorld(bx, by);
     },
     // Remove the cells at these places in the list (the same order as body()),
     // when they pop. The others stay exactly where they are.
@@ -163,8 +225,9 @@ export function yeastGroup({ mover, svg, species, isPlayer }) {
       spot.world = toWorld(spot.x, spot.y);
       return spot;
     },
-    // Slide a new cell from (wx, wy) in the dish into `spot`.
-    addCell(spot, wx, wy) {
+    // Slide a new cell from (wx, wy) in the dish into `spot`, starting at
+    // `grow` of full size.
+    addCell(spot, wx, wy, grow = BUD_START) {
       const [fx, fy] = toLocal(wx, wy);
       for (const c of group.cells) {
         c.fromX = c.toX = c.x;
@@ -172,20 +235,26 @@ export function yeastGroup({ mover, svg, species, isPlayer }) {
       }
       const cell = {
         x: fx, y: fy, fromX: fx, fromY: fy, toX: spot.x, toY: spot.y, face: false,
-        grow: BUD_START, tilt: Math.round(Math.random() * 180),
+        grow, tilt: Math.round(Math.random() * 180),
       };
       if (spot.atStart) group.cells.unshift(cell);
       else group.cells.push(cell);
       group.moveFor = 0;
-      group.bud = cell;
     },
     // A cell buds: the daughter joins the nearest cluster that
     // has room and is close enough (and not onto an antifungal disk), or else
-    // starts a new one. `from` is where the dividing cell is in the dish: the
-    // player's spot, or the cell in an offspring group that ate a nutrient.
+    // starts a new one. `from` is where she starts in the dish: the player's
+    // bud, if one has swelled on her side, or else the cell in an offspring
+    // group that ate a nutrient. She starts as small as the bud was.
     // Returns the new group, or null if the daughter joined one.
-    divide(others, dishRadius, disks = [], from = [group.x, group.y]) {
+    divide(others, dishRadius, disks = [], from = group.budding ? group.budSpot() : [group.x, group.y]) {
       const [fx, fy] = from;
+      const grow = group.budding ? budSize() : BUD_START;
+      if (group.budding) {
+        // Pinched off: the bud is the daughter now.
+        group.budding = null;
+        draw();
+      }
       let best = null;
       for (const other of others) {
         const spot = other.attachSpot?.(fx, fy, disks, dishRadius);
@@ -195,13 +264,15 @@ export function yeastGroup({ mover, svg, species, isPlayer }) {
         if (!best || distance < best.distance) best = { other, spot, distance };
       }
       if (best) {
-        best.other.addCell(best.spot, fx, fy);
+        best.other.addCell(best.spot, fx, fy, grow);
         return null;
       }
       const copy = svg.cloneNode(false);
       const child = yeastGroup({ mover: newMover(copy), svg: copy, species, isPlayer: false });
       child.x = fx;
       child.y = fy;
+      // She starts small and grows, like a daughter joining a cluster.
+      Object.assign(child.cells[0], { grow, tilt: Math.round(Math.random() * 180) });
       const angle = Math.random() * Math.PI * 2;
       const burst = GAME.BURST_SPEED * dishRadius * 0.5;
       child.vx = Math.cos(angle) * burst;
