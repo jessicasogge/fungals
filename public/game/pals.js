@@ -57,21 +57,21 @@ export const PALS = [
     `,
   },
   // Candi: Candida albicans, a creamy white oval yeast cell with lavender
-  // edges, sprouting a germ tube: the start of a hypha
+  // edges and a bud growing out of her upper left
   {
     id: 'candi',
     name: 'Candi',
-    looks: 'a creamy white Candida albicans yeast cell with a thread-like germ tube sprouting from her',
+    looks: 'a creamy white oval Candida albicans yeast cell with a little bud growing from her side',
     motion: 'bob',
-    frames: { home: '28 16 166 166', picker: '36 26 150 150', dish: '40 30 144 144' },
+    frames: { home: '18 25 160 160', picker: '28 35 140 140', dish: '34 40 128 128' },
     art: `
-      <!-- the germ tube, curling up and out to her right: outline, then fill -->
-      <path d="M130 96 C150 84 160 70 176 48" stroke="#7c3aed" stroke-width="20" fill="none" stroke-linecap="round" />
-      <path d="M130 96 C150 84 160 70 176 48" stroke="#faf5ff" stroke-width="12" fill="none" stroke-linecap="round" />
-      <!-- the yeast cell -->
-      <ellipse cx="96" cy="116" rx="50" ry="42" fill="#faf5ff" stroke="#7c3aed" stroke-width="4" />
-      <ellipse cx="76" cy="91" rx="9" ry="5" fill="#ffffff" transform="rotate(-25 76 91)" />
-      ${face(96, 116, '#4c1d95')}
+      <!-- the bud, swelling out of her upper left -->
+      <ellipse cx="60" cy="74" rx="21" ry="19" fill="#faf5ff" stroke="#7c3aed" stroke-width="4" transform="rotate(-20 60 74)" />
+      <circle cx="53" cy="66" r="4" fill="#ffffff" />
+      <!-- the mother cell -->
+      <ellipse cx="104" cy="112" rx="50" ry="42" fill="#faf5ff" stroke="#7c3aed" stroke-width="4" />
+      <ellipse cx="86" cy="88" rx="9" ry="5" fill="#ffffff" transform="rotate(-25 86 88)" />
+      ${face(104, 112, '#4c1d95')}
     `,
   },
 ];

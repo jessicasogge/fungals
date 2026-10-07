@@ -108,7 +108,7 @@ describe('her drawing', () => {
 });
 
 describe('moving parts', () => {
-  // A pal with a bit of SVG animation, like a wiggling germ tube.
+  // A pal with a bit of SVG animation, like a wiggling hypha.
   const wiggly = { ...palById('candi'), art: '<path d="M0 0 L1 1"><animate attributeName="d" values="M0 0 L1 1;M0 0 L1 2" /></path>' };
   afterEach(() => vi.unstubAllGlobals());
 
