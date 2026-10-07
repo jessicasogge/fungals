@@ -38,9 +38,9 @@ describe('names above the dish', () => {
 
   it.each(PALS)("colors %s's name so it's easy to read on the page", (pal) => {
     expect(SPECIES[pal].color).toMatch(/^#[0-9a-f]{6}$/i);
-    // The page behind the title is a warm apricot (#fde4cf). 3:1 is the
+    // The page behind the title is a soft purple (#d6c5f3). 3:1 is the
     // standard minimum for large, bold text like her name.
-    expect(contrast(SPECIES[pal].color, '#fde4cf')).toBeGreaterThanOrEqual(3);
+    expect(contrast(SPECIES[pal].color, '#d6c5f3')).toBeGreaterThanOrEqual(3);
   });
 
   it('gives every pal her own name color', () => {
