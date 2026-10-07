@@ -22,7 +22,7 @@ Tap **Who’s That Gal?** on the home page for a quiz on the pals' fun facts, li
 | Pal | Species | Looks |
 |---|---|---|
 | **Sasha** | *Saccharomyces cerevisiae* | Wheat-colored oval yeast with a bud and two bud scars |
-| **Candi** | *Candida albicans* | Pale lilac oval yeast with a bud and two bud scars |
+| **Candi** | *Candida albicans* | Sky-blue oval yeast with a bud and two bud scars |
 
 ## The real science
 
