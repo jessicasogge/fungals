@@ -238,7 +238,7 @@ describe('the pages', () => {
   });
 
   it("the pages don't draw any pals by hand", () => {
-    for (const page of ['index.html', 'pal-picker.html', 'petri-dish.html']) {
+    for (const page of ['index.html', 'pal-picker.html', 'petri-dish.html', 'whos-that-gal.html']) {
       expect(file(page), page).not.toContain('<svg');
     }
   });

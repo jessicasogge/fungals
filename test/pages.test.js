@@ -4,7 +4,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 
 const file = (name) => new URL(`../public/${name}`, import.meta.url);
-const PAGES = ['index.html', 'pal-picker.html', 'petri-dish.html'];
+const PAGES = ['index.html', 'pal-picker.html', 'petri-dish.html', 'whos-that-gal.html'];
 
 describe('tab icon', () => {
   it.each(PAGES)('%s links the icon, with a PNG for browsers without SVG icons', (page) => {
