@@ -79,13 +79,23 @@ describe('search engines and shared links', () => {
     expect(meta(html, 'property', 'og:url')).toBe(address);
   });
 
-  // (No preview picture yet: when there is one, add og:image and switch the
-  // card to summary_large_image, as PetriPals does.)
-  it.each(PAGES)('%s has a title and description when its link is shared', (page) => {
+  it.each(PAGES)('%s shows a picture when its link is shared', (page) => {
     const html = readFileSync(file(page), 'utf8');
+    const image = meta(html, 'property', 'og:image');
+    expect(image.startsWith(SITE)).toBe(true); // apps need the full address
+    expect(existsSync(file(image.slice(SITE.length)))).toBe(true);
+    expect(meta(html, 'property', 'og:image:width')).toBe('1200');
+    expect(meta(html, 'property', 'og:image:height')).toBe('630');
+    expect(meta(html, 'property', 'og:image:alt')).toBeTruthy();
     expect(meta(html, 'property', 'og:title')).toBeTruthy();
     expect(meta(html, 'property', 'og:description')).toBe(meta(html, 'name', 'description'));
-    expect(meta(html, 'name', 'twitter:card')).toBe('summary');
+    expect(meta(html, 'name', 'twitter:card')).toBe('summary_large_image');
+  });
+
+  it('has a link picture the size apps expect (1200 x 630)', () => {
+    const png = readFileSync(file('social-preview.png'));
+    expect(png.readUInt32BE(16)).toBe(1200); // width, from the PNG header
+    expect(png.readUInt32BE(20)).toBe(630); // height
   });
 
   it('lists real pages in the sitemap', () => {
