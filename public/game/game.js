@@ -11,7 +11,7 @@ import { sporeBurst } from './spores.js';
 import { steer, touchSteering } from './touch.js';
 import { track } from './track.js';
 
-// `level` is which level this is (1 to 5) and `target` how many cells it
+// `level` is which level this is (1 to 7) and `target` how many cells it
 // takes to beat it.
 export function playGame(palEl, species, nutrients, disks, { level = 1, target = LEVELS[0].target } = {}) {
   const agar = document.querySelector('.agar');

@@ -90,6 +90,8 @@ export const LEVELS = [
   { disks: 3, target: 16 },
   { disks: 4, target: 32 },
   { disks: 5, target: 64 },
+  { disks: 6, target: 128 },
+  { disks: 7, target: 256 },
 ];
 
 export const GAME = {

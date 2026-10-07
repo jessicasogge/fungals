@@ -11,7 +11,7 @@ A cute mycology game for the browser, and the sister game to [PetriPals](https:/
 3. **Eat nutrients to bud.** Every cell that eats a nutrient buds: a little daughter cell swells out of her side and grows to full size. Daughters stick together in clusters, the way budding yeast does on a plate.
 4. **Don't touch the antifungals.** Touching a disk, or the clear zone of inhibition around it, ends the game. The zones start small and spread outward over the first few seconds, so grab the nutrients near the disks early.
 
-There are five levels. Each one adds another antifungal disk and doubles the colony you need to grow, from 4 cells up to 64.
+There are seven levels. Each one adds another antifungal disk and doubles the colony you need to grow, from 4 cells up to 256. Each pal has five antifungals, so levels 6 and 7 start over from her first drugs.
 
 ### Who’s That Gal?
 
