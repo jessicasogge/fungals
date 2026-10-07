@@ -2,8 +2,8 @@
 // petri dish all draw the pals from here, so a change to how a pal looks
 // only has to be made once.
 //
-// The list is in the order the pals appear on the home page (the picker
-// shuffles them).
+// The home page shows them in its own order (HOME below), and the picker
+// shuffles them.
 // Each pal has:
 //   id      her key, matching SPECIES in config.js and ?pal= in addresses
 //   name    what she's called
@@ -105,8 +105,10 @@ export const PALS = [
   },
 ];
 
-// Both pals fit in the home page's row.
-export const HOME_PALS = PALS;
+// The home page's row, in its own order: Olive in the middle, between
+// Sasha and Candi.
+const HOME = ['sasha', 'olive', 'candi'];
+export const HOME_PALS = HOME.map((id) => PALS.find((pal) => pal.id === id));
 
 // How many pals fit on one page of the picker: four across, two down.
 export const PAGE_SIZE = 8;
