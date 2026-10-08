@@ -175,21 +175,17 @@ export const GAME = {
   ZONE_SPREAD_SECONDS: 20,
   SWIM_ROOM: 0.13, // minimum gap between zones, in dish radii
   // Molds (Fumi) grow as threads (see hypha.js). All lengths are fractions
-  // of the dish radius. Her tip grows HYPHA_SPEED a second and turns at most
-  // HYPHA_TURN radians a second toward where you steer. A wall forms every
-  // SEPTUM along a thread, and each walled compartment is a cell. A branch
-  // sprouts BRANCH_ANGLE off its parent's line and grows BRANCH_LENGTH at
-  // BRANCH_SPEED (half as far again each time it eats). Threads are
-  // HYPHA_WIDTH thick, her tip TIP_SIZE across, and they stop at HYPHA_RIM.
-  // A new point goes on a thread's path every HYPHA_POINT.
-  HYPHA_SPEED: 0.2,
-  HYPHA_TURN: 2.6,
-  SEPTUM: 0.1,
+  // of the dish radius. She swims like the yeasts and leaves a thread
+  // HYPHA_WIDTH thick behind her tip, which is TIP_SIZE across. Each time a
+  // tip eats, a wall makes one more cell; when she eats, a branch also
+  // sprouts BRANCH_ANGLE off her thread and grows BRANCH_LENGTH at
+  // BRANCH_SPEED, stopping at HYPHA_RIM. A new point goes on a thread every
+  // HYPHA_POINT.
+  HYPHA_WIDTH: 0.06,
+  TIP_SIZE: 0.1,
   BRANCH_ANGLE: Math.PI / 4,
-  BRANCH_LENGTH: 0.3,
-  BRANCH_SPEED: 0.14,
-  HYPHA_WIDTH: 0.04,
-  TIP_SIZE: 0.075,
+  BRANCH_LENGTH: 0.14,
+  BRANCH_SPEED: 0.1,
   HYPHA_RIM: 0.93,
   HYPHA_POINT: 0.012,
 };

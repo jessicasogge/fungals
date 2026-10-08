@@ -2,16 +2,18 @@ import { GAME } from './config.js';
 import { newMover } from './mover.js';
 
 // A mold (Fumi) grows as threads called hyphae instead of budding. The player
-// is a growing hyphal tip: she always grows forward, and steering turns her.
-// Walls (septa) form along her thread every GAME.SEPTUM of the dish radius,
-// and each walled compartment counts as one cell. Eating sprouts a branch
-// about 45 degrees off her line; each branch is an offspring group that grows
-// a short way on its own, eats, and branches again. A branch that grows into
-// an antifungal zone stops there (see stopInZone); the thread behind it stays.
+// swims like the yeasts do, but leaves a thread behind her. Each nutrient
+// she eats puts a wall (a septum) across her thread right where she ate, and
+// each wall makes one more cell, the same pace as a yeast budding. Eating
+// also sprouts a branch from that spot, about 45 degrees off the way she was
+// going. A branch is an offspring group: it grows a short way on its own,
+// and when it eats it gets a wall (a cell) too, but no branch. A branch that
+// grows into an antifungal zone stops there (see stopInZone); the thread
+// behind it stays.
 //
 // The threads are drawn on one canvas under everything else on the agar
 // (see threadLayer); each group's mover only shows its tip.
-export function hyphaGroup({ mover, svg, species, isPlayer, start = [0, 0], angle = -Math.PI / 2 }) {
+export function hyphaGroup({ mover, svg, species, isPlayer, start = [0, 0], angle = 0 }) {
   const { colors } = species;
   const layer = threadLayer(mover.parentElement, colors);
   const dishRadius = () => (mover.parentElement?.clientWidth ?? 0) / 2;
@@ -26,18 +28,20 @@ export function hyphaGroup({ mover, svg, species, isPlayer, start = [0, 0], angl
     vy: 0,
     facing: 1,
     angle, // which way the tip is heading, in radians
-    want: null, // which way the player wants to turn, or null
-    // The thread, as fixed points in fractions of the dish radius; the tip
-    // itself is always the live end.
+    // The thread, as points in fractions of the dish radius; the tip itself
+    // is always the live end.
     path: [start],
     tip: [...start],
-    length: 0, // how long the thread is, in fractions of the dish radius
-    // A branch grows this much farther (more when it eats); the player never
-    // runs out.
-    budget: isPlayer ? Infinity : GAME.BRANCH_LENGTH,
-    stopped: false, // grew into a zone, ran into the rim, or the level ended
+    // Walls across the thread, each [x, y, angle]: where, and which way the
+    // thread ran there. Each one is a cell.
+    walls: [],
+    // A branch grows this much farther, in fractions of the dish radius.
+    budget: isPlayer ? 0 : GAME.BRANCH_LENGTH,
+    stopped: false, // grew into a zone or the rim, or the level ended
     side: 1, // which side the next branch sprouts on
-    cellCount: () => 1 + Math.floor(group.length / GAME.SEPTUM),
+    // The player starts as one cell, the spore; a branch is part of the
+    // cell it grew from until it gets a wall of its own.
+    cellCount: () => (isPlayer ? 1 : 0) + group.walls.length,
     coast() {}, // threads don't slide
   };
   layer.add(group);
@@ -50,56 +54,46 @@ export function hyphaGroup({ mover, svg, species, isPlayer, start = [0, 0], angl
       `<circle cx="3.6" cy="-1" r="1.8" fill="${colors.dark}" />` +
       `<path d="M-2 3 Q0 5 2 3" stroke="${colors.dark}" stroke-width="1.2" fill="none" stroke-linecap="round" />`
     : '');
-  mover.style.width = `${(isPlayer ? GAME.TIP_SIZE : GAME.HYPHA_WIDTH) * 50}%`;
+  if (isPlayer) svg.style.animation = 'none'; // her tip stays on the end of her thread
+  const size = isPlayer ? GAME.TIP_SIZE : GAME.HYPHA_WIDTH;
+  mover.style.width = `${size * 50}%`;
 
-  function grow(seconds) {
-    if (group.want !== null) {
-      const turn = Math.atan2(Math.sin(group.want - group.angle), Math.cos(group.want - group.angle));
-      const most = GAME.HYPHA_TURN * seconds;
-      group.angle += Math.max(-most, Math.min(most, turn));
-    }
-    const speed = isPlayer ? GAME.HYPHA_SPEED : GAME.BRANCH_SPEED;
-    const step = Math.min(speed * seconds, group.budget);
-    let nx = group.tip[0] + Math.cos(group.angle) * step;
-    let ny = group.tip[1] + Math.sin(group.angle) * step;
-    const fromCenter = Math.hypot(nx, ny);
-    if (fromCenter > GAME.HYPHA_RIM) {
-      // A branch stops at the rim; the player slides along it instead.
-      if (!isPlayer) {
-        group.stopped = true;
-        return;
-      }
-      const out = Math.atan2(ny, nx);
-      const along = out + (Math.sin(group.angle - out) >= 0 ? Math.PI / 2 : -Math.PI / 2);
-      group.angle = along;
-      nx = (nx / fromCenter) * GAME.HYPHA_RIM;
-      ny = (ny / fromCenter) * GAME.HYPHA_RIM;
-    }
-    const moved = Math.hypot(nx - group.tip[0], ny - group.tip[1]);
-    group.tip = [nx, ny];
-    group.length += moved;
-    group.budget -= moved;
+  // Add the tip to the thread once it's far enough from the last point.
+  function extend([x, y]) {
+    if (x !== group.tip[0] || y !== group.tip[1]) group.angle = Math.atan2(y - group.tip[1], x - group.tip[0]);
+    group.tip = [x, y];
     const [lx, ly] = group.path.at(-1);
-    if (Math.hypot(nx - lx, ny - ly) > GAME.HYPHA_POINT) group.path.push([nx, ny]);
+    if (Math.hypot(x - lx, y - ly) > GAME.HYPHA_POINT) group.path.push([x, y]);
+  }
+
+  // A branch grows on its own, straight ahead, until it runs out of length
+  // or reaches the rim.
+  function grow(seconds) {
+    const step = Math.min(GAME.BRANCH_SPEED * seconds, group.budget);
+    const nx = group.tip[0] + Math.cos(group.angle) * step;
+    const ny = group.tip[1] + Math.sin(group.angle) * step;
+    if (Math.hypot(nx, ny) > GAME.HYPHA_RIM) {
+      group.stopped = true;
+      return;
+    }
+    group.budget -= step;
+    extend([nx, ny]);
   }
 
   Object.assign(group, {
-    reach: () => 0, // nothing pushes against a thread
-    // Steer toward this direction: arrow keys [dx, dy], a mouse held on the
-    // dish (a spot in px from the dish center), or a finger dragging that
-    // way ([dx, dy] in px). With none of them, she keeps growing straight.
-    steer([dx, dy], finger, dragged = [0, 0]) {
-      if (dx !== 0 || dy !== 0) group.want = Math.atan2(dy, dx);
-      else if (dragged[0] !== 0 || dragged[1] !== 0) group.want = Math.atan2(dragged[1], dragged[0]);
-      else if (finger) group.want = Math.atan2(finger[1] - group.y, finger[0] - group.x);
-      else group.want = null;
-    },
+    // The player's tip is kept inside the dish like a yeast; nothing pushes
+    // against a branch.
+    reach: () => (isPlayer ? (size / 2) * dishRadius() : 0),
     update(seconds) {
-      if (!group.stopped && !layer.frozen && group.budget > 0 && seconds > 0) grow(seconds);
-      // Positions are kept as fractions of the dish, so they follow a resize.
       const radius = dishRadius();
+      if (isPlayer) {
+        // She swims (game.js moves her); her thread follows.
+        if (radius > 0) extend([group.x / radius, group.y / radius]);
+        layer.draw();
+        return;
+      }
+      if (!group.stopped && !layer.frozen && group.budget > 0 && seconds > 0) grow(seconds);
       [group.x, group.y] = [group.tip[0] * radius, group.tip[1] * radius];
-      if (isPlayer) layer.draw();
     },
     place() {
       mover.style.transform = `translate(${group.x}px, ${group.y}px)`;
@@ -107,9 +101,8 @@ export function hyphaGroup({ mover, svg, species, isPlayer, start = [0, 0], angl
     // The tip, which is what eats, and what touches a zone. A branch that
     // stopped in a zone has nothing left to touch.
     body() {
-      if (group.stopped && group.inZone) return [];
-      const r = ((isPlayer ? GAME.TIP_SIZE : GAME.HYPHA_WIDTH) / 2) * dishRadius();
-      return [[group.x, group.y, r]];
+      if (group.inZone) return [];
+      return [[group.x, group.y, (size / 2) * dishRadius()]];
     },
     // A branch that grows into a zone stops right there, and its tip grays.
     stopInZone() {
@@ -117,16 +110,19 @@ export function hyphaGroup({ mover, svg, species, isPlayer, start = [0, 0], angl
       group.inZone = true;
       mover.classList.add('stopped');
     },
-    // When the level ends, every thread stops growing.
+    // When the level ends, every branch stops growing.
     freeze() {
       layer.frozen = true;
     },
-    // Eating sprouts a branch a little behind the tip, about 45 degrees off
-    // its line, on alternating sides. A branch that eats also gets to grow
-    // farther. Returns the new branch.
+    // Eating: a wall forms across the thread right where the tip is (one
+    // more cell, with a "+1" to show it). When she eats, a branch also
+    // sprouts from the same spot, about 45 degrees off the way she was going,
+    // on alternating sides. Returns the new branch, or null for a branch,
+    // which only gets the wall (so the pace stays close to the yeasts').
     divide() {
-      if (!isPlayer) group.budget = Math.max(group.budget, 0) + GAME.BRANCH_LENGTH / 2;
-      const from = group.path[Math.max(0, group.path.length - 3)];
+      group.walls.push([...group.tip, group.angle]);
+      showPlusOne(mover.parentElement, group.tip);
+      if (!isPlayer) return null;
       group.side = -group.side;
       const copy = svg.cloneNode(false);
       return hyphaGroup({
@@ -134,19 +130,34 @@ export function hyphaGroup({ mover, svg, species, isPlayer, start = [0, 0], angl
         svg: copy,
         species,
         isPlayer: false,
-        start: [...from],
+        start: [...group.tip],
         angle: group.angle + group.side * GAME.BRANCH_ANGLE,
       });
     },
   });
 
-  if (isPlayer) svg.style.animation = 'none'; // her tip stays on the end of her thread
-  group.update(0);
+  [group.x, group.y] = [start[0] * dishRadius(), start[1] * dishRadius()];
   return group;
 }
 
+// A "+1" that floats up from a new wall and fades (see .cell-plus in
+// styles.css). `at` is in fractions of the dish radius.
+export function showPlusOne(agar, [x, y]) {
+  if (!agar) return;
+  const plus = document.createElement('span');
+  plus.className = 'cell-plus';
+  plus.textContent = '+1';
+  plus.setAttribute('aria-hidden', 'true');
+  plus.style.left = `${50 + x * 50}%`;
+  plus.style.top = `${50 + y * 50}%`;
+  agar.append(plus);
+  const remove = () => plus.remove();
+  plus.addEventListener('animationend', remove);
+  setTimeout(remove, 1500); // in case the animation never runs
+}
+
 // One canvas per dish that draws every thread: a dark tube with a light
-// core, and a wall across it every GAME.SEPTUM.
+// core, and a bold bar across it for each wall.
 const layers = new WeakMap();
 export function threadLayer(agar, colors) {
   if (layers.has(agar)) return layers.get(agar);
@@ -194,17 +205,20 @@ export function threadLayer(agar, colors) {
       groups.forEach((g, i) => {
         trace(lines[i]);
         ctx.strokeStyle = g.inZone ? '#e5e7eb' : colors.fill;
-        ctx.lineWidth = width * 0.5;
+        ctx.lineWidth = width * 0.55;
         ctx.stroke();
       });
+      // Each wall: a bold bar straight across the thread.
       ctx.strokeStyle = colors.stroke;
-      ctx.lineWidth = Math.max(1, width * 0.18);
-      for (const line of lines) {
-        for (const [x, y, nx, ny] of septa(line)) {
-          const w = GAME.HYPHA_WIDTH * 0.45;
+      ctx.lineWidth = Math.max(2, width * 0.3);
+      ctx.lineCap = 'butt';
+      for (const g of groups) {
+        for (const [x, y, angle] of g.walls) {
+          const reach = GAME.HYPHA_WIDTH * 0.6;
+          const [nx, ny] = [-Math.sin(angle) * reach, Math.cos(angle) * reach];
           ctx.beginPath();
-          ctx.moveTo(...at([x + nx * w, y + ny * w]));
-          ctx.lineTo(...at([x - nx * w, y - ny * w]));
+          ctx.moveTo(...at([x + nx, y + ny]));
+          ctx.lineTo(...at([x - nx, y - ny]));
           ctx.stroke();
         }
       }
@@ -212,26 +226,4 @@ export function threadLayer(agar, colors) {
   };
   layers.set(agar, layer);
   return layer;
-}
-
-// Where the walls go along a thread (points in fractions of the dish radius):
-// one every GAME.SEPTUM from its start, each as [x, y, nx, ny], the spot and
-// the direction across the thread.
-export function septa(line) {
-  const walls = [];
-  let along = 0;
-  let next = GAME.SEPTUM;
-  for (let i = 1; i < line.length; i++) {
-    const [ax, ay] = line[i - 1];
-    const [bx, by] = line[i];
-    const length = Math.hypot(bx - ax, by - ay);
-    if (length === 0) continue;
-    while (along + length >= next) {
-      const t = (next - along) / length;
-      walls.push([ax + (bx - ax) * t, ay + (by - ay) * t, -(by - ay) / length, (bx - ax) / length]);
-      next += GAME.SEPTUM;
-    }
-    along += length;
-  }
-  return walls;
 }

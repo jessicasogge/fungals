@@ -22,7 +22,7 @@ export function playGame(palEl, species, nutrients, disks, { level = 1, target =
   // The player's pal leads the colony.
   const playerMover = document.querySelector('.pal-mover');
   playerMover.classList.add('player');
-  // Yeasts bud; a mold (Fumi) grows threads from a tip you steer.
+  // Yeasts bud; a mold (Fumi) leaves a thread and grows walls and branches.
   const makeGroup = species.kind === 'mold' ? hyphaGroup : yeastGroup;
   const player = makeGroup({ mover: playerMover, svg: palEl, species, isPlayer: true });
   const colony = makeColony({
@@ -69,19 +69,14 @@ export function playGame(palEl, species, nutrients, disks, { level = 1, target =
       spreadZones(disks, elapsed);
     }
 
-    // Steer the player's pal. A growing tip turns toward where you steer
-    // instead of swimming there.
-    if (!finished && player.steer) {
-      player.steer(keys.direction(), touch.target(), touch.drag());
-    } else if (!finished) {
+    // Steer the player's pal.
+    if (!finished) {
       steer(player, keys.direction(), touch.target(), GAME.SPEED * radius * seconds, GAME.ARRIVE * radius,
         touch.drag(), GAME.DRAG_SPEED * radius * seconds);
     }
 
     colony.tick(seconds);
     moveGroups(colony.groups, { agar, radius, seconds });
-    // Threads grow cells as they go, not just when a cell divides.
-    if (!finished) updateCounter();
     // Offspring that wander into an antifungal zone pop.
     if (!finished) colony.popInZones(radius);
 
@@ -90,7 +85,7 @@ export function playGame(palEl, species, nutrients, disks, { level = 1, target =
     const hit = finished ? null : touchedDisk(disks, player.body(), radius);
     if (hit) {
       finished = true;
-      player.freeze?.(); // a mold's threads stop growing
+      player.freeze?.(); // a mold's branches stop growing
       keys.stop();
       touch.stop();
       nutrients.stop();
@@ -106,7 +101,7 @@ export function playGame(palEl, species, nutrients, disks, { level = 1, target =
         // disk can't be touched after winning. The pop-up waits only until
         // the newest cell has finished sliding into place.
         finished = true;
-      player.freeze?.(); // a mold's threads stop growing
+      player.freeze?.(); // a mold's branches stop growing
         keys.stop();
         touch.stop();
         nutrients.stop();

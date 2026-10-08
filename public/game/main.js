@@ -51,7 +51,9 @@ function start() {
   playGame(pal, species, nutrients, disks, { level: levelNumber, target: level.target });
 }
 
-// A mold grows threads from a tip you steer, so her directions say so.
+// A mold leaves a thread and grows walls instead of budding, so her
+// directions say so. On level 1 a card explains it once, until she moves or
+// the card is closed.
 function moldDirections() {
   const span = (className, text) => {
     const el = document.createElement('span');
@@ -62,12 +64,31 @@ function moldDirections() {
   const target = document.createElement('span');
   target.className = 'target-cells';
   document.querySelector('.how-to-play').replaceChildren(
-    span('for-keys', 'Use the arrow keys to steer her growing tip.'),
-    span('for-touch', 'Touch the dish and slide your finger the way her tip should grow.'),
-    ' She never stops growing! Every wall along her threads is a cell: grow to ',
+    span('for-keys', 'Use the arrow keys to swim.'),
+    span('for-touch', 'Touch the dish and slide your finger to swim.'),
+    ' Fumi leaves a thread behind her. Each nutrient she eats adds a wall to her thread, and each wall is a cell: grow to ',
     target,
     ' cells.',
     document.createElement('br'),
-    "Eating a nutrient sprouts a branch. Don't let her tip touch the antifungal disks or the clear zones around them, and watch out: the zones spread as the drug soaks into the agar!",
+    "Eating also sprouts a branch, which can eat too. Don't touch the antifungal disks or the clear zones around them, and watch out: the zones spread as the drug soaks into the agar!",
   );
+  if (levelNumber !== 1) return;
+  const card = document.createElement('div');
+  card.className = 'mold-hint';
+  card.setAttribute('role', 'note');
+  const text = document.createElement('p');
+  text.textContent = "Fumi is a mold: she grows like a thread instead of budding. Each nutrient adds a wall to her thread, and each wall is a cell.";
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'pick-btn';
+  button.textContent = 'Got it';
+  card.append(text, button);
+  const dish = document.querySelector('.petri-dish');
+  dish.append(card);
+  const close = () => card.remove();
+  button.addEventListener('click', close);
+  dish.addEventListener('pointerdown', close, { once: true });
+  window.addEventListener('keydown', (event) => {
+    if (event.key.startsWith('Arrow')) close();
+  });
 }

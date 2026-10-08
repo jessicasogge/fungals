@@ -19,9 +19,9 @@ vi.mock('../public/game/colony.js', () => ({
   moveGroups: vi.fn(),
 }));
 vi.mock('../public/game/yeast.js', () => ({ yeastGroup: vi.fn(() => ({ body: () => [[0, 0, 5]] })) }));
-// A stand-in for a mold's growing tip (Fumi), which steers itself.
+// A stand-in for a mold (Fumi), whose branches stop when the level ends.
 vi.mock('../public/game/hypha.js', () => ({
-  hyphaGroup: vi.fn(() => ({ body: () => [[0, 0, 5]], steer: vi.fn(), freeze: vi.fn() })),
+  hyphaGroup: vi.fn(() => ({ body: () => [[0, 0, 5]], freeze: vi.fn() })),
 }));
 vi.mock('../public/game/keyboard.js', () => ({
   arrowKeys: vi.fn(() => ({ direction: () => [0, 0], stop: vi.fn() })),
@@ -358,41 +358,29 @@ describe('spreading zones', () => {
 });
 
 describe('a mold (Fumi)', () => {
-  it('plays as a growing tip, not a budding cell', () => {
+  it('plays as a thread, not a budding cell', () => {
     start({ pal: 'fumi' });
     expect(hyphaGroup).toHaveBeenCalledTimes(1);
     expect(yeastGroup).not.toHaveBeenCalled();
   });
 
-  it('turns her tip toward where you steer, instead of swimming there', () => {
+  it('swims like the yeasts', () => {
     start({ pal: 'fumi' });
     frame();
-    const tip = hyphaGroup.mock.results[0].value;
-    expect(tip.steer).toHaveBeenCalledWith([0, 0], null, [0, 0]);
-    expect(steer).not.toHaveBeenCalled();
+    expect(steer).toHaveBeenCalledTimes(1);
   });
 
-  it('updates the cell counter as her threads grow, between divisions', () => {
-    start({ pal: 'fumi', level: 2 });
-    fake.colony.setCells(3);
-    frame();
-    expect(document.querySelector('.cell-count').textContent).toBe('Level 2 · 3 / 8 cells');
-  });
-
-  it('stops her threads growing when the level is won', () => {
+  it('stops her branches growing when the level is won', () => {
     start({ pal: 'fumi' });
     fake.colony.setCells(4);
     frame();
     expect(hyphaGroup.mock.results[0].value.freeze).toHaveBeenCalled();
   });
 
-  it('stops her threads growing on a game over', () => {
+  it('stops her branches growing on a game over', () => {
     start({ pal: 'fumi' });
     fake.hit = disk(0.05);
     frame();
-    const tip = hyphaGroup.mock.results[0].value;
-    expect(tip.freeze).toHaveBeenCalled();
-    frame();
-    expect(tip.steer).toHaveBeenCalledTimes(1); // no more steering after it's over
+    expect(hyphaGroup.mock.results[0].value.freeze).toHaveBeenCalled();
   });
 });
