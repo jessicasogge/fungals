@@ -64,9 +64,9 @@ function moldDirections() {
   const target = document.createElement('span');
   target.className = 'target-cells';
   document.querySelector('.how-to-play').replaceChildren(
-    span('for-keys', 'Fumi is a mold: she grows instead of swimming. Steer her growing tip with the arrow keys, and press Space to branch.'),
-    span('for-touch', 'Fumi is a mold: she grows instead of swimming. Slide your finger to steer her growing tip, and tap Branch to branch.'),
-    ' Nutrients that touch any part of her feed her growth (she needs some stored to branch), and her threads add cells as they grow: grow to ',
+    span('for-keys', 'Fumi is a mold: she grows instead of swimming. Hold the arrow keys to grow her tip that way, and press Space to branch.'),
+    span('for-touch', 'Fumi is a mold: she grows instead of swimming. Slide your finger to grow her tip that way, and tap Branch to branch.'),
+    ' Nutrients that touch any part of her feed all her tips, so her branches grow on their own, and her threads add cells as they grow: grow to ',
     target,
     ' cells.',
     document.createElement('br'),

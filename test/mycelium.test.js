@@ -100,26 +100,31 @@ describe('the canvas', () => {
     expect(canvas.getAttribute('aria-hidden')).toBe('true');
   });
 
-  it('draws each thread fuzzy, then its tube and core, its walls, and a gray dot for a dead tip', () => {
+  it('draws each thread fuzzy, then its tube and core, its walls, and a bud or a gray dot at each branch tip', () => {
     const agar = dish();
     const canvas = myceliumCanvas(agar);
     const { ctx, calls } = fakeContext();
     vi.spyOn(canvas, 'getContext').mockReturnValue(ctx);
     const mold = makeMold({ angle: 0 });
     mold.growth = 10;
-    for (let i = 0; i < 40; i++) mold.update(0.02);
+    for (let i = 0; i < 40; i++) mold.update(0.02, 0);
     const branch = mold.branch();
-    for (let i = 0; i < 20; i++) mold.update(0.02);
+    for (let i = 0; i < 20; i++) mold.update(0.02, 0);
     mold.kill(branch);
+    for (let i = 0; i < 20; i++) mold.update(0.02, 0);
+    mold.branch(); // a new bud, not grown yet
     drawMycelium(canvas, agar, mold, SPECIES.fumi.colors);
     expect(canvas.width).toBe(400 * Math.min(2, window.devicePixelRatio || 1));
-    // two threads: a haze, hairs, a tube and a core each; then all the walls
-    expect(calls.filter(([name]) => name === 'stroke')).toHaveLength(9);
+    // three threads: a haze, hairs, a tube and a core each; then all the
+    // walls, then the live bud's outline
+    expect(calls.filter(([name]) => name === 'stroke')).toHaveLength(14);
     expect(calls.filter(([name]) => name === 'quadraticCurveTo').length).toBeGreaterThan(0);
     const styles = calls.filter(([name]) => name === 'set strokeStyle').map(([, v]) => v);
     expect(styles).toContain(SPECIES.fumi.colors.fill);
     expect(styles).toContain('#e5e7eb'); // the dead branch's core
-    expect(calls.filter(([name]) => name === 'fill')).toHaveLength(1); // one dead tip
+    expect(calls.filter(([name]) => name === 'fill')).toHaveLength(2); // the dead tip and the new bud
+    const fills = calls.filter(([name]) => name === 'set fillStyle').map(([, v]) => v);
+    expect(fills).toEqual(['#9ca3af', SPECIES.fumi.colors.fill]);
     calls.length = 0;
     drawMycelium(canvas, agar, mold, SPECIES.fumi.colors); // same size: no resize
     expect(calls.filter(([name]) => name === 'set width')).toHaveLength(0);

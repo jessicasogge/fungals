@@ -1,6 +1,6 @@
 // Fumi's game: she's a mold, so instead of swimming and budding she grows
-// (see mold.js). Steer her lead tip with the arrow keys or a finger, and
-// branch with Space or the Branch button. Grow to the level's number of
+// (see mold.js). Her lead tip grows while you steer it with the arrow keys
+// or a finger, and Space or the Branch button branches. Grow to the level's number of
 // cells; a tip that touches an antifungal zone dies, and the game is over
 // when every tip has.
 import { spreadZones, touchedDisk } from './antifungal.js';
@@ -19,13 +19,16 @@ export function moldMessage(name, disk) {
   return `${name}'s last growing tip touched the ${drug} disk. She's resistant to ${drug}, so it has no zone, but the disk still counts!`;
 }
 
-// Which way to steer, in radians, or null to keep going: the arrow keys win
-// if any are held; otherwise the way a dragging finger moved; otherwise
-// toward a held-down mouse (`target`, px from the dish center).
+// Which way to steer, in radians, or null when she isn't being steered (and
+// so doesn't grow): the arrow keys win if any are held; otherwise the way a
+// dragging finger moved; otherwise toward a held-down mouse (`target`, px
+// from the dish center), until her tip gets there.
 export function steerAngle([dx, dy], dragged, target, tip) {
   if (dx !== 0 || dy !== 0) return Math.atan2(dy, dx);
   if (Math.hypot(...dragged) > 0.5) return Math.atan2(dragged[1], dragged[0]);
-  if (target) return Math.atan2(target[1] - tip[1], target[0] - tip[0]);
+  if (target && Math.hypot(target[0] - tip[0], target[1] - tip[1]) > 2) {
+    return Math.atan2(target[1] - tip[1], target[0] - tip[0]);
+  }
   return null;
 }
 
@@ -121,7 +124,6 @@ export function playMold(palEl, species, nutrients, disks, { level = 1, target =
       }
 
       updateCounter();
-      button.disabled = !mold.canBranch(); // grayed out until she's eaten
       if (!mold.alive()) {
         finish();
         face.classList.add('killed');

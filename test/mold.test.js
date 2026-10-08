@@ -8,6 +8,8 @@ import { makeMold } from '../public/game/mold.js';
 const M = GAME.MOLD;
 const close = (a, b) => expect(a).toBeCloseTo(b, 6);
 const UP = -Math.PI / 2;
+// Steer her straight on, the way she's already heading, for `seconds`.
+const go = (mold, seconds) => mold.update(seconds, mold.lead.angle);
 
 describe('Fumi, a growing mold', () => {
   it('starts as one cell, a spore in the middle, with one tip heading up', () => {
@@ -22,7 +24,7 @@ describe('Fumi, a growing mold', () => {
 
   it('grows her lead tip straight ahead, using up stored growth', () => {
     const mold = makeMold({ angle: 0 });
-    mold.update(0.1);
+    go(mold, 0.1);
     close(mold.lead.tip[0], M.TIP_SPEED * 0.1);
     close(mold.lead.length, M.TIP_SPEED * 0.1);
     close(mold.growth, M.START_GROWTH - M.TIP_SPEED * 0.1);
@@ -31,14 +33,29 @@ describe('Fumi, a growing mold', () => {
   it('only creeps, slowly, once her stored growth is used up', () => {
     const mold = makeMold({ angle: 0 });
     mold.growth = 0;
-    mold.update(1);
+    go(mold, 1);
     close(mold.lead.tip[0], M.CREEP_SPEED);
     expect(mold.growth).toBe(0);
   });
 
+  it("doesn't grow her lead tip on its own: only while she's steered", () => {
+    const mold = makeMold();
+    mold.update(1);
+    expect(mold.lead.tip).toEqual([0, 0]);
+    expect(mold.growth).toBe(M.START_GROWTH); // and saves her stored growth
+  });
+
+  it('keeps growing her branches on their own while she has stored growth', () => {
+    const mold = makeMold({ angle: 0 });
+    const branch = mold.branch();
+    mold.update(0.1);
+    close(branch.length, M.TIP_SPEED * 0.1);
+    expect(mold.lead.length).toBe(0);
+  });
+
   it("doesn't grow on a frame with no time in it", () => {
     const mold = makeMold();
-    mold.update(0);
+    go(mold, 0);
     expect(mold.lead.tip).toEqual([0, 0]);
   });
 
@@ -47,14 +64,14 @@ describe('Fumi, a growing mold', () => {
     mold.growth = 10;
     // Grow a little past 3 cells' worth, in small steps.
     const seconds = (M.CELL_LENGTH * 3.2) / M.TIP_SPEED;
-    for (let i = 0; i < 100; i++) mold.update(seconds / 100);
+    for (let i = 0; i < 100; i++) go(mold, seconds / 100);
     expect(mold.cellCount()).toBe(4);
   });
 
   it('keeps points along her thread, spaced out', () => {
     const mold = makeMold({ angle: 0 });
     mold.growth = 10;
-    for (let i = 0; i < 50; i++) mold.update(0.01);
+    for (let i = 0; i < 50; i++) go(mold, 0.01);
     const { path } = mold.lead;
     expect(path.length).toBeGreaterThan(5);
     for (let i = 1; i < path.length; i++) {
@@ -83,7 +100,7 @@ describe('steering', () => {
   it('slides her lead tip along the rim instead of growing past it', () => {
     const mold = makeMold({ start: [M.RIM - 0.01, 0], angle: 0 });
     mold.growth = 10;
-    for (let i = 0; i < 20; i++) mold.update(0.05);
+    for (let i = 0; i < 20; i++) go(mold, 0.05);
     expect(Math.hypot(...mold.lead.tip)).toBeLessThanOrEqual(M.RIM + 1e-9);
     expect(mold.lead.length).toBeGreaterThan(0.2); // kept growing, around the rim
   });
@@ -91,11 +108,11 @@ describe('steering', () => {
   it('slides along the rim whichever way she was heading', () => {
     const mold = makeMold({ start: [M.RIM - 0.01, 0], angle: 0.3 });
     mold.growth = 10;
-    mold.update(0.1);
+    go(mold, 0.1);
     expect(Math.sin(mold.lead.angle)).toBeGreaterThan(0); // around clockwise (down on screen)
     const other = makeMold({ start: [M.RIM - 0.01, 0], angle: -0.3 });
     other.growth = 10;
-    other.update(0.1);
+    go(other, 0.1);
     expect(Math.sin(other.lead.angle)).toBeLessThan(0);
   });
 });
@@ -104,11 +121,11 @@ describe('branching', () => {
   it('sprouts a new tip from her lead, about 45 degrees off, on alternating sides', () => {
     const mold = makeMold({ angle: 0 });
     mold.growth = 10;
-    mold.update(0.1);
+    go(mold, 0.1);
     const a = mold.branch();
     expect(a.tip).toEqual(mold.lead.tip);
     close(Math.abs(a.angle), M.BRANCH_ANGLE);
-    mold.update(M.BRANCH_COOLDOWN);
+    go(mold, M.BRANCH_COOLDOWN);
     const b = mold.branch();
     close(a.angle, -b.angle);
     expect(mold.threads).toHaveLength(3);
@@ -125,7 +142,7 @@ describe('branching', () => {
     const mold = makeMold({ angle: 0 });
     mold.growth = 1;
     mold.branch();
-    mold.update(0.1);
+    go(mold, 0.1);
     close(mold.growth, 1 - 2 * M.TIP_SPEED * 0.1);
     close(mold.threads[1].length, M.TIP_SPEED * 0.1);
   });
@@ -134,18 +151,22 @@ describe('branching', () => {
     const mold = makeMold({ angle: 0 });
     mold.growth = 0.01;
     mold.branch();
-    mold.update(1);
+    go(mold, 1);
     close(mold.threads[1].length, 0.005);
     expect(mold.growth).toBe(0);
   });
 
-  it("can't branch with no stored growth to grow the new tip", () => {
+  it('can branch any time, even with nothing stored; the new tip waits to be fed', () => {
     const mold = makeMold();
     mold.growth = 0;
-    expect(mold.canBranch()).toBe(false);
-    expect(mold.branch()).toBeNull();
-    mold.feed(1);
     expect(mold.canBranch()).toBe(true);
+    const branch = mold.branch();
+    expect(branch).not.toBeNull();
+    go(mold, 1);
+    expect(branch.length).toBe(0);
+    mold.feed(1);
+    mold.update(0.1);
+    expect(branch.length).toBeGreaterThan(0);
   });
 
   it('stops a branch at the rim', () => {
@@ -153,7 +174,7 @@ describe('branching', () => {
     mold.growth = 10;
     const branch = mold.branch();
     branch.angle = 0; // straight at the rim
-    mold.update(0.1);
+    go(mold, 0.1);
     expect(branch.stopped).toBe(true);
     expect(mold.growing()).not.toContain(branch);
   });
@@ -188,7 +209,7 @@ describe('antifungals', () => {
     mold.growth = 10;
     const first = mold.lead;
     const a = mold.branch();
-    mold.update(M.BRANCH_COOLDOWN);
+    go(mold, M.BRANCH_COOLDOWN);
     const b = mold.branch();
     b.stopped = true; // it had reached the rim
     mold.kill(first);
@@ -203,7 +224,7 @@ describe('antifungals', () => {
     mold.kill(mold.lead);
     expect(mold.alive()).toBe(false);
     expect(mold.branch()).toBeNull();
-    mold.update(1);
+    go(mold, 1);
     expect(mold.lead.length).toBe(0);
   });
 });

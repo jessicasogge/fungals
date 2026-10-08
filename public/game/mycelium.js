@@ -1,7 +1,7 @@
 // Draws a mold's threads (see mold.js) on one canvas under everything else
 // on the agar: a soft fuzzy haze with fine hairs, a dark tube with a light
-// core, and a wall across the thread at every cell. A dead tip's thread is
-// grayed. Her face rides her lead tip separately, as a page element (see
+// core, a wall across the thread at every cell, and a bud on each branch
+// tip. A dead tip's thread is grayed. Her face rides her lead tip separately, as a page element (see
 // mold-game.js).
 import { GAME } from './config.js';
 
@@ -178,12 +178,16 @@ export function drawMycelium(canvas, agar, mold, colors) {
   });
   ctx.stroke();
 
-  // A dead tip: a gray dot where it stopped.
-  ctx.fillStyle = '#9ca3af';
+  // Each branch tip: a little bud, so a new branch shows right away, even
+  // before it grows; a dead tip is a gray dot where it stopped. (Her lead tip
+  // has her face instead.)
+  ctx.lineWidth = Math.max(1, width * 0.3);
   for (const thread of mold.threads) {
-    if (thread.alive) continue;
+    if (thread === mold.lead) continue;
     ctx.beginPath();
     ctx.arc(...at(thread.tip), width * 0.9, 0, Math.PI * 2);
+    ctx.fillStyle = thread.alive ? colors.fill : '#9ca3af';
     ctx.fill();
+    if (thread.alive) ctx.stroke();
   }
 }

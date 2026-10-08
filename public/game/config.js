@@ -180,11 +180,11 @@ export const GAME = {
     TIP_SPEED: 0.3, // how fast each tip grows while she has stored growth
     CREEP_SPEED: 0.1, // how fast her lead tip grows with none stored
     START_GROWTH: 0.05, // stored growth she starts with
-    NUTRIENT_GROWTH: 0.1, // stored growth from each nutrient, for each growing tip
+    NUTRIENT_GROWTH: 0.07, // stored growth from each nutrient, for each growing tip
     CELL_LENGTH: 0.1, // each this much of thread is one more cell
     TURN: 0.12, // the radius of her tightest turn, so she never makes corners
     BRANCH_ANGLE: Math.PI / 4, // branches sprout about 45 degrees off
-    BRANCH_COOLDOWN: 0.6, // seconds between branches
+    BRANCH_COOLDOWN: 0.25, // seconds between branches
     RIM: 0.94, // tips can't grow past this far from the center
     WIDTH: 0.02, // how thick a thread is drawn
     TIP_SIZE: 0.1, // her face, on her lead tip

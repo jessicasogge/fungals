@@ -102,8 +102,9 @@ describe('steering', () => {
     expect(steerAngle([0, 0], [0.1, 0.1], null, [0, 0])).toBeNull();
   });
 
-  it('then toward a held-down mouse, or else straight on', () => {
+  it('then toward a held-down mouse until her tip gets there, or else not at all', () => {
     expect(steerAngle([0, 0], [0, 0], [10, 10], [10, 0])).toBe(Math.PI / 2);
+    expect(steerAngle([0, 0], [0, 0], [10, 1], [10, 0])).toBeNull();
     expect(steerAngle([0, 0], [0, 0], null, [0, 0])).toBeNull();
   });
 
@@ -125,8 +126,15 @@ describe('Fumi in the dish', () => {
     expect(face.style.width).toBe(`${M.TIP_SIZE * 50}%`);
   });
 
-  it('grows every frame, keeps her face on her tip, and draws her threads', () => {
+  it("stays put until she's steered", () => {
     start();
+    frames_(10);
+    expect(fake.mold.lead.length).toBe(0);
+  });
+
+  it('grows while steered, keeps her face on her tip, and draws her threads', () => {
+    start();
+    fake.direction = [0, -1];
     frame();
     frames_(10);
     expect(fake.mold.lead.length).toBeGreaterThan(0);
@@ -143,6 +151,7 @@ describe('Fumi in the dish', () => {
 
   it("doesn't grow before the dish has a size", () => {
     start();
+    fake.direction = [0, -1];
     Object.defineProperty(document.querySelector('.agar'), 'clientWidth', { configurable: true, value: 0 });
     frames_(5);
     expect(fake.mold.lead.length).toBe(0);
@@ -158,20 +167,10 @@ describe('branching', () => {
     window.dispatchEvent(space);
     expect(space.defaultPrevented).toBe(true); // no scrolling the page
     expect(fake.mold.threads).toHaveLength(2);
-    frames_(60); // wait out the cooldown
-    fake.mold.growth = 10;
-    frame(); // the button lights back up
+    frames_(20); // wait out the cooldown
+    fake.mold.growth = 0; // even with nothing stored
     button.click();
     expect(fake.mold.threads).toHaveLength(3);
-  });
-
-  it('grays out the Branch button until she has stored growth', () => {
-    const { button } = start();
-    fake.mold.growth = 0;
-    frame();
-    expect(button.disabled).toBe(true);
-    fake.mold.feed(1);
-    frame();
     expect(button.disabled).toBe(false);
   });
 

@@ -1,13 +1,14 @@
 // A mold (Fumi) doesn't bud and doesn't swim: she grows. She starts as a
-// spore, and her threads (hyphae) stretch out from their tips. You steer her
-// lead tip, the one with her face; Branch sprouts a new tip off it, about 45
-// degrees to one side. Every tip grows on its own, straight ahead.
+// spore, and her threads (hyphae) stretch out from their tips. Her lead tip,
+// the one with her face, grows only while you steer it; Branch sprouts a new
+// tip off it, about 45 degrees to one side, any time. Her other tips grow on
+// their own, straight ahead, while she has stored growth.
 //
 // Growing uses up stored growth, which is shared by all her tips. Nutrients
 // that touch any part of her refill it, with enough for every growing tip
 // (a real mold moves food along its threads to all its tips; see feed), so
 // more tips grow her faster. With none stored, only her lead tip creeps
-// along, slowly.
+// along, slowly, while you steer it.
 //
 // Her cells are the lengths of her threads: every MOLD.CELL_LENGTH of thread
 // is one more cell, on top of the spore she started as.
@@ -49,12 +50,12 @@ export function makeMold({ start = [0, 0], angle = -Math.PI / 2 } = {}) {
     alive: () => threads.some((t) => t.alive),
     cellCount: () => 1 + threads.reduce((sum, t) => sum + Math.floor(t.length / M.CELL_LENGTH), 0),
 
-    // Grow every tip for `seconds`. `want` is which way to steer her lead
-    // tip, in radians, or null to keep going the way she's going. She turns
-    // in a curve, never a sharp corner.
+    // Grow for `seconds`. `want` is which way she's being steered, in
+    // radians; her lead tip turns that way, in a curve, never a sharp
+    // corner. With no steering (null), her lead tip stays put.
     update(seconds, want = null) {
       cooldown = Math.max(0, cooldown - seconds);
-      const tips = mold.growing();
+      const tips = mold.growing().filter((t) => want !== null || t !== mold.lead);
       if (tips.length === 0 || seconds <= 0) return;
       let step = M.TIP_SPEED * seconds;
       if (step * tips.length > mold.growth) step = mold.growth / tips.length;
@@ -64,14 +65,13 @@ export function makeMold({ start = [0, 0], angle = -Math.PI / 2 } = {}) {
         // With nothing stored, her lead tip still creeps.
         const distance = lead ? Math.max(step, M.CREEP_SPEED * seconds) : step;
         if (distance <= 0) continue;
-        if (lead && want !== null) turn(thread, want, distance);
+        if (lead) turn(thread, want, distance);
         grow(thread, distance);
       }
     },
 
-    // Whether she can branch now: she needs stored growth for a new tip to
-    // grow, and a moment since the last one.
-    canBranch: () => cooldown === 0 && mold.growth > 0 && mold.lead.alive,
+    // Whether she can branch now: any time but right after the last one.
+    canBranch: () => cooldown === 0 && mold.lead.alive,
 
     // Sprout a new tip from her lead tip, about 45 degrees off it, on
     // alternating sides. Returns the new thread, or null if she can't now.
