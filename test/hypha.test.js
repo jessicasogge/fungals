@@ -257,12 +257,34 @@ describe('the thread layer', () => {
     swimTo(tip, 0.3, 0.1);
     const canvas = agar.querySelector('canvas');
     expect(canvas.width).toBe(DISH * Math.min(2, window.devicePixelRatio || 1));
-    // three threads (hers and two branches): three tubes, three cores, two walls
-    expect(calls.filter(([name]) => name === 'stroke')).toHaveLength(8);
+    // three threads (hers and two branches): for each, a haze, its hairs, a
+    // tube and a core; then two walls
+    expect(calls.filter(([name]) => name === 'stroke')).toHaveLength(14);
+    expect(calls.some(([name]) => name === 'quadraticCurveTo')).toBe(true); // curves, not straight bits
     const styles = calls.filter(([name]) => name === 'set strokeStyle').map(([, v]) => v);
     expect(styles).toContain(SPECIES.fumi.colors.stroke);
     expect(styles).toContain(SPECIES.fumi.colors.fill);
     expect(styles).toContain('#e5e7eb'); // the stopped branch's core, grayed
+  });
+
+  it('draws a wavy, fuzzy thread that holds still from frame to frame', () => {
+    const { ctx, calls } = fakeContext();
+    vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockReturnValue(ctx);
+    const tip = makeTip();
+    for (let i = 1; i <= 40; i++) swimTo(tip, i * 0.015, 0);
+    calls.length = 0;
+    swimTo(tip, 40 * 0.015, 0);
+    const drawn = () => calls.filter(([name]) => name === 'quadraticCurveTo').map((c) => c.slice(1));
+    const hairs = () => calls.filter(([name]) => name === 'moveTo').length;
+    const first = drawn();
+    const firstHairs = hairs();
+    // her path is a straight line along y = 0, but the drawing wiggles off it
+    expect(first.some(([, y]) => Math.abs(y - RADIUS) > 1)).toBe(true);
+    expect(firstHairs).toBeGreaterThan(5);
+    calls.length = 0;
+    swimTo(tip, 40 * 0.015, 0); // same spot again
+    expect(drawn()).toEqual(first);
+    expect(hairs()).toBe(firstHairs);
   });
 
   it('skips drawing where there is no canvas to draw on', () => {

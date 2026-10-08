@@ -188,4 +188,8 @@ export const GAME = {
   BRANCH_SPEED: 0.1,
   HYPHA_RIM: 0.93,
   HYPHA_POINT: 0.012,
+  // How much a thread wiggles side to side, and how long each wiggle is, in
+  // fractions of the dish radius.
+  HYPHA_WAVE: 0.014,
+  HYPHA_WAVELENGTH: 0.2,
 };

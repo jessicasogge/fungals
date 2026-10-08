@@ -156,8 +156,73 @@ export function showPlusOne(agar, [x, y]) {
   setTimeout(remove, 1500); // in case the animation never runs
 }
 
-// One canvas per dish that draws every thread: a dark tube with a light
-// core, and a bold bar across it for each wall.
+// A number from 0 to 1 that's always the same for the same i and k, so the
+// threads' wiggles and hairs stay put from frame to frame.
+const noise = (i, k) => {
+  const x = Math.sin(i * 127.1 + k * 311.7) * 43758.5453;
+  return x - Math.floor(x);
+};
+
+// How far each point is along its thread, in fractions of the dish radius.
+function distances(line) {
+  const s = [0];
+  for (let i = 1; i < line.length; i++) {
+    s.push(s[i - 1] + Math.hypot(line[i][0] - line[i - 1][0], line[i][1] - line[i - 1][1]));
+  }
+  return s;
+}
+
+// Which way is sideways from the thread at point i.
+function sideways(line, i) {
+  const a = line[Math.max(0, i - 1)];
+  const b = line[Math.min(line.length - 1, i + 1)];
+  const length = Math.hypot(b[0] - a[0], b[1] - a[1]) || 1;
+  return [-(b[1] - a[1]) / length, (b[0] - a[0]) / length];
+}
+
+// Real hyphae aren't ruler-straight, so the thread is drawn with a gentle
+// wave. The wave goes by how far along the thread a point is, so the old
+// part holds still as she grows, and it fades out at both ends so the
+// thread still meets its tip and the thread it branched from.
+function wavy(line, seed) {
+  const s = distances(line);
+  const total = s.at(-1);
+  const ease = GAME.HYPHA_WAVELENGTH / 3;
+  return line.map((p, i) => {
+    const fade = Math.min(1, s[i] / ease, (total - s[i]) / ease);
+    const k = (2 * Math.PI) / GAME.HYPHA_WAVELENGTH;
+    const wave = (Math.sin(s[i] * k + seed * 2.1) + 0.35 * Math.sin(s[i] * k * 1.7 + seed * 5.3)) / 1.35;
+    const [nx, ny] = sideways(line, i);
+    const off = GAME.HYPHA_WAVE * fade * wave;
+    return [p[0] + nx * off, p[1] + ny * off];
+  });
+}
+
+// Fine hairs along a thread, each [from, to], sticking out a little from
+// either side at uneven spots, so the thread looks fuzzy.
+function hairs(line, seed) {
+  const out = [];
+  const s = distances(line);
+  const total = s.at(-1);
+  line.forEach((p, i) => {
+    if (total - s[i] < GAME.HYPHA_WIDTH * 2) return; // none right at the growing tip
+    for (const side of [1, -1]) {
+      const k = seed * 1000 + i * 2 + (side > 0 ? 0 : 1);
+      if (noise(k, 1) > 0.55) continue;
+      const [nx, ny] = sideways(line, i);
+      const tilt = (noise(k, 2) - 0.5) * 1.4; // not all straight out
+      const [dx, dy] = [nx * Math.cos(tilt) - ny * Math.sin(tilt), nx * Math.sin(tilt) + ny * Math.cos(tilt)];
+      const start = GAME.HYPHA_WIDTH * 0.45 * side;
+      const end = start + GAME.HYPHA_WIDTH * (0.5 + noise(k, 3)) * side;
+      out.push([[p[0] + dx * start, p[1] + dy * start], [p[0] + dx * end, p[1] + dy * end]]);
+    }
+  });
+  return out;
+}
+
+// One canvas per dish that draws every thread: a soft fuzzy haze with fine
+// hairs, a dark tube with a light core, and a bold bar across it for each
+// wall.
 const layers = new WeakMap();
 export function threadLayer(agar, colors) {
   if (layers.has(agar)) return layers.get(agar);
@@ -191,14 +256,37 @@ export function threadLayer(agar, colors) {
       const width = GAME.HYPHA_WIDTH * r;
       ctx.lineCap = 'round';
       ctx.lineJoin = 'round';
-      const lines = groups.map((g) => [...g.path, g.tip]);
+      const raw = groups.map((g) => [...g.path, g.tip]);
+      const lines = raw.map((line, i) => wavy(line, i));
+      // A smooth curve through the points instead of straight bits.
       const trace = (line) => {
         ctx.beginPath();
-        line.forEach((p, i) => (i ? ctx.lineTo(...at(p)) : ctx.moveTo(...at(p))));
+        ctx.moveTo(...at(line[0]));
+        for (let i = 1; i < line.length - 1; i++) {
+          const mid = [(line[i][0] + line[i + 1][0]) / 2, (line[i][1] + line[i + 1][1]) / 2];
+          ctx.quadraticCurveTo(...at(line[i]), ...at(mid));
+        }
+        ctx.lineTo(...at(line.at(-1)));
       };
+      // Fuzz: a soft haze around each thread, and fine hairs sticking out.
+      ctx.strokeStyle = colors.stroke;
+      lines.forEach((line, i) => {
+        trace(line);
+        ctx.globalAlpha = 0.12;
+        ctx.lineWidth = width * 3;
+        ctx.stroke();
+        ctx.beginPath();
+        hairs(line, i).forEach(([from, to]) => {
+          ctx.moveTo(...at(from));
+          ctx.lineTo(...at(to));
+        });
+        ctx.globalAlpha = 0.45;
+        ctx.lineWidth = Math.max(0.6, width * 0.2);
+        ctx.stroke();
+      });
+      ctx.globalAlpha = 1;
       for (const line of lines) {
         trace(line);
-        ctx.strokeStyle = colors.stroke;
         ctx.lineWidth = width;
         ctx.stroke();
       }
@@ -208,12 +296,16 @@ export function threadLayer(agar, colors) {
         ctx.lineWidth = width * 0.55;
         ctx.stroke();
       });
-      // Each wall: a bold bar straight across the thread.
+      // Each wall: a bold bar straight across the thread, where the wavy
+      // thread passes the spot she ate.
       ctx.strokeStyle = colors.stroke;
       ctx.lineWidth = Math.max(1.5, width * 0.45);
       ctx.lineCap = 'butt';
-      for (const g of groups) {
-        for (const [x, y, angle] of g.walls) {
+      groups.forEach((g, i) => {
+        for (const [wx, wy, angle] of g.walls) {
+          const near = raw[i].reduce((best, p, j) =>
+            Math.hypot(p[0] - wx, p[1] - wy) < Math.hypot(raw[i][best][0] - wx, raw[i][best][1] - wy) ? j : best, 0);
+          const [x, y] = lines[i][near];
           const reach = GAME.HYPHA_WIDTH * 1.3; // sticks out past the thin thread, so it shows
           const [nx, ny] = [-Math.sin(angle) * reach, Math.cos(angle) * reach];
           ctx.beginPath();
@@ -221,7 +313,7 @@ export function threadLayer(agar, colors) {
           ctx.lineTo(...at([x - nx, y - ny]));
           ctx.stroke();
         }
-      }
+      });
     },
   };
   layers.set(agar, layer);
