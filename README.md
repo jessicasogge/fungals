@@ -9,7 +9,7 @@ A cute mycology game for the browser, and the sister game to [PetriPals](https:/
 1. **Pick a pal.** Each one is a real fungus, drawn as a cartoon.
 2. **Swim around the dish.** Use the arrow keys, or on a touch screen, drag your pal like a trackpad: touch anywhere on the dish and slide your finger, and she moves the same way.
 3. **Eat nutrients to bud.** Every cell that eats a nutrient buds: a little daughter cell swells out of her side and grows to full size. Daughters stick together in clusters, the way budding yeast does on a plate.
-   **Fumi grows a thread instead.** She's a mold: she swims like the others, but leaves a thread behind her. Each nutrient she eats puts a wall across her thread right there, and each wall is a cell. Eating also sprouts a short branch, which can eat too.
+   **Fumi grows a thread instead.** She's a mold: she swims like the others, but leaves a thread behind her, and like a real hypha she turns in curves, never sharp corners. Each nutrient she eats puts a wall across her thread right there, and each wall is a cell. Eating also sprouts a short branch, which can eat too.
 4. **Don't touch the antifungals.** Touching a disk, or the clear zone of inhibition around it, ends the game. The zones start small and spread outward over the first few seconds, so grab the nutrients near the disks early.
 
 There are seven levels. Each one adds another antifungal disk and doubles the colony you need to grow, from 4 cells up to 256. Each pal has five antifungals, so levels 6 and 7 start over from her first drugs.

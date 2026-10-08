@@ -649,56 +649,6 @@ body {
   pointer-events: none;
 }
 
-/* A "+1" floating up from a new wall on a mold's thread (game/hypha.js). */
-.cell-plus {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  font: 700 0.95rem/1 system-ui, sans-serif;
-  color: #134e4a;
-  text-shadow: 0 0 3px #fff, 0 0 6px #fff;
-  pointer-events: none;
-  z-index: 3;
-  animation: cell-plus 1s ease-out forwards;
-}
-
-@keyframes cell-plus {
-  from {
-    opacity: 1;
-    transform: translate(-50%, -50%);
-  }
-
-  to {
-    opacity: 0;
-    transform: translate(-50%, -180%);
-  }
-}
-
-/* On Fumi's first level, a card over the dish says how a mold grows. */
-.mold-hint {
-  position: absolute;
-  left: 50%;
-  bottom: 8%;
-  transform: translateX(-50%);
-  width: min(86%, 22rem);
-  display: grid;
-  gap: 0.6rem;
-  justify-items: center;
-  padding: 0.9rem 1rem;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.94);
-  box-shadow: 0 10px 28px rgba(19, 78, 74, 0.18);
-  text-align: center;
-  z-index: 4;
-}
-
-.mold-hint p {
-  margin: 0;
-}
-
-.mold-hint .pick-btn {
-  margin-top: 0;
-}
-
 /* A branch tip that grew into an antifungal zone stops there and grays. */
 .pal-mover.stopped {
   filter: grayscale(1);

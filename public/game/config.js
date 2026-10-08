@@ -192,4 +192,7 @@ export const GAME = {
   // fractions of the dish radius.
   HYPHA_WAVE: 0.014,
   HYPHA_WAVELENGTH: 0.2,
+  // Fumi's tightest turn: the radius of the curve, in fractions of the dish
+  // radius, so she never makes a sharp corner.
+  HYPHA_TURN: 0.15,
 };

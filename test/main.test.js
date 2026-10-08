@@ -121,8 +121,6 @@ describe('a broken address', () => {
 });
 
 describe('a mold (Fumi)', () => {
-  const card = () => document.querySelector('.petri-dish .mold-hint');
-
   it('says how she plays: she leaves a thread, and each nutrient adds a wall', async () => {
     await open('?pal=fumi&level=2');
     const howTo = document.querySelector('.how-to-play');
@@ -133,29 +131,9 @@ describe('a mold (Fumi)', () => {
     expect(howTo.querySelector('.target-cells')).not.toBeNull();
   });
 
-  it('explains it once, on level 1 only', async () => {
-    await open('?pal=fumi&level=1');
-    expect(card().textContent).toContain('Fumi is a mold');
-    await open('?pal=fumi&level=2');
-    expect(card()).toBeNull();
-    await open('?pal=sasha&level=1');
-    expect(card()).toBeNull();
-  });
 
-  it('closes the card with "Got it"', async () => {
+  it('starts right away, with no card over the dish', async () => {
     await open('?pal=fumi&level=1');
-    card().querySelector('button').click();
-    expect(card()).toBeNull();
-  });
-
-  it('closes the card as soon as she swims, by arrow key or by touch', async () => {
-    await open('?pal=fumi&level=1');
-    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
-    expect(card()).not.toBeNull(); // not a steering key
-    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft' }));
-    expect(card()).toBeNull();
-    await open('?pal=fumi&level=1');
-    document.querySelector('.petri-dish').dispatchEvent(new Event('pointerdown'));
-    expect(card()).toBeNull();
+    expect(document.querySelector('.petri-dish .mold-hint')).toBeNull();
   });
 });

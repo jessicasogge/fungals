@@ -4,7 +4,7 @@
 // sprouts a branch. These run in jsdom, a simulated browser page.
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { GAME, SPECIES } from '../public/game/config.js';
-import { hyphaGroup, showPlusOne, threadLayer } from '../public/game/hypha.js';
+import { hyphaGroup, threadLayer } from '../public/game/hypha.js';
 
 // jsdom doesn't lay anything out; give the agar a fixed width.
 const DISH = 400;
@@ -73,9 +73,9 @@ describe('Fumi', () => {
   it('leaves a thread behind her wherever she swims', () => {
     const tip = makeTip();
     swimTo(tip, 0.2, 0);
-    swimTo(tip, 0.2, 0.2);
-    expect(tip.path).toEqual([[0, 0], [0.2, 0], [0.2, 0.2]]);
-    close(tip.angle, Math.PI / 2); // heading down now
+    swimTo(tip, 0.4, 0);
+    expect(tip.path).toEqual([[0, 0], [0.2, 0], [0.4, 0]]);
+    close(tip.angle, 0);
   });
 
   it("doesn't add a point for every tiny move, and stays put when she does", () => {
@@ -86,6 +86,37 @@ describe('Fumi', () => {
     const angle = tip.angle;
     swimTo(tip, GAME.HYPHA_POINT / 2, 0);
     expect(tip.angle).toBe(angle);
+  });
+
+  it("turns in a curve, never a sharp corner", () => {
+    const tip = makeTip();
+    swimTo(tip, 0.2, 0); // her first move can go any way
+    expect(tip.tip).toEqual([0.2, 0]);
+    // steered straight down: she bends only a little per step
+    const step = 0.01;
+    swimTo(tip, 0.2, step);
+    close(tip.angle, step / GAME.HYPHA_TURN);
+    close(Math.hypot(tip.tip[0] - 0.2, tip.tip[1]), step); // same distance, bent path
+    close(tip.x, tip.tip[0] * RADIUS);
+    // keep steering down and she comes around to heading down
+    for (let i = 0; i < 60; i++) swimTo(tip, tip.tip[0], tip.tip[1] + step);
+    close(tip.angle, Math.PI / 2);
+    // every bend along her thread stays gentle
+    const p = tip.path;
+    for (let i = 2; i < p.length; i++) {
+      const a = Math.atan2(p[i - 1][1] - p[i - 2][1], p[i - 1][0] - p[i - 2][0]);
+      const b = Math.atan2(p[i][1] - p[i - 1][1], p[i][0] - p[i - 1][0]);
+      expect(Math.abs(Math.atan2(Math.sin(b - a), Math.cos(b - a)))).toBeLessThan(0.5);
+    }
+  });
+
+  it('stays inside the rim even when her curve would carry her past it', () => {
+    const rim = 1 - GAME.TIP_SIZE / 2;
+    const tip = makeTip({ start: [rim - 0.05, 0] });
+    swimTo(tip, rim - 0.05, -0.05); // heading up, along the rim
+    swimTo(tip, rim + 0.1, -0.05); // steered hard outward
+    expect(Math.hypot(...tip.tip)).toBeCloseTo(rim, 5);
+    expect(Math.hypot(tip.x, tip.y) / RADIUS).toBeCloseTo(rim, 5);
   });
 
   it("doesn't get more cells just by swimming", () => {
@@ -123,14 +154,11 @@ describe('eating', () => {
     expect(tip.walls).toEqual([[0.3, 0, 0]]);
   });
 
-  it('shows a "+1" floating up from the new wall', () => {
+  it('shows no "+1" when she eats', () => {
     const tip = makeTip();
     swimTo(tip, 0.3, 0);
     tip.divide();
-    const plus = agar.querySelector('.cell-plus');
-    expect(plus.textContent).toBe('+1');
-    expect(plus.style.left).toBe('65%');
-    expect(plus.getAttribute('aria-hidden')).toBe('true');
+    expect(agar.querySelector('.cell-plus')).toBeNull();
   });
 
   it('sprouts a branch from that spot, about 45 degrees off her line, on alternating sides', () => {
@@ -197,22 +225,6 @@ describe('a branch', () => {
     tip.freeze();
     branch.update(1);
     expect(branch.tip).toEqual([0, 0]);
-  });
-});
-
-describe('the "+1"', () => {
-  it('goes away once it has floated up, or after a moment anyway', () => {
-    vi.useFakeTimers();
-    showPlusOne(agar, [0, 0]);
-    agar.querySelector('.cell-plus').dispatchEvent(new Event('animationend'));
-    expect(agar.querySelector('.cell-plus')).toBeNull();
-    showPlusOne(agar, [0, 0]);
-    vi.advanceTimersByTime(1500);
-    expect(agar.querySelector('.cell-plus')).toBeNull();
-  });
-
-  it('does nothing without a dish to show it in', () => {
-    expect(() => showPlusOne(null, [0, 0])).not.toThrow();
   });
 });
 

@@ -52,8 +52,7 @@ function start() {
 }
 
 // A mold leaves a thread and grows walls instead of budding, so her
-// directions say so. On level 1 a card explains it once, until she moves or
-// the card is closed.
+// directions say so.
 function moldDirections() {
   const span = (className, text) => {
     const el = document.createElement('span');
@@ -72,23 +71,4 @@ function moldDirections() {
     document.createElement('br'),
     "Eating also sprouts a branch, which can eat too. Don't touch the antifungal disks or the clear zones around them, and watch out: the zones spread as the drug soaks into the agar!",
   );
-  if (levelNumber !== 1) return;
-  const card = document.createElement('div');
-  card.className = 'mold-hint';
-  card.setAttribute('role', 'note');
-  const text = document.createElement('p');
-  text.textContent = "Fumi is a mold: she grows like a thread instead of budding. Each nutrient adds a wall to her thread, and each wall is a cell.";
-  const button = document.createElement('button');
-  button.type = 'button';
-  button.className = 'pick-btn';
-  button.textContent = 'Got it';
-  card.append(text, button);
-  const dish = document.querySelector('.petri-dish');
-  dish.append(card);
-  const close = () => card.remove();
-  button.addEventListener('click', close);
-  dish.addEventListener('pointerdown', close, { once: true });
-  window.addEventListener('keydown', (event) => {
-    if (event.key.startsWith('Arrow')) close();
-  });
 }

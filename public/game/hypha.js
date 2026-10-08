@@ -66,6 +66,32 @@ export function hyphaGroup({ mover, svg, species, isPlayer, start = [0, 0], angl
     if (Math.hypot(x - lx, y - ly) > GAME.HYPHA_POINT) group.path.push([x, y]);
   }
 
+  // A real hypha can't turn on a dime, so she turns in a curve: however
+  // she's steered, her heading changes by at most so much for how far she
+  // went (a turn no tighter than HYPHA_TURN). Her very first move can go any
+  // way. Returns where she ends up, and moves her there.
+  let started = false;
+  function curve([x, y], radius) {
+    const [tx, ty] = group.tip;
+    const distance = Math.hypot(x - tx, y - ty);
+    if (distance === 0) return [x, y];
+    if (!started) {
+      started = true;
+      return [x, y];
+    }
+    const want = Math.atan2(y - ty, x - tx);
+    const turn = Math.atan2(Math.sin(want - group.angle), Math.cos(want - group.angle));
+    const most = distance / GAME.HYPHA_TURN;
+    const angle = group.angle + Math.max(-most, Math.min(most, turn));
+    let to = [tx + Math.cos(angle) * distance, ty + Math.sin(angle) * distance];
+    // A curve can carry her past the rim; keep her (and her thread) inside.
+    const rim = 1 - size / 2;
+    const out = Math.hypot(...to);
+    if (out > rim) to = [(to[0] * rim) / out, (to[1] * rim) / out];
+    [group.x, group.y] = [to[0] * radius, to[1] * radius];
+    return to;
+  }
+
   // A branch grows on its own, straight ahead, until it runs out of length
   // or reaches the rim.
   function grow(seconds) {
@@ -88,7 +114,7 @@ export function hyphaGroup({ mover, svg, species, isPlayer, start = [0, 0], angl
       const radius = dishRadius();
       if (isPlayer) {
         // She swims (game.js moves her); her thread follows.
-        if (radius > 0) extend([group.x / radius, group.y / radius]);
+        if (radius > 0) extend(curve([group.x / radius, group.y / radius], radius));
         layer.draw();
         return;
       }
@@ -115,13 +141,12 @@ export function hyphaGroup({ mover, svg, species, isPlayer, start = [0, 0], angl
       layer.frozen = true;
     },
     // Eating: a wall forms across the thread right where the tip is (one
-    // more cell, with a "+1" to show it). When she eats, a branch also
+    // more cell). When she eats, a branch also
     // sprouts from the same spot, about 45 degrees off the way she was going,
     // on alternating sides. Returns the new branch, or null for a branch,
     // which only gets the wall (so the pace stays close to the yeasts').
     divide() {
       group.walls.push([...group.tip, group.angle]);
-      showPlusOne(mover.parentElement, group.tip);
       if (!isPlayer) return null;
       group.side = -group.side;
       const copy = svg.cloneNode(false);
@@ -138,22 +163,6 @@ export function hyphaGroup({ mover, svg, species, isPlayer, start = [0, 0], angl
 
   [group.x, group.y] = [start[0] * dishRadius(), start[1] * dishRadius()];
   return group;
-}
-
-// A "+1" that floats up from a new wall and fades (see .cell-plus in
-// styles.css). `at` is in fractions of the dish radius.
-export function showPlusOne(agar, [x, y]) {
-  if (!agar) return;
-  const plus = document.createElement('span');
-  plus.className = 'cell-plus';
-  plus.textContent = '+1';
-  plus.setAttribute('aria-hidden', 'true');
-  plus.style.left = `${50 + x * 50}%`;
-  plus.style.top = `${50 + y * 50}%`;
-  agar.append(plus);
-  const remove = () => plus.remove();
-  plus.addEventListener('animationend', remove);
-  setTimeout(remove, 1500); // in case the animation never runs
 }
 
 // A number from 0 to 1 that's always the same for the same i and k, so the
