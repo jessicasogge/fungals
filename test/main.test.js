@@ -97,16 +97,6 @@ describe('a mold', () => {
     expect(options.avoid).toEqual(playMold.mock.calls[0][3]);
   });
 
-  it('gives a mold one more disk than a yeast gets on the same level', async () => {
-    const disks = () => document.querySelectorAll('.antifungal').length;
-    await openMold('?pal=fumi&level=1');
-    expect(disks()).toBe(LEVELS[0].moldDisks);
-    await openMold('?pal=fumi&level=4');
-    expect(disks()).toBe(LEVELS[3].moldDisks);
-    await open('?pal=sasha&level=4');
-    expect(disks()).toBe(LEVELS[3].disks);
-  });
-
   it('puts out fewer nutrients for a mold than for a yeast', async () => {
     const flecks = () => document.querySelectorAll('.nutrient').length;
     await openMold('?pal=fumi');

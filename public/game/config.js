@@ -136,15 +136,15 @@ export const SPECIES = {
 
 // Each level adds an antifungal disk and doubles the colony you need to grow.
 // A mold (Fumi) needs `colonies` colonies instead: 8 on level 1, and 2 more
-// each level, with `moldDisks` disks: one more than a yeast gets.
+// each level.
 export const LEVELS = [
-  { disks: 1, target: 4, colonies: 8, moldDisks: 2 },
-  { disks: 2, target: 8, colonies: 10, moldDisks: 3 },
-  { disks: 3, target: 16, colonies: 12, moldDisks: 4 },
-  { disks: 4, target: 32, colonies: 14, moldDisks: 5 },
-  { disks: 5, target: 64, colonies: 16, moldDisks: 6 },
-  { disks: 6, target: 128, colonies: 18, moldDisks: 7 },
-  { disks: 7, target: 256, colonies: 20, moldDisks: 8 },
+  { disks: 1, target: 4, colonies: 8 },
+  { disks: 2, target: 8, colonies: 10 },
+  { disks: 3, target: 16, colonies: 12 },
+  { disks: 4, target: 32, colonies: 14 },
+  { disks: 5, target: 64, colonies: 16 },
+  { disks: 6, target: 128, colonies: 18 },
+  { disks: 7, target: 256, colonies: 20 },
 ];
 
 export const GAME = {
@@ -183,9 +183,6 @@ export const GAME = {
   // grow from its edge, to COLONY_FULL (dish radii) over COLONY_GROW_SECONDS.
   SPORE_SPEED: 1,
   MOLD_NUTRIENTS: 5, // flecks on the agar at a time (yeasts get 10)
-  // A mold has an extra disk each level, so hers can sit a little nearer the
-  // rim (all 8 on level 7 wouldn't always fit otherwise).
-  MOLD_DISK_MAX_DISTANCE: 0.7,
   COLONY_START: 0.025,
   COLONY_FULL: 0.15,
   COLONY_GROW_SECONDS: 5,

@@ -3,8 +3,7 @@
 // a simulated browser page.
 import { beforeEach, describe, expect, it } from 'vitest';
 import { placeAntifungals } from '../public/game/antifungal.js';
-import { antifungalsFor } from '../public/game/antifungal.js';
-import { GAME, LEVELS, SPECIES } from '../public/game/config.js';
+import { SPECIES } from '../public/game/config.js';
 
 beforeEach(() => {
   document.body.innerHTML = '<div class="agar"></div>';
@@ -13,17 +12,6 @@ beforeEach(() => {
 describe("a mold's disks", () => {
   it('all have zones: no drug she shrugs off', () => {
     for (const drug of SPECIES.fumi.antifungals) expect(drug.zone, drug.code).toBeGreaterThan(0);
-  });
-
-  it('all fit on the dish, even the 8 on the last level, a little nearer the rim', () => {
-    const count = LEVELS.at(-1).moldDisks;
-    for (let i = 0; i < 100; i++) {
-      document.body.innerHTML = '<div class="agar"></div>';
-      const disks = placeAntifungals(antifungalsFor(SPECIES.fumi.antifungals, count),
-        { maxDistance: GAME.MOLD_DISK_MAX_DISTANCE });
-      expect(disks).toHaveLength(count);
-      for (const d of disks) expect(Math.hypot(d.fx, d.fy)).toBeLessThanOrEqual(GAME.MOLD_DISK_MAX_DISTANCE + 1e-9);
-    }
   });
 });
 
