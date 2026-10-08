@@ -15,7 +15,7 @@ There are seven levels. Each one adds another antifungal disk and doubles the co
 
 ### Playing a mold: Fumi
 
-Fumi (*Aspergillus fumigatus*) plays differently. You're one of her tiny **spores**, floating over the agar. Land on a nutrient and a spore germinates right there: a **colony** starts small and spreads out in a circle, white and fluffy with a greenish middle where it's making spores. A colony counts as soon as it starts, and you need **2 colonies** on level 1, one more each level, up to 8. There are fewer nutrients on her plate than on the yeasts', since each one is a whole colony.
+Fumi (*Aspergillus fumigatus*) plays differently. You're one of her tiny **spores**, floating over the agar. Land on a nutrient and a spore germinates right there: a **colony** starts small and spreads out in a circle, white and fluffy with a greenish middle where it's making spores. A colony counts as soon as it starts, and you need **8 colonies** on level 1 and 2 more each level, up to 20. There are fewer nutrients on her plate than on the yeasts', since each one is a whole colony.
 
 Plant them carefully: **a colony that touches an antifungal disk, or its zone of inhibition, pops**, the whole colony at once, and you lose it from your count. The colonies keep spreading and the zones keep widening for the first few seconds, so leave room. Your spore touching one is still game over. A spot that already has a colony won't start a new one.
 

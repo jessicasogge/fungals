@@ -225,8 +225,8 @@ describe('playing as a mold', () => {
 
   it('counts colonies instead of cells, and puts the target in the directions', () => {
     start({ level: 3 });
-    expect(counter()).toBe('Level 3 · 0 / 4 colonies');
-    expect(document.querySelector('.target-colonies').textContent).toBe('4');
+    expect(counter()).toBe('Level 3 · 0 / 12 colonies');
+    expect(document.querySelector('.target-colonies').textContent).toBe('12');
     expect(mover.classList.contains('spore')).toBe(true);
     // Colonies grow on a layer under everything else on the agar.
     expect(agar.firstElementChild.className).toBe('colonies');
@@ -235,7 +235,7 @@ describe('playing as a mold', () => {
   it('defaults to level 1', () => {
     vi.stubGlobal('requestAnimationFrame', () => {});
     playMold(document.createElement('div'), SPECIES.fumi, fakeNutrients(), []);
-    expect(document.querySelector('.cell-count').textContent).toBe('Level 1 · 0 / 2 colonies');
+    expect(document.querySelector('.cell-count').textContent).toBe('Level 1 · 0 / 8 colonies');
   });
 
   it('floats with the arrow keys, a little faster than a yeast swims', () => {
