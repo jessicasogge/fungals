@@ -1,4 +1,5 @@
-// Gals are budding yeasts with clustered daughters; molds coming next.
+// Gals are budding yeasts with clustered daughters, or molds (Fumi) that play
+// as a spore planting colonies (see mold.js).
 //
 // `zone`: inhibition diameter (mm), scaled by ZONE_*; null = resistant.
 // Candi: CLSI M44 approximations. Sasha/Olive: efficacy estimates.
@@ -97,17 +98,54 @@ export const SPECIES = {
       { code: 'AMB', name: 'amphotericin B', zone: 17 },
     ],
   },
+  fumi: {
+    facts: [
+      "Fumi's species name, *fumigatus*, means \"smoky,\" for her smoky grey-green colonies.",
+      "Fumi's genus is named for the aspergillum, a brush for sprinkling holy water.",
+      "Fumi's spores are only 2 to 3 micrometers across, so tiny they float on the air.",
+      "Most people breathe in hundreds of Fumi's spores every day, and healthy lungs clear them.",
+      "Fumi can grow at 50 °C, so she thrives in hot, rotting compost heaps.",
+      "Fumi can cause aspergillosis, a lung infection in people with weak immune systems.",
+      "Fumi's spores wear a coat of protein rodlets that hides them from the immune system.",
+      "Fumi's spores get their grey-green color from a kind of melanin.",
+      "A colony of Fumi grows from the tips of her threads (hyphae), spreading out in a circle.",
+      "Fumi's colonies start out white and fluffy, then turn green as she makes spores.",
+      "Fumi's spores grow in long chains that stand up from a swollen head, like columns.",
+      "Voriconazole is usually the first drug doctors use against Fumi.",
+      "Fumi is naturally resistant to fluconazole, a drug that works on many yeasts.",
+      "Azole fungicides sprayed on crops have helped some of Fumi's strains resist azole drugs.",
+    ],
+    scientific: 'Aspergillus fumigatus',
+    color: '#2f6b5e', // for her name above the dish
+    kind: 'mold',
+    // `fill`/`stroke`/`highlight`/`dark` are her spore's colors; `spores` is
+    // the smoky green her colonies turn as they make spores.
+    colors: { fill: '#dcebe5', stroke: '#3f7a6c', highlight: '#f4faf7', dark: '#1f4d43', spores: '#5b8c80' },
+    // Molds have a CLSI disk test too (M51), but there are no settled zone
+    // sizes for Aspergillus, so these are rough estimates. Like most molds,
+    // she's naturally resistant to fluconazole: no zone at all.
+    antifungals: [
+      { code: 'VOR', name: 'voriconazole', zone: 28 },
+      { code: 'ITC', name: 'itraconazole', zone: 22 },
+      { code: 'POS', name: 'posaconazole', zone: 30 },
+      { code: 'FLC', name: 'fluconazole', zone: null },
+      { code: 'AMB', name: 'amphotericin B', zone: 18 },
+      { code: 'CAS', name: 'caspofungin', zone: 16 },
+    ],
+  },
 };
 
 // Each level adds an antifungal disk and doubles the colony you need to grow.
+// A mold (Fumi) needs `colonies` fully grown colonies instead: one more each
+// level, since each one takes up a good piece of the dish.
 export const LEVELS = [
-  { disks: 1, target: 4 },
-  { disks: 2, target: 8 },
-  { disks: 3, target: 16 },
-  { disks: 4, target: 32 },
-  { disks: 5, target: 64 },
-  { disks: 6, target: 128 },
-  { disks: 7, target: 256 },
+  { disks: 1, target: 4, colonies: 2 },
+  { disks: 2, target: 8, colonies: 3 },
+  { disks: 3, target: 16, colonies: 4 },
+  { disks: 4, target: 32, colonies: 5 },
+  { disks: 5, target: 64, colonies: 6 },
+  { disks: 6, target: 128, colonies: 7 },
+  { disks: 7, target: 256, colonies: 8 },
 ];
 
 export const GAME = {
@@ -140,4 +178,12 @@ export const GAME = {
   ZONE_START: 0.1,
   ZONE_SPREAD_SECONDS: 20,
   SWIM_ROOM: 0.13, // minimum gap between zones, in dish radii
+
+  // Molds (mold.js): the spore floats a little faster than a yeast swims.
+  // A colony starts at COLONY_START and spreads at a steady pace, as hyphae
+  // grow from its edge, to COLONY_FULL (dish radii) over COLONY_GROW_SECONDS.
+  SPORE_SPEED: 1,
+  COLONY_START: 0.025,
+  COLONY_FULL: 0.15,
+  COLONY_GROW_SECONDS: 5,
 };

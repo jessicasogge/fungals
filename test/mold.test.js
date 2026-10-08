@@ -1,0 +1,321 @@
+// @vitest-environment jsdom
+// mold.js: Fumi's game. She's a spore; every nutrient she lands on starts a
+// colony that spreads out in a circle, dies if it touches an antifungal disk
+// or its zone, and counts once it's fully grown. These tests load the real
+// petri dish page into jsdom and stand in for the steering and effects.
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { GAME, LEVELS, SPECIES } from '../public/game/config.js';
+
+const fake = vi.hoisted(() => ({ keys: [0, 0] }));
+
+vi.mock('../public/game/keyboard.js', () => ({
+  arrowKeys: vi.fn(() => ({ direction: () => fake.keys, stop: vi.fn() })),
+}));
+vi.mock('../public/game/touch.js', async (importActual) => ({
+  ...(await importActual()),
+  touchSteering: vi.fn(() => ({ target: () => null, drag: () => [0, 0], stop: vi.fn() })),
+}));
+vi.mock('../public/game/spores.js', () => ({ sporeBurst: vi.fn() }));
+vi.mock('../public/game/track.js', () => ({ track: vi.fn() }));
+
+const { colonyRadius, moldColonies, playMold, sporeGroup } = await import('../public/game/mold.js');
+const { sporeBurst } = await import('../public/game/spores.js');
+const { track } = await import('../public/game/track.js');
+
+// (jsdom changes import.meta.url to a web address, so find the file from the project folder.)
+const page = readFileSync(resolve(process.cwd(), 'public/petri-dish.html'), 'utf8');
+const body = page.slice(page.indexOf('<body'), page.indexOf('</body>'));
+
+const { colors } = SPECIES.fumi;
+const disk = (fx, fy, zone = 0.05) =>
+  ({ fx, fy, r: 0.08, zone, antifungal: { code: 'VOR', name: 'voriconazole' } });
+
+// Nutrients that record what's been eaten, with flecks at the given spots.
+function fakeNutrients(spots = []) {
+  const flecks = [...spots];
+  return {
+    flecks,
+    eatNear: vi.fn((x, y, reach) => {
+      const before = flecks.length;
+      for (let i = flecks.length - 1; i >= 0; i--) {
+        if (Math.hypot(flecks[i][0] - x, flecks[i][1] - y) <= reach) flecks.splice(i, 1);
+      }
+      return before - flecks.length;
+    }),
+    stop: vi.fn(),
+  };
+}
+
+beforeEach(() => {
+  document.body.outerHTML = body;
+  fake.keys = [0, 0];
+  vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] });
+});
+afterEach(() => {
+  vi.useRealTimers();
+  vi.unstubAllGlobals();
+  vi.clearAllMocks();
+});
+
+describe('a colony', () => {
+  it('spreads at a steady pace from small to full size, then stops', () => {
+    expect(colonyRadius(0)).toBe(GAME.COLONY_START);
+    const half = colonyRadius(GAME.COLONY_GROW_SECONDS / 2);
+    expect(half).toBeCloseTo((GAME.COLONY_START + GAME.COLONY_FULL) / 2);
+    expect(colonyRadius(GAME.COLONY_GROW_SECONDS)).toBe(GAME.COLONY_FULL);
+    expect(colonyRadius(100)).toBe(GAME.COLONY_FULL);
+    expect(colonyRadius(-1)).toBe(GAME.COLONY_START);
+  });
+});
+
+describe('the colonies', () => {
+  let layer;
+  beforeEach(() => {
+    layer = document.createElement('div');
+    document.querySelector('.agar').append(layer);
+  });
+
+  it('starts one where the spore lands, drawn small on the agar', () => {
+    const avoid = [];
+    const colonies = moldColonies({ layer, nutrients: fakeNutrients(), avoid, colors });
+    const colony = colonies.plant(0.5, -0.25);
+    expect(colonies.colonies).toEqual([colony]);
+    expect(colony.el.parentElement).toBe(layer);
+    expect(colony.el.className).toBe('colony');
+    expect(colony.el.style.left).toBe('75%');
+    expect(colony.el.style.top).toBe('37.5%');
+    expect(colony.el.style.width).toBe(`${GAME.COLONY_START * 100}%`);
+    expect(colony.el.style.getPropertyValue('--spores')).toBe(colors.spores);
+    // New nutrients keep clear of it.
+    expect(avoid).toEqual([colony]);
+    expect(colonies.grown()).toBe(0);
+  });
+
+  it("won't start one on top of another", () => {
+    const colonies = moldColonies({ layer, nutrients: fakeNutrients(), colors });
+    colonies.plant(0, 0);
+    colonies.grow(GAME.COLONY_GROW_SECONDS);
+    expect(colonies.plant(0.1, 0)).toBeNull();
+    expect(colonies.plant(0.5, 0)).not.toBeNull();
+    expect(colonies.colonies).toHaveLength(2);
+  });
+
+  it('grows out, turns green from the middle, and counts once full size', () => {
+    const colonies = moldColonies({ layer, nutrients: fakeNutrients(), colors });
+    const colony = colonies.plant(0, 0);
+    expect(colonies.grow(GAME.COLONY_GROW_SECONDS / 2)).toBe(0);
+    expect(colony.r).toBeCloseTo(colonyRadius(GAME.COLONY_GROW_SECONDS / 2));
+    expect(colony.el.style.getPropertyValue('--ripe')).toBe('43%');
+    expect(colonies.grown()).toBe(0);
+    expect(colonies.grow(GAME.COLONY_GROW_SECONDS / 2)).toBe(1);
+    expect(colony.grown).toBe(true);
+    expect(colony.el.classList.contains('grown')).toBe(true);
+    expect(colony.el.style.width).toBe(`${GAME.COLONY_FULL * 100}%`);
+    expect(colonies.grown()).toBe(1);
+    // Fully grown, it stays that size.
+    expect(colonies.grow(1)).toBe(0);
+    expect(colony.r).toBe(GAME.COLONY_FULL);
+  });
+
+  it('covers up the nutrients it grows over', () => {
+    const nutrients = fakeNutrients([[0.1, 0], [0.6, 0]]);
+    const colonies = moldColonies({ layer, nutrients, colors });
+    colonies.plant(0, 0);
+    colonies.grow(0);
+    expect(nutrients.flecks).toHaveLength(2);
+    colonies.grow(GAME.COLONY_GROW_SECONDS);
+    expect(nutrients.flecks).toEqual([[0.6, 0]]);
+  });
+
+  it('dies if it touches a disk or its zone, and pops and fades away', () => {
+    const avoid = [];
+    const disks = [disk(0.5, 0)];
+    const colonies = moldColonies({ layer, disks, nutrients: fakeNutrients(), avoid, colors });
+    const safe = colonies.plant(-0.5, 0);
+    const doomed = colonies.plant(0.3, 0);
+    // Still small: clear of the zone (which starts at 0.5 - 0.08 - 0.05).
+    expect(colonies.killInZones(200)).toBe(0);
+    colonies.grow(GAME.COLONY_GROW_SECONDS);
+    expect(colonies.killInZones(200)).toBe(1);
+    expect(colonies.colonies).toEqual([safe]);
+    expect(avoid).toEqual([safe]);
+    expect(doomed.el.classList.contains('dying')).toBe(true);
+    // A pop ring, sized and placed in px.
+    const pop = layer.parentElement.querySelector('.pop');
+    expect(pop.style.width).toBe(`${2 * GAME.COLONY_FULL * 200}px`);
+    expect(pop.style.left).toBe(`calc(50% + ${0.3 * 200}px)`);
+    // Gone once it has faded, or after a moment if the animation never runs.
+    doomed.el.dispatchEvent(new Event('animationend'));
+    expect(doomed.el.isConnected).toBe(false);
+    vi.runAllTimers();
+  });
+
+  it("dies to a zone that spreads out to it, even when it's grown", () => {
+    const d = disk(0.5, 0, 0);
+    const colonies = moldColonies({ layer, disks: [d], nutrients: fakeNutrients(), colors });
+    const colony = colonies.plant(0.15, 0);
+    colonies.grow(GAME.COLONY_GROW_SECONDS);
+    expect(colonies.killInZones(200)).toBe(0);
+    d.zone = 0.15;
+    expect(colonies.killInZones(200)).toBe(1);
+    vi.runAllTimers();
+    expect(colony.el.isConnected).toBe(false);
+  });
+});
+
+describe('the spore', () => {
+  it('is one small round cell that stays in the dish', () => {
+    const agar = document.querySelector('.agar');
+    const mover = document.querySelector('.pal-mover');
+    vi.spyOn(agar, 'clientWidth', 'get').mockReturnValue(400);
+    vi.spyOn(mover, 'offsetWidth', 'get').mockReturnValue(20);
+    const spore = sporeGroup({ mover, agar });
+    spore.x = 30;
+    spore.y = -10;
+    expect(spore.body()).toEqual([[30, -10, 8.5]]);
+    spore.facing = -1;
+    spore.place();
+    expect(mover.style.transform).toBe('translate(30px, -10px) scaleX(-1)');
+    // Past the rim, she's kept just inside it.
+    spore.x = 500;
+    spore.y = 0;
+    spore.place();
+    expect([spore.x, spore.y]).toEqual([190, 0]);
+  });
+});
+
+describe('playing as a mold', () => {
+  let frames;
+  let now;
+  let agar;
+  let mover;
+
+  // Start a level as Fumi, with nutrient flecks at `spots`.
+  function start({ level = 1, target = LEVELS[level - 1].colonies, disks = [], spots = [], avoid } = {}) {
+    frames = [];
+    now = 0;
+    vi.stubGlobal('requestAnimationFrame', (run) => frames.push(run));
+    vi.stubGlobal('location', { href: 'http://localhost/petri-dish.html?pal=fumi&level=1' });
+    agar = document.querySelector('.agar');
+    mover = document.querySelector('.pal-mover');
+    vi.spyOn(agar, 'clientWidth', 'get').mockReturnValue(400);
+    vi.spyOn(mover, 'offsetWidth', 'get').mockReturnValue(20);
+    const palEl = document.createElement('div');
+    palEl.dataset.pal = 'fumi';
+    palEl.dataset.name = 'Fumi';
+    const nutrients = fakeNutrients(spots);
+    playMold(palEl, SPECIES.fumi, nutrients, disks, { level, target, avoid });
+    return { nutrients, banner: document.querySelector('.win-banner') };
+  }
+
+  function frame(ms = 16) {
+    now += ms;
+    const waiting = frames;
+    frames = [];
+    for (const run of waiting) run(now);
+  }
+
+  // Run frames for `seconds` of play.
+  function play(seconds) {
+    for (let t = 0; t < seconds; t += 0.05) frame(50);
+  }
+
+  const counter = () => document.querySelector('.cell-count').textContent;
+  const colonyEls = () => [...agar.querySelectorAll('.colonies .colony')];
+
+  it('counts colonies instead of cells, and puts the target in the directions', () => {
+    start({ level: 3 });
+    expect(counter()).toBe('Level 3 · 0 / 4 colonies');
+    expect(document.querySelector('.target-colonies').textContent).toBe('4');
+    expect(mover.classList.contains('spore')).toBe(true);
+    // Colonies grow on a layer under everything else on the agar.
+    expect(agar.firstElementChild.className).toBe('colonies');
+  });
+
+  it('defaults to level 1', () => {
+    vi.stubGlobal('requestAnimationFrame', () => {});
+    playMold(document.createElement('div'), SPECIES.fumi, fakeNutrients(), []);
+    expect(document.querySelector('.cell-count').textContent).toBe('Level 1 · 0 / 2 colonies');
+  });
+
+  it('floats with the arrow keys, a little faster than a yeast swims', () => {
+    start();
+    frame(); // first frame: no time has passed
+    fake.keys = [1, 0];
+    frame(50);
+    expect(mover.style.transform).toBe(`translate(${GAME.SPORE_SPEED * 200 * 0.05}px, 0px) scaleX(1)`);
+  });
+
+  it('starts a colony when she lands on a nutrient, and counts it once it has grown', () => {
+    const { banner } = start({ spots: [[0, 0]], target: 2 });
+    frame();
+    expect(colonyEls()).toHaveLength(1);
+    expect(counter()).toBe('Level 1 · 0 / 2 colonies · 1 growing');
+    play(GAME.COLONY_GROW_SECONDS + 0.1);
+    expect(counter()).toBe('Level 1 · 1 / 2 colonies');
+    expect(banner.hidden).toBe(true);
+  });
+
+  it('keeps her colonies on the list new nutrients avoid', () => {
+    const avoid = [];
+    start({ spots: [[0, 0]], avoid });
+    frame();
+    expect(avoid).toHaveLength(1);
+  });
+
+  it('wins the level once enough colonies have grown', () => {
+    const { banner, nutrients } = start({ spots: [[0, 0]], target: 1, level: 2 });
+    frame();
+    play(GAME.COLONY_GROW_SECONDS + 0.1);
+    expect(nutrients.stop).toHaveBeenCalled();
+    expect(sporeBurst).toHaveBeenCalledWith(mover, { big: false });
+    vi.runAllTimers();
+    expect(banner.hidden).toBe(false);
+    expect(banner.querySelector('h2').textContent).toBe('Level 2 complete!');
+    expect(banner.querySelector('.win-message').textContent).toBe('You grew 1 colony!');
+    expect(banner.querySelector('.play-again').textContent).toBe('Play level 3');
+    expect(track).toHaveBeenCalledWith('level-complete/fumi/level-2', 'Fumi finished level 2');
+    // Play stops: the counter stays put.
+    frame(50);
+    expect(counter()).toBe('Level 2 · 1 / 1 colony');
+  });
+
+  it('wins the whole game on the last level', () => {
+    const { banner } = start({ spots: [[0, 0]], target: 1, level: LEVELS.length });
+    frame();
+    play(GAME.COLONY_GROW_SECONDS + 0.1);
+    vi.runAllTimers();
+    expect(sporeBurst).toHaveBeenCalledWith(mover, { big: true });
+    expect(banner.querySelector('h2').textContent).toBe('You won!');
+    expect(banner.querySelector('.win-message').textContent)
+      .toBe(`You beat all ${LEVELS.length} levels with 1 colony!`);
+    expect(banner.querySelector('.play-again').textContent).toBe('Play again');
+    expect(track).toHaveBeenCalledWith('won-all-levels/fumi', 'Fumi beat every level');
+  });
+
+  it('loses a colony that grows into a zone', () => {
+    const { banner } = start({ spots: [[0, 0]], disks: [disk(0.25, 0, 0.03)], target: 1 });
+    frame();
+    play(GAME.COLONY_GROW_SECONDS + 0.1);
+    expect(colonyEls().filter((el) => !el.classList.contains('dying'))).toHaveLength(0);
+    expect(counter()).toBe('Level 1 · 0 / 1 colony');
+    vi.runAllTimers();
+    expect(banner.hidden).toBe(true);
+  });
+
+  it('is game over when the spore touches a disk or its zone', () => {
+    const { banner, nutrients } = start({ level: 2, disks: [disk(0, 0)] });
+    frame();
+    expect(mover.classList.contains('killed')).toBe(true);
+    expect(nutrients.stop).toHaveBeenCalled();
+    vi.runAllTimers();
+    expect(banner.querySelector('h2').textContent).toBe('Game over');
+    expect(banner.querySelector('.win-message').textContent)
+      .toBe('Fumi swam into the voriconazole zone of inhibition. Antifungals kill fungi!');
+    expect(banner.querySelector('.play-again').textContent).toBe('Try level 2 again');
+    expect(banner.querySelector('.start-over').hidden).toBe(false);
+    expect(track).toHaveBeenCalledWith('game-over/fumi/level-2/VOR', 'Fumi hit voriconazole on level 2');
+  });
+});

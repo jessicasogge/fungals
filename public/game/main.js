@@ -5,6 +5,7 @@ import { antifungalsFor, placeAntifungals } from './antifungal.js';
 import { LEVELS, SPECIES } from './config.js';
 import { playGame } from './game.js';
 import { speciesName } from './italics.js';
+import { playMold } from './mold.js';
 import { pageReady, watchLoading } from './loading.js';
 import { scatterNutrients } from './nutrients.js';
 import { dishPal, PALS } from './pals.js';
@@ -46,6 +47,18 @@ function start() {
   title.style.color = species.color;
   document.querySelector('.species-name').replaceChildren(...speciesName(species.scientific));
   const disks = placeAntifungals(antifungalsFor(species.antifungals, level.disks));
-  const nutrients = scatterNutrients({ avoid: disks });
-  playGame(pal, species, nutrients, disks, { level: levelNumber, target: level.target });
+  // New nutrient flecks keep clear of the disks (and, for a mold, of her
+  // colonies, which join this list as they grow).
+  const avoid = [...disks];
+  const nutrients = scatterNutrients({ avoid });
+  // A mold plays as a spore planting colonies, with its own directions.
+  const mold = species.kind === 'mold';
+  for (const how of document.querySelectorAll('.how-to-play')) {
+    how.hidden = how.classList.contains('for-mold') !== mold;
+  }
+  if (mold) {
+    playMold(pal, species, nutrients, disks, { level: levelNumber, target: level.colonies, avoid });
+  } else {
+    playGame(pal, species, nutrients, disks, { level: levelNumber, target: level.target });
+  }
 }

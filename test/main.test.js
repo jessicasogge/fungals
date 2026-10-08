@@ -10,6 +10,7 @@ import { LEVELS, SPECIES } from '../public/game/config.js';
 
 // Don't run the real game loop; just record how the game was started.
 vi.mock('../public/game/game.js', () => ({ playGame: vi.fn() }));
+vi.mock('../public/game/mold.js', () => ({ playMold: vi.fn() }));
 
 // (jsdom changes import.meta.url to a web address, so find the file from the project folder.)
 const page = readFileSync(resolve(process.cwd(), 'public/petri-dish.html'), 'utf8');
@@ -59,12 +60,50 @@ describe('picking the pal', () => {
     expect(document.title).toBe('FunGals | Sasha | Level 3');
   });
 
-  it.each(Object.keys(SPECIES))('starts the game for %s with her own species settings', async (pal) => {
+  const YEASTS = Object.keys(SPECIES).filter((pal) => SPECIES[pal].kind === 'yeast');
+  it.each(YEASTS)('starts the game for %s with her own species settings', async (pal) => {
     const playGame = await open(`?pal=${pal}`);
     expect(playGame).toHaveBeenCalledTimes(1);
     const [palEl, species] = playGame.mock.calls[0];
     expect(palEl.dataset.pal).toBe(pal);
     expect(species).toEqual(SPECIES[pal]);
+  });
+});
+
+describe('a mold', () => {
+  async function openMold(search) {
+    await open(search);
+    const { playMold } = await import('../public/game/mold.js');
+    return playMold;
+  }
+
+  it('starts the mold game for Fumi, not the yeast one', async () => {
+    const playMold = await openMold('?pal=fumi');
+    const { playGame } = await import('../public/game/game.js');
+    expect(playGame).not.toHaveBeenCalled();
+    expect(playMold).toHaveBeenCalledTimes(1);
+    const [palEl, species] = playMold.mock.calls[0];
+    expect(palEl.dataset.pal).toBe('fumi');
+    expect(species).toEqual(SPECIES.fumi);
+  });
+
+  it('aims for that level\'s number of colonies, not cells', async () => {
+    const playMold = await openMold('?pal=fumi&level=3');
+    const options = playMold.mock.calls[0][4];
+    expect(options.level).toBe(3);
+    expect(options.target).toBe(LEVELS[2].colonies);
+    // Her colonies join the list new nutrients keep clear of, which starts
+    // with the disks.
+    expect(options.avoid).toEqual(playMold.mock.calls[0][3]);
+  });
+
+  it('shows the mold directions, and the yeast ones for a yeast', async () => {
+    const shown = () => [...document.querySelectorAll('.how-to-play')]
+      .filter((p) => !p.hidden).map((p) => p.classList.contains('for-mold'));
+    await openMold('?pal=fumi');
+    expect(shown()).toEqual([true]);
+    await open('?pal=sasha');
+    expect(shown()).toEqual([false]);
   });
 });
 

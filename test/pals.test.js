@@ -105,6 +105,20 @@ describe('her drawing', () => {
     expect(svg.dataset).toMatchObject({ pal: 'sasha', name: 'Sasha' });
     expect(svg.hasAttribute('hidden')).toBe(true);
   });
+
+  it("is a mold's spore in the dish, and her whole mold everywhere else", () => {
+    const fumi = palById('fumi');
+    // In the dish she's one round spore, with her face.
+    const spore = dishPal(fumi);
+    expect(spore.querySelector('.face')).not.toBeNull();
+    expect(spore.querySelectorAll('circle[r="42"]')).toHaveLength(1);
+    expect(spore.querySelector('rect')).toBeNull();
+    // On the picker and home page, her stalk, head and chains of spores.
+    for (const svg of [palTile(fumi).firstChild, homePal(fumi)]) {
+      expect(svg.querySelector('rect')).not.toBeNull();
+      expect(svg.querySelectorAll('circle[r="7"]').length).toBeGreaterThan(10);
+    }
+  });
 });
 
 describe('moving parts', () => {
@@ -162,8 +176,8 @@ describe('the pages', () => {
     await open('index.html', 'script.js');
     const labels = [...document.querySelectorAll('.friends svg')].map((s) => s.getAttribute('aria-label'));
     expect(labels).toEqual(HOME_PALS.map((pal) => `${pal.name}, ${pal.looks}`));
-    // Every pal, each once, with Olive in the middle.
-    expect(HOME_PALS.map((pal) => pal.id)).toEqual(['sasha', 'olive', 'candi']);
+    // Every pal, each once: the yeasts with Olive in the middle, then Fumi.
+    expect(HOME_PALS.map((pal) => pal.id)).toEqual(['sasha', 'olive', 'candi', 'fumi']);
     expect([...HOME_PALS].sort((a, b) => a.id.localeCompare(b.id))).toEqual(
       [...PALS].sort((a, b) => a.id.localeCompare(b.id)));
   });
