@@ -181,7 +181,7 @@ export const GAME = {
   // sprouts BRANCH_ANGLE off her thread and grows BRANCH_LENGTH at
   // BRANCH_SPEED, stopping at HYPHA_RIM. A new point goes on a thread every
   // HYPHA_POINT.
-  HYPHA_WIDTH: 0.06,
+  HYPHA_WIDTH: 0.02,
   TIP_SIZE: 0.1,
   BRANCH_ANGLE: Math.PI / 4,
   BRANCH_LENGTH: 0.14,

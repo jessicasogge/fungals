@@ -210,11 +210,11 @@ export function threadLayer(agar, colors) {
       });
       // Each wall: a bold bar straight across the thread.
       ctx.strokeStyle = colors.stroke;
-      ctx.lineWidth = Math.max(2, width * 0.3);
+      ctx.lineWidth = Math.max(1.5, width * 0.45);
       ctx.lineCap = 'butt';
       for (const g of groups) {
         for (const [x, y, angle] of g.walls) {
-          const reach = GAME.HYPHA_WIDTH * 0.6;
+          const reach = GAME.HYPHA_WIDTH * 1.3; // sticks out past the thin thread, so it shows
           const [nx, ny] = [-Math.sin(angle) * reach, Math.cos(angle) * reach];
           ctx.beginPath();
           ctx.moveTo(...at([x + nx, y + ny]));
