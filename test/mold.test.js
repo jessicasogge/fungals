@@ -80,8 +80,7 @@ describe('the colonies', () => {
   });
 
   it('starts one where the spore lands, drawn small on the agar', () => {
-    const avoid = [];
-    const colonies = moldColonies({ layer, nutrients: fakeNutrients(), avoid, colors });
+    const colonies = moldColonies({ layer, nutrients: fakeNutrients(), colors });
     const colony = colonies.plant(0.5, -0.25);
     expect(colonies.colonies).toEqual([colony]);
     expect(colony.el.parentElement).toBe(layer);
@@ -90,8 +89,6 @@ describe('the colonies', () => {
     expect(colony.el.style.top).toBe('37.5%');
     expect(colony.el.style.width).toBe(`${GAME.COLONY_START * 100}%`);
     expect(colony.el.style.getPropertyValue('--spores')).toBe(colors.spores);
-    // New nutrients keep clear of it.
-    expect(avoid).toEqual([colony]);
     // It counts right away.
     expect(colonies.count()).toBe(1);
   });
@@ -134,9 +131,8 @@ describe('the colonies', () => {
   });
 
   it('pops, the whole colony at once, if it touches a disk or its zone', () => {
-    const avoid = [];
     const disks = [disk(0.5, 0)];
-    const colonies = moldColonies({ layer, disks, nutrients: fakeNutrients(), avoid, colors });
+    const colonies = moldColonies({ layer, disks, nutrients: fakeNutrients(), colors });
     const safe = colonies.plant(-0.5, 0);
     const doomed = colonies.plant(0.3, 0);
     // Still small: clear of the zone (which starts at 0.5 - 0.08 - 0.05).
@@ -144,7 +140,6 @@ describe('the colonies', () => {
     colonies.grow(GAME.COLONY_GROW_SECONDS);
     expect(colonies.killInZones(200)).toBe(1);
     expect(colonies.colonies).toEqual([safe]);
-    expect(avoid).toEqual([safe]);
     expect(doomed.el.classList.contains('dying')).toBe(true);
     // A pop ring, sized and placed in px.
     const pop = layer.parentElement.querySelector('.pop');
@@ -197,7 +192,7 @@ describe('playing as a mold', () => {
   let mover;
 
   // Start a level as Fumi, with nutrient flecks at `spots`.
-  function start({ level = 1, target = LEVELS[level - 1].colonies, disks = [], spots = [], avoid } = {}) {
+  function start({ level = 1, target = LEVELS[level - 1].colonies, disks = [], spots = [] } = {}) {
     frames = [];
     now = 0;
     vi.stubGlobal('requestAnimationFrame', (run) => frames.push(run));
@@ -210,7 +205,7 @@ describe('playing as a mold', () => {
     palEl.dataset.pal = 'fumi';
     palEl.dataset.name = 'Fumi';
     const nutrients = fakeNutrients(spots);
-    playMold(palEl, SPECIES.fumi, nutrients, disks, { level, target, avoid });
+    playMold(palEl, SPECIES.fumi, nutrients, disks, { level, target });
     return { nutrients, banner: document.querySelector('.win-banner') };
   }
 
@@ -262,11 +257,18 @@ describe('playing as a mold', () => {
     expect(banner.hidden).toBe(true);
   });
 
-  it('keeps her colonies on the list new nutrients avoid', () => {
-    const avoid = [];
-    start({ spots: [[0, 0]], avoid });
+  it('starts a colony right away from a nutrient that turns up under a colony', () => {
+    const { nutrients } = start({ spots: [[0, 0]], target: 3 });
     frame();
-    expect(avoid).toHaveLength(1);
+    // Float away from it, then a fleck appears inside the colony's edge.
+    fake.keys = [1, 0];
+    play(1);
+    fake.keys = [0, 0];
+    nutrients.flecks.push([-0.05, 0]);
+    frame(50);
+    expect(nutrients.flecks).toEqual([]);
+    expect(colonyEls()).toHaveLength(2);
+    expect(colonyEls()[1].style.left).toBe(`${50 - 0.05 * 50}%`);
   });
 
   it("grows the colony out from exactly where the nutrient was, not from her middle", () => {

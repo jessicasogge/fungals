@@ -26,11 +26,11 @@ export function colonyRadius(seconds) {
 }
 
 // The colonies in the dish. `layer` is where they're drawn, `nutrients` the
-// flecks they cover up as they spread, `avoid` the list new nutrient flecks
-// keep clear of (colonies join it while they're alive), and `colors` the
-// pal's colors (`spores` is the green they turn). Positions and sizes are in
-// fractions of the dish radius, like the disks.
-export function moldColonies({ layer, disks = [], nutrients, avoid = [], colors }) {
+// flecks that start new colonies when one spreads over them (new flecks can
+// turn up under a colony too), and `colors` the pal's colors (`spores` is
+// the green in their middles). Positions and sizes are in fractions of the
+// dish radius, like the disks.
+export function moldColonies({ layer, disks = [], nutrients, colors }) {
   const colonies = [];
 
   function draw(colony) {
@@ -46,7 +46,6 @@ export function moldColonies({ layer, disks = [], nutrients, avoid = [], colors 
 
   function remove(colony) {
     colonies.splice(colonies.indexOf(colony), 1);
-    avoid.splice(avoid.indexOf(colony), 1);
   }
 
   const api = {
@@ -69,7 +68,6 @@ export function moldColonies({ layer, disks = [], nutrients, avoid = [], colors 
       draw(colony);
       layer.appendChild(el);
       colonies.push(colony);
-      avoid.push(colony);
       return colony;
     },
 
@@ -133,8 +131,7 @@ const colonyCount = (n) => `${n} ${n === 1 ? 'colony' : 'colonies'}`;
 
 // The mold game loop: like the yeast game (game.js), but you plant colonies
 // instead of budding, and `target` is how many colonies win the level.
-// `avoid` is the list new nutrient flecks keep clear of (see main.js).
-export function playMold(palEl, species, nutrients, disks, { level = 1, target = LEVELS[0].colonies, avoid = [] } = {}) {
+export function playMold(palEl, species, nutrients, disks, { level = 1, target = LEVELS[0].colonies } = {}) {
   const agar = document.querySelector('.agar');
   const counter = document.querySelector('.cell-count');
   const dishRadius = () => agar.clientWidth / 2;
@@ -148,7 +145,7 @@ export function playMold(palEl, species, nutrients, disks, { level = 1, target =
   const layer = document.createElement('div');
   layer.className = 'colonies';
   agar.prepend(layer);
-  const colonies = moldColonies({ layer, disks, nutrients, avoid, colors: species.colors });
+  const colonies = moldColonies({ layer, disks, nutrients, colors: species.colors });
 
   let finished = false;
   let lastTime = null;

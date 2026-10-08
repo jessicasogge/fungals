@@ -92,9 +92,6 @@ describe('a mold', () => {
     const options = playMold.mock.calls[0][4];
     expect(options.level).toBe(3);
     expect(options.target).toBe(LEVELS[2].colonies);
-    // Her colonies join the list new nutrients keep clear of, which starts
-    // with the disks.
-    expect(options.avoid).toEqual(playMold.mock.calls[0][3]);
   });
 
   it('puts out fewer nutrients for a mold than for a yeast', async () => {

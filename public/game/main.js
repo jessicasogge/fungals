@@ -47,18 +47,17 @@ function start() {
   title.style.color = species.color;
   document.querySelector('.species-name').replaceChildren(...speciesName(species.scientific));
   const disks = placeAntifungals(antifungalsFor(species.antifungals, level.disks));
-  // New nutrient flecks keep clear of the disks (and, for a mold, of her
-  // colonies, which join this list as they grow).
-  const avoid = [...disks];
   // A mold plays as a spore planting colonies, with fewer nutrients (each
-  // one is a whole colony) and its own directions.
+  // one is a whole colony) and its own directions. Nutrient flecks keep
+  // clear of the disks, but can turn up under a mold's colonies, where they
+  // start new ones.
   const mold = species.kind === 'mold';
-  const nutrients = scatterNutrients(mold ? { avoid, count: GAME.MOLD_NUTRIENTS } : { avoid });
+  const nutrients = scatterNutrients(mold ? { avoid: disks, count: GAME.MOLD_NUTRIENTS } : { avoid: disks });
   for (const how of document.querySelectorAll('.how-to-play')) {
     how.hidden = how.classList.contains('for-mold') !== mold;
   }
   if (mold) {
-    playMold(pal, species, nutrients, disks, { level: levelNumber, target: level.colonies, avoid });
+    playMold(pal, species, nutrients, disks, { level: levelNumber, target: level.colonies });
   } else {
     playGame(pal, species, nutrients, disks, { level: levelNumber, target: level.target });
   }
