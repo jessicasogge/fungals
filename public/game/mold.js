@@ -1,11 +1,11 @@
 // Molds (Fumi, Aspergillus fumigatus). Instead of budding, you're one of her
 // spores floating over the agar. Land on a nutrient and a spore germinates
 // there: a colony starts small and spreads out in a circle, the way mold
-// colonies grow on a real plate, as threads (hyphae) grow from its edge. It
-// starts white and fluffy and turns smoky green from the middle out as it
-// makes spores, and counts once it's fully grown. Grow enough colonies to
-// beat the level. A colony that touches an antifungal disk, or the zone of
-// inhibition around it, dies; the spore touching one is game over.
+// colonies grow on a real plate, as threads (hyphae) grow from its edge. It's
+// white and fluffy, with a greenish middle where it's started making spores,
+// and counts as soon as it starts. Start enough colonies to beat the level.
+// A colony that touches an antifungal disk, or the zone of inhibition around
+// it, pops, the whole colony at once; the spore touching one is game over.
 import { spreadZones, touchedDisk, touchesDisk, touchMessage } from './antifungal.js';
 import { levelBanner } from './banner.js';
 import { showPop } from './colony.js';
@@ -38,9 +38,10 @@ export function moldColonies({ layer, disks = [], nutrients, avoid = [], colors 
     el.style.left = `${50 + fx * 50}%`;
     el.style.top = `${50 + fy * 50}%`;
     el.style.width = `${r * 100}%`;
-    // The green, sporing middle spreads out behind the white growing edge.
+    // The greenish, sporing middle spreads out a little as it grows; the
+    // rest stays white and fluffy.
     const ripe = Math.min(1, colony.age / GAME.COLONY_GROW_SECONDS);
-    el.style.setProperty('--ripe', `${Math.round(ripe * 85)}%`);
+    el.style.setProperty('--ripe', `${Math.round(ripe * 40)}%`);
   }
 
   function remove(colony) {
@@ -50,8 +51,8 @@ export function moldColonies({ layer, disks = [], nutrients, avoid = [], colors 
 
   return {
     colonies,
-    // How many colonies are fully grown.
-    grown: () => colonies.filter((c) => c.grown).length,
+    // How many colonies there are: each counts as soon as it starts.
+    count: () => colonies.length,
 
     // A spore germinates at (fx, fy) and starts a colony, unless that spot is
     // already covered by one. Returns the new colony, or null.
@@ -65,7 +66,7 @@ export function moldColonies({ layer, disks = [], nutrients, avoid = [], colors 
       const wobble = () => `${47 + Math.random() * 6}%`;
       el.style.borderRadius =
         `${wobble()} ${wobble()} ${wobble()} ${wobble()} / ${wobble()} ${wobble()} ${wobble()} ${wobble()}`;
-      const colony = { fx, fy, r: colonyRadius(0), age: 0, grown: false, el };
+      const colony = { fx, fy, r: colonyRadius(0), age: 0, el };
       draw(colony);
       layer.appendChild(el);
       colonies.push(colony);
@@ -74,27 +75,20 @@ export function moldColonies({ layer, disks = [], nutrients, avoid = [], colors 
     },
 
     // Spread every colony for `seconds`, and cover up (eat) any nutrient
-    // flecks they've grown over. Returns how many colonies just finished.
+    // flecks they've grown over. A full-size colony stays that size.
     grow(seconds) {
-      let finished = 0;
       for (const colony of colonies) {
-        if (!colony.grown) {
+        if (colony.age < GAME.COLONY_GROW_SECONDS) {
           colony.age += seconds;
           colony.r = colonyRadius(colony.age);
-          if (colony.age >= GAME.COLONY_GROW_SECONDS) {
-            colony.grown = true;
-            colony.el.classList.add('grown');
-            finished++;
-          }
           draw(colony);
         }
         nutrients.eatNear(colony.fx, colony.fy, colony.r);
       }
-      return finished;
     },
 
-    // Any colony touching an antifungal disk or its zone dies: it pops and
-    // fades away. `radius` is the dish radius in px, for the pop. Returns
+    // Any colony touching an antifungal disk or its zone dies: the whole
+    // colony pops at once. `radius` is the dish radius in px, for the pop. Returns
     // how many died.
     killInZones(radius) {
       let died = 0;
@@ -137,7 +131,7 @@ export function sporeGroup({ mover, agar }) {
 const colonyCount = (n) => `${n} ${n === 1 ? 'colony' : 'colonies'}`;
 
 // The mold game loop: like the yeast game (game.js), but you plant colonies
-// instead of budding, and `target` is how many grown colonies win the level.
+// instead of budding, and `target` is how many colonies win the level.
 // `avoid` is the list new nutrient flecks keep clear of (see main.js).
 export function playMold(palEl, species, nutrients, disks, { level = 1, target = LEVELS[0].colonies, avoid = [] } = {}) {
   const agar = document.querySelector('.agar');
@@ -163,10 +157,8 @@ export function playMold(palEl, species, nutrients, disks, { level = 1, target =
   const banner = levelBanner(level);
 
   function updateCounter() {
-    const shown = Math.min(colonies.grown(), target);
-    const growing = colonies.colonies.length - colonies.grown();
-    counter.textContent = `Level ${level} · ${shown} / ${colonyCount(target)}` +
-      (growing > 0 && !finished ? ` · ${growing} growing` : '');
+    const shown = Math.min(colonies.count(), target);
+    counter.textContent = `Level ${level} · ${shown} / ${colonyCount(target)}`;
   }
 
   function stop() {
@@ -197,9 +189,8 @@ export function playMold(palEl, species, nutrients, disks, { level = 1, target =
         // Landing on a nutrient: one of her spores germinates right there.
         const [[x, y, r]] = spore.body();
         if (nutrients.eatNear(x / radius, y / radius, r / radius) > 0) colonies.plant(x / radius, y / radius);
-        colonies.grow(seconds);
         colonies.killInZones(radius);
-        if (colonies.grown() >= target) {
+        if (colonies.count() >= target) {
           stop();
           sporeBurst(playerMover, { big: level === LEVELS.length });
           setTimeout(showWin, 400);
@@ -207,6 +198,8 @@ export function playMold(palEl, species, nutrients, disks, { level = 1, target =
       }
       updateCounter();
     }
+    // Colonies keep spreading, even after the level ends.
+    colonies.grow(seconds);
 
     requestAnimationFrame(step);
   }

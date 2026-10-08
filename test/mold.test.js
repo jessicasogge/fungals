@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 // mold.js: Fumi's game. She's a spore; every nutrient she lands on starts a
 // colony that spreads out in a circle, dies if it touches an antifungal disk
-// or its zone, and counts once it's fully grown. These tests load the real
+// or its zone, and counts as soon as it starts. These tests load the real
 // petri dish page into jsdom and stand in for the steering and effects.
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
@@ -90,7 +90,8 @@ describe('the colonies', () => {
     expect(colony.el.style.getPropertyValue('--spores')).toBe(colors.spores);
     // New nutrients keep clear of it.
     expect(avoid).toEqual([colony]);
-    expect(colonies.grown()).toBe(0);
+    // It counts right away.
+    expect(colonies.count()).toBe(1);
   });
 
   it("won't start one on top of another", () => {
@@ -102,20 +103,17 @@ describe('the colonies', () => {
     expect(colonies.colonies).toHaveLength(2);
   });
 
-  it('grows out, turns green from the middle, and counts once full size', () => {
+  it('grows out, greenish only in the middle, then stays full size', () => {
     const colonies = moldColonies({ layer, nutrients: fakeNutrients(), colors });
     const colony = colonies.plant(0, 0);
-    expect(colonies.grow(GAME.COLONY_GROW_SECONDS / 2)).toBe(0);
+    colonies.grow(GAME.COLONY_GROW_SECONDS / 2);
     expect(colony.r).toBeCloseTo(colonyRadius(GAME.COLONY_GROW_SECONDS / 2));
-    expect(colony.el.style.getPropertyValue('--ripe')).toBe('43%');
-    expect(colonies.grown()).toBe(0);
-    expect(colonies.grow(GAME.COLONY_GROW_SECONDS / 2)).toBe(1);
-    expect(colony.grown).toBe(true);
-    expect(colony.el.classList.contains('grown')).toBe(true);
+    expect(colony.el.style.getPropertyValue('--ripe')).toBe('20%');
+    colonies.grow(GAME.COLONY_GROW_SECONDS / 2);
     expect(colony.el.style.width).toBe(`${GAME.COLONY_FULL * 100}%`);
-    expect(colonies.grown()).toBe(1);
-    // Fully grown, it stays that size.
-    expect(colonies.grow(1)).toBe(0);
+    // The green never covers more than the middle.
+    expect(colony.el.style.getPropertyValue('--ripe')).toBe('40%');
+    colonies.grow(1);
     expect(colony.r).toBe(GAME.COLONY_FULL);
   });
 
@@ -129,7 +127,7 @@ describe('the colonies', () => {
     expect(nutrients.flecks).toEqual([[0.6, 0]]);
   });
 
-  it('dies if it touches a disk or its zone, and pops and fades away', () => {
+  it('pops, the whole colony at once, if it touches a disk or its zone', () => {
     const avoid = [];
     const disks = [disk(0.5, 0)];
     const colonies = moldColonies({ layer, disks, nutrients: fakeNutrients(), avoid, colors });
@@ -248,11 +246,11 @@ describe('playing as a mold', () => {
     expect(mover.style.transform).toBe(`translate(${GAME.SPORE_SPEED * 200 * 0.05}px, 0px) scaleX(1)`);
   });
 
-  it('starts a colony when she lands on a nutrient, and counts it once it has grown', () => {
+  it('starts a colony when she lands on a nutrient, and counts it right away', () => {
     const { banner } = start({ spots: [[0, 0]], target: 2 });
     frame();
     expect(colonyEls()).toHaveLength(1);
-    expect(counter()).toBe('Level 1 · 0 / 2 colonies · 1 growing');
+    expect(counter()).toBe('Level 1 · 1 / 2 colonies');
     play(GAME.COLONY_GROW_SECONDS + 0.1);
     expect(counter()).toBe('Level 1 · 1 / 2 colonies');
     expect(banner.hidden).toBe(true);
@@ -265,10 +263,9 @@ describe('playing as a mold', () => {
     expect(avoid).toHaveLength(1);
   });
 
-  it('wins the level once enough colonies have grown', () => {
+  it('wins the level as soon as enough colonies have started', () => {
     const { banner, nutrients } = start({ spots: [[0, 0]], target: 1, level: 2 });
     frame();
-    play(GAME.COLONY_GROW_SECONDS + 0.1);
     expect(nutrients.stop).toHaveBeenCalled();
     expect(sporeBurst).toHaveBeenCalledWith(mover, { big: false });
     vi.runAllTimers();
@@ -277,15 +274,17 @@ describe('playing as a mold', () => {
     expect(banner.querySelector('.win-message').textContent).toBe('You grew 1 colony!');
     expect(banner.querySelector('.play-again').textContent).toBe('Play level 3');
     expect(track).toHaveBeenCalledWith('level-complete/fumi/level-2', 'Fumi finished level 2');
-    // Play stops: the counter stays put.
+    // Play stops (the counter stays put), but the colonies keep spreading.
+    const [colony] = colonyEls();
+    const width = colony.style.width;
     frame(50);
     expect(counter()).toBe('Level 2 · 1 / 1 colony');
+    expect(colony.style.width).not.toBe(width);
   });
 
   it('wins the whole game on the last level', () => {
     const { banner } = start({ spots: [[0, 0]], target: 1, level: LEVELS.length });
     frame();
-    play(GAME.COLONY_GROW_SECONDS + 0.1);
     vi.runAllTimers();
     expect(sporeBurst).toHaveBeenCalledWith(mover, { big: true });
     expect(banner.querySelector('h2').textContent).toBe('You won!');
@@ -296,11 +295,12 @@ describe('playing as a mold', () => {
   });
 
   it('loses a colony that grows into a zone', () => {
-    const { banner } = start({ spots: [[0, 0]], disks: [disk(0.25, 0, 0.03)], target: 1 });
+    const { banner } = start({ spots: [[0, 0]], disks: [disk(0.25, 0, 0.03)], target: 2 });
     frame();
+    expect(counter()).toBe('Level 1 · 1 / 2 colonies');
     play(GAME.COLONY_GROW_SECONDS + 0.1);
     expect(colonyEls().filter((el) => !el.classList.contains('dying'))).toHaveLength(0);
-    expect(counter()).toBe('Level 1 · 0 / 1 colony');
+    expect(counter()).toBe('Level 1 · 0 / 2 colonies');
     vi.runAllTimers();
     expect(banner.hidden).toBe(true);
   });

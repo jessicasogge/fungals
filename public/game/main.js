@@ -2,7 +2,7 @@
 // URL and start the game with them:
 //   petri-dish.html?pal=sasha&level=2
 import { antifungalsFor, placeAntifungals } from './antifungal.js';
-import { LEVELS, SPECIES } from './config.js';
+import { GAME, LEVELS, SPECIES } from './config.js';
 import { playGame } from './game.js';
 import { speciesName } from './italics.js';
 import { playMold } from './mold.js';
@@ -50,9 +50,10 @@ function start() {
   // New nutrient flecks keep clear of the disks (and, for a mold, of her
   // colonies, which join this list as they grow).
   const avoid = [...disks];
-  const nutrients = scatterNutrients({ avoid });
-  // A mold plays as a spore planting colonies, with its own directions.
+  // A mold plays as a spore planting colonies, with fewer nutrients (each
+  // one is a whole colony) and its own directions.
   const mold = species.kind === 'mold';
+  const nutrients = scatterNutrients(mold ? { avoid, count: GAME.MOLD_NUTRIENTS } : { avoid });
   for (const how of document.querySelectorAll('.how-to-play')) {
     how.hidden = how.classList.contains('for-mold') !== mold;
   }

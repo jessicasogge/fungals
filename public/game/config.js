@@ -183,6 +183,7 @@ export const GAME = {
   // A colony starts at COLONY_START and spreads at a steady pace, as hyphae
   // grow from its edge, to COLONY_FULL (dish radii) over COLONY_GROW_SECONDS.
   SPORE_SPEED: 1,
+  MOLD_NUTRIENTS: 5, // flecks on the agar at a time (yeasts get 10)
   COLONY_START: 0.025,
   COLONY_FULL: 0.15,
   COLONY_GROW_SECONDS: 5,

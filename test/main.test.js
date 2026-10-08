@@ -6,7 +6,7 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { LEVELS, SPECIES } from '../public/game/config.js';
+import { GAME, LEVELS, SPECIES } from '../public/game/config.js';
 
 // Don't run the real game loop; just record how the game was started.
 vi.mock('../public/game/game.js', () => ({ playGame: vi.fn() }));
@@ -95,6 +95,15 @@ describe('a mold', () => {
     // Her colonies join the list new nutrients keep clear of, which starts
     // with the disks.
     expect(options.avoid).toEqual(playMold.mock.calls[0][3]);
+  });
+
+  it('puts out fewer nutrients for a mold than for a yeast', async () => {
+    const flecks = () => document.querySelectorAll('.nutrient').length;
+    await openMold('?pal=fumi');
+    expect(flecks()).toBeLessThanOrEqual(GAME.MOLD_NUTRIENTS);
+    expect(flecks()).toBeGreaterThan(0);
+    await open('?pal=sasha');
+    expect(flecks()).toBeGreaterThan(GAME.MOLD_NUTRIENTS);
   });
 
   it('shows the mold directions, and the yeast ones for a yeast', async () => {
