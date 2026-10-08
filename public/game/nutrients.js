@@ -14,25 +14,44 @@ export function scatterNutrients({ avoid = [], count = 10 } = {}) {
   const flecks = [];
   let stopped = false;
 
+  const RETRY_MS = 500;
+  // The strict gap is wider than any zone of inhibition; the relaxed one
+  // isn't, so then a disk's zone (as wide as it will get) is added in.
+  const zoneOf = (a, strict) => (strict ? 0 : (a.fullZone ?? a.zone ?? 0));
+
+  // A random spot for a new fleck: away from where the pal just ate (so it
+  // doesn't pop up right under her), from the other flecks, and from
+  // everything in `avoid`, with room to spare. On a crowded dish (a mold's
+  // colonies can cover most of it) there may be no such spot, so it then
+  // settles for anywhere that's just clear of `avoid`. Null only if even that
+  // can't be found.
   function randomSpot(avoidX, avoidY) {
-    for (let tries = 0; tries < 50; tries++) {
-      // Uniform over the disk, kept away from the rim.
-      const angle = Math.random() * Math.PI * 2;
-      const distance = Math.sqrt(Math.random()) * 0.82;
-      const fx = Math.cos(angle) * distance;
-      const fy = Math.sin(angle) * distance;
-      const clearOfPal = Math.hypot(fx - avoidX, fy - avoidY) > 0.3;
-      const clearOfOthers = flecks.every((f) => Math.hypot(fx - f.fx, fy - f.fy) > MIN_GAP);
-      const clearOfHazards = avoid.every((a) => Math.hypot(fx - a.fx, fy - a.fy) > a.r + MIN_GAP);
-      if (clearOfPal && clearOfOthers && clearOfHazards) return { fx, fy };
+    for (const strict of [true, false]) {
+      const gap = strict ? MIN_GAP : 0.01;
+      for (let tries = 0; tries < 100; tries++) {
+        // Uniform over the disk, kept away from the rim.
+        const angle = Math.random() * Math.PI * 2;
+        const distance = Math.sqrt(Math.random()) * 0.82;
+        const fx = Math.cos(angle) * distance;
+        const fy = Math.sin(angle) * distance;
+        const clearOfPal = !strict || Math.hypot(fx - avoidX, fy - avoidY) > 0.3;
+        const clearOfOthers = flecks.every((f) => Math.hypot(fx - f.fx, fy - f.fy) > (strict ? MIN_GAP : 0.05));
+        const clearOfHazards = avoid.every((a) => Math.hypot(fx - a.fx, fy - a.fy) > a.r + gap + zoneOf(a, strict));
+        if (clearOfPal && clearOfOthers && clearOfHazards) return { fx, fy };
+      }
     }
-    return null; // dish is crowded; skip this one
+    return null;
   }
 
+  // Add a fleck, so there are always COUNT of them. If there's no room for
+  // it right now, try again in a moment rather than losing it.
   function addFleck(avoidX, avoidY) {
     if (stopped) return;
     const spot = randomSpot(avoidX, avoidY);
-    if (!spot) return;
+    if (!spot) {
+      setTimeout(() => addFleck(avoidX, avoidY), RETRY_MS);
+      return;
+    }
     const el = document.createElement('span');
     el.className = 'nutrient';
     // Its radius as a fraction of the dish radius, matching the CSS widths.
