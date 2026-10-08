@@ -44,6 +44,7 @@ function fakeNutrients(spots = []) {
       }
       return before - flecks.length;
     }),
+    positions: () => flecks.map(([fx, fy]) => ({ fx, fy })),
     stop: vi.fn(),
   };
 }
@@ -94,13 +95,13 @@ describe('the colonies', () => {
     expect(colonies.count()).toBe(1);
   });
 
-  it("won't start one on top of another", () => {
+  it('starts one even on top of another, drawn over it', () => {
     const colonies = moldColonies({ layer, nutrients: fakeNutrients(), colors });
-    colonies.plant(0, 0);
+    const under = colonies.plant(0, 0);
     colonies.grow(GAME.COLONY_GROW_SECONDS);
-    expect(colonies.plant(0.1, 0)).toBeNull();
-    expect(colonies.plant(0.5, 0)).not.toBeNull();
-    expect(colonies.colonies).toHaveLength(2);
+    const over = colonies.plant(0.1, 0);
+    expect(colonies.colonies).toEqual([under, over]);
+    expect(layer.lastElementChild).toBe(over.el);
   });
 
   it('grows out, greenish only in the middle, then stays full size', () => {
@@ -117,14 +118,18 @@ describe('the colonies', () => {
     expect(colony.r).toBe(GAME.COLONY_FULL);
   });
 
-  it('covers up the nutrients it grows over', () => {
+  it('starts a new colony at each nutrient it grows over', () => {
     const nutrients = fakeNutrients([[0.1, 0], [0.6, 0]]);
     const colonies = moldColonies({ layer, nutrients, colors });
     colonies.plant(0, 0);
     colonies.grow(0);
     expect(nutrients.flecks).toHaveLength(2);
+    expect(colonies.count()).toBe(1);
     colonies.grow(GAME.COLONY_GROW_SECONDS);
+    // The fleck it reached is eaten, and a colony starts right where it was.
     expect(nutrients.flecks).toEqual([[0.6, 0]]);
+    expect(colonies.count()).toBe(2);
+    expect(colonies.colonies[1]).toMatchObject({ fx: 0.1, fy: 0, age: 0 });
   });
 
   it('pops, the whole colony at once, if it touches a disk or its zone', () => {
@@ -261,6 +266,27 @@ describe('playing as a mold', () => {
     start({ spots: [[0, 0]], avoid });
     frame();
     expect(avoid).toHaveLength(1);
+  });
+
+  it('starts a colony when she lands on a nutrient on top of a colony', () => {
+    const { nutrients } = start({ spots: [[0, 0]], target: 3 });
+    frame();
+    play(1);
+    // A new fleck right under her, on top of her first colony.
+    nutrients.flecks.push([0, 0]);
+    frame(50);
+    expect(colonyEls()).toHaveLength(2);
+    expect(counter()).toBe('Level 1 · 2 / 3 colonies');
+  });
+
+  it('counts a colony started from a nutrient a colony spread over, toward the win', () => {
+    const { banner } = start({ spots: [[0, 0], [0.1, 0]], target: 2 });
+    frame();
+    expect(counter()).toBe('Level 1 · 1 / 2 colonies');
+    play(GAME.COLONY_GROW_SECONDS);
+    expect(colonyEls()).toHaveLength(2);
+    vi.runAllTimers();
+    expect(banner.hidden).toBe(false);
   });
 
   it('wins the level as soon as enough colonies have started', () => {

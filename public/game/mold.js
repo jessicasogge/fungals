@@ -49,15 +49,14 @@ export function moldColonies({ layer, disks = [], nutrients, avoid = [], colors 
     avoid.splice(avoid.indexOf(colony), 1);
   }
 
-  return {
+  const api = {
     colonies,
     // How many colonies there are: each counts as soon as it starts.
     count: () => colonies.length,
 
-    // A spore germinates at (fx, fy) and starts a colony, unless that spot is
-    // already covered by one. Returns the new colony, or null.
+    // A spore germinates at (fx, fy) and starts a colony, even on top of
+    // another one. Returns the new colony.
     plant(fx, fy) {
-      if (colonies.some((c) => Math.hypot(c.fx - fx, c.fy - fy) <= c.r)) return null;
       const el = document.createElement('div');
       el.className = 'colony';
       el.setAttribute('aria-hidden', 'true');
@@ -74,16 +73,21 @@ export function moldColonies({ layer, disks = [], nutrients, avoid = [], colors 
       return colony;
     },
 
-    // Spread every colony for `seconds`, and cover up (eat) any nutrient
-    // flecks they've grown over. A full-size colony stays that size.
+    // Spread every colony for `seconds`. A full-size colony stays that size.
+    // A nutrient fleck that ends up under a colony isn't wasted: it starts a
+    // new colony right where it was.
     grow(seconds) {
-      for (const colony of colonies) {
+      for (const colony of [...colonies]) {
         if (colony.age < GAME.COLONY_GROW_SECONDS) {
           colony.age += seconds;
           colony.r = colonyRadius(colony.age);
           draw(colony);
         }
-        nutrients.eatNear(colony.fx, colony.fy, colony.r);
+        for (const { fx, fy } of nutrients.positions()) {
+          if (Math.hypot(fx - colony.fx, fy - colony.fy) > colony.r) continue;
+          nutrients.eatNear(fx, fy, 0);
+          api.plant(fx, fy);
+        }
       }
     },
 
@@ -106,6 +110,7 @@ export function moldColonies({ layer, disks = [], nutrients, avoid = [], colors 
       return died;
     },
   };
+  return api;
 }
 
 // The player's spore: one little round cell, steered like any pal.
