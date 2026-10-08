@@ -84,6 +84,13 @@ export function makeColony({
           .filter((i) => i >= 0);
         if (hit.length === 0) continue;
         const dish = group.mover.parentElement;
+        // A mold's branch doesn't pop: its tip stops at the zone, and the
+        // thread behind it stays.
+        if (group.stopInZone) {
+          group.stopInZone();
+          showPop(dish, body[0], color);
+          continue;
+        }
         for (const i of hit) showPop(dish, body[i], color);
         popped += hit.length;
         if (hit.length < body.length) {

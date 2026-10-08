@@ -158,3 +158,26 @@ describe('popping part of a cluster', () => {
     expect(chain.mover.isConnected).toBe(false);
   });
 });
+
+describe("a mold's branch in an antifungal zone", () => {
+  it('stops growing there instead of popping, and stays on the plate', () => {
+    const leader = makeGroup('sasha', { isPlayer: true, x: -150 });
+    const branch = {
+      mover: document.createElement('div'),
+      x: 100, y: 0,
+      body: () => [[100, 0, 4]],
+      cellCount: () => 3,
+      stopInZone: vi.fn(),
+    };
+    document.querySelector('.agar').append(branch.mover);
+    const onPop = vi.fn();
+    const colony = makeColony({ leader, nutrients: {}, disks: [diskWithEdgeAt(100)], dishRadius: () => RADIUS, target: 64, onPop });
+    colony.groups.push(branch);
+    expect(colony.popInZones(RADIUS)).toBe(0);
+    expect(branch.stopInZone).toHaveBeenCalledTimes(1);
+    expect(colony.groups).toContain(branch);
+    expect(colony.cellCount()).toBe(4); // its cells all stay
+    expect(document.querySelectorAll('.agar .pop')).toHaveLength(1); // a little pop where the tip stopped
+    expect(onPop).not.toHaveBeenCalled();
+  });
+});

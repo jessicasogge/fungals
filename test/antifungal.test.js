@@ -193,3 +193,14 @@ describe("Olive's drugs", () => {
     expect(SPECIES.olive.antifungals[0].code).toBe('KCA');
   });
 });
+
+describe("Fumi's drugs", () => {
+  it('start with voriconazole, the usual first choice for aspergillosis', () => {
+    expect(SPECIES.fumi.antifungals[0].code).toBe('VOR');
+  });
+
+  it('give fluconazole no zone, since Aspergillus is naturally resistant to it', () => {
+    const fluconazole = SPECIES.fumi.antifungals.find((a) => a.code === 'FLC');
+    expect(fluconazole.zone).toBeNull();
+  });
+});

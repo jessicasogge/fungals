@@ -19,6 +19,10 @@ vi.mock('../public/game/colony.js', () => ({
   moveGroups: vi.fn(),
 }));
 vi.mock('../public/game/yeast.js', () => ({ yeastGroup: vi.fn(() => ({ body: () => [[0, 0, 5]] })) }));
+// A stand-in for a mold's growing tip (Fumi), which steers itself.
+vi.mock('../public/game/hypha.js', () => ({
+  hyphaGroup: vi.fn(() => ({ body: () => [[0, 0, 5]], steer: vi.fn(), freeze: vi.fn() })),
+}));
 vi.mock('../public/game/keyboard.js', () => ({
   arrowKeys: vi.fn(() => ({ direction: () => [0, 0], stop: vi.fn() })),
 }));
@@ -36,6 +40,9 @@ vi.mock('../public/game/antifungal.js', async (importActual) => ({
 
 const { playGame } = await import('../public/game/game.js');
 const { makeColony } = await import('../public/game/colony.js');
+const { hyphaGroup } = await import('../public/game/hypha.js');
+const { yeastGroup } = await import('../public/game/yeast.js');
+const { steer } = await import('../public/game/touch.js');
 
 // (jsdom changes import.meta.url to a web address, so find the file from the project folder.)
 const page = readFileSync(resolve(process.cwd(), 'public/petri-dish.html'), 'utf8');
@@ -347,5 +354,45 @@ describe('spreading zones', () => {
     const atGameOver = d.zone;
     for (let i = 0; i < 50; i++) frame(50);
     expect(d.zone).toBe(atGameOver);
+  });
+});
+
+describe('a mold (Fumi)', () => {
+  it('plays as a growing tip, not a budding cell', () => {
+    start({ pal: 'fumi' });
+    expect(hyphaGroup).toHaveBeenCalledTimes(1);
+    expect(yeastGroup).not.toHaveBeenCalled();
+  });
+
+  it('turns her tip toward where you steer, instead of swimming there', () => {
+    start({ pal: 'fumi' });
+    frame();
+    const tip = hyphaGroup.mock.results[0].value;
+    expect(tip.steer).toHaveBeenCalledWith([0, 0], null, [0, 0]);
+    expect(steer).not.toHaveBeenCalled();
+  });
+
+  it('updates the cell counter as her threads grow, between divisions', () => {
+    start({ pal: 'fumi', level: 2 });
+    fake.colony.setCells(3);
+    frame();
+    expect(document.querySelector('.cell-count').textContent).toBe('Level 2 · 3 / 8 cells');
+  });
+
+  it('stops her threads growing when the level is won', () => {
+    start({ pal: 'fumi' });
+    fake.colony.setCells(4);
+    frame();
+    expect(hyphaGroup.mock.results[0].value.freeze).toHaveBeenCalled();
+  });
+
+  it('stops her threads growing on a game over', () => {
+    start({ pal: 'fumi' });
+    fake.hit = disk(0.05);
+    frame();
+    const tip = hyphaGroup.mock.results[0].value;
+    expect(tip.freeze).toHaveBeenCalled();
+    frame();
+    expect(tip.steer).toHaveBeenCalledTimes(1); // no more steering after it's over
   });
 });

@@ -103,11 +103,61 @@ export const PALS = [
       ${face(100, 140, '#3a4410')}
     `,
   },
+  // Fumi: Aspergillus fumigatus, a smoky gray-green mold drawn as her
+  // conidiophore: a stalk rising from a foot cell, a round head with her face,
+  // and straight columns of spores on top. She grows as threads, not buds.
+  {
+    id: 'fumi',
+    name: 'Fumi',
+    looks: 'a smoky gray-green Aspergillus fumigatus spore stalk, with columns of spores rising from her round head',
+    motion: 'bob',
+    frames: { home: '8 18 188 188', picker: '12 22 180 180', dish: '12 22 180 180' },
+    art: `
+      <!-- foot cell, stalk, spore columns on short phialides, then her head -->
+      <rect x="66" y="181" width="68" height="15" rx="7.5" fill="#dbe7e1" stroke="#4b6b61" stroke-width="4"/>
+      <line x1="80" y1="183" x2="80" y2="194" stroke="#4b6b61" stroke-width="3"/><line x1="120" y1="183" x2="120" y2="194" stroke="#4b6b61" stroke-width="3"/>
+      <rect x="90" y="128" width="20" height="62" rx="9" fill="#dbe7e1" stroke="#4b6b61" stroke-width="4"/>
+      <rect x="94" y="176" width="12" height="10" fill="#dbe7e1"/>
+      <circle cx="139.0" cy="42.0" r="6" fill="#9dbcb0" stroke="#4b6b61" stroke-width="2"/>
+      <circle cx="139.0" cy="53.5" r="6" fill="#9dbcb0" stroke="#4b6b61" stroke-width="2"/>
+      <circle cx="139.0" cy="65.0" r="6" fill="#9dbcb0" stroke="#4b6b61" stroke-width="2"/>
+      <circle cx="139.0" cy="76.5" r="6" fill="#9dbcb0" stroke="#4b6b61" stroke-width="2"/>
+      <circle cx="128.9" cy="43.1" r="6" fill="#9dbcb0" stroke="#4b6b61" stroke-width="2"/>
+      <circle cx="128.9" cy="54.6" r="6" fill="#9dbcb0" stroke="#4b6b61" stroke-width="2"/>
+      <circle cx="128.9" cy="66.1" r="6" fill="#9dbcb0" stroke="#4b6b61" stroke-width="2"/>
+      <circle cx="115.4" cy="36.4" r="6" fill="#9dbcb0" stroke="#4b6b61" stroke-width="2"/>
+      <circle cx="115.4" cy="47.9" r="6" fill="#9dbcb0" stroke="#4b6b61" stroke-width="2"/>
+      <circle cx="115.4" cy="59.4" r="6" fill="#9dbcb0" stroke="#4b6b61" stroke-width="2"/>
+      <circle cx="100.0" cy="45.5" r="6" fill="#9dbcb0" stroke="#4b6b61" stroke-width="2"/>
+      <circle cx="100.0" cy="57.0" r="6" fill="#9dbcb0" stroke="#4b6b61" stroke-width="2"/>
+      <circle cx="84.6" cy="36.4" r="6" fill="#9dbcb0" stroke="#4b6b61" stroke-width="2"/>
+      <circle cx="84.6" cy="47.9" r="6" fill="#9dbcb0" stroke="#4b6b61" stroke-width="2"/>
+      <circle cx="84.6" cy="59.4" r="6" fill="#9dbcb0" stroke="#4b6b61" stroke-width="2"/>
+      <circle cx="71.1" cy="43.1" r="6" fill="#9dbcb0" stroke="#4b6b61" stroke-width="2"/>
+      <circle cx="71.1" cy="54.6" r="6" fill="#9dbcb0" stroke="#4b6b61" stroke-width="2"/>
+      <circle cx="71.1" cy="66.1" r="6" fill="#9dbcb0" stroke="#4b6b61" stroke-width="2"/>
+      <circle cx="61.0" cy="42.0" r="6" fill="#9dbcb0" stroke="#4b6b61" stroke-width="2"/>
+      <circle cx="61.0" cy="53.5" r="6" fill="#9dbcb0" stroke="#4b6b61" stroke-width="2"/>
+      <circle cx="61.0" cy="65.0" r="6" fill="#9dbcb0" stroke="#4b6b61" stroke-width="2"/>
+      <circle cx="61.0" cy="76.5" r="6" fill="#9dbcb0" stroke="#4b6b61" stroke-width="2"/>
+      <ellipse cx="61.0" cy="88.5" rx="4.5" ry="7" fill="#c3d6ce" stroke="#4b6b61" stroke-width="2.5" transform="rotate(-60 61.0 88.5)"/>
+      <ellipse cx="71.1" cy="78.1" rx="4.5" ry="7" fill="#c3d6ce" stroke="#4b6b61" stroke-width="2.5" transform="rotate(-40 71.1 78.1)"/>
+      <ellipse cx="84.6" cy="71.4" rx="4.5" ry="7" fill="#c3d6ce" stroke="#4b6b61" stroke-width="2.5" transform="rotate(-20 84.6 71.4)"/>
+      <ellipse cx="100.0" cy="69.0" rx="4.5" ry="7" fill="#c3d6ce" stroke="#4b6b61" stroke-width="2.5" transform="rotate(0 100.0 69.0)"/>
+      <ellipse cx="115.4" cy="71.4" rx="4.5" ry="7" fill="#c3d6ce" stroke="#4b6b61" stroke-width="2.5" transform="rotate(20 115.4 71.4)"/>
+      <ellipse cx="128.9" cy="78.1" rx="4.5" ry="7" fill="#c3d6ce" stroke="#4b6b61" stroke-width="2.5" transform="rotate(40 128.9 78.1)"/>
+      <ellipse cx="139.0" cy="88.5" rx="4.5" ry="7" fill="#c3d6ce" stroke="#4b6b61" stroke-width="2.5" transform="rotate(60 139.0 88.5)"/>
+      <ellipse cx="100" cy="108" rx="40" ry="34" fill="#dbe7e1" stroke="#4b6b61" stroke-width="4"/>
+      <rect x="94" y="136" width="12" height="8" fill="#dbe7e1"/>
+      <ellipse cx="84" cy="90" rx="8" ry="4.5" fill="#f3f8f5" transform="rotate(-25 84 90)"/>
+      ${face(100, 112, '#22392f')}
+    `,
+  },
 ];
 
-// The home page's row, in its own order: Olive in the middle, between
-// Sasha and Candi.
-const HOME = ['sasha', 'olive', 'candi'];
+// The home page's row, in its own order: Olive and Fumi in the middle,
+// between Sasha and Candi.
+const HOME = ['sasha', 'olive', 'fumi', 'candi'];
 export const HOME_PALS = HOME.map((id) => PALS.find((pal) => pal.id === id));
 
 // How many pals fit on one page of the picker: four across, two down.

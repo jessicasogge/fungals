@@ -45,7 +45,29 @@ function start() {
   title.textContent = pal.dataset.name;
   title.style.color = species.color;
   document.querySelector('.species-name').replaceChildren(...speciesName(species.scientific));
+  if (species.kind === 'mold') moldDirections();
   const disks = placeAntifungals(antifungalsFor(species.antifungals, level.disks));
   const nutrients = scatterNutrients({ avoid: disks });
   playGame(pal, species, nutrients, disks, { level: levelNumber, target: level.target });
+}
+
+// A mold grows threads from a tip you steer, so her directions say so.
+function moldDirections() {
+  const span = (className, text) => {
+    const el = document.createElement('span');
+    el.className = className;
+    el.textContent = text;
+    return el;
+  };
+  const target = document.createElement('span');
+  target.className = 'target-cells';
+  document.querySelector('.how-to-play').replaceChildren(
+    span('for-keys', 'Use the arrow keys to steer her growing tip.'),
+    span('for-touch', 'Touch the dish and slide your finger the way her tip should grow.'),
+    ' She never stops growing! Every wall along her threads is a cell: grow to ',
+    target,
+    ' cells.',
+    document.createElement('br'),
+    "Eating a nutrient sprouts a branch. Don't let her tip touch the antifungal disks or the clear zones around them, and watch out: the zones spread as the drug soaks into the agar!",
+  );
 }

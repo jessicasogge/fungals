@@ -27,4 +27,14 @@ export const QUIZ_FACTS = {
     "Olive can cause pityriasis versicolor: patches of skin that turn lighter or darker.",
     "Olive is a basidiomycete yeast, on the same big fungal branch as cap-and-stem mushrooms.",
   ],
+  fumi: [
+    "Fumi's genus is named for the aspergillum, a sprinkler for shaking holy water.",
+    "Fumi grows as long threads called hyphae, which stretch from their tips.",
+    "Fumi's hyphae branch at sharp angles, about 45 degrees.",
+    "Fumi makes her spores in straight columns on top of a swollen stalk.",
+    "Fumi can grow at 50°C, hotter than most fungi can stand, so she thrives in compost.",
+    "You breathe in hundreds of Fumi's spores a day, but healthy lungs clear them.",
+    "Fumi can cause aspergillosis, a lung infection, in people with weak immune systems.",
+    "Fluconazole doesn't work on Fumi, but voriconazole is a first choice against her.",
+  ],
 };

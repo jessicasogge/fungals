@@ -3,6 +3,7 @@
 import { spreadZones, touchedDisk, touchMessage } from './antifungal.js';
 import { makeColony, moveGroups } from './colony.js';
 import { GAME, LEVELS } from './config.js';
+import { hyphaGroup } from './hypha.js';
 import { yeastGroup } from './yeast.js';
 import { showFact } from './facts.js';
 import { arrowKeys } from './keyboard.js';
@@ -21,7 +22,9 @@ export function playGame(palEl, species, nutrients, disks, { level = 1, target =
   // The player's pal leads the colony.
   const playerMover = document.querySelector('.pal-mover');
   playerMover.classList.add('player');
-  const player = yeastGroup({ mover: playerMover, svg: palEl, species, isPlayer: true });
+  // Yeasts bud; a mold (Fumi) grows threads from a tip you steer.
+  const makeGroup = species.kind === 'mold' ? hyphaGroup : yeastGroup;
+  const player = makeGroup({ mover: playerMover, svg: palEl, species, isPlayer: true });
   const colony = makeColony({
     leader: player, nutrients, disks, dishRadius, target, color: species.color,
     onDivide: () => updateCounter(), onPop: () => updateCounter(),
@@ -66,14 +69,19 @@ export function playGame(palEl, species, nutrients, disks, { level = 1, target =
       spreadZones(disks, elapsed);
     }
 
-    // Steer the player's pal.
-    if (!finished) {
+    // Steer the player's pal. A growing tip turns toward where you steer
+    // instead of swimming there.
+    if (!finished && player.steer) {
+      player.steer(keys.direction(), touch.target(), touch.drag());
+    } else if (!finished) {
       steer(player, keys.direction(), touch.target(), GAME.SPEED * radius * seconds, GAME.ARRIVE * radius,
         touch.drag(), GAME.DRAG_SPEED * radius * seconds);
     }
 
     colony.tick(seconds);
     moveGroups(colony.groups, { agar, radius, seconds });
+    // Threads grow cells as they go, not just when a cell divides.
+    if (!finished) updateCounter();
     // Offspring that wander into an antifungal zone pop.
     if (!finished) colony.popInZones(radius);
 
@@ -82,6 +90,7 @@ export function playGame(palEl, species, nutrients, disks, { level = 1, target =
     const hit = finished ? null : touchedDisk(disks, player.body(), radius);
     if (hit) {
       finished = true;
+      player.freeze?.(); // a mold's threads stop growing
       keys.stop();
       touch.stop();
       nutrients.stop();
@@ -97,6 +106,7 @@ export function playGame(palEl, species, nutrients, disks, { level = 1, target =
         // disk can't be touched after winning. The pop-up waits only until
         // the newest cell has finished sliding into place.
         finished = true;
+      player.freeze?.(); // a mold's threads stop growing
         keys.stop();
         touch.stop();
         nutrients.stop();

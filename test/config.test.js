@@ -22,13 +22,17 @@ describe('pals', () => {
     for (const pal of PALS) expect(pal).toMatch(/^[a-z]+$/);
   });
 
-  it.each(PALS)('%s is a yeast, with colors for her daughter cells', (pal) => {
+  it.each(PALS)('%s is a yeast or a mold, with colors for her cells', (pal) => {
     const species = SPECIES[pal];
-    expect(species.kind).toBe('yeast');
+    expect(['yeast', 'mold']).toContain(species.kind);
     for (const part of ['fill', 'stroke', 'highlight', 'dark']) {
       expect(species.colors[part]).toMatch(/^#[0-9a-f]{6}$/i);
     }
   });
+});
+
+it('makes Fumi the one mold, who grows threads instead of budding', () => {
+  expect(PALS.filter((pal) => SPECIES[pal].kind === 'mold')).toEqual(['fumi']);
 });
 
 describe('names above the dish', () => {

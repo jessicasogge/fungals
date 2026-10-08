@@ -97,6 +97,40 @@ export const SPECIES = {
       { code: 'AMB', name: 'amphotericin B', zone: 17 },
     ],
   },
+  fumi: {
+    facts: [
+      "Fumi's species name, *fumigatus*, means \"smoky,\" after her gray-green colonies.",
+      "Fumi's genus is named for the aspergillum, a sprinkler for shaking holy water.",
+      "Pier Antonio Micheli named Fumi's genus, *Aspergillus*, in 1729.",
+      "Fumi grows as long threads called hyphae, which stretch from their tips.",
+      "Fumi's hyphae have cross-walls called septa, splitting them into compartments.",
+      "Fumi's hyphae branch at sharp angles, about 45 degrees.",
+      "Fumi makes her spores in straight columns on top of a swollen stalk.",
+      "Fumi can grow at 50°C, hotter than most fungi can stand, so she thrives in compost.",
+      "Fumi's spores are only 2 to 3 µm across, small enough to reach deep into the lungs.",
+      "You breathe in hundreds of Fumi's spores a day, but healthy lungs clear them.",
+      "Fumi can cause aspergillosis, a lung infection, in people with weak immune systems.",
+      "Fluconazole doesn't work on Fumi, but voriconazole is a first choice against her.",
+      "Fumi is a mold, not a yeast: she never buds, she just keeps growing and branching.",
+    ],
+    scientific: 'Aspergillus fumigatus',
+    color: '#3f665b', // for her name above the dish
+    // A mold: she grows as threads (hyphae) from a tip you steer, instead of
+    // budding (see hypha.js).
+    kind: 'mold',
+    colors: { fill: '#dbe7e1', stroke: '#4b6b61', highlight: '#f3f8f5', dark: '#22392f' },
+    // Molds have few standard disk sizes (CLSI M51), so these are estimates
+    // from how well each drug works on her. Voriconazole, the usual first
+    // choice for aspergillosis, comes first. Aspergillus is naturally
+    // resistant to fluconazole, so it has no zone at all.
+    antifungals: [
+      { code: 'VOR', name: 'voriconazole', zone: 28 },
+      { code: 'ITC', name: 'itraconazole', zone: 24 },
+      { code: 'FLC', name: 'fluconazole', zone: null },
+      { code: 'AMB', name: 'amphotericin B', zone: 18 },
+      { code: 'CAS', name: 'caspofungin', zone: 20 },
+    ],
+  },
 };
 
 // Each level adds an antifungal disk and doubles the colony you need to grow.
@@ -140,4 +174,22 @@ export const GAME = {
   ZONE_START: 0.1,
   ZONE_SPREAD_SECONDS: 20,
   SWIM_ROOM: 0.13, // minimum gap between zones, in dish radii
+  // Molds (Fumi) grow as threads (see hypha.js). All lengths are fractions
+  // of the dish radius. Her tip grows HYPHA_SPEED a second and turns at most
+  // HYPHA_TURN radians a second toward where you steer. A wall forms every
+  // SEPTUM along a thread, and each walled compartment is a cell. A branch
+  // sprouts BRANCH_ANGLE off its parent's line and grows BRANCH_LENGTH at
+  // BRANCH_SPEED (half as far again each time it eats). Threads are
+  // HYPHA_WIDTH thick, her tip TIP_SIZE across, and they stop at HYPHA_RIM.
+  // A new point goes on a thread's path every HYPHA_POINT.
+  HYPHA_SPEED: 0.2,
+  HYPHA_TURN: 2.6,
+  SEPTUM: 0.1,
+  BRANCH_ANGLE: Math.PI / 4,
+  BRANCH_LENGTH: 0.3,
+  BRANCH_SPEED: 0.14,
+  HYPHA_WIDTH: 0.04,
+  TIP_SIZE: 0.075,
+  HYPHA_RIM: 0.93,
+  HYPHA_POINT: 0.012,
 };
