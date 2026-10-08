@@ -10,6 +10,7 @@ import { LEVELS, SPECIES } from '../public/game/config.js';
 
 // Don't run the real game loop; just record how the game was started.
 vi.mock('../public/game/game.js', () => ({ playGame: vi.fn() }));
+vi.mock('../public/game/mold-game.js', () => ({ playMold: vi.fn() }));
 
 // (jsdom changes import.meta.url to a web address, so find the file from the project folder.)
 const page = readFileSync(resolve(process.cwd(), 'public/petri-dish.html'), 'utf8');
@@ -61,8 +62,10 @@ describe('picking the pal', () => {
 
   it.each(Object.keys(SPECIES))('starts the game for %s with her own species settings', async (pal) => {
     const playGame = await open(`?pal=${pal}`);
-    expect(playGame).toHaveBeenCalledTimes(1);
-    const [palEl, species] = playGame.mock.calls[0];
+    const { playMold } = await import('../public/game/mold-game.js');
+    const play = SPECIES[pal].kind === 'mold' ? playMold : playGame;
+    expect(play).toHaveBeenCalledTimes(1);
+    const [palEl, species] = play.mock.calls[0];
     expect(palEl.dataset.pal).toBe(pal);
     expect(species).toEqual(SPECIES[pal]);
   });
@@ -117,5 +120,29 @@ describe('a broken address', () => {
     const playGame = await open('?pal=sasha"]');
     expect(location.replace).toHaveBeenCalledWith('./pal-picker.html');
     expect(playGame).not.toHaveBeenCalled();
+  });
+});
+
+describe('a mold (Fumi)', () => {
+  it('starts her own game, where she grows instead of swimming', async () => {
+    const playGame = await open('?pal=fumi&level=2');
+    const { playMold } = await import('../public/game/mold-game.js');
+    expect(playGame).not.toHaveBeenCalled();
+    expect(playMold).toHaveBeenCalledTimes(1);
+    expect(playMold.mock.calls[0][4]).toEqual({ level: 2, target: LEVELS[1].target });
+  });
+
+  it('says how she plays: steer her growing tip, and branch', async () => {
+    await open('?pal=fumi');
+    const howTo = document.querySelector('.how-to-play');
+    expect(howTo.querySelector('.for-keys').textContent).toContain('press Space to branch');
+    expect(howTo.querySelector('.for-touch').textContent).toContain('tap Branch to branch');
+    expect(howTo.textContent).toContain('any part of her');
+    expect(howTo.querySelector('.target-cells')).not.toBeNull();
+  });
+
+  it("leaves the yeasts' directions alone", async () => {
+    await open('?pal=sasha');
+    expect(document.querySelector('.how-to-play').textContent).toContain('Any cell that eats a nutrient buds');
   });
 });

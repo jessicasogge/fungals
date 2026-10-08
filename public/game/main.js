@@ -4,6 +4,7 @@
 import { antifungalsFor, placeAntifungals } from './antifungal.js';
 import { LEVELS, SPECIES } from './config.js';
 import { playGame } from './game.js';
+import { playMold } from './mold-game.js';
 import { speciesName } from './italics.js';
 import { pageReady, watchLoading } from './loading.js';
 import { scatterNutrients } from './nutrients.js';
@@ -45,7 +46,30 @@ function start() {
   title.textContent = pal.dataset.name;
   title.style.color = species.color;
   document.querySelector('.species-name').replaceChildren(...speciesName(species.scientific));
+  if (species.kind === 'mold') moldDirections();
   const disks = placeAntifungals(antifungalsFor(species.antifungals, level.disks));
   const nutrients = scatterNutrients({ avoid: disks });
-  playGame(pal, species, nutrients, disks, { level: levelNumber, target: level.target });
+  const play = species.kind === 'mold' ? playMold : playGame;
+  play(pal, species, nutrients, disks, { level: levelNumber, target: level.target });
+}
+
+// A mold grows instead of swimming and budding, so her directions say so.
+function moldDirections() {
+  const span = (className, text) => {
+    const el = document.createElement('span');
+    el.className = className;
+    el.textContent = text;
+    return el;
+  };
+  const target = document.createElement('span');
+  target.className = 'target-cells';
+  document.querySelector('.how-to-play').replaceChildren(
+    span('for-keys', 'Fumi is a mold: she grows instead of swimming. Steer her growing tip with the arrow keys, and press Space to branch.'),
+    span('for-touch', 'Fumi is a mold: she grows instead of swimming. Slide your finger to steer her growing tip, and tap Branch to branch.'),
+    ' Nutrients that touch any part of her feed her growth (she needs some stored to branch), and her threads add cells as they grow: grow to ',
+    target,
+    ' cells.',
+    document.createElement('br'),
+    "A tip that touches an antifungal disk or its zone dies, but she keeps growing as long as any tip is alive. Watch out: the zones spread as the drug soaks into the agar!",
+  );
 }

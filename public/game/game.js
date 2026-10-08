@@ -4,12 +4,10 @@ import { spreadZones, touchedDisk, touchMessage } from './antifungal.js';
 import { makeColony, moveGroups } from './colony.js';
 import { GAME, LEVELS } from './config.js';
 import { yeastGroup } from './yeast.js';
-import { showFact } from './facts.js';
 import { arrowKeys } from './keyboard.js';
-import { goTo } from './loading.js';
+import { levelEnd } from './level-end.js';
 import { sporeBurst } from './spores.js';
 import { steer, touchSteering } from './touch.js';
-import { track } from './track.js';
 
 // `level` is which level this is (1 to 7) and `target` how many cells it
 // takes to beat it.
@@ -38,17 +36,7 @@ export function playGame(palEl, species, nutrients, disks, { level = 1, target =
   // button where to swim).
   const touch = touchSteering(agar, agar.closest('.petri-dish') ?? agar);
 
-  // The pop-up's buttons: the main one goes to the next level, back to
-  // level 1, or tries this level again; after a game over, "Start over" goes
-  // back to level 1.
-  let nextLevel = level;
-  function goToLevel(n) {
-    const url = new URL(window.location.href);
-    url.searchParams.set('level', n);
-    goTo(url.toString());
-  }
-  document.querySelector('.play-again').addEventListener('click', () => goToLevel(nextLevel));
-  document.querySelector('.start-over').addEventListener('click', () => goToLevel(1));
+  const end = levelEnd(palEl, species, { level, target });
 
   function updateCounter() {
     const shown = Math.min(colony.cellCount(), target);
@@ -86,7 +74,7 @@ export function playGame(palEl, species, nutrients, disks, { level = 1, target =
       touch.stop();
       nutrients.stop();
       playerMover.classList.add('killed');
-      setTimeout(() => showGameOver(hit), 500);
+      setTimeout(() => end.gameOver(hit, touchMessage(palEl.dataset.name, hit)), 500);
     }
 
     if (!finished) {
@@ -101,53 +89,13 @@ export function playGame(palEl, species, nutrients, disks, { level = 1, target =
         touch.stop();
         nutrients.stop();
         sporeBurst(playerMover, { big: level === LEVELS.length });
-        setTimeout(showWin, Math.max(0, GAME.DIVIDE_MS - colony.sinceAnyDivision));
+        setTimeout(end.win, Math.max(0, GAME.DIVIDE_MS - colony.sinceAnyDivision));
       } else {
         colony.divideLeader();
       }
     }
 
     requestAnimationFrame(step);
-  }
-
-  function showBanner(title, message, button, { startOver = false } = {}) {
-    const banner = document.querySelector('.win-banner');
-    banner.querySelector('h2').textContent = title;
-    banner.querySelector('.win-message').textContent = message;
-    banner.querySelector('.play-again').textContent = button;
-    banner.querySelector('.start-over').hidden = !startOver;
-    banner.removeAttribute('hidden');
-    banner.querySelector('.play-again').focus();
-  }
-
-  function showWin() {
-    const name = palEl.dataset.name;
-    const pal = palEl.dataset.pal;
-    track(`level-complete/${pal}/level-${level}`, `${name} finished level ${level}`);
-    if (level === LEVELS.length) track(`won-all-levels/${pal}`, `${name} beat every level`);
-    showFact(pal, species);
-    if (level < LEVELS.length) {
-      nextLevel = level + 1;
-      showBanner(`Level ${level} complete!`, `You grew a colony of ${target} cells!`,
-        `Play level ${nextLevel}`);
-    } else {
-      nextLevel = 1;
-      showBanner('You won!', `You beat all ${LEVELS.length} levels with a colony of ${target} cells!`,
-        'Play again');
-    }
-  }
-
-  function showGameOver(disk) {
-    showFact(palEl.dataset.pal, species);
-    const { code, name } = disk.antifungal;
-    track(`game-over/${palEl.dataset.pal}/level-${level}/${code}`,
-      `${palEl.dataset.name} hit ${name} on level ${level}`);
-    showBanner(
-      'Game over',
-      touchMessage(palEl.dataset.name, disk),
-      `Try level ${level} again`,
-      { startOver: level > 1 }, // on level 1 they'd do the same thing
-    );
   }
 
   // The zones start small and spread from there (drawn before the first frame).

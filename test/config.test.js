@@ -22,13 +22,17 @@ describe('pals', () => {
     for (const pal of PALS) expect(pal).toMatch(/^[a-z]+$/);
   });
 
-  it.each(PALS)('%s is a yeast, with colors for her daughter cells', (pal) => {
+  it.each(PALS)('%s is a yeast or a mold, with colors for her cells', (pal) => {
     const species = SPECIES[pal];
-    expect(species.kind).toBe('yeast');
+    expect(['yeast', 'mold']).toContain(species.kind);
     for (const part of ['fill', 'stroke', 'highlight', 'dark']) {
       expect(species.colors[part]).toMatch(/^#[0-9a-f]{6}$/i);
     }
   });
+});
+
+it('makes Fumi the one mold, who grows threads instead of budding', () => {
+  expect(PALS.filter((pal) => SPECIES[pal].kind === 'mold')).toEqual(['fumi']);
 });
 
 describe('names above the dish', () => {
@@ -70,10 +74,17 @@ describe('levels', () => {
 
 describe('game settings', () => {
   it('are all positive numbers', () => {
-    for (const [name, value] of Object.entries(GAME)) {
+    const { MOLD, ...rest } = GAME;
+    for (const [name, value] of [...Object.entries(rest), ...Object.entries(MOLD)]) {
       expect(typeof value, name).toBe('number');
       expect(value, name).toBeGreaterThan(0);
     }
+  });
+
+  it("let Fumi's lead tip creep slower than she grows, and keep her inside the dish", () => {
+    expect(GAME.MOLD.CREEP_SPEED).toBeLessThan(GAME.MOLD.TIP_SPEED);
+    expect(GAME.MOLD.RIM).toBeLessThan(1);
+    expect(GAME.MOLD.START_GROWTH).toBeLessThan(GAME.MOLD.CELL_LENGTH * 3); // level 1 takes eating
   });
 
   it('keep the disks inside the dish and clear of where the pal starts', () => {

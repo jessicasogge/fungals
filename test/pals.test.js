@@ -162,8 +162,8 @@ describe('the pages', () => {
     await open('index.html', 'script.js');
     const labels = [...document.querySelectorAll('.friends svg')].map((s) => s.getAttribute('aria-label'));
     expect(labels).toEqual(HOME_PALS.map((pal) => `${pal.name}, ${pal.looks}`));
-    // Every pal, each once, with Olive in the middle.
-    expect(HOME_PALS.map((pal) => pal.id)).toEqual(['sasha', 'olive', 'candi']);
+    // Every pal, each once, with Olive and Fumi in the middle.
+    expect(HOME_PALS.map((pal) => pal.id)).toEqual(['sasha', 'olive', 'fumi', 'candi']);
     expect([...HOME_PALS].sort((a, b) => a.id.localeCompare(b.id))).toEqual(
       [...PALS].sort((a, b) => a.id.localeCompare(b.id)));
   });
