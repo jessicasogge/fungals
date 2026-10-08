@@ -11,11 +11,12 @@
 import { GAME } from './config.js';
 
 // Pick a random spot for one disk, as fractions of the dish radius from the
-// center: away from the middle (where the pal starts) and from the rim.
-export function diskSpot(random = Math.random) {
+// center: away from the middle (where the pal starts) and from the rim, at
+// most `maxDistance` out.
+export function diskSpot(random = Math.random, maxDistance = GAME.DISK_MAX_DISTANCE) {
   const angle = random() * Math.PI * 2;
   const distance = GAME.DISK_MIN_DISTANCE +
-    random() * (GAME.DISK_MAX_DISTANCE - GAME.DISK_MIN_DISTANCE);
+    random() * (maxDistance - GAME.DISK_MIN_DISTANCE);
   return { fx: Math.cos(angle) * distance, fy: Math.sin(angle) * distance, r: GAME.DISK_RADIUS };
 }
 
@@ -39,14 +40,15 @@ function minGap(a, b) {
 // other so there's always room to swim between them. With lots of disks, the
 // first few can land so that there's no room left for the rest; then start
 // over. (A number instead of a list means that many disks with no zones.)
-export function diskSpots(zones, random = Math.random) {
+// `maxDistance` is how far out from the center a disk can go.
+export function diskSpots(zones, random = Math.random, maxDistance = GAME.DISK_MAX_DISTANCE) {
   if (typeof zones === 'number') zones = new Array(zones).fill(0);
   const count = zones.length;
   let best = [];
   for (let attempt = 0; attempt < 50 && best.length < count; attempt++) {
     const disks = [];
     for (let tries = 0; disks.length < count && tries < 500; tries++) {
-      const spot = { ...diskSpot(random), zone: zones[disks.length] };
+      const spot = { ...diskSpot(random, maxDistance), zone: zones[disks.length] };
       if (disks.every((d) => Math.hypot(d.fx - spot.fx, d.fy - spot.fy) >= minGap(d, spot))) {
         disks.push(spot);
       }
@@ -108,10 +110,11 @@ export function antifungalsFor(list, count) {
 }
 
 // Put one disk per antifungal on the agar and return where they are.
-export function placeAntifungals(antifungals) {
+// `maxDistance` is how far out from the center a disk can go.
+export function placeAntifungals(antifungals, { maxDistance = GAME.DISK_MAX_DISTANCE } = {}) {
   const agar = document.querySelector('.agar');
   const zones = antifungals.map((antifungal) => zoneWidth(antifungal.zone));
-  return diskSpots(zones).map((spot, i) => {
+  return diskSpots(zones, Math.random, maxDistance).map((spot, i) => {
     const antifungal = antifungals[i];
     // The zone of inhibition: a clear ring around the disk, drawn underneath it.
     const zoneEl = document.createElement('div');

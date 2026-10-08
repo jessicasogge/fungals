@@ -64,17 +64,21 @@ describe('levels', () => {
   });
 
   it('start with one disk and a small colony', () => {
-    expect(LEVELS[0]).toEqual({ disks: 1, target: 4, colonies: 8 });
+    expect(LEVELS[0]).toEqual({ disks: 1, target: 4, colonies: 8, moldDisks: 2 });
   });
 
   it('go up to a colony of 256 cells past seven disks, doubling each level', () => {
     expect(LEVELS).toHaveLength(7);
-    expect(LEVELS.at(-1)).toEqual({ disks: 7, target: 256, colonies: 20 });
+    expect(LEVELS.at(-1)).toEqual({ disks: 7, target: 256, colonies: 20, moldDisks: 8 });
     for (let i = 1; i < LEVELS.length; i++) expect(LEVELS[i].target).toBe(LEVELS[i - 1].target * 2);
   });
 
   it('ask a mold for 8 colonies, and 2 more each level, up to 20', () => {
     expect(LEVELS.map((level) => level.colonies)).toEqual([8, 10, 12, 14, 16, 18, 20]);
+  });
+
+  it('give a mold 2 disks on level 1, and one more each level', () => {
+    expect(LEVELS.map((level) => level.moldDisks)).toEqual([2, 3, 4, 5, 6, 7, 8]);
   });
 });
 
@@ -90,6 +94,7 @@ describe('game settings', () => {
     expect(GAME.DISK_MIN_DISTANCE).toBeLessThan(GAME.DISK_MAX_DISTANCE);
     // The farthest disk, buffer and all, still sits inside the rim.
     expect(GAME.DISK_MAX_DISTANCE + GAME.DISK_RADIUS + GAME.ZONE_MAX_WIDTH).toBeLessThan(1);
+    expect(GAME.MOLD_DISK_MAX_DISTANCE + GAME.DISK_RADIUS + GAME.ZONE_MAX_WIDTH).toBeLessThan(1);
   });
 
   it('grow a mold colony from small to big', () => {
