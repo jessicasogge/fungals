@@ -74,8 +74,8 @@ export function moldColonies({ layer, disks = [], nutrients, avoid = [], colors 
     },
 
     // Spread every colony for `seconds`. A full-size colony stays that size.
-    // A nutrient fleck that ends up under a colony isn't wasted: it starts a
-    // new colony right where it was.
+    // A nutrient fleck a colony reaches isn't wasted: it starts a new colony
+    // centered exactly where the fleck was.
     grow(seconds) {
       for (const colony of [...colonies]) {
         if (colony.age < GAME.COLONY_GROW_SECONDS) {
@@ -83,11 +83,7 @@ export function moldColonies({ layer, disks = [], nutrients, avoid = [], colors 
           colony.r = colonyRadius(colony.age);
           draw(colony);
         }
-        for (const { fx, fy } of nutrients.positions()) {
-          if (Math.hypot(fx - colony.fx, fy - colony.fy) > colony.r) continue;
-          nutrients.eatNear(fx, fy, 0);
-          api.plant(fx, fy);
-        }
+        nutrients.eatNear(colony.fx, colony.fy, colony.r, api.plant);
       }
     },
 
@@ -191,9 +187,10 @@ export function playMold(palEl, species, nutrients, disks, { level = 1, target =
         playerMover.classList.add('killed');
         setTimeout(() => showGameOver(hit), 500);
       } else {
-        // Landing on a nutrient: one of her spores germinates right there.
+        // Landing on a nutrient: one of her spores germinates there, and the
+        // colony grows out from exactly where the fleck was.
         const [[x, y, r]] = spore.body();
-        if (nutrients.eatNear(x / radius, y / radius, r / radius) > 0) colonies.plant(x / radius, y / radius);
+        nutrients.eatNear(x / radius, y / radius, r / radius, colonies.plant);
         colonies.killInZones(radius);
         if (colonies.count() >= target) {
           stop();

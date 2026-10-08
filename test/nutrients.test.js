@@ -131,7 +131,13 @@ describe('eating nutrients', () => {
   it('eats a fleck the pal is on and reports it', () => {
     const nutrients = scatterNutrients();
     const [target] = liveFlecks();
-    expect(nutrients.eatNear(target.fx, target.fy, 0.01)).toBe(1);
+    const eaten = vi.fn();
+    expect(nutrients.eatNear(target.fx + 0.005, target.fy, 0.01, eaten)).toBe(1);
+    // Says exactly where the fleck was, not where the pal was.
+    expect(eaten).toHaveBeenCalledTimes(1);
+    const [fx, fy] = eaten.mock.calls[0];
+    expect(fx).toBeCloseTo(target.fx);
+    expect(fy).toBeCloseTo(target.fy);
     expect(target.el.classList.contains('eaten')).toBe(true);
     expect(liveFlecks()).toHaveLength(COUNT - 1);
   });

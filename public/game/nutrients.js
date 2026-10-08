@@ -53,8 +53,8 @@ export function scatterNutrients({ avoid = [], count = 10 } = {}) {
   return {
     // Pick up every fleck touching a circle of radius `reach` at the given
     // spot (all values are fractions of the dish radius). Returns how many
-    // were picked up.
-    eatNear(bx, by, reach) {
+    // were picked up. `eaten(fx, fy)` is called with where each one was.
+    eatNear(bx, by, reach, eaten = () => {}) {
       let count = 0;
       for (let i = flecks.length - 1; i >= 0; i--) {
         const fleck = flecks[i];
@@ -63,6 +63,7 @@ export function scatterNutrients({ avoid = [], count = 10 } = {}) {
         fleck.el.classList.add('eaten');
         fleck.el.addEventListener('transitionend', () => fleck.el.remove(), { once: true });
         setTimeout(() => addFleck(bx, by), RESPAWN_MS);
+        eaten(fleck.fx, fleck.fy);
         count++;
       }
       return count;

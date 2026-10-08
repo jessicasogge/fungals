@@ -37,14 +37,15 @@ function fakeNutrients(spots = []) {
   const flecks = [...spots];
   return {
     flecks,
-    eatNear: vi.fn((x, y, reach) => {
+    eatNear: vi.fn((x, y, reach, eaten = () => {}) => {
       const before = flecks.length;
       for (let i = flecks.length - 1; i >= 0; i--) {
-        if (Math.hypot(flecks[i][0] - x, flecks[i][1] - y) <= reach) flecks.splice(i, 1);
+        if (Math.hypot(flecks[i][0] - x, flecks[i][1] - y) > reach) continue;
+        const [[fx, fy]] = flecks.splice(i, 1);
+        eaten(fx, fy);
       }
       return before - flecks.length;
     }),
-    positions: () => flecks.map(([fx, fy]) => ({ fx, fy })),
     stop: vi.fn(),
   };
 }
@@ -266,6 +267,16 @@ describe('playing as a mold', () => {
     start({ spots: [[0, 0]], avoid });
     frame();
     expect(avoid).toHaveLength(1);
+  });
+
+  it("grows the colony out from exactly where the nutrient was, not from her middle", () => {
+    // She reaches 0.0425 of the dish radius; the fleck is a little off to
+    // her right.
+    start({ spots: [[0.03, 0]], target: 3 });
+    frame();
+    const [colony] = colonyEls();
+    expect(colony.style.left).toBe(`${50 + 0.03 * 50}%`);
+    expect(colony.style.top).toBe('50%');
   });
 
   it('starts a colony when she lands on a nutrient on top of a colony', () => {
