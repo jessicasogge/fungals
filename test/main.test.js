@@ -109,13 +109,20 @@ describe('a mold', () => {
     expect(flecks()).toBeGreaterThan(GAME.MOLD_NUTRIENTS);
   });
 
-  it('shows the mold directions, and the yeast ones for a yeast', async () => {
+  it("shows the mold directions, Phyllis's own, and the yeast ones for a yeast", async () => {
     const shown = () => [...document.querySelectorAll('.how-to-play')]
-      .filter((p) => !p.hidden).map((p) => p.classList.contains('for-mold'));
+      .filter((p) => !p.hidden).map((p) => p.className.replace('how-to-play ', ''));
     await openMold('?pal=fumi');
-    expect(shown()).toEqual([true]);
+    expect(shown()).toEqual(['for-mold']);
+    await openMold('?pal=phyllis');
+    expect(shown()).toEqual(['for-pairs']);
     await open('?pal=sasha');
-    expect(shown()).toEqual([false]);
+    expect(shown()).toEqual(['for-yeast']);
+  });
+
+  it("aims Phyllis at that level's number of mushrooms", async () => {
+    const playMold = await openMold('?pal=phyllis&level=4');
+    expect(playMold.mock.calls[0][4]).toEqual({ level: 4, target: LEVELS[3].mushrooms });
   });
 });
 

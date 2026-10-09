@@ -1,6 +1,13 @@
 // Fumi (Aspergillus fumigatus): guide her spore to nutrients to start colonies.
 // Colonies count immediately, spread in circles, and turn green as they sporulate.
 // Start enough to win; disks/zones pop colonies and end the game on spore contact.
+//
+// Phyllis (Schizophyllum commune, `pairs` in her species) plays the same way,
+// but a colony of hers can't make mushrooms on its own. Every spore she
+// plants is a new mating type (a `strain`); a colony that spreads onto a
+// nutrient starts a clone of itself, with the same strain. When two of her
+// colonies of different strains grow into each other, they mate and a
+// split-gill mushroom pops up where they meet. Mushrooms win her levels.
 import { spreadZones, touchedDisk, touchesDisk, touchMessage } from './antifungal.js';
 import { levelBanner } from './banner.js';
 import { showPop } from './colony.js';
@@ -12,6 +19,15 @@ import { sporeBurst } from './spores.js';
 import { steer, touchSteering } from './touch.js';
 import { track } from './track.js';
 
+// Phyllis's mushroom: a little fuzzy fan with split gills, seen from above.
+const MUSHROOM = ({ fill, stroke, spores }) => `
+  <svg viewBox="-12 -12 24 24">
+    <path d="M0 5 C-8 4 -9 -6 -4 -8 Q0 -10 4 -8 C9 -6 8 4 0 5 Z" fill="${fill}" stroke="${stroke}" stroke-width="1.4" />
+    <g stroke="${spores}" stroke-width="0.9" stroke-linecap="round">
+      <path d="M0 4 L-5 -5" /><path d="M0 4 L-2 -7" /><path d="M0 4 L2 -7" /><path d="M0 4 L5 -5" />
+    </g>
+  </svg>`;
+
 // Colony radius after `seconds`, in dish radii; grows steadily to full size.
 export function colonyRadius(seconds) {
   const t = Math.min(1, Math.max(0, seconds / GAME.COLONY_GROW_SECONDS));
@@ -20,33 +36,81 @@ export function colonyRadius(seconds) {
 
 // Colonies: `layer` draws them; `nutrients` seed new ones, even underneath.
 // `colors` are the gal's palette; `spores` colors their centers.
+// With `pairs` (Phyllis), colonies of different strains that touch mate and
+// make mushrooms (see the top of this file).
 // Positions and sizes use fractions of the dish radius.
-export function moldColonies({ layer, disks = [], nutrients, colors }) {
+export function moldColonies({ layer, disks = [], nutrients, colors, pairs = false }) {
   const colonies = [];
+  const mushrooms = [];
+  let strains = 0;
 
   function draw(colony) {
     const { el, fx, fy, r } = colony;
     el.style.left = `${50 + fx * 50}%`;
     el.style.top = `${50 + fy * 50}%`;
     el.style.width = `${r * 100}%`;
-    // The greenish, sporing middle spreads out a little as it grows; the
-    // rest stays white and fluffy.
-    const ripe = Math.min(1, colony.age / GAME.COLONY_GROW_SECONDS);
+    // The colored middle: for Fumi, her greenish, sporing middle spreads out
+    // a little as she grows; Phyllis stays white until she's mated, then
+    // blushes. The rest stays white and fluffy.
+    const ripe = pairs ? Number(colony.mated) : Math.min(1, colony.age / GAME.COLONY_GROW_SECONDS);
     el.style.setProperty('--ripe', `${Math.round(ripe * 40)}%`);
   }
 
   function remove(colony) {
     colonies.splice(colonies.indexOf(colony), 1);
+    // Her mushrooms need both their colonies.
+    for (const mushroom of mushrooms.filter((m) => m.colonies.includes(colony))) {
+      mushrooms.splice(mushrooms.indexOf(mushroom), 1);
+      mushroom.el.remove();
+    }
+  }
+
+  // A mushroom pops up where colonies `a` and `b` meet, on the line between
+  // their middles, facing out from it.
+  function fruit(a, b) {
+    const along = a.r / (a.r + b.r);
+    const fx = a.fx + (b.fx - a.fx) * along;
+    const fy = a.fy + (b.fy - a.fy) * along;
+    const el = document.createElement('div');
+    el.className = 'mushroom';
+    el.setAttribute('aria-hidden', 'true');
+    el.style.left = `${50 + fx * 50}%`;
+    el.style.top = `${50 + fy * 50}%`;
+    const angle = (Math.atan2(b.fy - a.fy, b.fx - a.fx) * 180) / Math.PI + 90;
+    el.style.setProperty('--turn', `${Math.round(angle)}deg`);
+    el.innerHTML = MUSHROOM(colors);
+    layer.appendChild(el);
+    mushrooms.push({ colonies: [a, b], fx, fy, el });
+    for (const colony of [a, b]) {
+      colony.mated = true;
+      draw(colony);
+    }
+  }
+
+  // Phyllis: any two colonies of different strains that touch, and haven't
+  // already made a mushroom together, make one now.
+  function mate() {
+    for (let i = 0; i < colonies.length; i++) {
+      for (let j = i + 1; j < colonies.length; j++) {
+        const [a, b] = [colonies[i], colonies[j]];
+        if (a.strain === b.strain) continue;
+        if (Math.hypot(a.fx - b.fx, a.fy - b.fy) > a.r + b.r) continue;
+        if (mushrooms.some((m) => m.colonies.includes(a) && m.colonies.includes(b))) continue;
+        fruit(a, b);
+      }
+    }
   }
 
   const api = {
     colonies,
+    mushrooms,
     // How many colonies there are: each counts as soon as it starts.
     count: () => colonies.length,
 
     // A spore germinates at (fx, fy) and starts a colony, even on top of
-    // another one. Returns the new colony.
-    plant(fx, fy) {
+    // another one. A new spore is a new strain; a colony spreading onto a
+    // nutrient passes on its own `strain`. Returns the new colony.
+    plant(fx, fy, strain = ++strains) {
       const el = document.createElement('div');
       el.className = 'colony';
       el.setAttribute('aria-hidden', 'true');
@@ -55,7 +119,7 @@ export function moldColonies({ layer, disks = [], nutrients, colors }) {
       const wobble = () => `${47 + Math.random() * 6}%`;
       el.style.borderRadius =
         `${wobble()} ${wobble()} ${wobble()} ${wobble()} / ${wobble()} ${wobble()} ${wobble()} ${wobble()}`;
-      const colony = { fx, fy, r: colonyRadius(0), age: 0, el };
+      const colony = { fx, fy, r: colonyRadius(0), age: 0, el, strain, mated: false };
       draw(colony);
       layer.appendChild(el);
       colonies.push(colony);
@@ -72,8 +136,9 @@ export function moldColonies({ layer, disks = [], nutrients, colors }) {
           colony.r = colonyRadius(colony.age);
           draw(colony);
         }
-        nutrients.eatNear(colony.fx, colony.fy, colony.r, api.plant);
+        nutrients.eatNear(colony.fx, colony.fy, colony.r, (fx, fy) => api.plant(fx, fy, colony.strain));
       }
+      if (pairs) mate();
     },
 
     // Any colony touching an antifungal disk or its zone dies: the whole
@@ -117,11 +182,13 @@ export function sporeGroup({ mover, agar }) {
   return spore;
 }
 
-// "1 colony", "3 colonies".
+// "1 colony", "3 colonies"; "1 mushroom", "3 mushrooms".
 const colonyCount = (n) => `${n} ${n === 1 ? 'colony' : 'colonies'}`;
+const mushroomCount = (n) => `${n} ${n === 1 ? 'mushroom' : 'mushrooms'}`;
 
 // The mold game loop: like the yeast game (game.js), but you plant colonies
-// instead of budding, and `target` is how many colonies win the level.
+// instead of budding, and `target` is how many colonies win the level (or,
+// for Phyllis, how many mushrooms).
 export function playMold(palEl, species, nutrients, disks, { level = 1, target = LEVELS[0].colonies } = {}) {
   const agar = document.querySelector('.agar');
   const counter = document.querySelector('.cell-count');
@@ -136,7 +203,11 @@ export function playMold(palEl, species, nutrients, disks, { level = 1, target =
   const layer = document.createElement('div');
   layer.className = 'colonies';
   agar.prepend(layer);
-  const colonies = moldColonies({ layer, disks, nutrients, colors: species.colors });
+  const pairs = Boolean(species.pairs);
+  const colonies = moldColonies({ layer, disks, nutrients, colors: species.colors, pairs });
+  // What counts toward winning, and how to say it.
+  const score = pairs ? () => colonies.mushrooms.length : colonies.count;
+  const goal = pairs ? mushroomCount : colonyCount;
 
   let finished = false;
   let lastTime = null;
@@ -146,8 +217,8 @@ export function playMold(palEl, species, nutrients, disks, { level = 1, target =
   const banner = levelBanner(level);
 
   function updateCounter() {
-    const shown = Math.min(colonies.count(), target);
-    counter.textContent = `Level ${level} · ${shown} / ${colonyCount(target)}`;
+    const shown = Math.min(score(), target);
+    counter.textContent = `Level ${level} · ${shown} / ${goal(target)}`;
   }
 
   function stop() {
@@ -180,7 +251,7 @@ export function playMold(palEl, species, nutrients, disks, { level = 1, target =
         const [[x, y, r]] = spore.body();
         nutrients.eatNear(x / radius, y / radius, r / radius, colonies.plant);
         colonies.killInZones(radius);
-        if (colonies.count() >= target) {
+        if (score() >= target) {
           stop();
           sporeBurst(playerMover, { big: level === LEVELS.length });
           setTimeout(showWin, 400);
@@ -201,10 +272,10 @@ export function playMold(palEl, species, nutrients, disks, { level = 1, target =
     if (level === LEVELS.length) track(`won-all-levels/${pal}`, `${name} beat every level`);
     showFact(pal, species);
     if (level < LEVELS.length) {
-      banner.show(`Level ${level} complete!`, `You grew ${colonyCount(target)}!`,
+      banner.show(`Level ${level} complete!`, `You grew ${goal(target)}!`,
         `Play level ${level + 1}`, { next: level + 1 });
     } else {
-      banner.show('You won!', `You beat all ${LEVELS.length} levels with ${colonyCount(target)}!`,
+      banner.show('You won!', `You beat all ${LEVELS.length} levels with ${goal(target)}!`,
         'Play again', { next: 1 });
     }
   }
@@ -219,7 +290,7 @@ export function playMold(palEl, species, nutrients, disks, { level = 1, target =
   }
 
   spreadZones(disks, 0);
-  for (const el of document.querySelectorAll('.target-colonies')) el.textContent = target;
+  for (const el of document.querySelectorAll('.target-colonies, .target-mushrooms')) el.textContent = target;
   updateCounter();
   requestAnimationFrame(step);
 }

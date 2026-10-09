@@ -53,11 +53,15 @@ function start() {
   // start new ones.
   const mold = species.kind === 'mold';
   const nutrients = scatterNutrients({ avoid: disks, count: mold ? GAME.MOLD_NUTRIENTS : GAME.YEAST_NUTRIENTS });
+  // Three sets of directions: the yeasts', a mold's, and Phyllis's, whose
+  // colonies pair up to make mushrooms.
+  const which = species.pairs ? 'for-pairs' : mold ? 'for-mold' : 'for-yeast';
   for (const how of document.querySelectorAll('.how-to-play')) {
-    how.hidden = how.classList.contains('for-mold') !== mold;
+    how.hidden = !how.classList.contains(which);
   }
   if (mold) {
-    playMold(pal, species, nutrients, disks, { level: levelNumber, target: level.colonies });
+    const target = species.pairs ? level.mushrooms : level.colonies;
+    playMold(pal, species, nutrients, disks, { level: levelNumber, target });
   } else {
     playGame(pal, species, nutrients, disks, { level: levelNumber, target: level.target });
   }
