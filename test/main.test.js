@@ -6,7 +6,7 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { LEVELS, SPECIES } from '../public/game/config.js';
+import { GAME, LEVELS, SPECIES } from '../public/game/config.js';
 
 // Don't run the real game loop; just record how the game was started.
 vi.mock('../public/game/game.js', () => ({ playGame: vi.fn() }));
@@ -120,6 +120,21 @@ describe('a broken address', () => {
     const playGame = await open('?pal=sasha"]');
     expect(location.replace).toHaveBeenCalledWith('./pal-picker.html');
     expect(playGame).not.toHaveBeenCalled();
+  });
+});
+
+describe('nutrients', () => {
+  const flecks = () => document.querySelectorAll('.agar .nutrient').length;
+
+  it('puts 8 on the dish for a yeast', async () => {
+    await open('?pal=sasha');
+    expect(flecks()).toBe(GAME.YEAST_NUTRIENTS);
+    expect(GAME.YEAST_NUTRIENTS).toBe(8);
+  });
+
+  it('puts the usual 10 on the dish for Fumi', async () => {
+    await open('?pal=fumi');
+    expect(flecks()).toBe(10);
   });
 });
 

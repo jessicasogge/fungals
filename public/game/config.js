@@ -174,6 +174,7 @@ export const GAME = {
   ZONE_START: 0.1,
   ZONE_SPREAD_SECONDS: 20,
   SWIM_ROOM: 0.13, // minimum gap between zones, in dish radii
+  YEAST_NUTRIENTS: 8, // nutrients on the dish at a time for the yeasts (Fumi gets the usual 10)
   // Molds (Fumi) don't bud or swim: she grows as threads (hyphae) from her
   // tips (see mold.js). Lengths are fractions of the dish radius.
   MOLD: {

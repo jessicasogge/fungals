@@ -2,7 +2,7 @@
 // URL and start the game with them:
 //   petri-dish.html?pal=sasha&level=2
 import { antifungalsFor, placeAntifungals } from './antifungal.js';
-import { LEVELS, SPECIES } from './config.js';
+import { GAME, LEVELS, SPECIES } from './config.js';
 import { playGame } from './game.js';
 import { playMold } from './mold-game.js';
 import { speciesName } from './italics.js';
@@ -48,7 +48,8 @@ function start() {
   document.querySelector('.species-name').replaceChildren(...speciesName(species.scientific));
   if (species.kind === 'mold') moldDirections();
   const disks = placeAntifungals(antifungalsFor(species.antifungals, level.disks));
-  const nutrients = scatterNutrients({ avoid: disks });
+  const count = species.kind === 'mold' ? undefined : GAME.YEAST_NUTRIENTS;
+  const nutrients = scatterNutrients({ avoid: disks, count });
   const play = species.kind === 'mold' ? playMold : playGame;
   play(pal, species, nutrients, disks, { level: levelNumber, target: level.target });
 }
