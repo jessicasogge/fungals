@@ -151,11 +151,52 @@ export const PALS = [
       ${face(100, 104, '#1f4d43')}
     `,
   },
+  // Phyllis: Schizophyllum commune, the split-gill mushroom: a fuzzy whitish
+  // fan with dusty-pink split gills, growing out of a bit of log. In the dish
+  // she plays as one of her spores (dishArt), smooth and oval, and her
+  // colonies pair up to make mushrooms (see mold.js).
+  {
+    id: 'phyllis',
+    name: 'Phyllis',
+    looks: 'a fuzzy whitish Schizophyllum commune mushroom: a fan with pink split gills, growing on a log',
+    motion: 'bob',
+    frames: { home: '-2 4 204 204', picker: '6 10 188 188', dish: '50 50 100 100' },
+    art: `
+      <!-- the bit of log she grows on -->
+      <rect x="36" y="158" width="128" height="30" rx="12" fill="#c49a73" stroke="#6e4b33" stroke-width="4" />
+      <ellipse cx="150" cy="173" rx="9" ry="13" fill="#e2c29f" stroke="#6e4b33" stroke-width="3" />
+      <path d="M150 166 q4 7 0 14" stroke="#b98b63" stroke-width="2" fill="none" />
+      <path d="M52 170 h40 M70 180 h50" stroke="#a57a54" stroke-width="2.5" stroke-linecap="round" />
+      <!-- her fan, with a wavy, lobed, fuzzy edge -->
+      <path d="M100 164 C 72 164, 38 142, 28 106 C 22 88, 26 68, 36 56 C 40 46, 52 42, 58 46 C 62 34, 76 28, 86 34 C 92 24, 108 24, 114 34 C 124 28, 138 34, 142 46 C 148 42, 160 46, 164 56 C 174 68, 178 88, 172 106 C 162 142, 128 164, 100 164 Z" fill="#f1ebe8" stroke="#7a5f63" stroke-width="4" stroke-linejoin="round" />
+      <!-- split gills: each one a pair of lines fanning out from where she grows -->
+      <g stroke="#c99ea2" stroke-width="2.4" stroke-linecap="round" fill="none">
+        <path d="M100 156 L48 64" /><path d="M100 156 L54 60" />
+        <path d="M100 156 L72 44" /><path d="M100 156 L78 42" />
+        <path d="M100 156 L97 34" /><path d="M100 156 L103 34" />
+        <path d="M100 156 L122 42" /><path d="M100 156 L128 44" />
+        <path d="M100 156 L146 60" /><path d="M100 156 L152 64" />
+        <path d="M100 156 L36 96" /><path d="M100 156 L164 96" />
+      </g>
+      <g stroke="#b7a6a6" stroke-width="1.6" stroke-linecap="round">
+        <path d="M40 54 l-4 -5" /><path d="M58 44 l-2 -6" /><path d="M86 32 l0 -6" /><path d="M114 32 l0 -6" />
+        <path d="M142 44 l2 -6" /><path d="M160 54 l4 -5" /><path d="M30 78 l-6 -2" /><path d="M170 78 l6 -2" />
+      </g>
+      <ellipse cx="70" cy="72" rx="12" ry="6" fill="#fffaf8" transform="rotate(-30 70 72)" />
+      ${face(100, 108, '#3d2a2e')}
+    `,
+    dishArt: `
+      <!-- a smooth, oval spore (basidiospore) -->
+      <ellipse cx="100" cy="100" rx="36" ry="44" fill="#f1ebe8" stroke="#7a5f63" stroke-width="4" />
+      <ellipse cx="86" cy="78" rx="8" ry="5" fill="#fffaf8" transform="rotate(-25 86 78)" />
+      ${face(100, 104, '#3d2a2e')}
+    `,
+  },
 ];
 
 // The home page's row, in its own order: the yeasts, with Olive in the
-// middle, then Fumi the mold.
-const HOME = ['sasha', 'olive', 'candi', 'fumi'];
+// middle, then Fumi the mold and Phyllis the mushroom.
+const HOME = ['sasha', 'olive', 'candi', 'fumi', 'phyllis'];
 export const HOME_PALS = HOME.map((id) => PALS.find((pal) => pal.id === id));
 
 // How many pals fit on one page of the picker: four across, two down.

@@ -19,6 +19,10 @@ Fumi (*Aspergillus fumigatus*) plays differently. You're one of her tiny **spore
 
 Watch out for the disks: **a colony that touches an antifungal disk, or its zone of inhibition, pops**, the whole colony at once, and you lose it from your count. The colonies keep spreading and the zones keep widening for the first few seconds, so leave room. Your spore touching one is still game over. A nutrient under a colony isn't wasted: new nutrients can turn up under a colony, and a colony can spread over one, and either way it starts a new colony right there.
 
+### Playing a mushroom: Phyllis
+
+Phyllis (*Schizophyllum commune*) plays like Fumi, with one twist: **her colonies have to pair up**. Each spore you land is a different mating type, and a colony from one spore can't make mushrooms on its own. When two colonies **from different spores** grow into each other, they mate: both blush pink, and a little split-gill **mushroom** pops up where they meet. Mushrooms are what count for her: 1 on level 1, and 1 more each level, up to 7. So where Fumi wants her colonies spread out, Phyllis wants hers close enough to touch. A colony that spreads onto a nutrient starts a clone of itself, which is the same mating type, so it can't mate with its parent. If a zone pops either colony of a pair, their mushroom goes with it.
+
 ### Who’s That Gal?
 
 Tap **Who’s That Gal?** on the home page for a quiz on the pals' fun facts, like PetriPals' Who’s That Pal?. You get one fact with "this gal" in place of her name: tap the pal it's about. A wrong guess greys that pal out so you can try again, and the right one puts her name back in and shows her species. There's no score, so it's just for learning. The quiz skips facts that fit any yeast (like having a nucleus); the ones it uses are listed in `public/game/quiz-facts.js`.
@@ -31,6 +35,7 @@ Tap **Who’s That Gal?** on the home page for a quiz on the pals' fun facts, li
 | **Candi** | *Candida albicans* | Sky-blue oval yeast with a bud and two bud scars |
 | **Olive** | *Malassezia furfur* | Olive-green bowling pin: a broad-based bud on one end, with a collarette at the neck |
 | **Fumi** | *Aspergillus fumigatus* | Smoky green mold: a round head on a stalk, topped with columns of spores. In the dish, one little spore |
+| **Phyllis** | *Schizophyllum commune* | A fuzzy whitish fan of a mushroom with dusty-pink split gills, growing out of a log. In the dish, one smooth oval spore |
 
 ## The real science
 
@@ -40,6 +45,8 @@ Tap **Who’s That Gal?** on the home page for a quiz on the pals' fun facts, li
 - **Fumi's colonies** grow the way mold colonies really do: each starts from a single spore (a conidium) that sprouts threads (hyphae), and the hyphae grow from their tips at the colony's edge. So a colony spreads out in a circle at a steady pace, rather than doubling like a heap of budding yeast. The middle is oldest, so that's where it makes spores first and turns green, while the rest, still growing, stays white and fluffy.
 - **Fumi's picture** is her conidiophore, the stalk that makes her spores: a swollen head (the vesicle) with spores in chains that stand up from its top in a column. That shape, a bit like the aspergillum used to sprinkle holy water, gave *Aspergillus* its name. *Fumigatus* means "smoky," for her grey-green colonies.
 - **Fumi's antifungals:** voriconazole is the usual first choice against her, then other azoles (itraconazole, posaconazole), amphotericin B and caspofungin, the five drugs on her disks. Like most molds, she's naturally resistant to fluconazole, so she never gets an FLC disk. There's a CLSI disk test for molds (M51), but no settled zone sizes for *Aspergillus*, so her zones are estimates.
+- **Phyllis is the split-gill mushroom**, the fuzzy little fan you find on dead wood almost everywhere. Her gills are split down the middle, and they curl shut when she dries out and open again when it rains. A colony grown from one of her spores (a monokaryon) can't make mushrooms. Two colonies of compatible mating types have to fuse first (into a dikaryon), and she has over 20,000 mating types, so almost any two will do. Once they've fused, her hyphae grow tiny hooks called clamp connections, and unlike most mushrooms she'll fruit right on a petri dish, which is why labs study her.
+- **Phyllis's antifungals** are estimates, since there are no standard disk sizes for *Schizophyllum*: amphotericin B, voriconazole, itraconazole and posaconazole. She shrugs off fluconazole, and echinocandins work poorly on her, so she gets neither.
 - **The antifungal disks** work like the Kirby-Bauer disk test for bacteria. *Candida* has a standard disk test (CLSI M44), so Candi's zones are ballpark sizes for a susceptible strain. *Saccharomyces* and *Malassezia* have no standard disk sizes, so Sasha's and Olive's are estimates from how well each drug works on them. Fluconazole only weakly holds *Saccharomyces* back, so Sasha's fluconazole zone is small. *Malassezia* is naturally resistant to echinocandins, so Olive's caspofungin disk has **no zone at all**: you can swim right up to it, but don't touch the disk itself.
 - **The disk codes** are the standard ones: FLC (fluconazole), VOR (voriconazole), KCA (ketoconazole), ITC (itraconazole), POS (posaconazole), CAS (caspofungin), MCF (micafungin), AMB (amphotericin B) and NY (nystatin).
 - **The zones spread** because the drug diffuses outward from the disk into the agar: fast at first, then more slowly. On a real plate this takes hours of incubation; the game speeds it up to a few seconds.
@@ -47,6 +54,7 @@ Tap **Who’s That Gal?** on the home page for a quiz on the pals' fun facts, li
 ## Coming next
 
 - **More molds**, like *Penicillium* (Fleming's mold) and *Aspergillus niger*, playing like Fumi.
+- **Phyllis's mushrooms dropping spores**, to start new colonies of her own.
 - **Candi switching to hyphae**, her signature trick.
 - More pals, like *Rhizopus* (bread mold) and *Trichophyton* (ringworm, which grows in rings).
 
@@ -80,7 +88,7 @@ FunGals started as a copy of the PetriPals engine (steering, nutrients, disks an
 | `public/pal-picker.html` | Pick a pal |
 | `public/petri-dish.html` | The game |
 | `public/whos-that-gal.html` | Who’s That Gal?, a quiz: which pal is this fact about? |
-| `public/game/` | Game code: the game loop (`game.js`), a colony eating and budding (`colony.js`), the mold game, where a spore starts colonies that spread (`mold.js`), the end-of-level pop-up both games share (`banner.js`), how yeast cells bud and cluster (`yeast.js`, with the cluster math in `attach.js`), steering (`keyboard.js`, `touch.js`), antifungal disks and zones (`antifungal.js`), nutrients, physics, settings and fun facts (`config.js`), the fun-fact pop-up (`facts.js`, with italics for scientific names from `italics.js`) the win spores (`spores.js`), and Who’s That Gal? (`whos-that-gal.js`, with the facts' "this gal" swap in `guess.js` and the facts it asks about in `quiz-facts.js`) |
+| `public/game/` | Game code: the game loop (`game.js`), a colony eating and budding (`colony.js`), the mold game, where a spore starts colonies that spread, and Phyllis's colonies mate to make mushrooms (`mold.js`), the end-of-level pop-up both games share (`banner.js`), how yeast cells bud and cluster (`yeast.js`, with the cluster math in `attach.js`), steering (`keyboard.js`, `touch.js`), antifungal disks and zones (`antifungal.js`), nutrients, physics, settings and fun facts (`config.js`), the fun-fact pop-up (`facts.js`, with italics for scientific names from `italics.js`) the win spores (`spores.js`), and Who’s That Gal? (`whos-that-gal.js`, with the facts' "this gal" swap in `guess.js` and the facts it asks about in `quiz-facts.js`) |
 | `public/game/pals.js` | Every pal's name and drawing, in one place. To add a pal, see the notes at the top. |
 | `test/` | Tests |
 | `src/index.ts` | Small Express server for local development |

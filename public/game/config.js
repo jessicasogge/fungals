@@ -131,20 +131,55 @@ export const SPECIES = {
       { code: 'AMB', name: 'amphotericin B', zone: 18 },
       { code: 'CAS', name: 'caspofungin', zone: 16 },
     ],
+  },  phyllis: {
+    facts: [
+      "Phyllis's genus name, *Schizophyllum*, means \"split leaf,\" for her split gills.",
+      "Phyllis is the split-gill mushroom, found on dead wood on every continent but Antarctica.",
+      "Phyllis's split gills curl shut when she dries out, and open again when it rains.",
+      "Phyllis has over 20,000 mating types, so almost any two of her spores can mate.",
+      "A colony from one of Phyllis's spores can't make mushrooms until it mates with another.",
+      "When two of Phyllis's colonies mate, her hyphae grow tiny hooks called clamp connections.",
+      "Unlike most mushrooms, Phyllis fruits right on a petri dish, so labs love to study her.",
+      "Phyllis's mushrooms are fuzzy little fans with no stalk, growing straight out of the wood.",
+      "Phyllis is a basidiomycete: she makes her spores on club-shaped cells called basidia.",
+      "People eat Phyllis in parts of Africa, Asia and Mexico, where she's prized for her chew.",
+      "Phyllis can rarely cause sinus and lung infections in people.",
+    ],
+    scientific: 'Schizophyllum commune',
+    color: '#8a5f68', // for her name above the dish
+    kind: 'mold',
+    // Her colonies have to mate to make mushrooms, which win her levels
+    // (see mold.js).
+    pairs: true,
+    // `fill`/`stroke`/`highlight`/`dark` are her spore's and mushrooms'
+    // colors; `spores` is the dusty pink of her gills, which her colonies
+    // blush once they've mated.
+    colors: { fill: '#f1ebe8', stroke: '#7a5f63', highlight: '#fffaf8', dark: '#3d2a2e', spores: '#c99ea2' },
+    // There are no standard disk sizes for Schizophyllum, so these are
+    // estimates from how well each drug works on her in the lab. Like most
+    // molds she shrugs off fluconazole, and echinocandins work poorly on
+    // her, so she gets neither.
+    antifungals: [
+      { code: 'AMB', name: 'amphotericin B', zone: 15 },
+      { code: 'VOR', name: 'voriconazole', zone: 24 },
+      { code: 'ITC', name: 'itraconazole', zone: 19 },
+      { code: 'POS', name: 'posaconazole', zone: 26 },
+    ],
   },
+
 };
 
 // Each level adds an antifungal disk and doubles the colony you need to grow.
 // A mold (Fumi) needs `colonies` colonies instead: 6 on level 1, and 6 more
 // each level.
 export const LEVELS = [
-  { disks: 1, target: 4, colonies: 6 },
-  { disks: 2, target: 8, colonies: 12 },
-  { disks: 3, target: 16, colonies: 18 },
-  { disks: 4, target: 32, colonies: 24 },
-  { disks: 5, target: 64, colonies: 30 },
-  { disks: 6, target: 128, colonies: 36 },
-  { disks: 7, target: 256, colonies: 42 },
+  { disks: 1, target: 4, colonies: 6, mushrooms: 1 },
+  { disks: 2, target: 8, colonies: 12, mushrooms: 2 },
+  { disks: 3, target: 16, colonies: 18, mushrooms: 3 },
+  { disks: 4, target: 32, colonies: 24, mushrooms: 4 },
+  { disks: 5, target: 64, colonies: 30, mushrooms: 5 },
+  { disks: 6, target: 128, colonies: 36, mushrooms: 6 },
+  { disks: 7, target: 256, colonies: 42, mushrooms: 7 },
 ];
 
 export const GAME = {

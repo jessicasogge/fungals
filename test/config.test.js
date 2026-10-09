@@ -30,10 +30,14 @@ describe('pals', () => {
     }
   });
 
-  it('gives a mold the green her colonies turn as they make spores', () => {
+  it('gives a mold the color her colonies turn: Fumi as she makes spores, Phyllis once she mates', () => {
     const molds = PALS.filter((pal) => SPECIES[pal].kind === 'mold');
-    expect(molds).toEqual(['fumi']);
+    expect(molds).toEqual(['fumi', 'phyllis']);
     for (const pal of molds) expect(SPECIES[pal].colors.spores).toMatch(/^#[0-9a-f]{6}$/i);
+  });
+
+  it('makes Phyllis the one whose colonies pair up to make mushrooms', () => {
+    expect(PALS.filter((pal) => SPECIES[pal].pairs)).toEqual(['phyllis']);
   });
 });
 
@@ -64,17 +68,21 @@ describe('levels', () => {
   });
 
   it('start with one disk and a small colony', () => {
-    expect(LEVELS[0]).toEqual({ disks: 1, target: 4, colonies: 6 });
+    expect(LEVELS[0]).toEqual({ disks: 1, target: 4, colonies: 6, mushrooms: 1 });
   });
 
   it('go up to a colony of 256 cells past seven disks, doubling each level', () => {
     expect(LEVELS).toHaveLength(7);
-    expect(LEVELS.at(-1)).toEqual({ disks: 7, target: 256, colonies: 42 });
+    expect(LEVELS.at(-1)).toEqual({ disks: 7, target: 256, colonies: 42, mushrooms: 7 });
     for (let i = 1; i < LEVELS.length; i++) expect(LEVELS[i].target).toBe(LEVELS[i - 1].target * 2);
   });
 
   it('ask a mold for 6 colonies, and 6 more each level, up to 42', () => {
     expect(LEVELS.map((level) => level.colonies)).toEqual([6, 12, 18, 24, 30, 36, 42]);
+  });
+
+  it('ask Phyllis for 1 mushroom, and 1 more each level, up to 7', () => {
+    expect(LEVELS.map((level) => level.mushrooms)).toEqual([1, 2, 3, 4, 5, 6, 7]);
   });
 });
 

@@ -33,4 +33,12 @@ export const QUIZ_FACTS = {
     "Fumi can grow at 50 °C, so she thrives in hot, rotting compost heaps.",
     "Fumi's spores grow in long chains that stand up from a swollen head, like columns.",
   ],
+  phyllis: [
+    "Phyllis's genus name, *Schizophyllum*, means \"split leaf,\" for her split gills.",
+    "Phyllis's split gills curl shut when she dries out, and open again when it rains.",
+    "Phyllis has over 20,000 mating types, so almost any two of her spores can mate.",
+    "When two of Phyllis's colonies mate, her hyphae grow tiny hooks called clamp connections.",
+    "Unlike most mushrooms, Phyllis fruits right on a petri dish, so labs love to study her.",
+    "People eat Phyllis in parts of Africa, Asia and Mexico, where she's prized for her chew.",
+  ],
 };

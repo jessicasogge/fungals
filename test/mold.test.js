@@ -164,6 +164,84 @@ describe('the colonies', () => {
   });
 });
 
+describe("Phyllis's colonies", () => {
+  let layer;
+  beforeEach(() => {
+    layer = document.createElement('div');
+    document.querySelector('.agar').append(layer);
+  });
+  const phyllis = (nutrients = fakeNutrients(), disks = []) =>
+    moldColonies({ layer, disks, nutrients, colors: SPECIES.phyllis.colors, pairs: true });
+  const grown = (colonies) => colonies.grow(GAME.COLONY_GROW_SECONDS);
+  const ripe = (colony) => colony.el.style.getPropertyValue('--ripe');
+
+  it('mate when two from different spores grow into each other: a mushroom pops up where they meet', () => {
+    const colonies = phyllis();
+    const a = colonies.plant(-0.1, 0);
+    const b = colonies.plant(0.1, 0);
+    expect(a.strain).not.toBe(b.strain);
+    colonies.grow(0.1);
+    expect(colonies.mushrooms).toHaveLength(0); // not touching yet
+    expect(ripe(a)).toBe('0%'); // white until she mates
+    grown(colonies);
+    expect(colonies.mushrooms).toHaveLength(1);
+    const [mushroom] = layer.querySelectorAll('.mushroom');
+    expect(mushroom.style.left).toBe('50%'); // halfway between equal colonies
+    expect(mushroom.style.getPropertyValue('--turn')).toBe('90deg');
+    expect(mushroom.querySelector('svg')).not.toBeNull();
+    expect([a.mated, b.mated]).toEqual([true, true]);
+    expect(ripe(a)).toBe('40%'); // and blushes once she has
+  });
+
+  it('make only one mushroom per pair, but a colony can pair with more than one', () => {
+    const colonies = phyllis();
+    colonies.plant(-0.1, 0);
+    colonies.plant(0.1, 0);
+    grown(colonies);
+    grown(colonies);
+    expect(colonies.mushrooms).toHaveLength(1);
+    colonies.plant(0, 0.15);
+    grown(colonies);
+    expect(colonies.mushrooms).toHaveLength(3);
+  });
+
+  it("don't mate with their own clones: a colony that spreads onto a nutrient starts one", () => {
+    const colonies = phyllis(fakeNutrients([[0.05, 0]]));
+    const parent = colonies.plant(0, 0);
+    grown(colonies);
+    expect(colonies.count()).toBe(2);
+    expect(colonies.colonies[1].strain).toBe(parent.strain);
+    grown(colonies);
+    expect(colonies.mushrooms).toHaveLength(0);
+  });
+
+  it('lose a mushroom when one of its colonies dies', () => {
+    const zone = disk(0.5, 0, 0);
+    const colonies = phyllis(fakeNutrients(), [zone]);
+    colonies.plant(0.15, 0);
+    colonies.plant(0.35, 0);
+    grown(colonies);
+    expect(colonies.mushrooms).toHaveLength(1);
+    zone.zone = 0.2; // the drug spreads out over one of them
+    colonies.killInZones(200);
+    expect(colonies.mushrooms).toHaveLength(0);
+    expect(layer.querySelector('.mushroom')).toBeNull();
+  });
+});
+
+describe("Fumi's colonies", () => {
+  it("never mate: they each count on their own", () => {
+    const layer = document.createElement('div');
+    document.querySelector('.agar').append(layer);
+    const colonies = moldColonies({ layer, nutrients: fakeNutrients(), colors });
+    colonies.plant(-0.05, 0);
+    colonies.plant(0.05, 0);
+    colonies.grow(GAME.COLONY_GROW_SECONDS);
+    expect(colonies.mushrooms).toHaveLength(0);
+    expect(layer.querySelector('.mushroom')).toBeNull();
+  });
+});
+
 describe('the spore', () => {
   it('is one small round cell that stays in the dish', () => {
     const agar = document.querySelector('.agar');
@@ -192,7 +270,7 @@ describe('playing as a mold', () => {
   let mover;
 
   // Start a level as Fumi, with nutrient flecks at `spots`.
-  function start({ level = 1, target = LEVELS[level - 1].colonies, disks = [], spots = [] } = {}) {
+  function start({ level = 1, target = LEVELS[level - 1].colonies, disks = [], spots = [], pal = 'fumi' } = {}) {
     frames = [];
     now = 0;
     vi.stubGlobal('requestAnimationFrame', (run) => frames.push(run));
@@ -202,10 +280,10 @@ describe('playing as a mold', () => {
     vi.spyOn(agar, 'clientWidth', 'get').mockReturnValue(400);
     vi.spyOn(mover, 'offsetWidth', 'get').mockReturnValue(20);
     const palEl = document.createElement('div');
-    palEl.dataset.pal = 'fumi';
-    palEl.dataset.name = 'Fumi';
+    palEl.dataset.pal = pal;
+    palEl.dataset.name = pal[0].toUpperCase() + pal.slice(1);
     const nutrients = fakeNutrients(spots);
-    playMold(palEl, SPECIES.fumi, nutrients, disks, { level, target });
+    playMold(palEl, SPECIES[pal], nutrients, disks, { level, target });
     return { nutrients, banner: document.querySelector('.win-banner') };
   }
 
@@ -319,6 +397,24 @@ describe('playing as a mold', () => {
     frame(50);
     expect(counter()).toBe('Level 2 · 1 / 1 colony');
     expect(colony.style.width).not.toBe(width);
+  });
+
+  it('plays Phyllis for mushrooms: two spores side by side mate and win the level', () => {
+    const { banner } = start({ pal: 'phyllis', target: LEVELS[0].mushrooms, spots: [[0, 0], [0.03, 0]] });
+    expect(counter()).toBe('Level 1 · 0 / 1 mushroom');
+    expect(document.querySelector('.target-mushrooms').textContent).toBe('1');
+    frame(); // she lands on both: two colonies, from two different spores
+    expect(colonyEls()).toHaveLength(2);
+    frame(50); // they touch and mate
+    frame(50); // and the win is counted
+    expect(counter()).toBe('Level 1 · 1 / 1 mushroom');
+    vi.runAllTimers();
+    expect(banner.querySelector('.win-message').textContent).toBe('You grew 1 mushroom!');
+  });
+
+  it('counts mushrooms in the plural too', () => {
+    start({ pal: 'phyllis', level: 3, target: LEVELS[2].mushrooms });
+    expect(counter()).toBe('Level 3 · 0 / 3 mushrooms');
   });
 
   it('wins the whole game on the last level', () => {

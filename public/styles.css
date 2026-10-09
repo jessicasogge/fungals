@@ -345,6 +345,10 @@ body {
   background: rgba(209, 231, 223, 0.7);
 }
 
+.phyllis {
+  background: rgba(236, 219, 222, 0.75);
+}
+
 .pick-btn {
   margin-top: 0.75rem;
   padding: 0.7rem 1rem;
@@ -1025,6 +1029,29 @@ body:not(.picker-page) .signature {
   animation: sprout 0.4s ease-out;
 }
 
+/* Phyllis's mushroom (game/mold.js): a little split-gill fan that pops up
+   where two of her colonies meet, facing out (--turn). */
+.mushroom {
+  position: absolute;
+  width: 7%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%) rotate(var(--turn, 0deg));
+  filter: drop-shadow(0 1px 1.5px rgba(61, 42, 46, 0.35));
+  animation: mushroom-pop 0.5s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+.mushroom svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes mushroom-pop {
+  from {
+    transform: translate(-50%, -50%) rotate(var(--turn, 0deg)) scale(0);
+  }
+}
+
 /* Killed by an antifungal: the whole colony pops, swelling and vanishing. */
 .colony.dying {
   animation: colony-pop 0.35s ease-out forwards;
@@ -1071,7 +1098,8 @@ body:not(.picker-page) .signature {
 @media (prefers-reduced-motion: reduce) {
   .pop,
   .colony,
-  .colony.dying {
+  .colony.dying,
+  .mushroom {
     animation-duration: 0.01s;
   }
 }
