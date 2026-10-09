@@ -17,7 +17,7 @@ There are seven levels. Each one adds another antifungal disk and doubles the co
 
 Fumi (*Aspergillus fumigatus*) plays differently. You're one of her tiny **spores**, floating over the agar. Land on a nutrient and a spore germinates right there: a **colony** starts small and spreads out in a circle, white and fluffy with a greenish middle where it's making spores. A colony counts as soon as it starts, and you need **6 colonies** on level 1 and 6 more each level, up to 42. Like the yeasts, she has 1 antifungal disk on level 1 and one more each level (drugs repeat once she's had them all). There are only 4 nutrients on her plate at a time (the yeasts get 10), since each one is a whole colony.
 
-Plant them carefully: **a colony that touches an antifungal disk, or its zone of inhibition, pops**, the whole colony at once, and you lose it from your count. The colonies keep spreading and the zones keep widening for the first few seconds, so leave room. Your spore touching one is still game over. A nutrient under a colony isn't wasted: new nutrients can turn up under a colony, and a colony can spread over one, and either way it starts a new colony right there.
+Watch out for the disks: **a colony that touches an antifungal disk, or its zone of inhibition, pops**, the whole colony at once, and you lose it from your count. The colonies keep spreading and the zones keep widening for the first few seconds, so leave room. Your spore touching one is still game over. A nutrient under a colony isn't wasted: new nutrients can turn up under a colony, and a colony can spread over one, and either way it starts a new colony right there.
 
 ### Who’s That Gal?
 
@@ -80,7 +80,7 @@ FunGals started as a copy of the PetriPals engine (steering, nutrients, disks an
 | `public/pal-picker.html` | Pick a pal |
 | `public/petri-dish.html` | The game |
 | `public/whos-that-gal.html` | Who’s That Gal?, a quiz: which pal is this fact about? |
-| `public/game/` | Game code: the game loop (`game.js`), a colony eating and budding (`colony.js`), the mold game, where a spore plants colonies that spread (`mold.js`), the end-of-level pop-up both games share (`banner.js`), how yeast cells bud and cluster (`yeast.js`, with the cluster math in `attach.js`), steering (`keyboard.js`, `touch.js`), antifungal disks and zones (`antifungal.js`), nutrients, physics, settings and fun facts (`config.js`), the fun-fact pop-up (`facts.js`, with italics for scientific names from `italics.js`) the win spores (`spores.js`), and Who’s That Gal? (`whos-that-gal.js`, with the facts' "this gal" swap in `guess.js` and the facts it asks about in `quiz-facts.js`) |
+| `public/game/` | Game code: the game loop (`game.js`), a colony eating and budding (`colony.js`), the mold game, where a spore starts colonies that spread (`mold.js`), the end-of-level pop-up both games share (`banner.js`), how yeast cells bud and cluster (`yeast.js`, with the cluster math in `attach.js`), steering (`keyboard.js`, `touch.js`), antifungal disks and zones (`antifungal.js`), nutrients, physics, settings and fun facts (`config.js`), the fun-fact pop-up (`facts.js`, with italics for scientific names from `italics.js`) the win spores (`spores.js`), and Who’s That Gal? (`whos-that-gal.js`, with the facts' "this gal" swap in `guess.js` and the facts it asks about in `quiz-facts.js`) |
 | `public/game/pals.js` | Every pal's name and drawing, in one place. To add a pal, see the notes at the top. |
 | `test/` | Tests |
 | `src/index.ts` | Small Express server for local development |
