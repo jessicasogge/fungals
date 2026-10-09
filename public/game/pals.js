@@ -14,6 +14,8 @@
 //           home page, filling her tile on the picker, snug in the dish
 //   art     the drawing itself, in a 200 x 200 space. Wrap the face in
 //           <g class="face">.
+//   dishArt (optional) a different drawing for the dish, framed by
+//           frames.dish: a mold plays as one of her spores
 //
 // To add a pal: add her to the end of this list and to SPECIES in config.js,
 // and give her tile a color in styles.css (.<id> next to .sasha and the
@@ -103,11 +105,57 @@ export const PALS = [
       ${face(100, 140, '#3a4410')}
     `,
   },
+  // Fumi: Aspergillus fumigatus, a smoky green mold. Her picture is her
+  // conidiophore, the stalk that makes her spores: a round head (the vesicle)
+  // with chains of spores standing up from its top in columns. In the dish
+  // she plays as one of those spores (dishArt), a little round, slightly
+  // spiky ball, and plants colonies (see mold.js).
+  {
+    id: 'fumi',
+    name: 'Fumi',
+    looks: 'a smoky green Aspergillus fumigatus mold: a round head on a stalk, topped with columns of spores',
+    motion: 'bob',
+    frames: { home: '20 32 160 160', picker: '29 44 142 142', dish: '50 50 100 100' },
+    art: `
+      <!-- the stalk (stipe) -->
+      <rect x="93" y="150" width="14" height="36" rx="6" fill="#dcebe5" stroke="#3f7a6c" stroke-width="4" />
+      <!-- chains of spores on little flasks (phialides), all pointing up -->
+      <ellipse cx="74" cy="97" rx="4.5" ry="7" fill="#bcd6cc" stroke="#3f7a6c" stroke-width="2.5" />
+      <circle cx="74" cy="85" r="7" fill="#7fa89b" stroke="#3f7a6c" stroke-width="2.5" />
+      <circle cx="74" cy="72" r="7" fill="#7fa89b" stroke="#3f7a6c" stroke-width="2.5" />
+      <ellipse cx="87" cy="92" rx="4.5" ry="7" fill="#bcd6cc" stroke="#3f7a6c" stroke-width="2.5" />
+      <circle cx="87" cy="80" r="7" fill="#7fa89b" stroke="#3f7a6c" stroke-width="2.5" />
+      <circle cx="87" cy="67" r="7" fill="#7fa89b" stroke="#3f7a6c" stroke-width="2.5" />
+      <circle cx="87" cy="54" r="7" fill="#7fa89b" stroke="#3f7a6c" stroke-width="2.5" />
+      <ellipse cx="100" cy="90" rx="4.5" ry="7" fill="#bcd6cc" stroke="#3f7a6c" stroke-width="2.5" />
+      <circle cx="100" cy="78" r="7" fill="#7fa89b" stroke="#3f7a6c" stroke-width="2.5" />
+      <circle cx="100" cy="65" r="7" fill="#7fa89b" stroke="#3f7a6c" stroke-width="2.5" />
+      <circle cx="100" cy="52" r="7" fill="#7fa89b" stroke="#3f7a6c" stroke-width="2.5" />
+      <ellipse cx="113" cy="92" rx="4.5" ry="7" fill="#bcd6cc" stroke="#3f7a6c" stroke-width="2.5" />
+      <circle cx="113" cy="80" r="7" fill="#7fa89b" stroke="#3f7a6c" stroke-width="2.5" />
+      <circle cx="113" cy="67" r="7" fill="#7fa89b" stroke="#3f7a6c" stroke-width="2.5" />
+      <circle cx="113" cy="54" r="7" fill="#7fa89b" stroke="#3f7a6c" stroke-width="2.5" />
+      <ellipse cx="126" cy="97" rx="4.5" ry="7" fill="#bcd6cc" stroke="#3f7a6c" stroke-width="2.5" />
+      <circle cx="126" cy="85" r="7" fill="#7fa89b" stroke="#3f7a6c" stroke-width="2.5" />
+      <circle cx="126" cy="72" r="7" fill="#7fa89b" stroke="#3f7a6c" stroke-width="2.5" />
+      <!-- the swollen head (vesicle) -->
+      <ellipse cx="100" cy="128" rx="42" ry="34" fill="#dcebe5" stroke="#3f7a6c" stroke-width="4" />
+      <ellipse cx="82" cy="112" rx="8" ry="4.5" fill="#f4faf7" transform="rotate(-25 82 112)" />
+      ${face(100, 132, '#1f4d43')}
+    `,
+    dishArt: `
+      <!-- a rough, slightly spiky spore (conidium) -->
+      <g fill="#5b8c80"><circle cx="142.0" cy="100.0" r="4.5" /><circle cx="137.8" cy="118.2" r="4.5" /><circle cx="126.2" cy="132.8" r="4.5" /><circle cx="109.3" cy="140.9" r="4.5" /><circle cx="90.7" cy="140.9" r="4.5" /><circle cx="73.8" cy="132.8" r="4.5" /><circle cx="62.2" cy="118.2" r="4.5" /><circle cx="58.0" cy="100.0" r="4.5" /><circle cx="62.2" cy="81.8" r="4.5" /><circle cx="73.8" cy="67.2" r="4.5" /><circle cx="90.7" cy="59.1" r="4.5" /><circle cx="109.3" cy="59.1" r="4.5" /><circle cx="126.2" cy="67.2" r="4.5" /><circle cx="137.8" cy="81.8" r="4.5" /></g>
+      <circle cx="100" cy="100" r="42" fill="#dcebe5" stroke="#3f7a6c" stroke-width="4" />
+      <ellipse cx="82" cy="80" rx="9" ry="5" fill="#f4faf7" transform="rotate(-25 82 80)" />
+      ${face(100, 104, '#1f4d43')}
+    `,
+  },
 ];
 
-// The home page's row, in its own order: Olive in the middle, between
-// Sasha and Candi.
-const HOME = ['sasha', 'olive', 'candi'];
+// The home page's row, in its own order: the yeasts, with Olive in the
+// middle, then Fumi the mold.
+const HOME = ['sasha', 'olive', 'candi', 'fumi'];
 export const HOME_PALS = HOME.map((id) => PALS.find((pal) => pal.id === id));
 
 // How many pals fit on one page of the picker: four across, two down.
@@ -140,7 +188,7 @@ export function palById(id) {
 function drawing(pal, page) {
   const svg = document.createElementNS(SVG, 'svg');
   svg.setAttribute('viewBox', pal.frames[page]);
-  svg.innerHTML = pal.art;
+  svg.innerHTML = page === 'dish' && pal.dishArt ? pal.dishArt : pal.art;
   // Anything drawn with SVG's own <animate> moves on the home page and in
   // the dish, but stays still on the picker, and for anyone who has asked for
   // less motion (CSS can't pause <animate>).

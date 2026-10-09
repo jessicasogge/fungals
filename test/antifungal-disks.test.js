@@ -9,6 +9,12 @@ beforeEach(() => {
   document.body.innerHTML = '<div class="agar"></div>';
 });
 
+describe("a mold's disks", () => {
+  it('all have zones: no drug she shrugs off', () => {
+    for (const drug of SPECIES.fumi.antifungals) expect(drug.zone, drug.code).toBeGreaterThan(0);
+  });
+});
+
 describe('placing the disks', () => {
   it('puts one disk per antifungal on the agar, labeled with its code', () => {
     const disks = placeAntifungals(SPECIES.candi.antifungals.slice(0, 3));

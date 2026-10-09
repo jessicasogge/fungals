@@ -341,6 +341,10 @@ body {
   background: rgba(226, 234, 194, 0.7);
 }
 
+.fumi {
+  background: rgba(209, 231, 223, 0.7);
+}
+
 .pick-btn {
   margin-top: 0.75rem;
   padding: 0.7rem 1rem;
@@ -984,6 +988,61 @@ body:not(.picker-page) .signature {
   }
 }
 
+/* A mold's spore (game/mold.js) is a single, tiny cell. */
+.pal-mover.spore {
+  width: 4.5%;
+}
+
+/* Mold colonies (game/mold.js), on a layer of their own under everything
+   else, clipped to the round dish so a colony by the rim stops at the wall,
+   like on a real plate. */
+.colonies {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* A colony: white and fluffy, with a soft greenish middle (--spores, the
+   pal's color) where it's started making spores; --ripe is how far out that
+   reaches. Over the white, fine streaks fanning out from the middle (the
+   threads, hyphae, growing outward) and faint growth rings give it a fuzzy,
+   velvety texture. Positioned and sized by game/mold.js. */
+.colony {
+  position: absolute;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  background:
+    radial-gradient(circle, color-mix(in srgb, var(--spores, #5b8c80) 70%, white) 0 calc(var(--ripe, 0%) * 0.45),
+      color-mix(in srgb, var(--spores, #5b8c80) 25%, white) calc(var(--ripe, 0%) * 0.8), transparent var(--ripe, 0%)),
+    repeating-conic-gradient(rgba(148, 170, 160, 0.16) 0 1.5deg, transparent 1.5deg 4deg),
+    repeating-radial-gradient(circle, transparent 0 11%, rgba(160, 180, 170, 0.14) 12.5% 13.5%, transparent 15%),
+    radial-gradient(circle, #f4f7f3 0 70%, #fdfefd 90%, rgba(255, 255, 255, 0.8) 100%);
+  box-shadow:
+    0 0 0 1px rgba(148, 170, 160, 0.25),
+    0 0 5px 2px rgba(255, 255, 255, 0.95);
+  animation: sprout 0.4s ease-out;
+}
+
+/* Killed by an antifungal: the whole colony pops, swelling and vanishing. */
+.colony.dying {
+  animation: colony-pop 0.35s ease-out forwards;
+}
+
+@keyframes sprout {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes colony-pop {
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.35);
+  }
+}
+
 /* An offspring cell popping in an antifungal zone (game/colony.js): a ring
    in the pal's color that bursts outward and fades. */
 .pop {
@@ -1010,7 +1069,9 @@ body:not(.picker-page) .signature {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .pop {
+  .pop,
+  .colony,
+  .colony.dying {
     animation-duration: 0.01s;
   }
 }

@@ -131,7 +131,13 @@ describe('eating nutrients', () => {
   it('eats a fleck the pal is on and reports it', () => {
     const nutrients = scatterNutrients();
     const [target] = liveFlecks();
-    expect(nutrients.eatNear(target.fx, target.fy, 0.01)).toBe(1);
+    const eaten = vi.fn();
+    expect(nutrients.eatNear(target.fx + 0.005, target.fy, 0.01, eaten)).toBe(1);
+    // Says exactly where the fleck was, not where the pal was.
+    expect(eaten).toHaveBeenCalledTimes(1);
+    const [fx, fy] = eaten.mock.calls[0];
+    expect(fx).toBeCloseTo(target.fx);
+    expect(fy).toBeCloseTo(target.fy);
     expect(target.el.classList.contains('eaten')).toBe(true);
     expect(liveFlecks()).toHaveLength(COUNT - 1);
   });
@@ -225,6 +231,49 @@ describe('respawning nutrients', () => {
       vi.advanceTimersByTime(RESPAWN_MS);
     }
     expect(liveFlecks()).toHaveLength(COUNT);
+  });
+
+  it('keeps the count steady on a crowded dish, squeezing flecks into small gaps', () => {
+    // A ring of big areas to avoid (like a mold's colonies) covering most of
+    // the dish, leaving only narrow gaps between them.
+    const avoid = [{ fx: 0, fy: 0, r: 0.3 }];
+    for (let i = 0; i < 12; i++) {
+      const a = (i / 12) * Math.PI * 2;
+      avoid.push({ fx: Math.cos(a) * 0.62, fy: Math.sin(a) * 0.62, r: 0.16 });
+    }
+    const nutrients = scatterNutrients({ avoid, count: 5 });
+    expect(liveFlecks()).toHaveLength(5);
+    for (let bite = 0; bite < 25; bite++) {
+      const [target] = liveFlecks();
+      nutrients.eatNear(target.fx, target.fy, 0.01);
+      vi.advanceTimersByTime(RESPAWN_MS);
+    }
+    expect(liveFlecks()).toHaveLength(5);
+    // Still clear of everything to avoid.
+    for (const f of liveFlecks()) {
+      for (const a of avoid) expect(Math.hypot(f.fx - a.fx, f.fy - a.fy)).toBeGreaterThan(a.r);
+    }
+  });
+
+  it("keeps a squeezed-in fleck out of a disk's zone, not just off the disk", () => {
+    // Everything is covered but a thin ring around one disk, inside its zone.
+    const disk = { fx: 0.5, fy: 0, r: 0.08, zone: 0.02, fullZone: 0.07 };
+    const avoid = [disk, { fx: -0.3, fy: 0, r: 0.65 }, { fx: 0.5, fy: 0.5, r: 0.38 }, { fx: 0.5, fy: -0.5, r: 0.38 }];
+    scatterNutrients({ avoid, count: 3 });
+    for (const f of liveFlecks()) {
+      expect(Math.hypot(f.fx - disk.fx, f.fy - disk.fy)).toBeGreaterThan(disk.r + disk.fullZone);
+    }
+  });
+
+  it('tries again a moment later when the dish is full, instead of losing the fleck', () => {
+    // Nowhere to go at first.
+    const avoid = [{ fx: 0, fy: 0, r: 2 }];
+    scatterNutrients({ avoid, count: 3 });
+    expect(liveFlecks()).toHaveLength(0);
+    // Room again (say, a colony popped): they all come back.
+    avoid.length = 0;
+    vi.advanceTimersByTime(500);
+    expect(liveFlecks()).toHaveLength(3);
   });
 
   it('stops replacing flecks once the game is over', () => {
