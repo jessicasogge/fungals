@@ -94,6 +94,12 @@ describe('a mold', () => {
     expect(options.target).toBe(LEVELS[2].colonies);
   });
 
+  it('puts out 8 nutrients for a yeast', async () => {
+    await open('?pal=sasha');
+    expect(GAME.YEAST_NUTRIENTS).toBe(8);
+    expect(document.querySelectorAll('.nutrient')).toHaveLength(GAME.YEAST_NUTRIENTS);
+  });
+
   it('puts out fewer nutrients for a mold than for a yeast', async () => {
     const flecks = () => document.querySelectorAll('.nutrient').length;
     await openMold('?pal=fumi');

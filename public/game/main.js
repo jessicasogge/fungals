@@ -52,7 +52,7 @@ function start() {
   // clear of the disks, but can turn up under a mold's colonies, where they
   // start new ones.
   const mold = species.kind === 'mold';
-  const nutrients = scatterNutrients(mold ? { avoid: disks, count: GAME.MOLD_NUTRIENTS } : { avoid: disks });
+  const nutrients = scatterNutrients({ avoid: disks, count: mold ? GAME.MOLD_NUTRIENTS : GAME.YEAST_NUTRIENTS });
   for (const how of document.querySelectorAll('.how-to-play')) {
     how.hidden = how.classList.contains('for-mold') !== mold;
   }

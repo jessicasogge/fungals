@@ -177,12 +177,13 @@ export const GAME = {
   ZONE_START: 0.1,
   ZONE_SPREAD_SECONDS: 20,
   SWIM_ROOM: 0.13, // minimum gap between zones, in dish radii
+  YEAST_NUTRIENTS: 8, // nutrient flecks on the agar at a time for a yeast
 
   // Molds (mold.js): the spore floats a little faster than a yeast swims.
   // A colony starts at COLONY_START and spreads at a steady pace, as hyphae
   // grow from its edge, to COLONY_FULL (dish radii) over COLONY_GROW_SECONDS.
   SPORE_SPEED: 1,
-  MOLD_NUTRIENTS: 3, // flecks on the agar at a time (yeasts get 10)
+  MOLD_NUTRIENTS: 3, // flecks on the agar at a time (yeasts get YEAST_NUTRIENTS)
   COLONY_START: 0.025,
   COLONY_FULL: 0.15,
   COLONY_GROW_SECONDS: 5,
