@@ -64,17 +64,17 @@ describe('levels', () => {
   });
 
   it('start with one disk and a small colony', () => {
-    expect(LEVELS[0]).toEqual({ disks: 1, target: 4, colonies: 12 });
+    expect(LEVELS[0]).toEqual({ disks: 1, target: 4, colonies: 20 });
   });
 
   it('go up to a colony of 256 cells past seven disks, doubling each level', () => {
     expect(LEVELS).toHaveLength(7);
-    expect(LEVELS.at(-1)).toEqual({ disks: 7, target: 256, colonies: 36 });
+    expect(LEVELS.at(-1)).toEqual({ disks: 7, target: 256, colonies: 80 });
     for (let i = 1; i < LEVELS.length; i++) expect(LEVELS[i].target).toBe(LEVELS[i - 1].target * 2);
   });
 
-  it('ask a mold for 12 colonies, and 4 more each level, up to 36', () => {
-    expect(LEVELS.map((level) => level.colonies)).toEqual([12, 16, 20, 24, 28, 32, 36]);
+  it('ask a mold for 20 colonies, and 10 more each level, up to 80', () => {
+    expect(LEVELS.map((level) => level.colonies)).toEqual([20, 30, 40, 50, 60, 70, 80]);
   });
 });
 
