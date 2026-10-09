@@ -31,9 +31,6 @@ export const QUIZ_FACTS = {
     "Fumi's species name, *fumigatus*, means \"smoky,\" for her smoky grey-green colonies.",
     "Fumi's genus is named for the aspergillum, a brush for sprinkling holy water.",
     "Fumi can grow at 50 °C, so she thrives in hot, rotting compost heaps.",
-    "Fumi can cause aspergillosis, a lung infection in people with weak immune systems.",
     "Fumi's spores grow in long chains that stand up from a swollen head, like columns.",
-    "Fumi is naturally resistant to fluconazole, a drug that works on many yeasts.",
-    "Azole fungicides sprayed on crops have helped some of Fumi's strains resist azole drugs.",
   ],
 };

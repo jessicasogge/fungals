@@ -19,12 +19,8 @@ export function scatterNutrients({ avoid = [], count = 10 } = {}) {
   // isn't, so then a disk's zone (as wide as it will get) is added in.
   const zoneOf = (a, strict) => (strict ? 0 : (a.fullZone ?? a.zone ?? 0));
 
-  // A random spot for a new fleck: away from where the pal just ate (so it
-  // doesn't pop up right under her), from the other flecks, and from
-  // everything in `avoid`, with room to spare. On a crowded dish (a mold's
-  // colonies can cover most of it) there may be no such spot, so it then
-  // settles for anywhere that's just clear of `avoid`. Null only if even that
-  // can't be found.
+  // Pick a fleck spot away from the gal, other flecks, and `avoid`.
+  // If crowded, only clear `avoid`; return null if no spot is found.
   function randomSpot(avoidX, avoidY) {
     for (const strict of [true, false]) {
       const gap = strict ? MIN_GAP : 0.01;

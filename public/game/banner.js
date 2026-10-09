@@ -1,7 +1,5 @@
-// The pop-up over the dish at the end of a level (level complete, you won, or
-// game over) and its buttons, shared by the yeast game (game.js) and the mold
-// game (mold.js). The main button goes to the next level, back to level 1, or
-// tries this level again; after a game over, "Start over" goes back to level 1.
+// Shared end-of-level pop-up for game.js and mold.js.
+// Main button advances, restarts, or retries; "Start over" returns to level 1.
 import { goTo } from './loading.js';
 
 export function levelBanner(level) {

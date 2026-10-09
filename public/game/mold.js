@@ -1,11 +1,6 @@
-// Molds (Fumi, Aspergillus fumigatus). Instead of budding, you're one of her
-// spores floating over the agar. Land on a nutrient and a spore germinates
-// there: a colony starts small and spreads out in a circle, the way mold
-// colonies grow on a real plate, as threads (hyphae) grow from its edge. It's
-// white and fluffy, with a greenish middle where it's started making spores,
-// and counts as soon as it starts. Start enough colonies to beat the level.
-// A colony that touches an antifungal disk, or the zone of inhibition around
-// it, pops, the whole colony at once; the spore touching one is game over.
+// Fumi (Aspergillus fumigatus): guide her spore to nutrients to start colonies.
+// Colonies count immediately, spread in circles, and turn green as they sporulate.
+// Start enough to win; disks/zones pop colonies and end the game on spore contact.
 import { spreadZones, touchedDisk, touchesDisk, touchMessage } from './antifungal.js';
 import { levelBanner } from './banner.js';
 import { showPop } from './colony.js';
@@ -17,19 +12,15 @@ import { sporeBurst } from './spores.js';
 import { steer, touchSteering } from './touch.js';
 import { track } from './track.js';
 
-// How wide a colony is `seconds` after it started, in dish radii. Hyphae
-// grow at a steady speed, so a mold colony's radius grows at a steady pace
-// (not doubling, like a heap of budding cells), until it's full size.
+// Colony radius after `seconds`, in dish radii; grows steadily to full size.
 export function colonyRadius(seconds) {
   const t = Math.min(1, Math.max(0, seconds / GAME.COLONY_GROW_SECONDS));
   return GAME.COLONY_START + (GAME.COLONY_FULL - GAME.COLONY_START) * t;
 }
 
-// The colonies in the dish. `layer` is where they're drawn, `nutrients` the
-// flecks that start new colonies when one spreads over them (new flecks can
-// turn up under a colony too), and `colors` the pal's colors (`spores` is
-// the green in their middles). Positions and sizes are in fractions of the
-// dish radius, like the disks.
+// Colonies: `layer` draws them; `nutrients` seed new ones, even underneath.
+// `colors` are the gal's palette; `spores` colors their centers.
+// Positions and sizes use fractions of the dish radius.
 export function moldColonies({ layer, disks = [], nutrients, colors }) {
   const colonies = [];
 

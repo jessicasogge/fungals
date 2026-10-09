@@ -101,19 +101,19 @@ export const SPECIES = {
   fumi: {
     facts: [
       "Fumi's species name, *fumigatus*, means \"smoky,\" for her smoky grey-green colonies.",
-      "Fumi's genus is named for the aspergillum, a brush for sprinkling holy water.",
+      "Fumi's genus is named for the aspergillum, a sprinkler used for holy water.",
       "Fumi's spores are only 2 to 3 micrometers across, so tiny they float on the air.",
       "Most people breathe in hundreds of Fumi's spores every day, and healthy lungs clear them.",
       "Fumi can grow at 50 °C, so she thrives in hot, rotting compost heaps.",
       "Fumi can cause aspergillosis, a lung infection in people with weak immune systems.",
       "Fumi's spores wear a coat of protein rodlets that hides them from the immune system.",
-      "Fumi's spores get their grey-green color from a kind of melanin.",
-      "A colony of Fumi grows from the tips of her threads (hyphae), spreading out in a circle.",
-      "Fumi's colonies start out white and fluffy, then turn green as she makes spores.",
-      "Fumi's spores grow in long chains that stand up from a swollen head, like columns.",
-      "Voriconazole is usually the first drug doctors use against Fumi.",
+      "Fumi's spores get their grey-green color from a pigment called DHN-melanin.",
+      "Fumi extends and branches her hyphae, often forming a circular colony on a plate.",
+      "Fumi's colonies usually start white, then turn grey-green as she makes spores.",
+      "Fumi makes chains of spores around a swollen stalk tip, forming a column-like head.",
+      "Voriconazole is a first-line treatment for invasive aspergillosis caused by Fumi.",
       "Fumi is naturally resistant to fluconazole, a drug that works on many yeasts.",
-      "Azole fungicides sprayed on crops have helped some of Fumi's strains resist azole drugs.",
+      "Agricultural azole fungicides can select Fumi strains that resist azole medicines.",
     ],
     scientific: 'Aspergillus fumigatus',
     color: '#2f6b5e', // for her name above the dish
@@ -126,7 +126,7 @@ export const SPECIES = {
     // she's naturally resistant to fluconazole, so she gets no FLC disk.
     antifungals: [
       { code: 'VOR', name: 'voriconazole', zone: 28 },
-      { code: 'ITC', name: 'itraconazole', zone: 22 },
+      { code: 'ITC', name: 'itraconazole', zone: 18 },
       { code: 'POS', name: 'posaconazole', zone: 30 },
       { code: 'AMB', name: 'amphotericin B', zone: 18 },
       { code: 'CAS', name: 'caspofungin', zone: 16 },
