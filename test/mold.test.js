@@ -226,8 +226,8 @@ describe('playing as a mold', () => {
 
   it('counts colonies instead of cells, and puts the target in the directions', () => {
     start({ level: 3 });
-    expect(counter()).toBe('Level 3 · 0 / 14 colonies');
-    expect(document.querySelector('.target-colonies').textContent).toBe('14');
+    expect(counter()).toBe('Level 3 · 0 / 18 colonies');
+    expect(document.querySelector('.target-colonies').textContent).toBe('18');
     expect(mover.classList.contains('spore')).toBe(true);
     // Colonies grow on a layer under everything else on the agar.
     expect(agar.firstElementChild.className).toBe('colonies');
