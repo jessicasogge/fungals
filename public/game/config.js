@@ -135,16 +135,16 @@ export const SPECIES = {
 };
 
 // Each level adds an antifungal disk and doubles the colony you need to grow.
-// A mold (Fumi) needs `colonies` colonies instead: 10 on level 1, and 4 more
+// A mold (Fumi) needs `colonies` colonies instead: 12 on level 1, and 4 more
 // each level.
 export const LEVELS = [
-  { disks: 1, target: 4, colonies: 10 },
-  { disks: 2, target: 8, colonies: 14 },
-  { disks: 3, target: 16, colonies: 18 },
-  { disks: 4, target: 32, colonies: 22 },
-  { disks: 5, target: 64, colonies: 26 },
-  { disks: 6, target: 128, colonies: 30 },
-  { disks: 7, target: 256, colonies: 34 },
+  { disks: 1, target: 4, colonies: 12 },
+  { disks: 2, target: 8, colonies: 16 },
+  { disks: 3, target: 16, colonies: 20 },
+  { disks: 4, target: 32, colonies: 24 },
+  { disks: 5, target: 64, colonies: 28 },
+  { disks: 6, target: 128, colonies: 32 },
+  { disks: 7, target: 256, colonies: 36 },
 ];
 
 export const GAME = {
