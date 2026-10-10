@@ -52,12 +52,6 @@ Tap **Who’s That Gal?** on the home page for a quiz on the pals' fun facts, li
 - **The disk codes** are the standard ones: FLC (fluconazole), VOR (voriconazole), KCA (ketoconazole), ITC (itraconazole), POS (posaconazole), CAS (caspofungin), MCF (micafungin), AMB (amphotericin B) and NY (nystatin).
 - **The zones spread** because the drug diffuses outward from the disk into the agar: fast at first, then more slowly. On a real plate this takes hours of incubation; the game speeds it up to a few seconds.
 
-## Coming next
-
-- **More molds**, like *Aspergillus niger*, playing like Fumi and Penelope.
-- **Candi switching to hyphae**, her signature trick.
-- More pals, like *Rhizopus* (bread mold) and *Trichophyton* (ringworm, which grows in rings).
-
 ## Running it locally
 
 The game is plain HTML, CSS and JavaScript in [`public/`](public/), with no build step. To run it with the included dev server:
