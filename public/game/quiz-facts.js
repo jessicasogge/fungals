@@ -33,4 +33,12 @@ export const QUIZ_FACTS = {
     "Fumi can grow at 50 °C, so she thrives in hot, rotting compost heaps.",
     "Fumi's spores grow in long chains that stand up from a swollen head, like columns.",
   ],
+  penelope: [
+    "Alexander Fleming found Penelope's penicillin in 1928, when she spoiled one of his plates.",
+    "Penelope's genus, *Penicillium*, means \"little paintbrush,\" for her spore stalks.",
+    "The world's penicillin strain came from Penelope on a moldy cantaloupe in Peoria.",
+    "Mary Hunt, nicknamed \"Moldy Mary,\" found Penelope on a moldy cantaloupe in 1943.",
+    "By D-Day in 1944, enough of Penelope's penicillin was made to treat wounded soldiers.",
+    "Penelope's cousins make blue cheese like Roquefort and the white rind on Brie.",
+  ],
 };

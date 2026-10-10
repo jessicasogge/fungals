@@ -131,7 +131,39 @@ export const SPECIES = {
       { code: 'AMB', name: 'amphotericin B', zone: 18 },
       { code: 'CAS', name: 'caspofungin', zone: 16 },
     ],
+  },  penelope: {
+    facts: [
+      "Alexander Fleming found Penelope's penicillin in 1928, when she spoiled one of his plates.",
+      "Penelope's genus, *Penicillium*, means \"little paintbrush,\" for her spore stalks.",
+      "Penelope's penicillin blocks bacterial cell-wall building.",
+      "Modern penicillin-producing strains descend from Penelope on a moldy cantaloupe in Peoria.",
+      "Mary Hunt, nicknamed \"Moldy Mary,\" found Penelope on a moldy cantaloupe in 1943.",
+      "By D-Day in 1944, enough of Penelope's penicillin was made to treat wounded soldiers.",
+      "Penelope's colonies are blue-green and velvety, with a fluffy white edge.",
+      "Penelope's cousins make blue cheese like Roquefort and the white rind on Brie.",
+      "Penelope's spores are so light they float on the air, so she turns up on bread and fruit.",
+      "Penelope is an ascomycete, in the same big fungal group as Fumi, Sasha and Candi.",
+      "Penelope's species name, *rubens*, means \"reddish.\"",
+      "Fleming's mold was long called *Penicillium notatum*, but it turned out to be Penelope.",
+    ],
+    scientific: 'Penicillium rubens',
+    color: '#3d5a8f', // for her name above the dish
+    kind: 'mold',
+    // All denim blue: `fill`/`stroke`/`highlight`/`dark` for her stalk,
+    // and `spores` for the blue her colonies turn as they make spores.
+    colors: { fill: '#dde6f0', stroke: '#3d5a80', highlight: '#f5f8fc', dark: '#26385a', spores: '#5f7fa8' },
+    // There are no standard disk sizes for Penicillium, so these are
+    // estimates from how well each drug works on her in the lab. Like most
+    // molds, she's naturally resistant to fluconazole, so she gets no FLC disk.
+    antifungals: [
+      { code: 'ITC', name: 'itraconazole', zone: 24 },
+      { code: 'AMB', name: 'amphotericin B', zone: 18 },
+      { code: 'POS', name: 'posaconazole', zone: 26 },
+      { code: 'VOR', name: 'voriconazole', zone: 20 },
+      { code: 'CAS', name: 'caspofungin', zone: 16 },
+    ],
   },
+
 };
 
 // Each level adds an antifungal disk and doubles the colony you need to grow.
