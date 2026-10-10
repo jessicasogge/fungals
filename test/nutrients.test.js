@@ -151,7 +151,9 @@ describe('eating nutrients', () => {
     const reach = 0.05;
     // The pal's circle is centered just far enough away for the edges to meet.
     const gap = reach + fleckRadius(target.el) - 0.001;
-    expect(nutrients.eatNear(target.fx + gap, target.fy, reach)).toBe(1);
+    // (Another random fleck can be in reach too, so check this one went.)
+    expect(nutrients.eatNear(target.fx + gap, target.fy, reach)).toBeGreaterThanOrEqual(1);
+    expect(target.el.classList.contains('eaten')).toBe(true);
   });
 
   it('does not eat a fleck whose edge is just short of the pal', () => {

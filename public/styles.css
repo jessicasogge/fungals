@@ -345,6 +345,10 @@ body {
   background: rgba(209, 231, 223, 0.7);
 }
 
+.penelope {
+  background: rgba(250, 236, 176, 0.7);
+}
+
 .pick-btn {
   margin-top: 0.75rem;
   padding: 0.7rem 1rem;

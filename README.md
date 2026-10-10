@@ -19,6 +19,10 @@ Fumi (*Aspergillus fumigatus*) plays differently. You're one of her tiny **spore
 
 Watch out for the disks: **a colony that touches an antifungal disk, or its zone of inhibition, pops**, the whole colony at once, and you lose it from your count. The colonies keep spreading and the zones keep widening for the first few seconds, so leave room. Your spore touching one is still game over. A nutrient under a colony isn't wasted: new nutrients can turn up under a colony, and a colony can spread over one, and either way it starts a new colony right there.
 
+### Penelope plays like Fumi
+
+Penelope (*Penicillium rubens*), the penicillin mold, plays exactly like Fumi: you're a spore, each nutrient starts a colony, and you grow the same number of colonies each level. Her colonies turn denim blue in the middle, with a white fluffy edge.
+
 ### Who’s That Gal?
 
 Tap **Who’s That Gal?** on the home page for a quiz on the pals' fun facts, like PetriPals' Who’s That Pal?. You get one fact with "this gal" in place of her name: tap the pal it's about. A wrong guess greys that pal out so you can try again, and the right one puts her name back in and shows her species. There's no score, so it's just for learning. The quiz skips facts that fit any yeast (like having a nucleus); the ones it uses are listed in `public/game/quiz-facts.js`.
@@ -31,6 +35,7 @@ Tap **Who’s That Gal?** on the home page for a quiz on the pals' fun facts, li
 | **Candi** | *Candida albicans* | Sky-blue oval yeast with a bud and two bud scars |
 | **Olive** | *Malassezia furfur* | Olive-green bowling pin: a broad-based bud on one end, with a collarette at the neck |
 | **Fumi** | *Aspergillus fumigatus* | Smoky green mold: a round head on a stalk, topped with columns of spores. In the dish, one little spore |
+| **Penelope** | *Penicillium rubens* | A butter-yellow paintbrush of a mold, with a wide fan of blue spore chains for bristles. In the dish, one round blue spore |
 
 ## The real science
 
@@ -40,13 +45,16 @@ Tap **Who’s That Gal?** on the home page for a quiz on the pals' fun facts, li
 - **Fumi's colonies** grow the way mold colonies really do: each starts from a single spore (a conidium) that sprouts threads (hyphae), and the hyphae grow from their tips at the colony's edge. So a colony spreads out in a circle at a steady pace, rather than doubling like a heap of budding yeast. The middle is oldest, so that's where it makes spores first and turns green, while the rest, still growing, stays white and fluffy.
 - **Fumi's picture** is her conidiophore, the stalk that makes her spores: a swollen head (the vesicle) with spores in chains that stand up from its top in a column. That shape, a bit like the aspergillum used to sprinkle holy water, gave *Aspergillus* its name. *Fumigatus* means "smoky," for her grey-green colonies.
 - **Fumi's antifungals:** voriconazole is the usual first choice against her, then other azoles (itraconazole, posaconazole), amphotericin B and caspofungin, the five drugs on her disks. Like most molds, she's naturally resistant to fluconazole, so she never gets an FLC disk. There's a CLSI disk test for molds (M51), but no settled zone sizes for *Aspergillus*, so her zones are estimates.
+- **Penelope is Fleming's penicillin mold.** In 1928 she spoiled one of Alexander Fleming's plates of bacteria, and the bacteria around her died. The strain that made penicillin for the world came from her too, on a moldy cantaloupe a lab worker, Mary Hunt ("Moldy Mary"), found at a market in Peoria, Illinois, in 1943. Fleming's mold was long called *Penicillium notatum*, but DNA showed it was *P. rubens*. Penicillin breaks bacteria's cell walls, which fungi don't have, so it can't hurt her.
+- **Penelope's picture** is her spore stalk (a conidiophore). Its top branches into short arms with straight chains of spores, like the bristles of a little paintbrush, which is what *Penicillium* means. Fumi's stalk instead ends in a round, swollen head. Her spores are blue, so her colonies turn blue as they make them.
+- **Penelope's antifungals** are estimates, since there are no standard disk sizes for *Penicillium*: itraconazole, amphotericin B, posaconazole, voriconazole and caspofungin. Like most molds, she's naturally resistant to fluconazole, so she never gets an FLC disk.
 - **The antifungal disks** work like the Kirby-Bauer disk test for bacteria. *Candida* has a standard disk test (CLSI M44), so Candi's zones are ballpark sizes for a susceptible strain. *Saccharomyces* and *Malassezia* have no standard disk sizes, so Sasha's and Olive's are estimates from how well each drug works on them. Fluconazole only weakly holds *Saccharomyces* back, so Sasha's fluconazole zone is small. *Malassezia* is naturally resistant to echinocandins, so Olive's caspofungin disk has **no zone at all**: you can swim right up to it, but don't touch the disk itself.
 - **The disk codes** are the standard ones: FLC (fluconazole), VOR (voriconazole), KCA (ketoconazole), ITC (itraconazole), POS (posaconazole), CAS (caspofungin), MCF (micafungin), AMB (amphotericin B) and NY (nystatin).
 - **The zones spread** because the drug diffuses outward from the disk into the agar: fast at first, then more slowly. On a real plate this takes hours of incubation; the game speeds it up to a few seconds.
 
 ## Coming next
 
-- **More molds**, like *Penicillium* (Fleming's mold) and *Aspergillus niger*, playing like Fumi.
+- **More molds**, like *Aspergillus niger*, playing like Fumi and Penelope.
 - **Candi switching to hyphae**, her signature trick.
 - More pals, like *Rhizopus* (bread mold) and *Trichophyton* (ringworm, which grows in rings).
 

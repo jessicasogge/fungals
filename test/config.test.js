@@ -32,7 +32,7 @@ describe('pals', () => {
 
   it('gives a mold the green her colonies turn as they make spores', () => {
     const molds = PALS.filter((pal) => SPECIES[pal].kind === 'mold');
-    expect(molds).toEqual(['fumi']);
+    expect(molds).toEqual(['fumi', 'penelope']);
     for (const pal of molds) expect(SPECIES[pal].colors.spores).toMatch(/^#[0-9a-f]{6}$/i);
   });
 });

@@ -177,7 +177,7 @@ describe('the pages', () => {
     const labels = [...document.querySelectorAll('.friends svg')].map((s) => s.getAttribute('aria-label'));
     expect(labels).toEqual(HOME_PALS.map((pal) => `${pal.name}, ${pal.looks}`));
     // Every pal, each once: the yeasts with Olive in the middle, then Fumi.
-    expect(HOME_PALS.map((pal) => pal.id)).toEqual(['sasha', 'olive', 'candi', 'fumi']);
+    expect(HOME_PALS.map((pal) => pal.id)).toEqual(['sasha', 'olive', 'candi', 'fumi', 'penelope']);
     expect([...HOME_PALS].sort((a, b) => a.id.localeCompare(b.id))).toEqual(
       [...PALS].sort((a, b) => a.id.localeCompare(b.id)));
   });
