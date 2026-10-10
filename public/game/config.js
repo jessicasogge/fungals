@@ -149,10 +149,9 @@ export const SPECIES = {
     scientific: 'Penicillium rubens',
     color: '#3d5a8f', // for her name above the dish
     kind: 'mold',
-    // `fill`/`stroke`/`highlight`/`dark` are her butter-yellow stalk's
-    // colors; `spores` is the denim blue of her spores, which her colonies
-    // turn as they make them.
-    colors: { fill: '#f8eaa8', stroke: '#33496e', highlight: '#fffbe6', dark: '#26385a', spores: '#5577ad' },
+    // All denim blue: `fill`/`stroke`/`highlight`/`dark` for her stalk,
+    // and `spores` for the blue her colonies turn as they make spores.
+    colors: { fill: '#dde6f0', stroke: '#3d5a80', highlight: '#f5f8fc', dark: '#26385a', spores: '#5f7fa8' },
     // There are no standard disk sizes for Penicillium, so these are
     // estimates from how well each drug works on her in the lab. Like most
     // molds, she's naturally resistant to fluconazole, so she gets no FLC disk.

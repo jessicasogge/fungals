@@ -35,7 +35,7 @@ Tap **Who’s That Gal?** on the home page for a quiz on the pals' fun facts, li
 | **Candi** | *Candida albicans* | Sky-blue oval yeast with a bud and two bud scars |
 | **Olive** | *Malassezia furfur* | Olive-green bowling pin: a broad-based bud on one end, with a collarette at the neck |
 | **Fumi** | *Aspergillus fumigatus* | Smoky green mold: a round head on a stalk, topped with columns of spores. In the dish, one little spore |
-| **Penelope** | *Penicillium rubens* | A butter-yellow paintbrush of a mold, with a wide fan of blue spore chains for bristles. In the dish, one round blue spore |
+| **Penelope** | *Penicillium rubens* | A denim-blue paintbrush of a mold, with a wide fan of spore chains for bristles. In the dish, one round blue spore |
 
 ## The real science
 
