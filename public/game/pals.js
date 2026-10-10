@@ -267,8 +267,6 @@ export const PALS = [
   },
 ];
 
-// The home page's row, in its own order: Penelope first, then the yeasts,
-// with Olive in the middle, then Fumi.
 const HOME = ['penelope', 'sasha', 'olive', 'candi', 'fumi'];
 export const HOME_PALS = HOME.map((id) => PALS.find((pal) => pal.id === id));
 

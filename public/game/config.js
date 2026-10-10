@@ -135,8 +135,8 @@ export const SPECIES = {
     facts: [
       "Alexander Fleming found Penelope's penicillin in 1928, when she spoiled one of his plates.",
       "Penelope's genus, *Penicillium*, means \"little paintbrush,\" for her spore stalks.",
-      "Penelope's penicillin kills bacteria by breaking their cell walls, but can't hurt fungi.",
-      "The world's penicillin strain came from Penelope on a moldy cantaloupe in Peoria.",
+      "Penelope's penicillin blocks bacterial cell-wall building.",
+      "Modern penicillin-producing strains descend from Penelope on a moldy cantaloupe in Peoria.",
       "Mary Hunt, nicknamed \"Moldy Mary,\" found Penelope on a moldy cantaloupe in 1943.",
       "By D-Day in 1944, enough of Penelope's penicillin was made to treat wounded soldiers.",
       "Penelope's colonies are blue-green and velvety, with a fluffy white edge.",
@@ -160,7 +160,7 @@ export const SPECIES = {
       { code: 'AMB', name: 'amphotericin B', zone: 18 },
       { code: 'POS', name: 'posaconazole', zone: 26 },
       { code: 'VOR', name: 'voriconazole', zone: 20 },
-      { code: 'CAS', name: 'caspofungin', zone: 14 },
+      { code: 'CAS', name: 'caspofungin', zone: 16 },
     ],
   },
 
