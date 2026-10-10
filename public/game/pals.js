@@ -267,9 +267,9 @@ export const PALS = [
   },
 ];
 
-// The home page's row, in its own order: the yeasts, with Olive in the
-// middle, then the molds, Fumi and Penelope.
-const HOME = ['sasha', 'olive', 'candi', 'fumi', 'penelope'];
+// The home page's row, in its own order: Penelope first, then the yeasts,
+// with Olive in the middle, then Fumi.
+const HOME = ['penelope', 'sasha', 'olive', 'candi', 'fumi'];
 export const HOME_PALS = HOME.map((id) => PALS.find((pal) => pal.id === id));
 
 // How many pals fit on one page of the picker: four across, two down.
