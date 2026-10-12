@@ -366,7 +366,7 @@ export const PALS = [
   },
 ];
 
-const HOME = ['penelope', 'sasha', 'olive', 'candi', 'fumi', 'miri'];
+const HOME = ['penelope', 'sasha', 'miri', 'candi', 'fumi', 'olive'];
 export const HOME_PALS = HOME.map((id) => PALS.find((pal) => pal.id === id));
 
 // How many pals fit on one page of the picker: four across, two down.
