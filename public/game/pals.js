@@ -265,9 +265,108 @@ export const PALS = [
       ${face(100, 104, '#26385a')}
     `,
   },
+  // Miri: Aspergillus oryzae, the koji mold behind soy sauce, miso and sake,
+  // drawn as her spore stalk. Fumi's cousin, but her spore chains point out
+  // in every direction, so her head is a round golden puff, on a tall, bumpy
+  // stalk. In the dish she plays as one of her spores (dishArt) and plants
+  // colonies, just like Fumi (see mold.js).
+  {
+    id: 'miri',
+    name: 'Miri',
+    looks: 'a golden Aspergillus oryzae mold: a round puff of spore chains pointing every way, on a tall bumpy stalk',
+    motion: 'bob',
+    frames: { home: '4 6 192 192', picker: '8 10 184 184', dish: '50 50 100 100' },
+    art: `
+      <!-- the bumpy stalk (stipe) on its foot, the spore chains all around,
+           and the round head (vesicle) with her face -->
+      <circle cx="92" cy="134" r="2.2" fill="#f7e6a0" stroke="#8c6d0f" stroke-width="1.8"/><circle cx="108" cy="146" r="2.2" fill="#f7e6a0" stroke="#8c6d0f" stroke-width="1.8"/><circle cx="92" cy="158" r="2.2" fill="#f7e6a0" stroke="#8c6d0f" stroke-width="1.8"/><circle cx="108" cy="170" r="2.2" fill="#f7e6a0" stroke="#8c6d0f" stroke-width="1.8"/><circle cx="92" cy="180" r="2.2" fill="#f7e6a0" stroke="#8c6d0f" stroke-width="1.8"/>
+      <rect x="93" y="112" width="14" height="72" rx="6" fill="#f7e6a0" stroke="#8c6d0f" stroke-width="4"/>
+      <ellipse cx="100" cy="186" rx="18" ry="6" fill="#f7e6a0" stroke="#8c6d0f" stroke-width="4"/>
+      <rect x="95" y="176" width="10" height="8" fill="#f7e6a0"/>
+      <circle cx="144.0" cy="86.0" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="153.4" cy="86.0" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="162.8" cy="86.0" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="172.2" cy="86.0" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="141.3" cy="101.0" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="150.2" cy="104.3" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="159.0" cy="107.5" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="167.8" cy="110.7" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="133.7" cy="114.3" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="140.9" cy="120.3" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="148.1" cy="126.4" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="66.3" cy="114.3" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="59.1" cy="120.3" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="51.9" cy="126.4" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="58.7" cy="101.0" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="49.8" cy="104.3" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="41.0" cy="107.5" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="32.2" cy="110.7" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="56.0" cy="86.0" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="46.6" cy="86.0" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="37.2" cy="86.0" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="27.8" cy="86.0" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="58.7" cy="71.0" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="49.8" cy="67.7" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="41.0" cy="64.5" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="32.2" cy="61.3" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="66.3" cy="57.7" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="59.1" cy="51.7" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="51.9" cy="45.6" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="44.7" cy="39.6" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="78.0" cy="47.9" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="73.3" cy="39.8" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="68.6" cy="31.6" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="63.9" cy="23.5" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="92.4" cy="42.7" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="90.7" cy="33.4" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="89.1" cy="24.2" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="87.5" cy="14.9" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="107.6" cy="42.7" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="109.3" cy="33.4" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="110.9" cy="24.2" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="112.5" cy="14.9" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="122.0" cy="47.9" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="126.7" cy="39.8" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="131.4" cy="31.6" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="136.1" cy="23.5" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="133.7" cy="57.7" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="140.9" cy="51.7" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="148.1" cy="45.6" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="155.3" cy="39.6" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="141.3" cy="71.0" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="150.2" cy="67.7" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="159.0" cy="64.5" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <circle cx="167.8" cy="61.3" r="4.6" fill="#e2c04a" stroke="#8c6d0f" stroke-width="1.8"/>
+      <ellipse cx="135.0" cy="86.0" rx="3" ry="5.5" fill="#f3dc86" stroke="#8c6d0f" stroke-width="2" transform="rotate(90 135.0 86.0)"/>
+      <ellipse cx="132.9" cy="98.0" rx="3" ry="5.5" fill="#f3dc86" stroke="#8c6d0f" stroke-width="2" transform="rotate(110 132.9 98.0)"/>
+      <ellipse cx="126.8" cy="108.5" rx="3" ry="5.5" fill="#f3dc86" stroke="#8c6d0f" stroke-width="2" transform="rotate(130 126.8 108.5)"/>
+      <ellipse cx="73.2" cy="108.5" rx="3" ry="5.5" fill="#f3dc86" stroke="#8c6d0f" stroke-width="2" transform="rotate(230 73.2 108.5)"/>
+      <ellipse cx="67.1" cy="98.0" rx="3" ry="5.5" fill="#f3dc86" stroke="#8c6d0f" stroke-width="2" transform="rotate(250 67.1 98.0)"/>
+      <ellipse cx="65.0" cy="86.0" rx="3" ry="5.5" fill="#f3dc86" stroke="#8c6d0f" stroke-width="2" transform="rotate(270 65.0 86.0)"/>
+      <ellipse cx="67.1" cy="74.0" rx="3" ry="5.5" fill="#f3dc86" stroke="#8c6d0f" stroke-width="2" transform="rotate(290 67.1 74.0)"/>
+      <ellipse cx="73.2" cy="63.5" rx="3" ry="5.5" fill="#f3dc86" stroke="#8c6d0f" stroke-width="2" transform="rotate(310 73.2 63.5)"/>
+      <ellipse cx="82.5" cy="55.7" rx="3" ry="5.5" fill="#f3dc86" stroke="#8c6d0f" stroke-width="2" transform="rotate(330 82.5 55.7)"/>
+      <ellipse cx="93.9" cy="51.5" rx="3" ry="5.5" fill="#f3dc86" stroke="#8c6d0f" stroke-width="2" transform="rotate(350 93.9 51.5)"/>
+      <ellipse cx="106.1" cy="51.5" rx="3" ry="5.5" fill="#f3dc86" stroke="#8c6d0f" stroke-width="2" transform="rotate(370 106.1 51.5)"/>
+      <ellipse cx="117.5" cy="55.7" rx="3" ry="5.5" fill="#f3dc86" stroke="#8c6d0f" stroke-width="2" transform="rotate(390 117.5 55.7)"/>
+      <ellipse cx="126.8" cy="63.5" rx="3" ry="5.5" fill="#f3dc86" stroke="#8c6d0f" stroke-width="2" transform="rotate(410 126.8 63.5)"/>
+      <ellipse cx="132.9" cy="74.0" rx="3" ry="5.5" fill="#f3dc86" stroke="#8c6d0f" stroke-width="2" transform="rotate(430 132.9 74.0)"/>
+      <circle cx="100" cy="86" r="30" fill="#f7e6a0" stroke="#8c6d0f" stroke-width="4"/>
+      <rect x="95" y="112" width="10" height="6" fill="#f7e6a0"/>
+      <ellipse cx="86" cy="70" rx="8" ry="4.5" fill="#fffaf0" transform="rotate(-25 86 70)"/>
+      ${face(100, 88, '#4f3d06')}
+    `,
+    dishArt: `
+      <!-- a round golden spore (conidium), a little rough -->
+      <g fill="#d9b740"><circle cx="144.0" cy="100.0" r="3" /><circle cx="138.1" cy="122.0" r="3" /><circle cx="122.0" cy="138.1" r="3" /><circle cx="100.0" cy="144.0" r="3" /><circle cx="78.0" cy="138.1" r="3" /><circle cx="61.9" cy="122.0" r="3" /><circle cx="56.0" cy="100.0" r="3" /><circle cx="61.9" cy="78.0" r="3" /><circle cx="78.0" cy="61.9" r="3" /><circle cx="100.0" cy="56.0" r="3" /><circle cx="122.0" cy="61.9" r="3" /><circle cx="138.1" cy="78.0" r="3" /></g>
+      <circle cx="100" cy="100" r="42" fill="#f2d675" stroke="#8c6d0f" stroke-width="4" />
+      <ellipse cx="82" cy="80" rx="9" ry="5" fill="#fffaf0" transform="rotate(-25 82 80)" />
+      ${face(100, 104, '#4f3d06')}
+    `,
+  },
 ];
 
-const HOME = ['penelope', 'sasha', 'olive', 'candi', 'fumi'];
+const HOME = ['penelope', 'sasha', 'olive', 'candi', 'fumi', 'miri'];
 export const HOME_PALS = HOME.map((id) => PALS.find((pal) => pal.id === id));
 
 // How many pals fit on one page of the picker: four across, two down.

@@ -352,6 +352,10 @@ body {
   background: rgba(214, 226, 238, 0.75);
 }
 
+.miri {
+  background: rgba(247, 230, 160, 0.6);
+}
+
 .pick-btn {
   margin-top: 0.75rem;
   padding: 0.7rem 1rem;

@@ -41,4 +41,12 @@ export const QUIZ_FACTS = {
     "By D-Day in 1944, enough of Penelope's penicillin was made to treat wounded soldiers.",
     "Penelope's cousins make blue cheese like Roquefort and the white rind on Brie.",
   ],
+  miri: [
+    "Miri is the koji mold, grown on steamed rice or soybeans to make soy sauce and miso.",
+    "Miri helps brew sake by turning the starch in rice into sugar that yeast can ferment.",
+    "In 2006, the Brewing Society of Japan named Miri its \"national fungus.\"",
+    "Miri is a tame cousin of *Aspergillus flavus*, but she doesn't make its poison, aflatoxin.",
+    "Miri's spore chains point out in every direction, making her spore head a round puff.",
+    "Miri's species name, *oryzae*, means \"of rice.\"",
+  ],
 };
