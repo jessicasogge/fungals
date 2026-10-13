@@ -217,9 +217,8 @@ body {
   margin-top: 0;
 }
 
-/* Four across on a computer (two rows of four), two on a tablet, one on a
-   phone, where the Select buttons wouldn't fit side by side. */
-/* Four cards across (two on a tablet, one on a phone), each the same
+/* Four across on a computer (two rows of four), two on a tablet or phone. */
+/* Four cards across (two on a tablet or phone), each the same
    width. Flex instead of grid so a page with fewer pals than a full row
    (like the second page, while it fills up) keeps them in the middle. */
 .picker-grid {
@@ -246,9 +245,49 @@ body {
   }
 }
 
+/* On a phone, still two across, so you can see more pals at once: a
+   little less room around the page and between cards, and smaller
+   pictures, names and buttons so "Select Penelope" still fits. */
 @media (max-width: 520px) {
+  .picker-page:has(.picker-wide) {
+    padding-inline: 0.5rem;
+  }
+
+  .picker-wide {
+    padding: 1.25rem 0.75rem;
+  }
+
+  .picker-grid {
+    gap: 0.5rem;
+  }
+
   .picker-grid > .pal-card {
-    flex-basis: 100%;
+    flex-basis: calc((100% - 0.5rem) / 2);
+    padding: 0.6rem 0.4rem 0.7rem;
+  }
+
+  .picker-grid .pal-icon {
+    width: 76px;
+    height: 76px;
+    border-radius: 16px;
+  }
+
+  .picker-grid .pal-icon svg {
+    width: 62px;
+    height: 62px;
+  }
+
+  .picker-grid .pal-card h2 {
+    font-size: 1.1rem;
+  }
+
+  .picker-grid .species {
+    font-size: 0.8rem;
+  }
+
+  .picker-grid .pal-card .pick-btn {
+    padding: 0.45rem 0.7rem;
+    font-size: 0.85rem;
   }
 }
 
@@ -350,6 +389,10 @@ body {
 
 .penelope {
   background: rgba(214, 226, 238, 0.75);
+}
+
+.miri {
+  background: rgba(247, 230, 160, 0.6);
 }
 
 .pick-btn {

@@ -19,9 +19,9 @@ Fumi (*Aspergillus fumigatus*) plays differently. You're one of her tiny **spore
 
 Watch out for the disks: **a colony that touches an antifungal disk, or its zone of inhibition, pops**, the whole colony at once, and you lose it from your count. The colonies keep spreading and the zones keep widening for the first few seconds, so leave room. Your spore touching one is still game over. A nutrient under a colony isn't wasted: new nutrients can turn up under a colony, and a colony can spread over one, and either way it starts a new colony right there.
 
-### Penelope plays like Fumi
+### Penelope and Miri play like Fumi
 
-Penelope (*Penicillium rubens*), the penicillin mold, plays exactly like Fumi: you're a spore, each nutrient starts a colony, and you grow the same number of colonies each level. Her colonies turn denim blue in the middle, with a white fluffy edge.
+Penelope (*Penicillium rubens*), the penicillin mold, plays exactly like Fumi: you're a spore, each nutrient starts a colony, and you grow the same number of colonies each level. Her colonies turn denim blue in the middle, with a white fluffy edge. Miri (*Aspergillus oryzae*), the koji mold, plays the same way; her colonies turn olive yellow-green.
 
 ### Who’s That Gal?
 
@@ -36,6 +36,7 @@ Tap **Who’s That Gal?** on the home page for a quiz on the pals' fun facts, li
 | **Olive** | *Malassezia furfur* | Olive-green bowling pin: a broad-based bud on one end, with a collarette at the neck |
 | **Fumi** | *Aspergillus fumigatus* | Smoky green mold: a round head on a stalk, topped with columns of spores. In the dish, one little spore |
 | **Penelope** | *Penicillium rubens* | A denim-blue paintbrush of a mold, with a wide fan of spore chains for bristles. In the dish, one round blue spore |
+| **Miri** | *Aspergillus oryzae* | A golden puff of spore chains pointing every way, on a tall, bumpy stalk. In the dish, one round golden spore |
 
 ## The real science
 
@@ -48,6 +49,9 @@ Tap **Who’s That Gal?** on the home page for a quiz on the pals' fun facts, li
 - **Penelope is Fleming's penicillin mold.** In 1928 she spoiled one of Alexander Fleming's plates of bacteria, and the bacteria around her died. The strain that made penicillin for the world came from her too, on a moldy cantaloupe a lab worker, Mary Hunt ("Moldy Mary"), found at a market in Peoria, Illinois, in 1943. Fleming's mold was long called *Penicillium notatum*, but DNA showed it was *P. rubens*. Penicillin breaks bacteria's cell walls, which fungi don't have, so it can't hurt her.
 - **Penelope's picture** is her spore stalk (a conidiophore). Its top branches into short arms with straight chains of spores, like the bristles of a little paintbrush, which is what *Penicillium* means. Fumi's stalk instead ends in a round, swollen head. Her spores are blue, so her colonies turn blue as they make them.
 - **Penelope's antifungals** are estimates, since there are no standard disk sizes for *Penicillium*: itraconazole, amphotericin B, posaconazole, voriconazole and caspofungin. Like most molds, she's naturally resistant to fluconazole, so she never gets an FLC disk.
+- **Miri is the koji mold.** Grown on steamed rice or soybeans, she makes the enzymes that turn starch into sugar and protein into savory umami flavors, which is how soy sauce, miso, sake, mirin and rice vinegar get made. People have grown her on purpose for over 2,000 years, and in 2006 the Brewing Society of Japan named her its "national fungus." She's a tame relative of *Aspergillus flavus*, but she doesn't make its poison, aflatoxin.
+- **Miri's picture** is her spore stalk. She's Fumi's cousin, in the same genus, but where Fumi's spore chains stand up in a column, Miri's point out in every direction from her round head, making a puff. Her stalk is rough, so it's drawn bumpy.
+- **Miri's antifungals** are estimates, like Fumi's: voriconazole, amphotericin B, posaconazole, itraconazole and caspofungin. Like Fumi, she's naturally resistant to fluconazole, so she never gets an FLC disk.
 - **The antifungal disks** work like the Kirby-Bauer disk test for bacteria. *Candida* has a standard disk test (CLSI M44), so Candi's zones are ballpark sizes for a susceptible strain. *Saccharomyces* and *Malassezia* have no standard disk sizes, so Sasha's and Olive's are estimates from how well each drug works on them. Fluconazole only weakly holds *Saccharomyces* back, so Sasha's fluconazole zone is small. *Malassezia* is naturally resistant to echinocandins, so Olive's caspofungin disk has **no zone at all**: you can swim right up to it, but don't touch the disk itself.
 - **The disk codes** are the standard ones: FLC (fluconazole), VOR (voriconazole), KCA (ketoconazole), ITC (itraconazole), POS (posaconazole), CAS (caspofungin), MCF (micafungin), AMB (amphotericin B) and NY (nystatin).
 - **The zones spread** because the drug diffuses outward from the disk into the agar: fast at first, then more slowly. On a real plate this takes hours of incubation; the game speeds it up to a few seconds.

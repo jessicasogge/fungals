@@ -131,7 +131,8 @@ export const SPECIES = {
       { code: 'AMB', name: 'amphotericin B', zone: 18 },
       { code: 'CAS', name: 'caspofungin', zone: 16 },
     ],
-  },  penelope: {
+  },
+  penelope: {
     facts: [
       "Alexander Fleming found Penelope's penicillin in 1928, when she spoiled one of his plates.",
       "Penelope's genus, *Penicillium*, means \"little paintbrush,\" for her spore stalks.",
@@ -163,7 +164,39 @@ export const SPECIES = {
       { code: 'CAS', name: 'caspofungin', zone: 16 },
     ],
   },
-
+  miri: {
+    facts: [
+      "Miri is the koji mold, grown on steamed rice or soybeans to make soy sauce and miso.",
+      "Miri helps brew sake by turning the starch in rice into sugar that yeast can ferment.",
+      "Miri's enzymes break down protein into the savory umami flavors of soy sauce and miso.",
+      "In 2006, the Brewing Society of Japan named Miri its \"national fungus.\"",
+      "Miri is a tame cousin of *Aspergillus flavus*, but she doesn't make its poison, aflatoxin.",
+      "People have grown Miri on purpose for over 2,000 years, starting in ancient China.",
+      "Miri's spore chains point out in every direction, making her spore head a round puff.",
+      "Miri's colonies start white, then turn yellow-green, and olive brown as they age.",
+      "In 1894, Jokichi Takamine patented a digestive enzyme made from Miri, Taka-diastase.",
+      "Miri also helps make mirin, rice vinegar and amazake, a sweet rice drink.",
+      "Miri is Fumi's cousin: they're in the same genus, *Aspergillus*.",
+      "Miri's species name, *oryzae*, means \"of rice.\"",
+    ],
+    scientific: 'Aspergillus oryzae',
+    color: '#8c6d0f', // for her name above the dish
+    kind: 'mold',
+    // All golden honey: `fill`/`stroke`/`highlight`/`dark` for her spore
+    // head and stalk, and `spores` for the olive yellow-green her colonies
+    // turn as they make spores.
+    colors: { fill: '#f7e6a0', stroke: '#8c6d0f', highlight: '#fffaf0', dark: '#4f3d06', spores: '#7d8a22' },
+    // There are no standard disk sizes for Aspergillus, so these are
+    // estimates from how well each drug works on her in the lab. Like Fumi,
+    // she's naturally resistant to fluconazole, so she gets no FLC disk.
+    antifungals: [
+      { code: 'VOR', name: 'voriconazole', zone: 26 },
+      { code: 'AMB', name: 'amphotericin B', zone: 16 },
+      { code: 'POS', name: 'posaconazole', zone: 28 },
+      { code: 'ITC', name: 'itraconazole', zone: 20 },
+      { code: 'CAS', name: 'caspofungin', zone: 18 },
+    ],
+  },
 };
 
 // Each level adds an antifungal disk and doubles the colony you need to grow.
