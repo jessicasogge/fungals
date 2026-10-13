@@ -265,11 +265,9 @@ export const PALS = [
       ${face(100, 104, '#26385a')}
     `,
   },
-  // Miri: Aspergillus oryzae, the koji mold behind soy sauce, miso and sake,
-  // drawn as her spore stalk. Fumi's cousin, but her spore chains point out
-  // in every direction, so her head is a round golden puff, on a tall, bumpy
-  // stalk. In the dish she plays as one of her spores (dishArt) and plants
-  // colonies, just like Fumi (see mold.js).
+  // Miri (Aspergillus oryzae): koji mold behind soy sauce, miso, and sake.
+  // Fumi's cousin, with a round golden spore head on a tall bumpy stalk.
+  // Plays like Fumi in dishArt/mold.js: spore-guided colonies.
   {
     id: 'miri',
     name: 'Miri',
