@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { clusterSpot, R, SPACING, wobble } from '../public/game/attach.js';
+import { chainSpot, clusterSpot, R, ROD_STEP, SPACING, wobble } from '../public/game/attach.js';
 
 const cell = (x, y) => ({ x, y });
 const distance = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
@@ -96,5 +96,59 @@ describe('clusterSpot', () => {
     const before = JSON.stringify(cells);
     clusterSpot(cells, 1.2, 50, 50);
     expect(JSON.stringify(cells)).toBe(before);
+  });
+});
+
+describe('chainSpot', () => {
+  const rod = (x, y, tilt = 0) => ({ x, y, tilt });
+  const angleOf = (a, b) => Math.atan2(b.y - a.y, b.x - a.x);
+
+  it('returns nothing for an empty chain', () => {
+    expect(chainSpot([], 0, 0)).toBeNull();
+  });
+
+  it('puts the next cell past a lone cell\'s end, the way she points, on the end nearer the player', () => {
+    const lone = [rod(0, 0, 0)];
+    const right = chainSpot(lone, 100, 0);
+    expect(distance(right, lone[0])).toBeCloseTo(ROD_STEP);
+    expect(right.x).toBeGreaterThan(0);
+    expect(Math.abs(right.y)).toBeLessThan(ROD_STEP * 0.4); // a slight kink at most
+    expect(right.atStart).toBe(false);
+    const left = chainSpot(lone, -100, 0);
+    expect(left.x).toBeLessThan(0);
+    expect(left.atStart).toBe(true);
+  });
+
+  it('grows a chain out in a line, never doubling back or piling up', () => {
+    const cells = [rod(0, 0, 0)];
+    for (let i = 1; i < 8; i++) {
+      const spot = chainSpot(cells, i % 2 ? 500 : -500, 0);
+      const cell = rod(spot.x, spot.y, spot.tilt);
+      if (spot.atStart) cells.unshift(cell);
+      else cells.push(cell);
+    }
+    for (let i = 1; i < cells.length; i++) {
+      expect(distance(cells[i], cells[i - 1])).toBeCloseTo(ROD_STEP);
+    }
+    // End to end: no two cells closer than a step, and it runs long, not bunched.
+    for (const a of cells) for (const b of cells) if (a !== b) expect(distance(a, b)).toBeGreaterThan(ROD_STEP * 0.8);
+    expect(distance(cells[0], cells.at(-1))).toBeGreaterThan(ROD_STEP * 5);
+    // Each new cell points the way the chain runs.
+    const last = cells.at(-1);
+    expect(Math.abs(Math.cos(angleOf(cells.at(-2), last) - (last.tilt * Math.PI) / 180))).toBeGreaterThan(0.99);
+  });
+
+  it('uses the other end when one is ruled out, and nothing when both are', () => {
+    const cells = [rod(0, 0, 0), rod(ROD_STEP, 0, 0)];
+    const spot = chainSpot(cells, 500, 0, (x) => x < 0);
+    expect(spot.atStart).toBe(true);
+    expect(chainSpot(cells, 500, 0, () => false)).toBeNull();
+  });
+
+  it('skips an end that would land on another cell', () => {
+    // A chain bent back on itself: the far end's next spot is taken.
+    const cells = [rod(0, 0, 0), rod(ROD_STEP, 0, 0), rod(ROD_STEP, ROD_STEP, 0), rod(0, ROD_STEP, 180)];
+    const spot = chainSpot(cells, 0, 50);
+    expect(cells.every((c) => distance(c, spot) > ROD_STEP * 0.8)).toBe(true);
   });
 });

@@ -2,7 +2,7 @@
 // yeast.js draws cells into the page, so these tests run in jsdom, a
 // simulated browser page.
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
-import { R, SPACING } from '../public/game/attach.js';
+import { R, ROD_STEP, SPACING } from '../public/game/attach.js';
 import { yeastGroup } from '../public/game/yeast.js';
 import { GAME, SPECIES } from '../public/game/config.js';
 
@@ -378,6 +378,84 @@ describe('a pal who buds from one end (Olive)', () => {
       angles.add(player.budding.angle);
     }
     expect(angles.size).toBeGreaterThan(1);
+  });
+});
+
+describe('a yeast who grows in chains (Yara)', () => {
+  // Grow an offspring chain by budding from a Yara player beside it.
+  function growChain(group, size) {
+    const player = makeGroup('yara', { isPlayer: true, x: group.x, y: group.y });
+    for (let tries = 0; group.cellCount() < size && tries < 50; tries++) {
+      // Swim to the end of the chain, the way a player would, then bud.
+      const spot = group.attachSpot(player.x, player.y, [], DISH_RADIUS);
+      [player.x, player.y] = spot.world;
+      player.divide([group], DISH_RADIUS);
+      group.update(2); // finish sliding into place and growing
+    }
+  }
+
+  it('draws long, rod-shaped cells with droplets of fat inside', () => {
+    const player = makeGroup('yara', { isPlayer: true });
+    const body = player.svg.querySelector('.cell-body');
+    expect(body.tagName).toBe('rect');
+    expect(Number(body.getAttribute('width'))).toBeGreaterThan(Number(body.getAttribute('height')) * 1.5);
+    const oil = [...player.svg.querySelectorAll('circle')].filter((c) => c.getAttribute('fill') === SPECIES.yara.colors.oil);
+    expect(oil).toHaveLength(2);
+  });
+
+  it('stays level as she swims; only her daughters point every which way', () => {
+    const player = makeGroup('yara', { isPlayer: true });
+    expect(player.svg.querySelector('.cell-body').getAttribute('transform')).toContain('rotate(0)');
+    player.vx = 50;
+    player.vy = -80;
+    player.place();
+    expect(player.svg.querySelector('.cell-body').getAttribute('transform')).toContain('rotate(0)');
+  });
+
+  it('buds from one end or the other', () => {
+    const angles = new Set();
+    for (let i = 0; i < 20; i++) {
+      const player = makeGroup('yara', { isPlayer: true });
+      player.startBud();
+      angles.add(Math.round(Math.cos(player.budding.angle)));
+      expect(Math.abs(Math.sin(player.budding.angle))).toBeLessThan(1e-9);
+    }
+    expect([...angles].sort()).toEqual([-1, 1]);
+  });
+
+  it("grows her bud out past her end, as a smaller rod", () => {
+    const player = makeGroup('yara', { isPlayer: true });
+    player.startBud();
+    player.budding.angle = 0;
+    player.update(1);
+    const bud = player.svg.querySelector('.bud');
+    expect(bud.tagName).toBe('rect');
+    const [, x] = bud.getAttribute('transform').match(/translate\((\S+) /).map(Number);
+    expect(x).toBeGreaterThan(R);
+    const [bx, by] = player.budSpot();
+    expect(by).toBeCloseTo(player.y);
+    expect(bx).toBeGreaterThan(player.x);
+  });
+
+  it('lines her daughters up end to end in a chain, up to the cap', () => {
+    const chain = makeGroup('yara', { x: 30, y: 0 });
+    growChain(chain, GAME.GROUP_CAP);
+    expect(chain.cellCount()).toBe(GAME.GROUP_CAP);
+    const centers = cellCenters(chain);
+    const step = ROD_STEP * UNIT;
+    for (let i = 1; i < centers.length; i++) expect(distance(centers[i], centers[i - 1])).toBeCloseTo(step, 0);
+    // It runs out long, instead of bunching like Sasha's clusters.
+    expect(distance(centers[0], centers.at(-1))).toBeGreaterThan(step * 4);
+    // Full: no room at either end, so the next daughter starts a chain of her own.
+    const [end] = centers.slice(-1);
+    expect(chain.attachSpot(end[0], end[1], [], DISH_RADIUS)).toBeNull();
+    const player = makeGroup('yara', { isPlayer: true, x: end[0], y: end[1] });
+    expect(player.divide([chain], DISH_RADIUS)).not.toBeNull();
+  });
+
+  it('reaches to the far end of her longest cell', () => {
+    const player = makeGroup('yara', { isPlayer: true });
+    expect(player.reach()).toBeGreaterThan(R * UNIT * 1.2);
   });
 });
 

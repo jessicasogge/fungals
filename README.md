@@ -8,7 +8,7 @@ A cute mycology game for the browser, and the sister game to [PetriPals](https:/
 
 1. **Pick a pal.** Each one is a real fungus, drawn as a cartoon.
 2. **Swim around the dish.** Use the arrow keys, or on a touch screen, drag your pal like a trackpad: touch anywhere on the dish and slide your finger, and she moves the same way.
-3. **Eat nutrients to bud.** Every cell that eats a nutrient buds: a little daughter cell swells out of her side and grows to full size. Daughters stick together in clusters, the way budding yeast does on a plate.
+3. **Eat nutrients to bud.** Every cell that eats a nutrient buds: a little daughter cell swells out of her side and grows to full size. Daughters stick together in clusters, the way budding yeast does on a plate. Yara's line up end to end in chains instead.
 4. **Don't touch the antifungals.** Touching a disk, or the clear zone of inhibition around it, ends the game. The zones start small and spread outward over the first few seconds, so grab the nutrients near the disks early.
 
 There are seven levels. Each one adds another antifungal disk and doubles the colony you need to grow, from 4 cells up to 256. Each yeast has four or five antifungals, so the later levels start over from her first drugs.
@@ -36,6 +36,7 @@ Tap **Who’s That Gal?** on the home page for a quiz on the pals' fun facts, li
 | **Olive** | *Malassezia furfur* | Olive-green bowling pin: a broad-based bud on one end, with a collarette at the neck |
 | **Fumi** | *Aspergillus fumigatus* | Smoky green mold: a round head on a stalk, topped with columns of spores. In the dish, one little spore |
 | **Penelope** | *Penicillium rubens* | A denim-blue paintbrush of a mold, with a wide fan of spore chains for bristles. In the dish, one round blue spore |
+| **Yara** | *Yarrowia lipolytica* | An apricot yeast: one long, sausage-shaped cell with droplets of fat inside, budding at her end |
 | **Miri** | *Aspergillus oryzae* | A golden puff of spore chains pointing every way, on a tall, bumpy stalk. In the dish, one round golden spore |
 
 ## The real science
@@ -43,6 +44,7 @@ Tap **Who’s That Gal?** on the home page for a quiz on the pals' fun facts, li
 - **Budding:** yeasts don't split in two like bacteria do. A small bud swells out of the mother cell and pinches off, which is why each daughter starts small in the dish and grows. Every bud leaves a ring-shaped scar on the mother, like the two on Sasha's and Candi's pictures.
 - **Olive buds from one end:** *Malassezia furfur* buds again and again from the same end, on a wide base, so mother and bud make a bowling pin. Each bud leaves a collar there, the collarette, instead of scattered bud scars, and in the dish her buds always grow from the top. She's olive green for the olive oil labs pour over her plates: she can't make her own fatty acids, so she needs oil to grow.
 - **Candi buds too**, but *Candida albicans* can also switch from budding yeast to hyphae, long thread-like cells. In the lab, sprouting germ tubes (the start of a hypha) in serum is a classic test for her.
+- **Yara loves fat.** *Yarrowia lipolytica* ("fat-breaking") lives on fats and oils, in cheese, sausages, soil and oily seawater, and stores fat in droplets inside her long cells, sometimes over a third of her weight, so companies grow her to make omega-3s and biofuels. She can bud like any yeast, but her daughters often stay attached end to end in chains (pseudohyphae), and she can grow true hyphae too. In the dish she buds from her ends, and her daughters line up in chains of up to 8 cells, the same cap as the other yeasts' clusters. Her antifungals are estimates, since there are no standard disk sizes for *Yarrowia*; fluconazole works only weakly on her, so its zone is small.
 - **Fumi's colonies** grow the way mold colonies really do: each starts from a single spore (a conidium) that sprouts threads (hyphae), and the hyphae grow from their tips at the colony's edge. So a colony spreads out in a circle at a steady pace, rather than doubling like a heap of budding yeast. The middle is oldest, so that's where it makes spores first and turns green, while the rest, still growing, stays white and fluffy.
 - **Fumi's picture** is her conidiophore, the stalk that makes her spores: a swollen head (the vesicle) with spores in chains that stand up from its top in a column. That shape, a bit like the aspergillum used to sprinkle holy water, gave *Aspergillus* its name. *Fumigatus* means "smoky," for her grey-green colonies.
 - **Fumi's antifungals:** voriconazole is the usual first choice against her, then other azoles (itraconazole, posaconazole), amphotericin B and caspofungin, the five drugs on her disks. Like most molds, she's naturally resistant to fluconazole, so she never gets an FLC disk. There's a CLSI disk test for molds (M51), but no settled zone sizes for *Aspergillus*, so her zones are estimates.

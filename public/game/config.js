@@ -98,6 +98,40 @@ export const SPECIES = {
       { code: 'AMB', name: 'amphotericin B', zone: 17 },
     ],
   },
+  yara: {
+    facts: [
+      "Yara's species name, *lipolytica*, means \"fat-breaking,\" since she feeds on fats and oils.",
+      "Yara's genus is named for David Yarrow, a yeast scientist.",
+      "Yara stores fat in droplets inside her cells, sometimes over a third of her weight.",
+      "Yara can bud like a yeast, or keep her buds attached in chains called pseudohyphae.",
+      "Yara can also grow true hyphae, long threads like a mold's.",
+      "Yara turns up in cheese, sausages and soil, and in seawater polluted with oil.",
+      "Yara can eat hydrocarbons from oil, so scientists study her for cleaning up spills.",
+      "Companies grow Yara to make omega-3 fats for fish feed and supplements.",
+      "Yara can make citric acid, the sour taste in many fruit drinks.",
+      "Most of Yara's strains can't grow at body temperature, so she rarely makes people sick.",
+      "Bioengineers like Yara for making biofuels, since she's so good at making fat.",
+      "Yara is an ascomycete, a yeast cousin of Sasha and Candi.",
+    ],
+    scientific: 'Yarrowia lipolytica',
+    color: '#b4532f', // for her name above the dish
+    kind: 'yeast',
+    // Long, rod-shaped cells that bud from their ends, with daughters that
+    // line up end to end in chains instead of bunching (see yeast.js).
+    chains: true,
+    // All apricot; `oil` is the droplets of fat inside her cells.
+    colors: { fill: '#fbd3bd', stroke: '#b4532f', highlight: '#fff4ec', dark: '#6e2f17', oil: '#fde9a8' },
+    // There are no standard disk sizes for Yarrowia, so these are estimates
+    // from how well each drug works on her in the lab. Fluconazole works
+    // only weakly on her, so its zone is small.
+    antifungals: [
+      { code: 'AMB', name: 'amphotericin B', zone: 18 },
+      { code: 'VOR', name: 'voriconazole', zone: 26 },
+      { code: 'CAS', name: 'caspofungin', zone: 20 },
+      { code: 'ITC', name: 'itraconazole', zone: 22 },
+      { code: 'FLC', name: 'fluconazole', zone: 14 },
+    ],
+  },
   fumi: {
     facts: [
       "Fumi's species name, *fumigatus*, means \"smoky,\" for her smoky grey-green colonies.",

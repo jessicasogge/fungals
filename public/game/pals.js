@@ -362,9 +362,32 @@ export const PALS = [
       ${face(100, 104, '#4f3d06')}
     `,
   },
+  // Yara: Yarrowia lipolytica, a fat-loving yeast, drawn as one long,
+  // sausage-shaped cell with droplets of fat inside and a smaller bud at her
+  // end. In the dish her daughters line up end to end in chains (see yeast.js).
+  {
+    id: 'yara',
+    name: 'Yara',
+    looks: 'an apricot Yarrowia lipolytica yeast: one long, sausage-shaped cell with droplets of fat inside, budding at her end',
+    motion: 'bob',
+    frames: { home: '14 10 180 180', picker: '18 14 172 172', dish: '14 10 180 180' },
+    art: `
+      <!-- a smaller bud at her end, still attached -->
+      <rect x="138" y="60" width="46" height="30" rx="15" fill="#fbd3bd" stroke="#b4532f" stroke-width="4" transform="rotate(-28 161 75)" />
+      <circle cx="166" cy="72" r="5" fill="#fde9a8" stroke="#d9a441" stroke-width="1.5" />
+      <!-- her long, sausage-shaped cell -->
+      <rect x="26" y="70" width="128" height="72" rx="36" fill="#fbd3bd" stroke="#b4532f" stroke-width="4" transform="rotate(-14 90 106)" />
+      <!-- droplets of fat she stores inside -->
+      <circle cx="50" cy="124" r="7" fill="#fde9a8" stroke="#d9a441" stroke-width="1.5" />
+      <circle cx="63" cy="137" r="4.5" fill="#fde9a8" stroke="#d9a441" stroke-width="1.5" />
+      <circle cx="134" cy="92" r="6" fill="#fde9a8" stroke="#d9a441" stroke-width="1.5" />
+      <ellipse cx="62" cy="94" rx="11" ry="5" fill="#fff4ec" transform="rotate(-14 62 94)" />
+      ${face(94, 106, '#6e2f17')}
+    `,
+  },
 ];
 
-const HOME = ['penelope', 'sasha', 'miri', 'candi', 'fumi', 'olive'];
+const HOME = ['penelope', 'sasha', 'miri', 'candi', 'fumi', 'olive', 'yara'];
 export const HOME_PALS = HOME.map((id) => PALS.find((pal) => pal.id === id));
 
 // How many pals fit on one page of the picker: four across, two down.

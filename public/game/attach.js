@@ -55,3 +55,40 @@ export function clusterSpot(cells, twist, px, py, allowed = () => true) {
 
   return best;
 }
+
+// Rod-shaped cells (Yara) line up end to end in chains instead of bunching.
+// A rod is ROD_LENGTH tip to tip and ROD_WIDTH across, in SVG units, and
+// the next cell in a chain sits ROD_STEP along from the one it joins.
+export const ROD_LENGTH = R * 2.6;
+export const ROD_WIDTH = R * 1.5;
+export const ROD_STEP = ROD_LENGTH * 0.92;
+
+// Where a new cell would join a chain: past one of its two ends, carrying on
+// the way the chain runs with a slight kink, on whichever end is nearer
+// (px, py). Each cell's `tilt` (degrees) is the way it points; a lone cell's
+// tilt says which way its chain will run. Returns { x, y, tilt, atStart },
+// atStart meaning it goes before the first cell, or null if both ends are
+// ruled out by `allowed(x, y)` or taken.
+export function chainSpot(cells, px, py, allowed = () => true) {
+  if (cells.length === 0) return null;
+  const first = cells[0];
+  const last = cells.at(-1);
+  const way = (a, b) => Math.atan2(b.y - a.y, b.x - a.x);
+  const pointing = ((first.tilt ?? 0) * Math.PI) / 180;
+  const ends = cells.length === 1
+    ? [[last, pointing, false], [first, pointing + Math.PI, true]]
+    : [[last, way(cells.at(-2), last), false], [first, way(cells[1], first), true]];
+  let best = null;
+  for (const [cell, angle, atStart] of ends) {
+    const bent = angle + wobble(cells.length, atStart ? 2 : 1) * 0.3;
+    const x = cell.x + Math.cos(bent) * ROD_STEP;
+    const y = cell.y + Math.sin(bent) * ROD_STEP;
+    if (!allowed(x, y)) continue;
+    if (cells.some((o) => Math.hypot(o.x - x, o.y - y) < ROD_STEP * 0.8)) continue;
+    const distance = Math.hypot(x - px, y - py);
+    if (!best || distance < best.distance) {
+      best = { x, y, tilt: Math.round((bent * 180) / Math.PI), atStart, distance };
+    }
+  }
+  return best;
+}
