@@ -394,11 +394,16 @@ describe('a yeast who grows in chains (Yara)', () => {
     }
   }
 
-  it('draws long, rod-shaped cells with droplets of fat inside', () => {
+  it('draws plump, egg-shaped cells, longer than wide, with droplets of fat inside', () => {
     const player = makeGroup('yara', { isPlayer: true });
     const body = player.svg.querySelector('.cell-body');
-    expect(body.tagName).toBe('rect');
-    expect(Number(body.getAttribute('width'))).toBeGreaterThan(Number(body.getAttribute('height')) * 1.5);
+    expect(body.tagName).toBe('path');
+    // Two curved halves and nothing straight: a longer one, then a shorter one.
+    const arcs = [...body.getAttribute('d').matchAll(/A (\S+) (\S+) /g)].map(([, rx, ry]) => [Number(rx), Number(ry)]);
+    expect(body.getAttribute('d')).not.toMatch(/[LHV]/);
+    expect(arcs).toHaveLength(2);
+    expect(arcs[0][0]).toBeGreaterThan(arcs[1][0]);
+    expect(arcs[0][0] + arcs[1][0]).toBeGreaterThan(arcs[0][1] * 2 * 1.4);
     const oil = [...player.svg.querySelectorAll('circle')].filter((c) => c.getAttribute('fill') === SPECIES.yara.colors.oil);
     expect(oil).toHaveLength(2);
   });
@@ -423,13 +428,13 @@ describe('a yeast who grows in chains (Yara)', () => {
     expect([...angles].sort()).toEqual([-1, 1]);
   });
 
-  it("grows her bud out past her end, as a smaller rod", () => {
+  it("grows her bud out past her end, as a smaller egg", () => {
     const player = makeGroup('yara', { isPlayer: true });
     player.startBud();
     player.budding.angle = 0;
     player.update(1);
     const bud = player.svg.querySelector('.bud');
-    expect(bud.tagName).toBe('rect');
+    expect(bud.tagName).toBe('path');
     const [, x] = bud.getAttribute('transform').match(/translate\((\S+) /).map(Number);
     expect(x).toBeGreaterThan(R);
     const [bx, by] = player.budSpot();
@@ -456,7 +461,7 @@ describe('a yeast who grows in chains (Yara)', () => {
 
   it('reaches to the far end of her longest cell', () => {
     const player = makeGroup('yara', { isPlayer: true });
-    expect(player.reach()).toBeGreaterThan(R * UNIT * 1.2);
+    expect(player.reach()).toBeGreaterThan(R * UNIT * 1.1);
   });
 });
 

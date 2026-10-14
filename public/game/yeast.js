@@ -12,7 +12,7 @@ import { coaster } from './physics.js';
 // grows on the side facing the cell that budded, so the player builds bunches
 // wherever she lingers.
 //
-// A yeast with `chains` (Yara) has long, rod-shaped cells with droplets of
+// A yeast with `chains` (Yara) has plump, egg-shaped cells with droplets of
 // fat inside, buds from her ends, and her daughters line up end to end in
 // chains of up to CHAIN_CAP cells instead of bunching. The player stays
 // level as she swims; only her daughters point every which way.
@@ -106,12 +106,20 @@ export function yeastGroup({ mover, svg, species, isPlayer }) {
     return [group.x + lx * unit * group.facing, group.y + ly * unit];
   }
 
+  // A plump egg `l` long and `w` wide, centered on (0, 0) and lying along x:
+  // two half-ovals joined at her widest point, the right one a little longer,
+  // so her sides curve all the way round with no straight edges.
+  function eggPath(l, w) {
+    const [right, left, h] = [l * 0.54, l * 0.46, w / 2];
+    const x = (left - right) / 2;
+    return `M ${x} ${-h} A ${right} ${h} 0 0 1 ${x} ${h} A ${left} ${h} 0 0 1 ${x} ${-h} Z`;
+  }
+
   function cellBody(c) {
     const paint = `fill="${colors.fill}" stroke="${colors.stroke}" stroke-width="${OUTLINE}"`;
     const size = c.grow ?? 1;
     if (rods) {
-      const [l, w] = [ROD_LENGTH * size, ROD_WIDTH * size];
-      return `<rect class="${c.bud ? 'bud' : 'cell-body'}" x="${-l / 2}" y="${-w / 2}" width="${l}" height="${w}" rx="${w / 2}" ` +
+      return `<path class="${c.bud ? 'bud' : 'cell-body'}" d="${eggPath(ROD_LENGTH * size, ROD_WIDTH * size)}" ` +
         `transform="translate(${c.x} ${c.y}) rotate(${c.tilt ?? 0})" ${paint} />`;
     }
     return `<ellipse class="${c.bud ? 'bud' : 'cell-body'}" cx="0" cy="0" rx="${R * size}" ry="${R * OVAL * size}" ` +

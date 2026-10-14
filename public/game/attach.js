@@ -59,7 +59,7 @@ export function clusterSpot(cells, twist, px, py, allowed = () => true) {
 // Rod-shaped cells (Yara) line up end to end in chains instead of bunching.
 // A rod is ROD_LENGTH tip to tip and ROD_WIDTH across, in SVG units, and
 // the next cell in a chain sits ROD_STEP along from the one it joins.
-export const ROD_LENGTH = R * 2.6;
+export const ROD_LENGTH = R * 2.35;
 export const ROD_WIDTH = R * 1.5;
 export const ROD_STEP = ROD_LENGTH * 0.92;
 

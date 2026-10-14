@@ -116,7 +116,7 @@ export const SPECIES = {
     scientific: 'Yarrowia lipolytica',
     color: '#b4532f', // for her name above the dish
     kind: 'yeast',
-    // Long, rod-shaped cells that bud from their ends, with daughters that
+    // Plump, egg-shaped cells that bud from their ends, with daughters that
     // line up end to end in chains instead of bunching (see yeast.js).
     chains: true,
     // All apricot; `oil` is the droplets of fat inside her cells.
