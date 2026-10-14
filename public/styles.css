@@ -50,6 +50,14 @@ body {
   width: 120px;
 }
 
+/* On a phone the pals sit two to a row, so show just the first six (three
+   even rows) instead of leaving the last one alone on a row of her own. */
+@media (max-width: 520px) {
+  .friends .pal:nth-child(n + 7) {
+    display: none;
+  }
+}
+
 .pal .cell {
   transform-box: fill-box;
   transform-origin: center;
@@ -393,6 +401,10 @@ body {
 
 .miri {
   background: rgba(247, 230, 160, 0.6);
+}
+
+.yara {
+  background: rgba(251, 214, 192, 0.6);
 }
 
 .pick-btn {

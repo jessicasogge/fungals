@@ -98,6 +98,40 @@ export const SPECIES = {
       { code: 'AMB', name: 'amphotericin B', zone: 17 },
     ],
   },
+  yara: {
+    facts: [
+      "Yara's species name, *lipolytica*, means \"fat-breaking\": she can feed on fats.",
+      "Yara's genus is named for David Yarrow, a yeast scientist.",
+      "Yara stores fat in cell droplets, sometimes over a third of her dry weight.",
+      "Yara can bud as single cells or grow attached chains called pseudohyphae.",
+      "Yara can also grow true hyphae, long threads like a mold's.",
+      "Yara turns up in cheese, sausages, soil and oil-polluted seawater.",
+      "Yara can eat some oil hydrocarbons, so scientists study her for pollution cleanup.",
+      "Companies use engineered Yara strains to make omega-3 fats for feed and supplements.",
+      "Yara can make citric acid, which gives many fruit drinks their sour taste.",
+      "Most Yara strains can't grow at 37°C, and she only rarely causes infections.",
+      "Bioengineers study Yara for making biofuels because she's good at storing fat.",
+      "Yara is an ascomycete, in the same broad fungal group as Sasha and Candi.",
+    ],
+    scientific: 'Yarrowia lipolytica',
+    color: '#b4532f', // for her name above the dish
+    kind: 'yeast',
+    // Plump, egg-shaped cells that bud from their ends, with daughters that
+    // line up end to end in chains instead of bunching (see yeast.js).
+    chains: true,
+    // All apricot; `oil` is the droplets of fat inside her cells.
+    colors: { fill: '#fbd3bd', stroke: '#b4532f', highlight: '#fff4ec', dark: '#6e2f17', oil: '#fde9a8' },
+    // There are no standard disk sizes for Yarrowia, so these are estimates
+    // from how well each drug works on her in the lab. Fluconazole works
+    // only weakly on her, so its zone is small.
+    antifungals: [
+      { code: 'AMB', name: 'amphotericin B', zone: 18 },
+      { code: 'VOR', name: 'voriconazole', zone: 26 },
+      { code: 'CAS', name: 'caspofungin', zone: 20 },
+      { code: 'ITC', name: 'itraconazole', zone: 22 },
+      { code: 'FLC', name: 'fluconazole', zone: 14 },
+    ],
+  },
   fumi: {
     facts: [
       "Fumi's species name, *fumigatus*, means \"smoky,\" for her smoky grey-green colonies.",
@@ -214,6 +248,7 @@ export const LEVELS = [
 
 export const GAME = {
   GROUP_CAP: 8, // max cells per cluster
+  CHAIN_CAP: 4, // max cells per chain, for a yeast that grows in chains (Yara)
   SNAP_REACH: 0.3, // bud attachment range, relative to dish radius
   NUTRIENTS_PER_DIVISION: 1, // nutrients per bud
   SPEED: 0.8, // dish radii per second

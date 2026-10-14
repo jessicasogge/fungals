@@ -1,20 +1,23 @@
 import { touchesDisk } from './antifungal.js';
-import { clusterSpot, R } from './attach.js';
+import { chainSpot, clusterSpot, R, ROD_LENGTH, ROD_WIDTH } from './attach.js';
 import { GAME } from './config.js';
 import { idlePose, newMover } from './mover.js';
 import { coaster } from './physics.js';
 
-// A budding yeast (Sasha, Candi, Olive). The player is always a single cell. Each
-// time she eats, a small bud swells out of her side, pinches off, and the
-// daughter keeps growing until she's full size. (Offspring that eat bud
-// too, without the swelling first.) Daughters stay stuck together in little clusters, up to
-// GROUP_CAP cells, the way budding yeast often does on a plate. A cluster
-// grows on the side facing the cell that budded, so the player builds bunches
-// wherever she lingers.
+// Budding yeast (Sasha, Candi, Olive, Yara): the player stays one cell.
+// Eating grows a bud that pinches off; daughters form clusters up to GROUP_CAP,
+// growing toward where the player budded.
+//
+// `chains` (Yara): egg-shaped cells with fat droplets bud end-to-end into
+// chains up to CHAIN_CAP. The player stays level; daughters tilt freely.
 export function yeastGroup({ mover, svg, species, isPlayer }) {
   const CELL_SIZE = 5; // one cell's width, as a percent of the dish
   const OUTLINE = 1.7; // each cell's outline width, in SVG units
   const { colors } = species;
+  const rods = Boolean(species.chains);
+  // How far a cell reaches from its middle, at most: half a rod's length, or
+  // an oval's radius.
+  const CELL_REACH = rods ? ROD_LENGTH / 2 : R;
 
   const group = {
     mover,
@@ -58,6 +61,12 @@ export function yeastGroup({ mover, svg, species, isPlayer }) {
     const { angle } = group.budding;
     const r = R * budSize();
     const sin = Math.sin(angle);
+    if (rods) {
+      // Out past her end, joined to her where the two rounded tips meet.
+      const half = (ROD_LENGTH / 2) * budSize();
+      const d = ROD_LENGTH / 2 + half * 0.75;
+      return [Math.cos(angle) * d, sin * d, half];
+    }
     const edge = R * (1 - (1 - OVAL) * sin * sin); // roughly her oval's edge
     const d = edge + r * 0.55;
     return [Math.cos(angle) * d, sin * d, r];
@@ -68,8 +77,8 @@ export function yeastGroup({ mover, svg, species, isPlayer }) {
     let mx = 0;
     let my = 0;
     for (const c of group.cells) {
-      mx = Math.max(mx, Math.abs(c.x) + R);
-      my = Math.max(my, Math.abs(c.y) + R);
+      mx = Math.max(mx, Math.abs(c.x) + CELL_REACH);
+      my = Math.max(my, Math.abs(c.y) + CELL_REACH);
     }
     if (group.budding) {
       const [bx, by, br] = budCenter();
@@ -91,17 +100,39 @@ export function yeastGroup({ mover, svg, species, isPlayer }) {
     return [group.x + lx * unit * group.facing, group.y + ly * unit];
   }
 
+  // A plump egg `l` long and `w` wide, centered on (0, 0) and lying along x:
+  // two half-ovals joined at her widest point, the right one a little longer,
+  // so her sides curve all the way round with no straight edges.
+  function eggPath(l, w) {
+    const [right, left, h] = [l * 0.54, l * 0.46, w / 2];
+    const x = (left - right) / 2;
+    return `M ${x} ${-h} A ${right} ${h} 0 0 1 ${x} ${h} A ${left} ${h} 0 0 1 ${x} ${-h} Z`;
+  }
+
   function cellBody(c) {
     const paint = `fill="${colors.fill}" stroke="${colors.stroke}" stroke-width="${OUTLINE}"`;
     const size = c.grow ?? 1;
+    if (rods) {
+      return `<path class="${c.bud ? 'bud' : 'cell-body'}" d="${eggPath(ROD_LENGTH * size, ROD_WIDTH * size)}" ` +
+        `transform="translate(${c.x} ${c.y}) rotate(${c.tilt ?? 0})" ${paint} />`;
+    }
     return `<ellipse class="${c.bud ? 'bud' : 'cell-body'}" cx="0" cy="0" rx="${R * size}" ry="${R * OVAL * size}" ` +
       `transform="translate(${c.x} ${c.y}) rotate(${c.tilt ?? 0})" ${paint} />`;
   }
 
+  // A rod's droplets of fat, inside it and turned with it.
+  function droplets(c) {
+    const [l, w] = [ROD_LENGTH * (c.grow ?? 1), ROD_WIDTH * (c.grow ?? 1)];
+    const paint = `fill="${colors.oil}" stroke="${colors.stroke}" stroke-opacity="0.45" stroke-width="0.6"`;
+    return `<g transform="translate(${c.x} ${c.y}) rotate(${c.tilt ?? 0})">` +
+      `<circle cx="${-l * 0.24}" cy="${w * 0.12}" r="${w * 0.17}" ${paint} />` +
+      `<circle cx="${l * 0.27}" cy="${-w * 0.1}" r="${w * 0.13}" ${paint} /></g>`;
+  }
+
   function cellMarkup(c) {
-    let out =
-      cellBody(c) +
-      `<circle cx="${c.x - 2.7}" cy="${c.y - 3.2}" r="${1.5 * (c.grow ?? 1)}" fill="${colors.highlight}" />`;
+    let out = cellBody(c) + (rods
+      ? droplets(c)
+      : `<circle cx="${c.x - 2.7}" cy="${c.y - 3.2}" r="${1.5 * (c.grow ?? 1)}" fill="${colors.highlight}" />`);
     if (c.face) {
       out +=
         `<g transform="translate(${c.x} ${c.y})">` +
@@ -137,7 +168,7 @@ export function yeastGroup({ mover, svg, species, isPlayer }) {
   Object.assign(group, {
     reach() {
       let farthest = 0;
-      for (const c of group.cells) farthest = Math.max(farthest, Math.hypot(c.x, c.y) + R);
+      for (const c of group.cells) farthest = Math.max(farthest, Math.hypot(c.x, c.y) + CELL_REACH);
       return farthest * pxPerUnit();
     },
     // Redraw only while something is changing (a new cell sliding into
@@ -172,9 +203,12 @@ export function yeastGroup({ mover, svg, species, isPlayer }) {
     },
     // Start a bud swelling on the player's side (if one isn't already
     // growing): from the top for a pal who always buds from the same end
-    // (Olive), or else pointing a random way.
+    // (Olive), from one end or the other for a rod (Yara), or else pointing
+    // a random way.
     startBud() {
-      const angle = species.budsFromOneEnd ? -Math.PI / 2 : Math.random() * Math.PI * 2;
+      let angle = Math.random() * Math.PI * 2;
+      if (species.budsFromOneEnd) angle = -Math.PI / 2;
+      else if (rods) angle = Math.random() < 0.5 ? 0 : Math.PI;
       group.budding ??= { ms: 0, angle };
     },
     // Whether her bud has swelled enough to pinch off.
@@ -211,7 +245,7 @@ export function yeastGroup({ mover, svg, species, isPlayer }) {
     // Where a new cell would join this group if it came from (wx, wy) in the
     // dish, or null if the group is full or every open spot is on a disk.
     attachSpot(wx, wy, disks = [], dishRadius = 0) {
-      if (group.cells.length >= GAME.GROUP_CAP) return null;
+      if (group.cells.length >= (rods ? GAME.CHAIN_CAP : GAME.GROUP_CAP)) return null;
       const [px, py] = toLocal(wx, wy);
       // Spots on or right next to an antifungal disk are off-limits. Measure
       // each cell the same way body() does (with its outline), or a new cell
@@ -222,7 +256,9 @@ export function yeastGroup({ mover, svg, species, isPlayer }) {
         return !disks.some((disk) =>
           touchesDisk(disk, [[sx, sy, cellRadius]], dishRadius));
       };
-      const spot = clusterSpot(group.cells, group.twist, px, py, allowed);
+      const spot = rods
+        ? chainSpot(group.cells, px, py, allowed)
+        : clusterSpot(group.cells, group.twist, px, py, allowed);
       if (!spot) return null;
       spot.world = toWorld(spot.x, spot.y);
       return spot;
@@ -237,7 +273,7 @@ export function yeastGroup({ mover, svg, species, isPlayer }) {
       }
       const cell = {
         x: fx, y: fy, fromX: fx, fromY: fy, toX: spot.x, toY: spot.y, face: false,
-        grow, tilt: Math.round(Math.random() * 180),
+        grow, tilt: spot.tilt ?? Math.round(Math.random() * 180),
       };
       if (spot.atStart) group.cells.unshift(cell);
       else group.cells.push(cell);

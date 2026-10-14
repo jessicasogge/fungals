@@ -47,4 +47,10 @@ export const QUIZ_FACTS = {
     "In 2006, the Brewing Society of Japan named Miri its \"national fungus.\"",
     "Miri's species name, *oryzae*, means \"of rice.\"",
   ],
+  yara: [
+    "Yara's species name, *lipolytica*, means \"fat-breaking,\" since she feeds on fats and oils.",
+    "Yara stores fat in cell droplets, sometimes over a third of her dry weight.",
+    "Yara can eat hydrocarbons from oil, so scientists study her for cleaning up spills.",
+    "Companies grow Yara to make omega-3 fats for fish feed and supplements.",
+  ],
 };
