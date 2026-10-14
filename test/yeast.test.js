@@ -439,13 +439,14 @@ describe('a yeast who grows in chains (Yara)', () => {
 
   it('lines her daughters up end to end in a chain, up to the cap', () => {
     const chain = makeGroup('yara', { x: 30, y: 0 });
-    growChain(chain, GAME.GROUP_CAP);
-    expect(chain.cellCount()).toBe(GAME.GROUP_CAP);
+    growChain(chain, GAME.CHAIN_CAP);
+    expect(GAME.CHAIN_CAP).toBe(4);
+    expect(chain.cellCount()).toBe(GAME.CHAIN_CAP);
     const centers = cellCenters(chain);
     const step = ROD_STEP * UNIT;
     for (let i = 1; i < centers.length; i++) expect(distance(centers[i], centers[i - 1])).toBeCloseTo(step, 0);
     // It runs out long, instead of bunching like Sasha's clusters.
-    expect(distance(centers[0], centers.at(-1))).toBeGreaterThan(step * 4);
+    expect(distance(centers[0], centers.at(-1))).toBeGreaterThan(step * 2.5);
     // Full: no room at either end, so the next daughter starts a chain of her own.
     const [end] = centers.slice(-1);
     expect(chain.attachSpot(end[0], end[1], [], DISH_RADIUS)).toBeNull();

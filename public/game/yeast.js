@@ -14,7 +14,7 @@ import { coaster } from './physics.js';
 //
 // A yeast with `chains` (Yara) has long, rod-shaped cells with droplets of
 // fat inside, buds from her ends, and her daughters line up end to end in
-// chains (still up to GROUP_CAP cells) instead of bunching. The player stays
+// chains of up to CHAIN_CAP cells instead of bunching. The player stays
 // level as she swims; only her daughters point every which way.
 export function yeastGroup({ mover, svg, species, isPlayer }) {
   const CELL_SIZE = 5; // one cell's width, as a percent of the dish
@@ -243,7 +243,7 @@ export function yeastGroup({ mover, svg, species, isPlayer }) {
     // Where a new cell would join this group if it came from (wx, wy) in the
     // dish, or null if the group is full or every open spot is on a disk.
     attachSpot(wx, wy, disks = [], dishRadius = 0) {
-      if (group.cells.length >= GAME.GROUP_CAP) return null;
+      if (group.cells.length >= (rods ? GAME.CHAIN_CAP : GAME.GROUP_CAP)) return null;
       const [px, py] = toLocal(wx, wy);
       // Spots on or right next to an antifungal disk are off-limits. Measure
       // each cell the same way body() does (with its outline), or a new cell

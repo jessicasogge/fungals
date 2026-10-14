@@ -248,6 +248,7 @@ export const LEVELS = [
 
 export const GAME = {
   GROUP_CAP: 8, // max cells per cluster
+  CHAIN_CAP: 4, // max cells per chain, for a yeast that grows in chains (Yara)
   SNAP_REACH: 0.3, // bud attachment range, relative to dish radius
   NUTRIENTS_PER_DIVISION: 1, // nutrients per bud
   SPEED: 0.8, // dish radii per second
