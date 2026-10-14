@@ -56,19 +56,14 @@ export function clusterSpot(cells, twist, px, py, allowed = () => true) {
   return best;
 }
 
-// Rod-shaped cells (Yara) line up end to end in chains instead of bunching.
-// A rod is ROD_LENGTH tip to tip and ROD_WIDTH across, in SVG units, and
-// the next cell in a chain sits ROD_STEP along from the one it joins.
+// Rod-shaped cells (Yara) grow in end-to-end chains.
+// ROD_LENGTH/ROD_WIDTH are in SVG units; ROD_STEP spaces chain cells.
 export const ROD_LENGTH = R * 2.35;
 export const ROD_WIDTH = R * 1.5;
 export const ROD_STEP = ROD_LENGTH * 0.92;
 
-// Where a new cell would join a chain: past one of its two ends, carrying on
-// the way the chain runs with a slight kink, on whichever end is nearer
-// (px, py). Each cell's `tilt` (degrees) is the way it points; a lone cell's
-// tilt says which way its chain will run. Returns { x, y, tilt, atStart },
-// atStart meaning it goes before the first cell, or null if both ends are
-// ruled out by `allowed(x, y)` or taken.
+// Find a chain-continuation spot past the nearer end of (px, py), with a slight kink.
+// Returns { x, y, tilt, atStart }, or null if both ends are blocked or taken.
 export function chainSpot(cells, px, py, allowed = () => true) {
   if (cells.length === 0) return null;
   const first = cells[0];

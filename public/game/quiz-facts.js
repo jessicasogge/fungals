@@ -49,10 +49,8 @@ export const QUIZ_FACTS = {
   ],
   yara: [
     "Yara's species name, *lipolytica*, means \"fat-breaking,\" since she feeds on fats and oils.",
-    "Yara stores fat in droplets inside her cells, sometimes over a third of her weight.",
-    "Yara can bud like a yeast, or keep her buds attached in chains called pseudohyphae.",
+    "Yara stores fat in cell droplets, sometimes over a third of her dry weight.",
     "Yara can eat hydrocarbons from oil, so scientists study her for cleaning up spills.",
     "Companies grow Yara to make omega-3 fats for fish feed and supplements.",
-    "Most of Yara's strains can't grow at body temperature, so she rarely makes people sick.",
   ],
 };

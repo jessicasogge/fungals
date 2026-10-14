@@ -4,18 +4,12 @@ import { GAME } from './config.js';
 import { idlePose, newMover } from './mover.js';
 import { coaster } from './physics.js';
 
-// A budding yeast (Sasha, Candi, Olive, Yara). The player is always a single cell. Each
-// time she eats, a small bud swells out of her side, pinches off, and the
-// daughter keeps growing until she's full size. (Offspring that eat bud
-// too, without the swelling first.) Daughters stay stuck together in little clusters, up to
-// GROUP_CAP cells, the way budding yeast often does on a plate. A cluster
-// grows on the side facing the cell that budded, so the player builds bunches
-// wherever she lingers.
+// Budding yeast (Sasha, Candi, Olive, Yara): the player stays one cell.
+// Eating grows a bud that pinches off; daughters form clusters up to GROUP_CAP,
+// growing toward where the player budded.
 //
-// A yeast with `chains` (Yara) has plump, egg-shaped cells with droplets of
-// fat inside, buds from her ends, and her daughters line up end to end in
-// chains of up to CHAIN_CAP cells instead of bunching. The player stays
-// level as she swims; only her daughters point every which way.
+// `chains` (Yara): egg-shaped cells with fat droplets bud end-to-end into
+// chains up to CHAIN_CAP. The player stays level; daughters tilt freely.
 export function yeastGroup({ mover, svg, species, isPlayer }) {
   const CELL_SIZE = 5; // one cell's width, as a percent of the dish
   const OUTLINE = 1.7; // each cell's outline width, in SVG units
