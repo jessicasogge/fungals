@@ -1,5 +1,5 @@
-// The pal picker: a card for each pal, with her picture, name and species,
-// and a button to pick her. All the pals are shuffled into a new random
+// The pal picker: a card for each pal, with her picture, name and species;
+// the whole card is the button that picks her. All the pals are shuffled into a new random
 // order every visit, so no pal is always first or always on a later page,
 // then split into pages of eight (PAGE_SIZE in pals.js), shown one at a time
 // with Back and More pals buttons to move between them.
@@ -49,8 +49,10 @@ more.addEventListener('click', () => {
 showPage(0);
 
 function card(pal) {
-  const article = document.createElement('article');
-  article.className = 'pal-card';
+  const link = document.createElement('a');
+  link.className = 'pal-card';
+  link.href = `./petri-dish.html?pal=${pal.id}`;
+  link.setAttribute('aria-label', `Pick ${pal.name}`);
 
   const name = document.createElement('h2');
   name.textContent = pal.name;
@@ -59,13 +61,8 @@ function card(pal) {
   species.className = 'species';
   species.append(...speciesName(SPECIES[pal.id].scientific));
 
-  const pick = document.createElement('a');
-  pick.className = 'pick-btn';
-  pick.href = `./petri-dish.html?pal=${pal.id}`;
-  pick.textContent = `Select ${pal.name}`;
-
-  article.append(palTile(pal), name, species, pick);
-  return article;
+  link.append(palTile(pal), name, species);
+  return link;
 }
 
 // All filled in: take the loading card away.

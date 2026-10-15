@@ -192,8 +192,11 @@ describe('the pages', () => {
       expect(card.querySelector('.pal-icon').classList).toContain(id);
       expect(card.querySelector('.species').textContent).toBe(plainText(SPECIES[id].scientific));
       expect(card.querySelector('.species i')).not.toBeNull(); // in italics
-      expect(card.querySelector('a').getAttribute('href')).toBe(`./petri-dish.html?pal=${id}`);
-      expect(card.querySelector('a').textContent).toBe(`Select ${name}`);
+      // The whole card is the link that picks her, with no separate button.
+      expect(card.tagName).toBe('A');
+      expect(card.getAttribute('href')).toBe(`./petri-dish.html?pal=${id}`);
+      expect(card.getAttribute('aria-label')).toBe(`Pick ${name}`);
+      expect(card.querySelector('a, button, .pick-btn')).toBeNull();
     }
   });
 
