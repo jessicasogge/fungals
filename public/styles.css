@@ -428,6 +428,10 @@ a.gal-card:active {
   background: rgba(251, 214, 192, 0.6);
 }
 
+.peachy {
+  background: rgba(252, 213, 227, 0.6);
+}
+
 .pick-btn {
   margin-top: 0.75rem;
   padding: 0.7rem 1rem;

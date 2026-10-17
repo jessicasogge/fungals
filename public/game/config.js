@@ -132,6 +132,37 @@ export const SPECIES = {
       { code: 'FLC', name: 'fluconazole', zone: 14 },
     ],
   },
+  peachy: {
+    facts: [
+      "Peachy can live on methanol, a simple alcohol that's an unusual food for a yeast.",
+      "On methanol, Peachy grows larger and more numerous peroxisomes inside her cells.",
+      "Peachy starts breaking down methanol in peroxisomes that help contain toxic byproducts.",
+      "Engineered Peachy strains make useful proteins, including insulin and vaccine parts.",
+      "Scientists can engineer Peachy to release useful proteins, making collection easier.",
+      "With enough oxygen, Peachy favors respiration over fermentation and grows densely.",
+      "Peachy's biotech strains trace back to yeast collected from California black oak trees.",
+      "In the 1970s, Phillips Petroleum grew Peachy on methanol for an animal-feed project.",
+      "Labs often call Peachy *Pichia pastoris*, but she's now *Komagataella phaffii*.",
+      "Peachy is an ascomycete, in the same broad fungal group as Sasha and Candi.",
+      "Peachy is not considered a human pathogen.",
+    ],
+    scientific: 'Komagataella phaffii',
+    color: '#be3f73', // for her name above the dish
+    kind: 'yeast',
+    // Pink peroxisomes inside her cells (see yeast.js).
+    peroxisomes: true,
+    // All rose; `perox` is her peroxisomes.
+    colors: { fill: '#fcd5e3', stroke: '#be3f73', highlight: '#fff1f6', dark: '#6d1d3f', perox: '#f6a6c6' },
+    // There are no standard disk sizes for Komagataella, so these are estimates.
+    // She's a lab yeast that common antifungals work on well.
+    antifungals: [
+      { code: 'AMB', name: 'amphotericin B', zone: 17 },
+      { code: 'FLC', name: 'fluconazole', zone: 22 },
+      { code: 'VOR', name: 'voriconazole', zone: 28 },
+      { code: 'CAS', name: 'caspofungin', zone: 21 },
+      { code: 'NY', name: 'nystatin', zone: 19 },
+    ],
+  },
   fumi: {
     facts: [
       "Fumi's species name, *fumigatus*, means \"smoky,\" for her smoky grey-green colonies.",

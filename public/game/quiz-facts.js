@@ -53,4 +53,10 @@ export const QUIZ_FACTS = {
     "Yara can eat hydrocarbons from oil, so scientists study her for cleaning up spills.",
     "Companies grow Yara to make omega-3 fats for fish feed and supplements.",
   ],
+  peachy: [
+    "Peachy can use methanol, a simple alcohol, as her sole source of carbon and energy.",
+    "On methanol, Peachy's peroxisomes can grow to occupy most of her cell.",
+    "Peachy's species name, *phaffii*, honors the yeast scientist Herman Phaff.",
+    "Peachy is now *Komagataella phaffii*, but labs often call her *Pichia pastoris*.",
+  ],
 };
