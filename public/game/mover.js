@@ -1,7 +1,7 @@
-// Add a new group's mover to the dish, holding a copy of the pal art.
+// Add a new group's mover to the dish, holding a copy of the gal art.
 export function newMover(svg) {
   const mover = document.createElement('div');
-  mover.className = 'pal-mover offspring';
+  mover.className = 'gal-mover offspring';
   svg.removeAttribute('role');
   svg.removeAttribute('aria-label');
   svg.setAttribute('aria-hidden', 'true');
@@ -10,7 +10,7 @@ export function newMover(svg) {
   return mover;
 }
 
-// The player's pal has an idle animation (bob, wobble, squish or slither)
+// The player's gal has an idle animation (bob, wobble, squish or slither)
 // that moves its drawing around a little. This returns a function that moves
 // a circle [x, y, r], in px from the mover's center (before it's flipped to
 // face left), to where the animation has the drawing right now, so touches

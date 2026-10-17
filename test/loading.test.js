@@ -192,7 +192,7 @@ describe('every page', () => {
 
   it.each([
     ['script.js'],
-    ['game/pal-picker.js'],
+    ['game/gal-picker.js'],
     ['game/main.js'],
     ['game/whos-that-gal.js'],
   ])('%s shows the card while the next screen loads', (file) => {
@@ -205,7 +205,7 @@ describe('every page', () => {
   });
 
   it.each([
-    ['game/pal-picker.js'],
+    ['game/gal-picker.js'],
     ['game/main.js'],
     ['game/whos-that-gal.js'],
   ])('%s takes the starting card away once the page is filled in', (file) => {

@@ -42,7 +42,7 @@ describe('scattering nutrients', () => {
     }
   });
 
-  it('keeps the middle clear so the pal does not start on top of food', () => {
+  it('keeps the middle clear so the gal does not start on top of food', () => {
     for (let dish = 0; dish < 30; dish++) {
       document.body.innerHTML = '<div class="agar"></div>';
       scatterNutrients();
@@ -128,12 +128,12 @@ describe('count and positions', () => {
 });
 
 describe('eating nutrients', () => {
-  it('eats a fleck the pal is on and reports it', () => {
+  it('eats a fleck the gal is on and reports it', () => {
     const nutrients = scatterNutrients();
     const [target] = liveFlecks();
     const eaten = vi.fn();
     expect(nutrients.eatNear(target.fx + 0.005, target.fy, 0.01, eaten)).toBe(1);
-    // Says exactly where the fleck was, not where the pal was.
+    // Says exactly where the fleck was, not where the gal was.
     expect(eaten).toHaveBeenCalledTimes(1);
     const [fx, fy] = eaten.mock.calls[0];
     expect(fx).toBeCloseTo(target.fx);
@@ -145,18 +145,18 @@ describe('eating nutrients', () => {
   // A fleck's radius as a fraction of the dish radius (see the CSS widths).
   const fleckRadius = (el) => (el.classList.contains('small') ? 0.015 : 0.022);
 
-  it('eats a fleck as soon as its edge touches the pal', () => {
+  it('eats a fleck as soon as its edge touches the gal', () => {
     const nutrients = scatterNutrients();
     const [target] = liveFlecks();
     const reach = 0.05;
-    // The pal's circle is centered just far enough away for the edges to meet.
+    // The gal's circle is centered just far enough away for the edges to meet.
     const gap = reach + fleckRadius(target.el) - 0.001;
     // (Another random fleck can be in reach too, so check this one went.)
     expect(nutrients.eatNear(target.fx + gap, target.fy, reach)).toBeGreaterThanOrEqual(1);
     expect(target.el.classList.contains('eaten')).toBe(true);
   });
 
-  it('does not eat a fleck whose edge is just short of the pal', () => {
+  it('does not eat a fleck whose edge is just short of the gal', () => {
     const nutrients = scatterNutrients();
     const [target] = liveFlecks();
     const reach = 0.05;
@@ -212,7 +212,7 @@ describe('respawning nutrients', () => {
     expect(liveFlecks()).toHaveLength(COUNT);
   });
 
-  it('puts the replacement somewhere else, not right where the pal ate', () => {
+  it('puts the replacement somewhere else, not right where the gal ate', () => {
     for (let round = 0; round < 20; round++) {
       document.body.innerHTML = '<div class="agar"></div>';
       const nutrients = scatterNutrients();

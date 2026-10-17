@@ -10,9 +10,9 @@ beforeEach(() => {
 });
 
 describe("a mold's disks", () => {
-  it.each(['fumi', 'penelope', 'miri'])("%s's all have zones: no drug she shrugs off, and no fluconazole", (pal) => {
-    for (const drug of SPECIES[pal].antifungals) expect(drug.zone, drug.code).toBeGreaterThan(0);
-    expect(SPECIES[pal].antifungals.map((drug) => drug.code)).not.toContain('FLC');
+  it.each(['fumi', 'penelope', 'miri'])("%s's all have zones: no drug she shrugs off, and no fluconazole", (gal) => {
+    for (const drug of SPECIES[gal].antifungals) expect(drug.zone, drug.code).toBeGreaterThan(0);
+    expect(SPECIES[gal].antifungals.map((drug) => drug.code)).not.toContain('FLC');
   });
 });
 

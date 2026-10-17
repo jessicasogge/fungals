@@ -167,7 +167,7 @@ describe('the colonies', () => {
 describe('the spore', () => {
   it('is one small round cell that stays in the dish', () => {
     const agar = document.querySelector('.agar');
-    const mover = document.querySelector('.pal-mover');
+    const mover = document.querySelector('.gal-mover');
     vi.spyOn(agar, 'clientWidth', 'get').mockReturnValue(400);
     vi.spyOn(mover, 'offsetWidth', 'get').mockReturnValue(20);
     const spore = sporeGroup({ mover, agar });
@@ -198,14 +198,14 @@ describe('playing as a mold', () => {
     vi.stubGlobal('requestAnimationFrame', (run) => frames.push(run));
     vi.stubGlobal('location', { href: 'http://localhost/petri-dish.html?pal=fumi&level=1' });
     agar = document.querySelector('.agar');
-    mover = document.querySelector('.pal-mover');
+    mover = document.querySelector('.gal-mover');
     vi.spyOn(agar, 'clientWidth', 'get').mockReturnValue(400);
     vi.spyOn(mover, 'offsetWidth', 'get').mockReturnValue(20);
-    const palEl = document.createElement('div');
-    palEl.dataset.pal = 'fumi';
-    palEl.dataset.name = 'Fumi';
+    const galEl = document.createElement('div');
+    galEl.dataset.gal = 'fumi';
+    galEl.dataset.name = 'Fumi';
     const nutrients = fakeNutrients(spots);
-    playMold(palEl, SPECIES.fumi, nutrients, disks, { level, target });
+    playMold(galEl, SPECIES.fumi, nutrients, disks, { level, target });
     return { nutrients, banner: document.querySelector('.win-banner') };
   }
 

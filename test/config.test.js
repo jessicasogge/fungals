@@ -1,9 +1,9 @@
 // Checks that the game's settings in config.js are complete and sensible.
-// (The pals' names and drawings are checked in pals.test.js.)
+// (The gals' names and drawings are checked in gals.test.js.)
 import { describe, expect, it } from 'vitest';
 import { GAME, LEVELS, SPECIES } from '../public/game/config.js';
 
-const PALS = Object.keys(SPECIES);
+const GALS = Object.keys(SPECIES);
 
 // How readable one color is on another (WCAG contrast ratio, 1 to 21).
 function contrast(a, b) {
@@ -16,14 +16,14 @@ function contrast(a, b) {
   return (hi + 0.05) / (lo + 0.05);
 }
 
-describe('pals', () => {
-  it('keys every pal by a short lowercase id, used in addresses like ?pal=sasha', () => {
-    expect(PALS.length).toBeGreaterThan(1);
-    for (const pal of PALS) expect(pal).toMatch(/^[a-z]+$/);
+describe('gals', () => {
+  it('keys every gal by a short lowercase id, used in addresses like ?pal=sasha', () => {
+    expect(GALS.length).toBeGreaterThan(1);
+    for (const gal of GALS) expect(gal).toMatch(/^[a-z]+$/);
   });
 
-  it.each(PALS)('%s is a yeast or a mold, with colors for her cells', (pal) => {
-    const species = SPECIES[pal];
+  it.each(GALS)('%s is a yeast or a mold, with colors for her cells', (gal) => {
+    const species = SPECIES[gal];
     expect(['yeast', 'mold']).toContain(species.kind);
     for (const part of ['fill', 'stroke', 'highlight', 'dark']) {
       expect(species.colors[part]).toMatch(/^#[0-9a-f]{6}$/i);
@@ -31,26 +31,26 @@ describe('pals', () => {
   });
 
   it('gives a mold the green her colonies turn as they make spores', () => {
-    const molds = PALS.filter((pal) => SPECIES[pal].kind === 'mold');
+    const molds = GALS.filter((gal) => SPECIES[gal].kind === 'mold');
     expect(molds).toEqual(['fumi', 'penelope', 'miri']);
-    for (const pal of molds) expect(SPECIES[pal].colors.spores).toMatch(/^#[0-9a-f]{6}$/i);
+    for (const gal of molds) expect(SPECIES[gal].colors.spores).toMatch(/^#[0-9a-f]{6}$/i);
   });
 });
 
 describe('names above the dish', () => {
-  it.each(PALS)("writes %s's species the scientific way: Genus species", (pal) => {
-    expect(SPECIES[pal].scientific).toMatch(/^[A-Z][a-z]+ [a-z]+$/);
+  it.each(GALS)("writes %s's species the scientific way: Genus species", (gal) => {
+    expect(SPECIES[gal].scientific).toMatch(/^[A-Z][a-z]+ [a-z]+$/);
   });
 
-  it.each(PALS)("colors %s's name so it's easy to read on the page", (pal) => {
-    expect(SPECIES[pal].color).toMatch(/^#[0-9a-f]{6}$/i);
+  it.each(GALS)("colors %s's name so it's easy to read on the page", (gal) => {
+    expect(SPECIES[gal].color).toMatch(/^#[0-9a-f]{6}$/i);
     // The page behind the title is a soft purple (#e6dcf8). 3:1 is the
     // standard minimum for large, bold text like her name.
-    expect(contrast(SPECIES[pal].color, '#e6dcf8')).toBeGreaterThanOrEqual(3);
+    expect(contrast(SPECIES[gal].color, '#e6dcf8')).toBeGreaterThanOrEqual(3);
   });
 
-  it('gives every pal her own name color', () => {
-    const colors = PALS.map((pal) => SPECIES[pal].color.toLowerCase());
+  it('gives every gal her own name color', () => {
+    const colors = GALS.map((gal) => SPECIES[gal].color.toLowerCase());
     expect(new Set(colors).size).toBe(colors.length);
   });
 });
@@ -86,7 +86,7 @@ describe('game settings', () => {
     }
   });
 
-  it('keep the disks inside the dish and clear of where the pal starts', () => {
+  it('keep the disks inside the dish and clear of where the gal starts', () => {
     expect(GAME.DISK_MIN_DISTANCE).toBeLessThan(GAME.DISK_MAX_DISTANCE);
     // The farthest disk, buffer and all, still sits inside the rim.
     expect(GAME.DISK_MAX_DISTANCE + GAME.DISK_RADIUS + GAME.ZONE_MAX_WIDTH).toBeLessThan(1);

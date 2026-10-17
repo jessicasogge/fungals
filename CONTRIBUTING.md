@@ -1,6 +1,6 @@
 # Contributing to FunGals
 
-Thanks for your interest in FunGals! Bug reports, ideas for new pals or antifungals, and fixes are all welcome.
+Thanks for your interest in FunGals! Bug reports, ideas for new gals or antifungals, and fixes are all welcome.
 
 Everyone taking part is expected to follow the [Code of Conduct](CODE_OF_CONDUCT.md).
 
@@ -30,14 +30,14 @@ Everyone taking part is expected to follow the [Code of Conduct](CODE_OF_CONDUCT
    npm run test:coverage
    ```
 
-5. Open a pull request saying what you changed and why. For anything you can see, such as how a pal looks or moves, include a screenshot.
+5. Open a pull request saying what you changed and why. For anything you can see, such as how a gal looks or moves, include a screenshot.
 
 ## Style
 
 - **Keep pull requests small and focused.** One fix or feature per pull request is easiest to review.
 - **Write comments in plain English** that explain why, not just what, like the existing code does.
 - **Check it on a phone as well as a computer.** The game works with both arrow keys and touch.
-- **Keep the science honest.** If a pal, drug or zone size is simplified or made up for the game, say so in a comment.
+- **Keep the science honest.** If a gal, drug or zone size is simplified or made up for the game, say so in a comment.
 
 ## License
 

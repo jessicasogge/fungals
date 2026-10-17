@@ -13,15 +13,15 @@ import { track } from './track.js';
 
 // `level` is which level this is (1 to 7) and `target` how many cells it
 // takes to beat it.
-export function playGame(palEl, species, nutrients, disks, { level = 1, target = LEVELS[0].target } = {}) {
+export function playGame(galEl, species, nutrients, disks, { level = 1, target = LEVELS[0].target } = {}) {
   const agar = document.querySelector('.agar');
   const counter = document.querySelector('.cell-count');
   const dishRadius = () => agar.clientWidth / 2;
 
-  // The player's pal leads the colony.
-  const playerMover = document.querySelector('.pal-mover');
+  // The player's gal leads the colony.
+  const playerMover = document.querySelector('.gal-mover');
   playerMover.classList.add('player');
-  const player = yeastGroup({ mover: playerMover, svg: palEl, species, isPlayer: true });
+  const player = yeastGroup({ mover: playerMover, svg: galEl, species, isPlayer: true });
   const colony = makeColony({
     leader: player, nutrients, disks, dishRadius, target, color: species.color,
     onDivide: () => updateCounter(), onPop: () => updateCounter(),
@@ -57,7 +57,7 @@ export function playGame(palEl, species, nutrients, disks, { level = 1, target =
       spreadZones(disks, elapsed);
     }
 
-    // Steer the player's pal.
+    // Steer the player's gal.
     if (!finished) {
       steer(player, keys.direction(), touch.target(), GAME.SPEED * radius * seconds, GAME.ARRIVE * radius,
         touch.drag(), GAME.DRAG_SPEED * radius * seconds);
@@ -102,11 +102,11 @@ export function playGame(palEl, species, nutrients, disks, { level = 1, target =
   }
 
   function showWin() {
-    const name = palEl.dataset.name;
-    const pal = palEl.dataset.pal;
-    track(`level-complete/${pal}/level-${level}`, `${name} finished level ${level}`);
-    if (level === LEVELS.length) track(`won-all-levels/${pal}`, `${name} beat every level`);
-    showFact(pal, species);
+    const name = galEl.dataset.name;
+    const gal = galEl.dataset.gal;
+    track(`level-complete/${gal}/level-${level}`, `${name} finished level ${level}`);
+    if (level === LEVELS.length) track(`won-all-levels/${gal}`, `${name} beat every level`);
+    showFact(gal, species);
     if (level < LEVELS.length) {
       banner.show(`Level ${level} complete!`, `You grew a colony of ${target} cells!`,
         `Play level ${level + 1}`, { next: level + 1 });
@@ -117,13 +117,13 @@ export function playGame(palEl, species, nutrients, disks, { level = 1, target =
   }
 
   function showGameOver(disk) {
-    showFact(palEl.dataset.pal, species);
+    showFact(galEl.dataset.gal, species);
     const { code, name } = disk.antifungal;
-    track(`game-over/${palEl.dataset.pal}/level-${level}/${code}`,
-      `${palEl.dataset.name} hit ${name} on level ${level}`);
+    track(`game-over/${galEl.dataset.gal}/level-${level}/${code}`,
+      `${galEl.dataset.name} hit ${name} on level ${level}`);
     banner.show(
       'Game over',
-      touchMessage(palEl.dataset.name, disk),
+      touchMessage(galEl.dataset.name, disk),
       `Try level ${level} again`,
       { startOver: level > 1 }, // on level 1 they'd do the same thing
     );

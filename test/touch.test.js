@@ -34,79 +34,79 @@ describe('stepToward', () => {
 });
 
 describe('steer', () => {
-  const pal = (x = 0, y = 0, facing = 1) => ({ x, y, facing });
+  const gal = (x = 0, y = 0, facing = 1) => ({ x, y, facing });
 
   it('moves with the arrow keys at full speed, the same on diagonals', () => {
-    const p = pal();
+    const p = gal();
     steer(p, [1, 1], null, 10);
     expect(Math.hypot(p.x, p.y)).toBeCloseTo(10);
     expect(p.x).toBeCloseTo(p.y);
   });
 
   it('turns to face the way the arrow keys point', () => {
-    const p = pal();
+    const p = gal();
     steer(p, [-1, 0], null, 5);
     expect([p.x, p.facing]).toEqual([-5, -1]);
   });
 
   it('swims toward the finger when no arrow key is held', () => {
-    const p = pal();
+    const p = gal();
     steer(p, [0, 0], [30, 40], 5);
     expect(p.x).toBeCloseTo(3);
     expect(p.y).toBeCloseTo(4);
   });
 
   it('lets the arrow keys win over a finger', () => {
-    const p = pal();
+    const p = gal();
     steer(p, [0, 1], [100, 0], 5);
     expect([p.x, p.y]).toEqual([0, 5]);
   });
 
   it("doesn't flip her around while swimming nearly straight up or down", () => {
-    const p = pal(0, 0, 1);
+    const p = gal(0, 0, 1);
     steer(p, [0, 0], [-1, 50], 5);
     expect(p.facing).toBe(1);
   });
 
   it('stays put with no keys and no finger', () => {
-    const p = pal(7, 8);
+    const p = gal(7, 8);
     steer(p, [0, 0], null, 5);
     expect([p.x, p.y]).toEqual([7, 8]);
   });
 
   describe('dragging', () => {
     it('moves her the same way the finger moved', () => {
-      const p = pal(10, 10);
+      const p = gal(10, 10);
       steer(p, [0, 0], null, 5, 1, [6, -8], 20);
       expect([p.x, p.y]).toEqual([16, 2]);
     });
 
     it('keeps up with a finger faster than her normal speed', () => {
-      const p = pal();
+      const p = gal();
       steer(p, [0, 0], null, 5, 1, [15, 0], 20);
       expect(p.x).toBe(15);
     });
 
     it('moves her less than a really fast swipe, at her top drag speed', () => {
-      const p = pal();
+      const p = gal();
       steer(p, [0, 0], null, 5, 1, [0, 100], 20);
       expect([p.x, p.y]).toEqual([0, 20]);
     });
 
     it('turns her to face the way she is dragged', () => {
-      const p = pal(0, 0, 1);
+      const p = gal(0, 0, 1);
       steer(p, [0, 0], null, 5, 1, [-10, 2], 20);
       expect(p.facing).toBe(-1);
     });
 
     it('stays put while a dragging finger is held still', () => {
-      const p = pal(7, 8);
+      const p = gal(7, 8);
       steer(p, [0, 0], null, 5, 1, [0, 0], 20);
       expect([p.x, p.y]).toEqual([7, 8]);
     });
 
     it('lets the arrow keys win over dragging', () => {
-      const p = pal();
+      const p = gal();
       steer(p, [0, 1], null, 5, 1, [15, 0], 20);
       expect([p.x, p.y]).toEqual([0, 5]);
     });

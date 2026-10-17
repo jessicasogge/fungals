@@ -1,10 +1,10 @@
-// Every pal's drawing, in one place. The home page, the pal picker and the
-// petri dish all draw the pals from here, so a change to how a pal looks
+// Every gal's drawing, in one place. The home page, the gal picker and the
+// petri dish all draw the gals from here, so a change to how a gal looks
 // only has to be made once.
 //
 // The home page shows them in its own order (HOME below), and the picker
 // shuffles them.
-// Each pal has:
+// Each gal has:
 //   id      her key, matching SPECIES in config.js and ?pal= in addresses
 //   name    what she's called
 //   looks   what a screen reader says after her name
@@ -17,14 +17,14 @@
 //   dishArt (optional) a different drawing for the dish, framed by
 //           frames.dish: a mold plays as one of her spores
 //
-// To add a pal: add her to the end of this list and to SPECIES in config.js,
+// To add a gal: add her to the end of this list and to SPECIES in config.js,
 // and give her tile a color in styles.css (.<id> next to .sasha and the
 // others).
 
 const SVG = 'http://www.w3.org/2000/svg';
 
 // A cute face: eyes with a glint, rosy cheeks and a smile, centered on
-// (x, y), in the pal's `dark` color.
+// (x, y), in the gal's `dark` color.
 const face = (x, y, dark) => `
       <g class="face">
         <circle cx="${x - 11}" cy="${y}" r="6" fill="${dark}" />
@@ -36,7 +36,7 @@ const face = (x, y, dark) => `
         <path d="M${x - 6} ${y + 12} Q${x} ${y + 18} ${x + 6} ${y + 12}" stroke="${dark}" stroke-width="3" fill="none" stroke-linecap="round" />
       </g>`;
 
-export const PALS = [
+export const GALS = [
   // Sasha: Saccharomyces cerevisiae, a wheat-colored oval yeast cell with a
   // bud growing out of her side and two bud scars from daughters she's had
   {
@@ -388,23 +388,23 @@ export const PALS = [
 ];
 
 const HOME = ['penelope', 'sasha', 'miri', 'candi', 'fumi', 'olive', 'yara'];
-export const HOME_PALS = HOME.map((id) => PALS.find((pal) => pal.id === id));
+export const HOME_GALS = HOME.map((id) => GALS.find((gal) => gal.id === id));
 
-// How many pals fit on one page of the picker: four across, two down.
+// How many gals fit on one page of the picker: four across, two down.
 export const PAGE_SIZE = 8;
 
-// `pals` split into the picker's pages, in order, PAGE_SIZE to a page (the
+// `gals` split into the picker's pages, in order, PAGE_SIZE to a page (the
 // last page has whoever is left over).
-export function pickerPages(pals = PALS, size = PAGE_SIZE) {
+export function pickerPages(gals = GALS, size = PAGE_SIZE) {
   const pages = [];
-  for (let i = 0; i < pals.length; i += size) pages.push(pals.slice(i, i + size));
+  for (let i = 0; i < gals.length; i += size) pages.push(gals.slice(i, i + size));
   return pages;
 }
 
-// A copy of `pals` in a random order (a Fisher-Yates shuffle, so every order
-// is equally likely). The picker uses it so no pal is always first.
-export function inRandomOrder(pals, random = Math.random) {
-  const order = [...pals];
+// A copy of `gals` in a random order (a Fisher-Yates shuffle, so every order
+// is equally likely). The picker uses it so no gal is always first.
+export function inRandomOrder(gals, random = Math.random) {
+  const order = [...gals];
   for (let i = order.length - 1; i > 0; i--) {
     const j = Math.floor(random() * (i + 1));
     [order[i], order[j]] = [order[j], order[i]];
@@ -412,15 +412,15 @@ export function inRandomOrder(pals, random = Math.random) {
   return order;
 }
 
-export function palById(id) {
-  return PALS.find((pal) => pal.id === id);
+export function galById(id) {
+  return GALS.find((gal) => gal.id === id);
 }
 
 // Her drawing as an <svg>, framed for `page` ('home', 'picker' or 'dish').
-function drawing(pal, page) {
+function drawing(gal, page) {
   const svg = document.createElementNS(SVG, 'svg');
-  svg.setAttribute('viewBox', pal.frames[page]);
-  svg.innerHTML = page === 'dish' && pal.dishArt ? pal.dishArt : pal.art;
+  svg.setAttribute('viewBox', gal.frames[page]);
+  svg.innerHTML = page === 'dish' && gal.dishArt ? gal.dishArt : gal.art;
   // Anything drawn with SVG's own <animate> moves on the home page and in
   // the dish, but stays still on the picker, and for anyone who has asked for
   // less motion (CSS can't pause <animate>).
@@ -431,34 +431,34 @@ function drawing(pal, page) {
   return svg;
 }
 
-// For the home page's row of pals.
-export function homePal(pal) {
-  const svg = drawing(pal, 'home');
-  svg.setAttribute('class', `pal ${pal.motion}`);
+// For the home page's row of gals.
+export function homeGal(gal) {
+  const svg = drawing(gal, 'home');
+  svg.setAttribute('class', `gal ${gal.motion}`);
   svg.setAttribute('role', 'img');
-  svg.setAttribute('aria-label', `${pal.name}, ${pal.looks}`);
+  svg.setAttribute('aria-label', `${gal.name}, ${gal.looks}`);
   return svg;
 }
 
 // Her picture on a colored tile, for the picker. The name
 // next to it says who she is, so the picture is hidden from screen readers.
-export function palTile(pal) {
+export function galTile(gal) {
   const tile = document.createElement('div');
-  tile.className = `pal-icon ${pal.id}`;
-  const svg = drawing(pal, 'picker');
+  tile.className = `gal-icon ${gal.id}`;
+  const svg = drawing(gal, 'picker');
   svg.setAttribute('aria-hidden', 'true');
   tile.append(svg);
   return tile;
 }
 
 // For the petri dish, hidden until the game picks her (main.js).
-export function dishPal(pal) {
-  const svg = drawing(pal, 'dish');
-  svg.setAttribute('class', `dish-pal ${pal.motion}`);
-  svg.dataset.pal = pal.id;
-  svg.dataset.name = pal.name;
+export function dishGal(gal) {
+  const svg = drawing(gal, 'dish');
+  svg.setAttribute('class', `dish-gal ${gal.motion}`);
+  svg.dataset.gal = gal.id;
+  svg.dataset.name = gal.name;
   svg.setAttribute('role', 'img');
-  svg.setAttribute('aria-label', `${pal.name}, ${pal.looks}`);
+  svg.setAttribute('aria-label', `${gal.name}, ${gal.looks}`);
   svg.setAttribute('hidden', '');
   return svg;
 }

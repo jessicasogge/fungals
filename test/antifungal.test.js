@@ -13,7 +13,7 @@ describe('diskSpot', () => {
     }
   });
 
-  it('is never close enough to the middle to touch a pal at the start', () => {
+  it('is never close enough to the middle to touch a gal at the start', () => {
     expect(GAME.DISK_MIN_DISTANCE - GAME.DISK_RADIUS).toBeGreaterThan(0.25);
   });
 
@@ -38,7 +38,7 @@ describe('diskSpots', () => {
         for (let b = a + 1; b < disks.length; b++) {
           const gap = Math.hypot(disks[a].fx - disks[b].fx, disks[a].fy - disks[b].fy);
           expect(gap).toBeGreaterThanOrEqual(GAME.DISK_MIN_GAP);
-          // The open space between their edges is wider than a pal (about 0.12).
+          // The open space between their edges is wider than a gal (about 0.12).
           expect(gap - 2 * GAME.DISK_RADIUS).toBeGreaterThan(0.2);
         }
       }
@@ -60,12 +60,12 @@ describe('touchesDisk', () => {
   const dishRadius = 200;
   const disk = { fx: 0.5, fy: 0, r: 0.1 }; // center at (100, 0), radius 20px
 
-  it('detects a pal overlapping the disk', () => {
+  it('detects a gal overlapping the disk', () => {
     expect(touchesDisk(disk, [[100, 0, 5]], dishRadius)).toBe(true);
     expect(touchesDisk(disk, [[125, 0, 10]], dishRadius)).toBe(true); // edges overlap
   });
 
-  it('ignores a pal that is close but not touching', () => {
+  it('ignores a gal that is close but not touching', () => {
     expect(touchesDisk(disk, [[131, 0, 10]], dishRadius)).toBe(false);
     expect(touchesDisk(disk, [[0, 0, 30]], dishRadius)).toBe(false);
   });
@@ -126,20 +126,20 @@ describe('zone of inhibition', () => {
     expect(diskSpots([zoneWidth(undefined), zoneWidth(undefined)])).toHaveLength(2);
   });
 
-  it('gives every antifungal a zone in a believable range, different across each pal\'s drugs', () => {
-    for (const [pal, species] of Object.entries(SPECIES)) {
+  it('gives every antifungal a zone in a believable range, different across each gal\'s drugs', () => {
+    for (const [gal, species] of Object.entries(SPECIES)) {
       for (const { code, zone } of species.antifungals) {
         if (zone === null) continue; // a drug she's resistant to: no zone (checked below)
-        expect(zone, `${pal} ${code}`).toBeGreaterThanOrEqual(12);
-        expect(zone, `${pal} ${code}`).toBeLessThanOrEqual(40);
+        expect(zone, `${gal} ${code}`).toBeGreaterThanOrEqual(12);
+        expect(zone, `${gal} ${code}`).toBeLessThanOrEqual(40);
       }
       const sizes = species.antifungals.map((a) => a.zone).filter((zone) => zone !== null);
-      expect(Math.max(...sizes) - Math.min(...sizes), pal).toBeGreaterThanOrEqual(10);
+      expect(Math.max(...sizes) - Math.min(...sizes), gal).toBeGreaterThanOrEqual(10);
     }
   });
 
-  it('gives the same drug different zones on different pals', () => {
-    // Fluconazole, voriconazole, nystatin and caspofungin show up for both pals.
+  it('gives the same drug different zones on different gals', () => {
+    // Fluconazole, voriconazole, nystatin and caspofungin show up for both gals.
     const byDrug = {};
     for (const species of Object.values(SPECIES)) {
       for (const { code, zone } of species.antifungals) (byDrug[code] ??= new Set()).add(zone);
@@ -149,14 +149,14 @@ describe('zone of inhibition', () => {
     }
   });
 
-  it('leaves room to swim between the two biggest zones, wider than a pal is tall', () => {
+  it('leaves room to swim between the two biggest zones, wider than a gal is tall', () => {
     const [a, b] = diskSpots([GAME.ZONE_MAX_WIDTH, GAME.ZONE_MAX_WIDTH]);
     const between = Math.hypot(a.fx - b.fx, a.fy - b.fy) - 2 * (GAME.DISK_RADIUS + GAME.ZONE_MAX_WIDTH);
     expect(between).toBeGreaterThanOrEqual(GAME.SWIM_ROOM - 1e-9);
     expect(GAME.SWIM_ROOM).toBeGreaterThan(0.1);
   });
 
-  it('always fits seven disks with each pal\'s zones, with swimming room between every pair', () => {
+  it('always fits seven disks with each gal\'s zones, with swimming room between every pair', () => {
     for (const species of Object.values(SPECIES)) {
       const zones = antifungalsFor(species.antifungals, 7).map((a) => zoneWidth(a.zone));
       for (let dish = 0; dish < 30; dish++) {
@@ -175,8 +175,8 @@ describe('zone of inhibition', () => {
     }
   });
 
-  it('never reaches the middle, where the pal starts', () => {
-    // A pal reaches about 0.1 of the dish radius from her center.
+  it('never reaches the middle, where the gal starts', () => {
+    // A gal reaches about 0.1 of the dish radius from her center.
     expect(GAME.DISK_MIN_DISTANCE - GAME.DISK_RADIUS - GAME.ZONE_MAX_WIDTH).toBeGreaterThan(0.2);
   });
 

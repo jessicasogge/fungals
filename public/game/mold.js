@@ -98,7 +98,7 @@ export function moldColonies({ layer, disks = [], nutrients, colors }) {
   return api;
 }
 
-// The player's spore: one little round cell, steered like any pal.
+// The player's spore: one little round cell, steered like any gal.
 export function sporeGroup({ mover, agar }) {
   const spore = {
     mover,
@@ -122,12 +122,12 @@ const colonyCount = (n) => `${n} ${n === 1 ? 'colony' : 'colonies'}`;
 
 // The mold game loop: like the yeast game (game.js), but you plant colonies
 // instead of budding, and `target` is how many colonies win the level.
-export function playMold(palEl, species, nutrients, disks, { level = 1, target = LEVELS[0].colonies } = {}) {
+export function playMold(galEl, species, nutrients, disks, { level = 1, target = LEVELS[0].colonies } = {}) {
   const agar = document.querySelector('.agar');
   const counter = document.querySelector('.cell-count');
   const dishRadius = () => agar.clientWidth / 2;
 
-  const playerMover = document.querySelector('.pal-mover');
+  const playerMover = document.querySelector('.gal-mover');
   playerMover.classList.add('player', 'spore');
   const spore = sporeGroup({ mover: playerMover, agar });
 
@@ -195,11 +195,11 @@ export function playMold(palEl, species, nutrients, disks, { level = 1, target =
   }
 
   function showWin() {
-    const name = palEl.dataset.name;
-    const pal = palEl.dataset.pal;
-    track(`level-complete/${pal}/level-${level}`, `${name} finished level ${level}`);
-    if (level === LEVELS.length) track(`won-all-levels/${pal}`, `${name} beat every level`);
-    showFact(pal, species);
+    const name = galEl.dataset.name;
+    const gal = galEl.dataset.gal;
+    track(`level-complete/${gal}/level-${level}`, `${name} finished level ${level}`);
+    if (level === LEVELS.length) track(`won-all-levels/${gal}`, `${name} beat every level`);
+    showFact(gal, species);
     if (level < LEVELS.length) {
       banner.show(`Level ${level} complete!`, `You grew ${colonyCount(target)}!`,
         `Play level ${level + 1}`, { next: level + 1 });
@@ -210,11 +210,11 @@ export function playMold(palEl, species, nutrients, disks, { level = 1, target =
   }
 
   function showGameOver(disk) {
-    showFact(palEl.dataset.pal, species);
+    showFact(galEl.dataset.gal, species);
     const { code, name } = disk.antifungal;
-    track(`game-over/${palEl.dataset.pal}/level-${level}/${code}`,
-      `${palEl.dataset.name} hit ${name} on level ${level}`);
-    banner.show('Game over', touchMessage(palEl.dataset.name, disk), `Try level ${level} again`,
+    track(`game-over/${galEl.dataset.gal}/level-${level}/${code}`,
+      `${galEl.dataset.name} hit ${name} on level ${level}`);
+    banner.show('Game over', touchMessage(galEl.dataset.name, disk), `Try level ${level} again`,
       { startOver: level > 1 });
   }
 

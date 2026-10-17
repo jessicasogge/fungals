@@ -1,13 +1,13 @@
 # FunGals 🍄
 
-A cute mycology game for the browser, and the sister game to [PetriPals](https://github.com/jessicasogge/petripals). Pick a fungal pal and eat nutrients to grow your colony, but steer clear of the antifungal disks and their zones of inhibition.
+A cute mycology game for the browser, and the sister game to [PetriPals](https://github.com/jessicasogge/petripals). Pick a fungal gal and eat nutrients to grow your colony, but steer clear of the antifungal disks and their zones of inhibition.
 
 **[▶ Play FunGals](https://jessicasogge.github.io/fungals/)**: works on computers, phones and tablets.
 
 ## How to play
 
-1. **Pick a pal.** Each one is a real fungus, drawn as a cartoon.
-2. **Swim around the dish.** Use the arrow keys, or on a touch screen, drag your pal like a trackpad: touch anywhere on the dish and slide your finger, and she moves the same way.
+1. **Pick a gal.** Each one is a real fungus, drawn as a cartoon.
+2. **Swim around the dish.** Use the arrow keys, or on a touch screen, drag your gal like a trackpad: touch anywhere on the dish and slide your finger, and she moves the same way.
 3. **Eat nutrients to bud.** Every cell that eats a nutrient buds: a little daughter cell swells out of her side and grows to full size. Daughters stick together in clusters, the way budding yeast does on a plate. Yara's line up end to end in chains instead.
 4. **Don't touch the antifungals.** Touching a disk, or the clear zone of inhibition around it, ends the game. The zones start small and spread outward over the first few seconds, so grab the nutrients near the disks early.
 
@@ -25,11 +25,11 @@ Penelope (*Penicillium rubens*), the penicillin mold, plays exactly like Fumi: y
 
 ### Who’s That Gal?
 
-Tap **Who’s That Gal?** on the home page for a quiz on the pals' fun facts, like PetriPals' Who’s That Pal?. You get one fact with "this gal" in place of her name: tap the pal it's about. A wrong guess greys that pal out so you can try again, and the right one puts her name back in and shows her species. There's no score, so it's just for learning. The quiz skips facts that fit any yeast (like having a nucleus); the ones it uses are listed in `public/game/quiz-facts.js`.
+Tap **Who’s That Gal?** on the home page for a quiz on the gals' fun facts, like PetriPals' Who’s That Pal?. You get one fact with "this gal" in place of her name: tap the gal it's about. A wrong guess greys that gal out so you can try again, and the right one puts her name back in and shows her species. There's no score, so it's just for learning. The quiz skips facts that fit any yeast (like having a nucleus); the ones it uses are listed in `public/game/quiz-facts.js`.
 
-## The pals
+## The gals
 
-| Pal | Species | Looks |
+| Gal | Species | Looks |
 |---|---|---|
 | **Sasha** | *Saccharomyces cerevisiae* | Wheat-colored oval yeast with a bud and two bud scars |
 | **Candi** | *Candida albicans* | Sky-blue oval yeast with a bud and two bud scars |
@@ -85,11 +85,11 @@ FunGals started as a copy of the PetriPals engine (steering, nutrients, disks an
 | Path | What's there |
 |---|---|
 | `public/index.html` | Home page |
-| `public/pal-picker.html` | Pick a pal |
+| `public/pal-picker.html` | Pick a gal |
 | `public/petri-dish.html` | The game |
-| `public/whos-that-gal.html` | Who’s That Gal?, a quiz: which pal is this fact about? |
+| `public/whos-that-gal.html` | Who’s That Gal?, a quiz: which gal is this fact about? |
 | `public/game/` | Game code: the game loop (`game.js`), a colony eating and budding (`colony.js`), the mold game, where a spore starts colonies that spread (`mold.js`), the end-of-level pop-up both games share (`banner.js`), how yeast cells bud and cluster (`yeast.js`, with the cluster math in `attach.js`), steering (`keyboard.js`, `touch.js`), antifungal disks and zones (`antifungal.js`), nutrients, physics, settings and fun facts (`config.js`), the fun-fact pop-up (`facts.js`, with italics for scientific names from `italics.js`) the win spores (`spores.js`), and Who’s That Gal? (`whos-that-gal.js`, with the facts' "this gal" swap in `guess.js` and the facts it asks about in `quiz-facts.js`) |
-| `public/game/pals.js` | Every pal's name and drawing, in one place. To add a pal, see the notes at the top. |
+| `public/game/gals.js` | Every gal's name and drawing, in one place. To add a gal, see the notes at the top. |
 | `test/` | Tests |
 | `src/index.ts` | Small Express server for local development |
 

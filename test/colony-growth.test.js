@@ -3,7 +3,7 @@
 // place in the dish.
 //
 // The eating and dividing tests use stand-in cells, so each test can say
-// exactly what was eaten and when. The moving tests use real pals in jsdom,
+// exactly what was eaten and when. The moving tests use real gals in jsdom,
 // a simulated browser page.
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { makeColony, moveGroups, showPop } from '../public/game/colony.js';
@@ -46,7 +46,7 @@ function colonyOf(leader, nutrients, extra = {}) {
   return makeColony({ leader, nutrients, dishRadius: () => RADIUS, target: 64, ...extra });
 }
 
-describe('your pal dividing', () => {
+describe('your gal dividing', () => {
   it("eating a nutrient doesn't divide her by itself; the game says when", () => {
     const leader = cell();
     const colony = colonyOf(leader, food(1));
@@ -87,7 +87,7 @@ describe('your pal dividing', () => {
 
   it('can eat with any part of her body', () => {
     const leader = cell({ x: 40, y: -20 });
-    // A pal whose outline is three circles, like a cell with a bud.
+    // A gal whose outline is three circles, like a cell with a bud.
     leader.body = () => [[20, -20, 6], [40, -20, 6], [60, -20, 6]];
     const nutrients = food(0);
     colonyOf(leader, nutrients).eat(0.016, RADIUS);
@@ -100,7 +100,7 @@ describe('your pal dividing', () => {
   });
 });
 
-describe('your pal growing a bud first', () => {
+describe('your gal growing a bud first', () => {
   // A stand-in yeast leader whose bud is ready when the test says so.
   function budder() {
     const leader = cell();
@@ -147,7 +147,7 @@ describe('a division', () => {
     expect(onDivide).toHaveBeenCalledWith(daughter);
   });
 
-  it('tells the cell about the other groups (not your pal), the dish and the disks', () => {
+  it('tells the cell about the other groups (not your gal), the dish and the disks', () => {
     const leader = cell();
     const disks = [{ fx: 0.5, fy: 0, r: 0.08, zone: 0.1 }];
     const colony = colonyOf(leader, food(2), { disks });
@@ -281,13 +281,13 @@ describe('moving the groups in the dish', () => {
     expect(insideRim(daughter)).toBe(true);
   });
 
-  it('keeps your pal inside the dish', () => {
+  it('keeps your gal inside the dish', () => {
     const leader = yeast({ x: 500, isPlayer: true });
     moveGroups([leader], { agar, radius: RADIUS, seconds: 0.016 });
     expect(Math.hypot(leader.x, leader.y) + leader.reach()).toBeCloseTo(RADIUS);
   });
 
-  it("doesn't let your pal drift: she only moves when you steer", () => {
+  it("doesn't let your gal drift: she only moves when you steer", () => {
     const leader = yeast({ x: 10, isPlayer: true });
     leader.vx = 300;
     moveGroups([leader], { agar, radius: RADIUS, seconds: 0.1 });

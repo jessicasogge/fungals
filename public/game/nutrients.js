@@ -1,4 +1,4 @@
-// Nutrient flecks: scattered over the agar, picked up when the pal or any of
+// Nutrient flecks: scattered over the agar, picked up when the gal or any of
 // her offspring touches one, and replaced somewhere else a few seconds later.
 // `avoid` lists areas to keep clear, like the antifungal disks, each as
 // { fx, fy, r } in fractions of the dish radius. `count` is how many flecks
@@ -30,10 +30,10 @@ export function scatterNutrients({ avoid = [], count = 10 } = {}) {
         const distance = Math.sqrt(Math.random()) * 0.82;
         const fx = Math.cos(angle) * distance;
         const fy = Math.sin(angle) * distance;
-        const clearOfPal = !strict || Math.hypot(fx - avoidX, fy - avoidY) > 0.3;
+        const clearOfGal = !strict || Math.hypot(fx - avoidX, fy - avoidY) > 0.3;
         const clearOfOthers = flecks.every((f) => Math.hypot(fx - f.fx, fy - f.fy) > (strict ? MIN_GAP : 0.05));
         const clearOfHazards = avoid.every((a) => Math.hypot(fx - a.fx, fy - a.fy) > a.r + gap + zoneOf(a, strict));
-        if (clearOfPal && clearOfOthers && clearOfHazards) return { fx, fy };
+        if (clearOfGal && clearOfOthers && clearOfHazards) return { fx, fy };
       }
     }
     return null;
@@ -62,7 +62,7 @@ export function scatterNutrients({ avoid = [], count = 10 } = {}) {
     flecks.push({ el, ...spot, r: small ? 0.015 : 0.022 });
   }
 
-  // Pals start in the middle, so the first batch avoids the center.
+  // Gals start in the middle, so the first batch avoids the center.
   for (let i = 0; i < COUNT; i++) addFleck(0, 0);
 
   return {

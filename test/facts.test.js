@@ -4,19 +4,19 @@ import { SPECIES } from '../public/game/config.js';
 import { hideFact, pickFact, showFact, writeFact } from '../public/game/facts.js';
 import { plainText } from '../public/game/italics.js';
 
-describe('every pal\'s facts', () => {
-  it.each(Object.keys(SPECIES))('%s has at least 10 short, different facts', (pal) => {
-    const { facts } = SPECIES[pal];
+describe('every gal\'s facts', () => {
+  it.each(Object.keys(SPECIES))('%s has at least 10 short, different facts', (gal) => {
+    const { facts } = SPECIES[gal];
     expect(facts.length).toBeGreaterThanOrEqual(10);
     expect(new Set(facts).size).toBe(facts.length);
-    const name = pal[0].toUpperCase() + pal.slice(1);
+    const name = gal[0].toUpperCase() + gal.slice(1);
     for (const raw of facts) {
       // Italics markers come in pairs, around at least one word.
       expect(raw.split('*').length % 2, raw).toBe(1);
       expect(raw, raw).not.toMatch(/\*\s*\*/);
       const fact = plainText(raw); // as it reads on screen
       expect(fact.length, fact).toBeLessThanOrEqual(90); // fits the pop-up
-      // Says whose fact it is, so it's clear in a race against another pal.
+      // Says whose fact it is, so it's clear in a race against another gal.
       expect(fact, fact).toContain(name);
       expect(fact, fact).toMatch(/^["A-Z0-9].*[.!"]$/); // a full sentence
       // Commas and other punctuation instead of dashes (hyphenated words,
@@ -27,13 +27,13 @@ describe('every pal\'s facts', () => {
 });
 
 describe('scientific names of other species', () => {
-  // Every genus our pals' facts mention by its full name.
+  // Every genus our gals' facts mention by its full name.
   const GENERA = /\b(Candida|Saccharomyces|Aspergillus|Penicillium) [a-z]+/g;
 
   it('are in italics wherever a fact names one', () => {
-    for (const [pal, { facts }] of Object.entries(SPECIES)) {
+    for (const [gal, { facts }] of Object.entries(SPECIES)) {
       for (const fact of facts) {
-        for (const [name] of fact.matchAll(GENERA)) expect(fact, `${pal}: ${fact}`).toContain(`*${name}*`);
+        for (const [name] of fact.matchAll(GENERA)) expect(fact, `${gal}: ${fact}`).toContain(`*${name}*`);
       }
     }
   });
@@ -99,7 +99,7 @@ describe('the pop-up line', () => {
   });
   const line = () => document.querySelector('.fun-fact');
 
-  it('shows one of the pal\'s facts', () => {
+  it('shows one of the gal\'s facts', () => {
     showFact('sasha', SPECIES.sasha);
     expect(line().hidden).toBe(false);
     expect(SPECIES.sasha.facts).toContain(line().querySelector('.fun-fact-text').textContent);
@@ -143,7 +143,7 @@ describe('the pop-up line', () => {
     expect(() => hideFact()).not.toThrow();
   });
 
-  it('stays hidden for a pal with no facts, and hides on a game over', () => {
+  it('stays hidden for a gal with no facts, and hides on a game over', () => {
     showFact('nobody', {});
     expect(line().hidden).toBe(true);
     showFact('sasha', SPECIES.sasha);

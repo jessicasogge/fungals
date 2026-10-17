@@ -149,7 +149,7 @@ export function yeastGroup({ mover, svg, species, isPlayer }) {
   }
 
   // The player's swelling bud, drawn behind her so her outline crosses it,
-  // like the pals' pictures.
+  // like the gals' pictures.
   function budMarkup() {
     if (!group.budding) return '';
     const [bx, by] = budCenter();
@@ -202,7 +202,7 @@ export function yeastGroup({ mover, svg, species, isPlayer }) {
       if (changed) draw();
     },
     // Start a bud swelling on the player's side (if one isn't already
-    // growing): from the top for a pal who always buds from the same end
+    // growing): from the top for a gal who always buds from the same end
     // (Olive), from one end or the other for a rod (Yara), or else pointing
     // a random way.
     startBud() {

@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 // main.js starts the petri dish page from its address, e.g.
 // petri-dish.html?pal=sasha&level=2. These tests load the real page into
-// jsdom, a simulated browser page, and check it picks the right pal and
+// jsdom, a simulated browser page, and check it picks the right gal and
 // level, and copes with addresses that are broken or made up.
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
@@ -37,16 +37,16 @@ afterEach(() => {
   vi.clearAllMocks();
 });
 
-describe('picking the pal', () => {
-  it('shows the chosen pal and hides the others', async () => {
+describe('picking the gal', () => {
+  it('shows the chosen gal and hides the others', async () => {
     await open('?pal=candi');
-    const shown = [...document.querySelectorAll('.dish-pal:not([hidden])')];
-    expect(shown.map((el) => el.dataset.pal)).toEqual(['candi']);
+    const shown = [...document.querySelectorAll('.dish-gal:not([hidden])')];
+    expect(shown.map((el) => el.dataset.gal)).toEqual(['candi']);
   });
 
   it('puts her name, in her color, and species above the dish', async () => {
     await open('?pal=candi');
-    const name = document.querySelector('.pal-name');
+    const name = document.querySelector('.gal-name');
     expect(name.textContent).toBe('Candi');
     // jsdom reports colors as rgb(), so compare against the same color set the same way.
     const expected = document.createElement('span');
@@ -55,18 +55,18 @@ describe('picking the pal', () => {
     expect(document.querySelector('.species-name').textContent).toBe(SPECIES.candi.scientific);
   });
 
-  it('names the pal and level in the tab title', async () => {
+  it('names the gal and level in the tab title', async () => {
     await open('?pal=sasha&level=3');
     expect(document.title).toBe('FunGals | Sasha | Level 3');
   });
 
-  const YEASTS = Object.keys(SPECIES).filter((pal) => SPECIES[pal].kind === 'yeast');
-  it.each(YEASTS)('starts the game for %s with her own species settings', async (pal) => {
-    const playGame = await open(`?pal=${pal}`);
+  const YEASTS = Object.keys(SPECIES).filter((gal) => SPECIES[gal].kind === 'yeast');
+  it.each(YEASTS)('starts the game for %s with her own species settings', async (gal) => {
+    const playGame = await open(`?pal=${gal}`);
     expect(playGame).toHaveBeenCalledTimes(1);
-    const [palEl, species] = playGame.mock.calls[0];
-    expect(palEl.dataset.pal).toBe(pal);
-    expect(species).toEqual(SPECIES[pal]);
+    const [galEl, species] = playGame.mock.calls[0];
+    expect(galEl.dataset.gal).toBe(gal);
+    expect(species).toEqual(SPECIES[gal]);
   });
 });
 
@@ -82,8 +82,8 @@ describe('a mold', () => {
     const { playGame } = await import('../public/game/game.js');
     expect(playGame).not.toHaveBeenCalled();
     expect(playMold).toHaveBeenCalledTimes(1);
-    const [palEl, species] = playMold.mock.calls[0];
-    expect(palEl.dataset.pal).toBe('fumi');
+    const [galEl, species] = playMold.mock.calls[0];
+    expect(galEl.dataset.gal).toBe('fumi');
     expect(species).toEqual(SPECIES.fumi);
   });
 
@@ -153,17 +153,17 @@ describe('picking the level', () => {
 
 describe('a broken address', () => {
   it.each([
-    ['no pal', ''],
-    ['an unknown pal', '?pal=bogus'],
-    ['a pal with the wrong capitals', '?pal=Sasha'],
-  ])('with %s, sends them back to pick a pal instead of starting', async (_, search) => {
+    ['no gal', ''],
+    ['an unknown gal', '?pal=bogus'],
+    ['a gal with the wrong capitals', '?pal=Sasha'],
+  ])('with %s, sends them back to pick a gal instead of starting', async (_, search) => {
     const playGame = await open(search);
     expect(location.replace).toHaveBeenCalledWith('./pal-picker.html');
     expect(playGame).not.toHaveBeenCalled();
-    expect(document.querySelectorAll('.dish-pal:not([hidden])')).toHaveLength(0);
+    expect(document.querySelectorAll('.dish-gal:not([hidden])')).toHaveLength(0);
   });
 
-  it('with a mangled pal name, still sends them back instead of crashing', async () => {
+  it('with a mangled gal name, still sends them back instead of crashing', async () => {
     // A stray quote or bracket once broke the page before it could redirect.
     const playGame = await open('?pal=sasha"]');
     expect(location.replace).toHaveBeenCalledWith('./pal-picker.html');

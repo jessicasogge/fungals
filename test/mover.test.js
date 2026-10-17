@@ -26,12 +26,12 @@ describe('newMover', () => {
     const svg = makeArt();
     const mover = newMover(svg);
     expect(mover.parentElement).toBe(document.querySelector('.agar'));
-    expect(mover.classList.contains('pal-mover')).toBe(true);
+    expect(mover.classList.contains('gal-mover')).toBe(true);
     expect(mover.classList.contains('offspring')).toBe(true);
     expect(mover.firstChild).toBe(svg);
   });
 
-  it('hides the copy from screen readers, so only the player pal is announced', () => {
+  it('hides the copy from screen readers, so only the player gal is announced', () => {
     const svg = makeArt();
     newMover(svg);
     expect(svg.hasAttribute('role')).toBe(false);
@@ -43,7 +43,7 @@ describe('newMover', () => {
     const a = newMover(makeArt());
     const b = newMover(makeArt());
     expect(a).not.toBe(b);
-    expect(document.querySelectorAll('.agar .pal-mover')).toHaveLength(2);
+    expect(document.querySelectorAll('.agar .gal-mover')).toHaveLength(2);
   });
 });
 

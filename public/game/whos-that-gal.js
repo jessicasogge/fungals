@@ -1,10 +1,10 @@
-// Who’s That Gal?: a quiz to tell which pal a fun fact is about. No score,
+// Who’s That Gal?: a quiz to tell which gal a fun fact is about. No score,
 // just tries until you find her.
 import { SPECIES } from './config.js';
 import { factDeck, fillBlanks, withBlanks } from './guess.js';
 import { shortSpeciesName, speciesName } from './italics.js';
 import { pageReady, watchLoading } from './loading.js';
-import { PALS, palTile } from './pals.js';
+import { GALS, galTile } from './gals.js';
 import { QUIZ_FACTS } from './quiz-facts.js';
 
 // "Growing the colony…" while the next screen loads.
@@ -15,21 +15,21 @@ const status = document.querySelector('.guess-status');
 const next = document.querySelector('.next-fact');
 const ASK = 'Who is this fact about? Tap her!';
 
-// Every pal, in the same order every time, so it's easy to find her again.
-const buttons = PALS.map((pal) => {
+// Every gal, in the same order every time, so it's easy to find her again.
+const buttons = GALS.map((gal) => {
   const button = document.createElement('button');
   button.type = 'button';
   button.className = 'gal-btn guess-btn';
-  button.dataset.pal = pal.id;
+  button.dataset.gal = gal.id;
   const name = document.createElement('span');
-  name.textContent = pal.name;
-  name.style.color = SPECIES[pal.id].color;
+  name.textContent = gal.name;
+  name.style.color = SPECIES[gal.id].color;
   // Her species, shortened (C. albicans), so facts about it can help too.
   const species = document.createElement('span');
   species.className = 'guess-species';
-  species.append(...shortSpeciesName(SPECIES[pal.id].scientific));
-  button.append(palTile(pal), name, species);
-  button.addEventListener('click', () => guess(pal, button));
+  species.append(...shortSpeciesName(SPECIES[gal.id].scientific));
+  button.append(galTile(gal), name, species);
+  button.addEventListener('click', () => guess(gal, button));
   return button;
 });
 document.querySelector('.guess-grid').append(...buttons);
@@ -42,13 +42,13 @@ let current = null;
 function showNext() {
   // Through every fact once, then shuffle them all again and count from 1.
   if (deck.length === 0) {
-    deck = factDeck(PALS, QUIZ_FACTS);
+    deck = factDeck(GALS, QUIZ_FACTS);
     total = deck.length;
   }
   current = deck.pop();
   // How far through the facts you are (Fact 2 of 16), not a score.
   counter.textContent = `Fact ${total - deck.length} of ${total}`;
-  factEl.replaceChildren(...withBlanks(current.fact, current.pal.name));
+  factEl.replaceChildren(...withBlanks(current.fact, current.gal.name));
   status.textContent = ASK;
   next.hidden = true;
   for (const button of buttons) {
@@ -57,16 +57,16 @@ function showNext() {
   }
 }
 
-function guess(pal, button) {
-  if (pal.id !== current.pal.id) {
-    status.textContent = `Not ${pal.name}. Try again!`;
+function guess(gal, button) {
+  if (gal.id !== current.gal.id) {
+    status.textContent = `Not ${gal.name}. Try again!`;
     button.disabled = true;
     return;
   }
-  fillBlanks(factEl, pal.name, SPECIES[pal.id].color);
+  fillBlanks(factEl, gal.name, SPECIES[gal.id].color);
   button.classList.add('right');
   for (const other of buttons) other.disabled = other !== button;
-  status.replaceChildren(`Yes! It's ${pal.name}, `, ...speciesName(SPECIES[pal.id].scientific), '.');
+  status.replaceChildren(`Yes! It's ${gal.name}, `, ...speciesName(SPECIES[gal.id].scientific), '.');
   next.hidden = false;
   next.focus();
 }

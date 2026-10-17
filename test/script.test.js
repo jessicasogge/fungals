@@ -45,7 +45,7 @@ describe('the start button', () => {
     expect(button.disabled).toBe(true);
   });
 
-  it('opens the pal picker a moment after the click', async () => {
+  it('opens the gal picker a moment after the click', async () => {
     vi.useFakeTimers();
     const button = await open();
     button.click();
@@ -84,7 +84,7 @@ describe('coming back with the Back button', () => {
 });
 
 describe('pages without a start button', () => {
-  it("doesn't break the pal picker if it's loaded there", async () => {
+  it("doesn't break the gal picker if it's loaded there", async () => {
     await expect(open('pal-picker.html')).resolves.toBeNull();
   });
 });
