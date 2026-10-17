@@ -18,7 +18,7 @@ export function withItalics(text) {
     .filter((node) => node.textContent !== '');
 }
 
-// A pal's `scientific` name as nodes for the page. Usually all of it is in
+// A gal's `scientific` name as nodes for the page. Usually all of it is in
 // italics (Bacillus cereus). A name that marks its own italics keeps the rest
 // upright, like the serovar in *Salmonella* Typhi.
 export function speciesName(scientific) {

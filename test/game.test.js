@@ -3,7 +3,7 @@
 // antifungal disks, and show the level-complete, win or game-over pop-up.
 // These tests load the real petri dish page into jsdom and stand in for the
 // colony, steering and effects, so each test can say exactly what happens
-// ("the colony reached 4 cells", "the pal touched a disk") and then check
+// ("the colony reached 4 cells", "the gal touched a disk") and then check
 // what the player sees.
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
@@ -59,12 +59,12 @@ function makeFakeColony() {
   };
 }
 
-// Start a level as Sasha (or `pal`) and return the pop-up.
-function start({ level = 1, target = LEVELS[level - 1].target, pal = 'sasha', disks = [] } = {}) {
-  const palEl = document.createElement('div');
-  palEl.dataset.pal = pal;
-  palEl.dataset.name = pal[0].toUpperCase() + pal.slice(1);
-  playGame(palEl, SPECIES[pal], nutrients, disks, { level, target });
+// Start a level as Sasha (or `gal`) and return the pop-up.
+function start({ level = 1, target = LEVELS[level - 1].target, gal = 'sasha', disks = [] } = {}) {
+  const galEl = document.createElement('div');
+  galEl.dataset.gal = gal;
+  galEl.dataset.name = gal[0].toUpperCase() + gal.slice(1);
+  playGame(galEl, SPECIES[gal], nutrients, disks, { level, target });
   return document.querySelector('.win-banner');
 }
 
@@ -87,7 +87,7 @@ beforeEach(() => {
   fake.hit = null;
   nutrients = { stop: vi.fn() };
   sessionStorage.clear();
-  location = { href: 'http://localhost/petri-dish.html?pal=sasha&level=3' };
+  location = { href: 'http://localhost/petri-dish.html?gal=sasha&level=3' };
   vi.stubGlobal('location', location);
   vi.stubGlobal('requestAnimationFrame', (run) => frames.push(run));
   vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] });
@@ -163,7 +163,7 @@ describe('beating a level', () => {
     expect(new URL(location.href).searchParams.get('level')).toBe('1');
   });
 
-  it('"Play level N" goes to the next level and keeps the pal', () => {
+  it('"Play level N" goes to the next level and keeps the gal', () => {
     const banner = start({ level: 3 });
     fake.colony.setCells(16);
     frame();
@@ -171,7 +171,7 @@ describe('beating a level', () => {
     banner.querySelector('.play-again').click();
     const url = new URL(location.href);
     expect(url.searchParams.get('level')).toBe('4');
-    expect(url.searchParams.get('pal')).toBe('sasha');
+    expect(url.searchParams.get('gal')).toBe('sasha');
   });
 
   it('stops play once the target is reached', () => {
@@ -215,7 +215,7 @@ describe('touching a disk', () => {
     const banner = start({ level: 2 });
     fake.hit = disk(0.05);
     frame();
-    expect(document.querySelector('.pal-mover').classList).toContain('killed');
+    expect(document.querySelector('.gal-mover').classList).toContain('killed');
     expect(nutrients.stop).toHaveBeenCalled();
     vi.runAllTimers();
     expect(banner.hidden).toBe(false);
@@ -295,16 +295,16 @@ describe('the fun fact', () => {
     expect(factShown()).toBeNull();
   });
 
-  it("shows one of the pal's facts when she beats a level", () => {
-    start({ level: 1, pal: 'candi' });
+  it("shows one of the gal's facts when she beats a level", () => {
+    start({ level: 1, gal: 'candi' });
     fake.colony.setCells(4);
     frame();
     vi.runAllTimers();
     expect(SPECIES.candi.facts.map(plainText)).toContain(factShown()); // as it reads, without asterisks
   });
 
-  it("shows one of the pal's facts on a game over", () => {
-    start({ level: 2, pal: 'sasha' });
+  it("shows one of the gal's facts on a game over", () => {
+    start({ level: 2, gal: 'sasha' });
     fake.hit = disk(0.05);
     frame();
     vi.runAllTimers();

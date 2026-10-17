@@ -9,7 +9,7 @@
 //
 // The pages a script fills in (the picker and the
 // dish) also start with the card already in their HTML, covering the page
-// (class "arriving"), so you never see them half built: no pal cards yet,
+// (class "arriving"), so you never see them half built: no gal cards yet,
 // both pager buttons showing. Their script calls pageReady() once the page
 // is filled in.
 

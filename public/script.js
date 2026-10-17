@@ -1,12 +1,12 @@
-// The home page: the row of pals, and the "Press Start to Play" button.
-import { HOME_PALS, homePal } from './game/pals.js';
+// The home page: the row of gals, and the "Press Start to Play" button.
+import { HOME_GALS, homeGal } from './game/gals.js';
 import { goTo, watchLoading } from './game/loading.js';
 
 // "Growing the colony…" while the next screen loads.
 watchLoading();
 
 const friends = document.querySelector('.friends');
-friends?.append(...HOME_PALS.map(homePal));
+friends?.append(...HOME_GALS.map(homeGal));
 
 const startButton = document.querySelector('.start-btn');
 
@@ -18,7 +18,7 @@ if (startButton) {
     startButton.disabled = true;
 
     setTimeout(() => {
-      goTo('./pal-picker.html');
+      goTo('./gal-picker.html');
     }, 250);
   });
 

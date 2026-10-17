@@ -1,14 +1,14 @@
 // @vitest-environment jsdom
-// Who’s That Gal? facts: shuffled into a deck, with "this gal" in place of the pal's name.
+// Who’s That Gal? facts: shuffled into a deck, with "this gal" in place of the gal's name.
 import { describe, expect, it } from 'vitest';
 import { factDeck, fillBlanks, withBlanks } from '../public/game/guess.js';
-import { PALS } from '../public/game/pals.js';
+import { GALS } from '../public/game/gals.js';
 import { QUIZ_FACTS } from '../public/game/quiz-facts.js';
 
 describe('the quiz facts', () => {
-  // These are picked to point to one pal each, sometimes reworded from the
+  // These are picked to point to one gal each, sometimes reworded from the
   // pop-up facts in config.js, so they're checked here on their own.
-  it.each(PALS.map((pal) => [pal.name, pal.id]))('%s has quiz facts that each name her', (name, id) => {
+  it.each(GALS.map((gal) => [gal.name, gal.id]))('%s has quiz facts that each name her', (name, id) => {
     const facts = QUIZ_FACTS[id];
     expect(facts.length).toBeGreaterThan(0);
     expect(new Set(facts).size).toBe(facts.length);
@@ -20,20 +20,20 @@ describe('the quiz facts', () => {
     }
   });
 
-  it('covers every pal in the game, and only them', () => {
-    expect(Object.keys(QUIZ_FACTS).sort()).toEqual(PALS.map((pal) => pal.id).sort());
+  it('covers every gal in the game, and only them', () => {
+    expect(Object.keys(QUIZ_FACTS).sort()).toEqual(GALS.map((gal) => gal.id).sort());
   });
 });
 
 describe('the deck of facts', () => {
-  it('has every quiz fact about every pal, once each', () => {
-    const deck = factDeck(PALS, QUIZ_FACTS);
-    const all = PALS.flatMap((pal) => QUIZ_FACTS[pal.id].map((fact) => `${pal.id}: ${fact}`));
-    expect(deck.map(({ pal, fact }) => `${pal.id}: ${fact}`).sort()).toEqual(all.sort());
+  it('has every quiz fact about every gal, once each', () => {
+    const deck = factDeck(GALS, QUIZ_FACTS);
+    const all = GALS.flatMap((gal) => QUIZ_FACTS[gal.id].map((fact) => `${gal.id}: ${fact}`));
+    expect(deck.map(({ gal, fact }) => `${gal.id}: ${fact}`).sort()).toEqual(all.sort());
   });
 
   it('is shuffled', () => {
-    const order = (random) => factDeck(PALS, QUIZ_FACTS, random).map(({ fact }) => fact);
+    const order = (random) => factDeck(GALS, QUIZ_FACTS, random).map(({ fact }) => fact);
     expect(order(() => 0)).not.toEqual(order(() => 0.999));
   });
 });
@@ -81,7 +81,7 @@ describe('swapping her name for "this gal"', () => {
     expect(p.querySelector('i').textContent).toBe('Candida auris');
   });
 
-  it.each(PALS.map((pal) => [pal.name, pal.id]))("never gives %s's name away", (name, id) => {
+  it.each(GALS.map((gal) => [gal.name, gal.id]))("never gives %s's name away", (name, id) => {
     for (const fact of QUIZ_FACTS[id]) {
       const text = shown(fact, name).textContent;
       expect(text, fact).not.toMatch(new RegExp(`\\b${name}\\b`));

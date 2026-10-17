@@ -1,4 +1,4 @@
-// "Did you know?" facts on the end-of-level pop-up, win or lose: a random fact about your pal from
+// "Did you know?" facts on the end-of-level pop-up, win or lose: a random fact about your gal from
 // her `facts` in config.js, never the same one twice in a row.
 //
 // A fact can put words in italics between asterisks, for scientific names
@@ -18,13 +18,13 @@ export function pickFact(facts = [], last = null, random = Math.random) {
   return choices[Math.floor(random() * choices.length)];
 }
 
-// Show a random fact about `pal` (her key, e.g. "sasha") in the pop-up, or
+// Show a random fact about `gal` (her key, e.g. "sasha") in the pop-up, or
 // hide the fact line if `species` has none. Remembers the fact for the rest
 // of the visit, since every level loads a fresh page.
-export function showFact(pal, species) {
+export function showFact(gal, species) {
   const line = document.querySelector('.fun-fact');
   if (!line) return;
-  const key = `fungals-last-fact-${pal}`;
+  const key = `fungals-last-fact-${gal}`;
   let last = null;
   try {
     last = sessionStorage.getItem(key);

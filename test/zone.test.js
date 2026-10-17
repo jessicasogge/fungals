@@ -63,10 +63,10 @@ describe('touching the zone', () => {
   });
 });
 
-describe('when the pal dies', () => {
+describe('when the gal dies', () => {
   // Read the stylesheet from the project folder (jsdom changes import.meta.url).
   const css = readFileSync(resolve(process.cwd(), 'public/styles.css'), 'utf8');
-  const rule = css.match(/\.pal-mover\.killed \.dish-pal \{([^}]*)\}/)[1];
+  const rule = css.match(/\.gal-mover\.killed \.dish-gal \{([^}]*)\}/)[1];
 
   it('freezes her mid-wiggle, so she stays exactly where she touched the zone', () => {
     // Turning the animation off instead snaps her back to her resting pose,
@@ -95,7 +95,7 @@ describe('spreading zones', () => {
     expect(zoneAt(0.06, -5)).toBeCloseTo(0.06 * GAME.ZONE_START);
   });
 
-  it('keeps no zone for a drug the pal is resistant to', () => {
+  it('keeps no zone for a drug the gal is resistant to', () => {
     expect(zoneAt(0, 0)).toBe(0);
     expect(zoneAt(0, GAME.ZONE_SPREAD_SECONDS)).toBe(0);
   });
@@ -116,7 +116,7 @@ describe('spreading zones', () => {
     expect(parseFloat(disk.zoneEl.style.width)).toBeGreaterThan(startWidth);
   });
 
-  it('lets the pal swim closer at first than once the zone has spread', () => {
+  it('lets the gal swim closer at first than once the zone has spread', () => {
     const disk = { fx: 0, fy: 0, r: 0.1, fullZone: 0.06, zone: 0.06 };
     const dishRadius = 100;
     // A cell just outside where the zone starts, inside where it ends up.

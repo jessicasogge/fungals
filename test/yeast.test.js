@@ -361,7 +361,7 @@ describe('a daughter cell', () => {
   });
 });
 
-describe('a pal who buds from one end (Olive)', () => {
+describe('a gal who buds from one end (Olive)', () => {
   it('always grows her bud from the top', () => {
     for (let i = 0; i < 5; i++) {
       const player = makeGroup('olive', { isPlayer: true });

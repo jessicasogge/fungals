@@ -116,7 +116,7 @@ export function watchInputMode(root = document.documentElement, win = window) {
   });
 }
 
-// Move `group` (the player's pal) for one frame: the arrow keys win if any
+// Move `group` (the player's gal) for one frame: the arrow keys win if any
 // are held ([dx, dy] from keyboard.js); otherwise a dragging finger moves her
 // the same way it moved (`dragged`, [dx, dy] px from touchSteering's drag(),
 // at most `dragStep`: a really fast swipe moves her less than the finger);

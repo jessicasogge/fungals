@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 // Offspring popping in an antifungal zone (popInZones in colony.js). These
-// use real pals in jsdom, a simulated browser page.
+// use real gals in jsdom, a simulated browser page.
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { yeastGroup } from '../public/game/yeast.js';
 import { makeColony } from '../public/game/colony.js';
@@ -28,10 +28,10 @@ afterEach(() => {
   else delete HTMLElement.prototype.offsetWidth;
 });
 
-// A pal group in the dish at (x, y) px from the center.
+// A gal group in the dish at (x, y) px from the center.
 function makeGroup(name, { isPlayer = false, x = 0, y = 0 } = {}) {
   const mover = document.createElement('div');
-  mover.className = 'pal-mover';
+  mover.className = 'gal-mover';
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   mover.appendChild(svg);
   document.querySelector('.agar').appendChild(mover);
@@ -74,7 +74,7 @@ describe('popping in an antifungal zone', () => {
     expect(onPop).toHaveBeenCalledWith(1);
   });
 
-  it("shows one pop in the pal's color where the cell was", () => {
+  it("shows one pop in the gal's color where the cell was", () => {
     const cell = makeGroup('sasha', { x: 40 });
     const leader = makeGroup('sasha', { isPlayer: true, x: -150 });
     const colony = makeColony({
@@ -97,7 +97,7 @@ describe('popping in an antifungal zone', () => {
     expect(onPop).not.toHaveBeenCalled();
   });
 
-  it('never pops the pal you steer (touching a zone is game over instead)', () => {
+  it('never pops the gal you steer (touching a zone is game over instead)', () => {
     const leader = makeGroup('sasha', { isPlayer: true, x: 100 });
     const colony = makeColony({
       leader, nutrients: {}, disks: [diskWithEdgeAt(100)], dishRadius: () => RADIUS, target: 64,

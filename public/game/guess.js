@@ -2,9 +2,9 @@
 
 import { withItalics } from './italics.js';
 
-// Shuffled { pal, fact } pairs
-export function factDeck(pals, facts, random = Math.random) {
-  const deck = pals.flatMap((pal) => facts[pal.id].map((fact) => ({ pal, fact })));
+// Shuffled { gal, fact } pairs
+export function factDeck(gals, facts, random = Math.random) {
+  const deck = gals.flatMap((gal) => facts[gal.id].map((fact) => ({ gal, fact })));
   for (let i = deck.length - 1; i > 0; i--) {
     const j = Math.floor(random() * (i + 1));
     [deck[i], deck[j]] = [deck[j], deck[i]];
@@ -12,7 +12,7 @@ export function factDeck(pals, facts, random = Math.random) {
   return deck;
 }
 
-// Placeholder for the pal's name
+// Placeholder for the gal's name
 function blank(startsSentence) {
   const gap = document.createElement('span');
   gap.className = 'fact-blank';

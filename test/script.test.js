@@ -45,14 +45,14 @@ describe('the start button', () => {
     expect(button.disabled).toBe(true);
   });
 
-  it('opens the pal picker a moment after the click', async () => {
+  it('opens the gal picker a moment after the click', async () => {
     vi.useFakeTimers();
     const button = await open();
     button.click();
     vi.advanceTimersByTime(249);
     expect(location.href).toBe('http://localhost/index.html'); // not yet
     vi.advanceTimersByTime(1);
-    expect(location.href).toBe('./pal-picker.html');
+    expect(location.href).toBe('./gal-picker.html');
   });
 });
 
@@ -79,12 +79,12 @@ describe('coming back with the Back button', () => {
     button.click();
     expect(button.textContent).toBe('Opening picker...');
     vi.advanceTimersByTime(250);
-    expect(location.href).toBe('./pal-picker.html');
+    expect(location.href).toBe('./gal-picker.html');
   });
 });
 
 describe('pages without a start button', () => {
-  it("doesn't break the pal picker if it's loaded there", async () => {
-    await expect(open('pal-picker.html')).resolves.toBeNull();
+  it("doesn't break the gal picker if it's loaded there", async () => {
+    await expect(open('gal-picker.html')).resolves.toBeNull();
   });
 });

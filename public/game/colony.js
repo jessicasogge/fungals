@@ -1,4 +1,4 @@
-// A colony: one pal (its "leader", the cell that's steered) and all the
+// A colony: one gal (its "leader", the cell that's steered) and all the
 // offspring it grows. It eats nutrients, buds, and counts its cells.
 import { touchesDisk } from './antifungal.js';
 import { GAME } from './config.js';
@@ -128,7 +128,7 @@ function nudge(group, [dx, dy]) {
   }
 }
 
-// A little "pop" where a cell died: a ring in the pal's color that bursts
+// A little "pop" where a cell died: a ring in the gal's color that bursts
 // outward and fades (see .pop in styles.css). `circle` is [x, y, r] in px
 // from the dish center.
 export function showPop(dish, [x, y, r], color) {

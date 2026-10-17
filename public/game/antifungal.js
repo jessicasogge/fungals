@@ -1,6 +1,6 @@
 // The antifungal disks: small white paper disks soaked in drugs, like the ones
 // used in the lab (the Kirby-Bauer disk test). Each has a zone of inhibition
-// around it, sized by how well that drug works on the pal. If the player's pal
+// around it, sized by how well that drug works on the gal. If the player's gal
 // touches a disk or its zone, the game is over; offspring cells that touch one
 // pop (see popInZones in colony.js).
 //
@@ -11,7 +11,7 @@
 import { GAME } from './config.js';
 
 // Pick a random spot for one disk, as fractions of the dish radius from the
-// center: away from the middle (where the pal starts) and from the rim.
+// center: away from the middle (where the gal starts) and from the rim.
 export function diskSpot(random = Math.random) {
   const angle = random() * Math.PI * 2;
   const distance = GAME.DISK_MIN_DISTANCE +
@@ -92,7 +92,7 @@ export function touchedDisk(disks, circles, dishRadius, margin = 0) {
   return disks.find((disk) => touchesDisk(disk, circles, dishRadius, margin)) || null;
 }
 
-// What the game-over pop-up says when the pal called `name` touches `disk`.
+// What the game-over pop-up says when the gal called `name` touches `disk`.
 // A drug she's resistant to has no zone, so she can only have touched the
 // disk itself.
 export function touchMessage(name, disk) {
@@ -101,7 +101,7 @@ export function touchMessage(name, disk) {
   return `${name} bumped into the ${drug} disk. She's resistant to ${drug}, so it has no zone, but the disk still counts!`;
 }
 
-// The antifungals for a dish with `count` disks: the pal's list in order,
+// The antifungals for a dish with `count` disks: the gal's list in order,
 // starting over from the top if there are more disks than drugs.
 export function antifungalsFor(list, count) {
   return Array.from({ length: count }, (_, i) => list[i % list.length]);

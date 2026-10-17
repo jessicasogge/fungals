@@ -66,7 +66,7 @@ describe('a page that starts covered', () => {
   };
 
   it('is taken away by pageReady, and stays see-through after', () => {
-    document.body.outerHTML = pageHtml('pal-picker.html');
+    document.body.outerHTML = pageHtml('gal-picker.html');
     expect(card().hidden).toBe(false);
     expect(card().classList.contains('arriving')).toBe(true);
     loading.pageReady();
@@ -78,7 +78,7 @@ describe('a page that starts covered', () => {
     expect(card().hidden).toBe(false);
   });
 
-  it.each(['pal-picker.html', 'petri-dish.html', 'whos-that-gal.html'])(
+  it.each(['gal-picker.html', 'petri-dish.html', 'whos-that-gal.html'])(
     '%s starts with the same card the script makes',
     (page) => {
       document.body.outerHTML = pageHtml(page);
@@ -98,11 +98,11 @@ describe('a page that starts covered', () => {
 
 describe('goTo', () => {
   it('shows the card, then goes to the address', () => {
-    const location = { href: 'http://localhost/petri-dish.html?pal=sasha' };
+    const location = { href: 'http://localhost/petri-dish.html?gal=sasha' };
     vi.stubGlobal('location', location);
-    loading.goTo('./petri-dish.html?pal=sasha&level=2');
+    loading.goTo('./petri-dish.html?gal=sasha&level=2');
     expect(card().hidden).toBe(false);
-    expect(location.href).toBe('./petri-dish.html?pal=sasha&level=2');
+    expect(location.href).toBe('./petri-dish.html?gal=sasha&level=2');
   });
 });
 
@@ -123,7 +123,7 @@ describe('following links', () => {
   beforeEach(() => loading.watchLoading());
 
   it('shows the card for a link to another FunGals page', () => {
-    expect(click({ href: './pal-picker.html' }).hidden).toBe(false);
+    expect(click({ href: './gal-picker.html' }).hidden).toBe(false);
   });
 
   it('shows the card for the same page with a different address (next level)', () => {
@@ -132,7 +132,7 @@ describe('following links', () => {
 
   it('shows the card for a click on something inside the link', () => {
     const link = document.createElement('a');
-    link.href = './pal-picker.html';
+    link.href = './gal-picker.html';
     const inside = document.createElement('span');
     link.append(inside);
     document.body.append(link);
@@ -143,25 +143,25 @@ describe('following links', () => {
 
   it.each([
     ['another site', { href: 'https://example.com/' }, {}],
-    ['a new tab', { href: './pal-picker.html', target: '_blank' }, {}],
+    ['a new tab', { href: './gal-picker.html', target: '_blank' }, {}],
     ['a download', { href: './social-preview.png', download: '' }, {}],
     ['a spot on this page', { href: '#how-to-play' }, {}],
-    ['a ctrl-click', { href: './pal-picker.html' }, { ctrlKey: true }],
-    ['a cmd-click', { href: './pal-picker.html' }, { metaKey: true }],
-    ['a shift-click', { href: './pal-picker.html' }, { shiftKey: true }],
-    ['an alt-click', { href: './pal-picker.html' }, { altKey: true }],
-    ['a middle click', { href: './pal-picker.html' }, { button: 1 }],
+    ['a ctrl-click', { href: './gal-picker.html' }, { ctrlKey: true }],
+    ['a cmd-click', { href: './gal-picker.html' }, { metaKey: true }],
+    ['a shift-click', { href: './gal-picker.html' }, { shiftKey: true }],
+    ['an alt-click', { href: './gal-picker.html' }, { altKey: true }],
+    ['a middle click', { href: './gal-picker.html' }, { button: 1 }],
   ])('stays away for %s', (_, attributes, options) => {
     expect(click(attributes, options)).toBeNull();
   });
 
   it('shows the card for a link that opens in this same tab', () => {
-    expect(click({ href: './pal-picker.html', target: '_self' }).hidden).toBe(false);
+    expect(click({ href: './gal-picker.html', target: '_self' }).hidden).toBe(false);
   });
 
   it('stays away when something else already handled the click', () => {
     const link = document.createElement('a');
-    link.href = './pal-picker.html';
+    link.href = './gal-picker.html';
     link.addEventListener('click', (event) => event.preventDefault());
     document.body.append(link);
     link.click();
@@ -181,7 +181,7 @@ describe('following links', () => {
   });
 
   it('is hidden again when the Back button brings the page back', () => {
-    click({ href: './pal-picker.html' });
+    click({ href: './gal-picker.html' });
     window.dispatchEvent(new Event('pageshow'));
     expect(card().hidden).toBe(true);
   });
@@ -192,7 +192,7 @@ describe('every page', () => {
 
   it.each([
     ['script.js'],
-    ['game/pal-picker.js'],
+    ['game/gal-picker.js'],
     ['game/main.js'],
     ['game/whos-that-gal.js'],
   ])('%s shows the card while the next screen loads', (file) => {
@@ -205,7 +205,7 @@ describe('every page', () => {
   });
 
   it.each([
-    ['game/pal-picker.js'],
+    ['game/gal-picker.js'],
     ['game/main.js'],
     ['game/whos-that-gal.js'],
   ])('%s takes the starting card away once the page is filled in', (file) => {
