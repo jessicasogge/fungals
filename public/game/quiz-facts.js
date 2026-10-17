@@ -54,10 +54,9 @@ export const QUIZ_FACTS = {
     "Companies grow Yara to make omega-3 fats for fish feed and supplements.",
   ],
   pippa: [
-    "Pippa can live on methanol, a simple alcohol that most living things can't eat.",
-    "On methanol, Pippa's peroxisomes swell until they fill most of her cell.",
-    "Labs give Pippa new genes, and she makes proteins like insulin and vaccine parts.",
-    "Pippa's species name, *phaffii*, honors Herman Phaff, a yeast scientist in California.",
-    "Pippa used to be called *Pichia pastoris*, and many labs still use that name.",
+    "Pippa can use methanol, a simple alcohol, as her sole source of carbon and energy.",
+    "On methanol, Pippa's peroxisomes can grow to occupy most of her cell.",
+    "Pippa's species name, *phaffii*, honors the yeast scientist Herman Phaff.",
+    "Pippa is now *Komagataella phaffii*, but labs often call her *Pichia pastoris*.",
   ],
 };
