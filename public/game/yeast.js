@@ -4,14 +4,14 @@ import { GAME } from './config.js';
 import { idlePose, newMover } from './mover.js';
 import { coaster } from './physics.js';
 
-// Budding yeast (Sasha, Candi, Olive, Yara, Pippa): the player stays one cell.
+// Budding yeast (Sasha, Candi, Olive, Yara, Peachy): the player stays one cell.
 // Eating grows a bud that pinches off; daughters form clusters up to GROUP_CAP,
 // growing toward where the player budded.
 //
 // `chains` (Yara): egg-shaped cells with fat droplets bud end-to-end into
 // chains up to CHAIN_CAP. The player stays level; daughters tilt freely.
 //
-// `peroxisomes` (Pippa): pink peroxisomes inside her cells.
+// `peroxisomes` (Peachy): pink peroxisomes inside her cells.
 export function yeastGroup({ mover, svg, species, isPlayer }) {
   const CELL_SIZE = 5; // one cell's width, as a percent of the dish
   const OUTLINE = 1.7; // each cell's outline width, in SVG units
@@ -132,7 +132,7 @@ export function yeastGroup({ mover, svg, species, isPlayer }) {
       `<circle cx="${l * 0.27}" cy="${-w * 0.1}" r="${w * 0.13}" ${paint} /></g>`;
   }
 
-  // Pippa's peroxisomes, turned with her cell. The player's sit low, under
+  // Peachy's peroxisomes, turned with her cell. The player's sit low, under
   // her face; a daughter's are scattered.
   function peroxisomes(c) {
     const size = c.grow ?? 1;

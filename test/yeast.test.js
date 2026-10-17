@@ -556,21 +556,21 @@ describe("the player's bud", () => {
   });
 });
 
-describe('a yeast with peroxisomes (Pippa)', () => {
+describe('a yeast with peroxisomes (Peachy)', () => {
   // The sizes of the last cell's peroxisomes: the player's own, drawn after
   // any bud swelling on her side.
   const sizes = (group) => [...[...group.svg.querySelectorAll('.peroxisomes')].at(-1).querySelectorAll('circle')]
     .map((c) => Number(c.getAttribute('r')));
 
   it('draws pink peroxisomes inside her cells', () => {
-    const player = makeGroup('pippa', { isPlayer: true });
+    const player = makeGroup('peachy', { isPlayer: true });
     const circles = player.svg.querySelectorAll('.peroxisomes circle');
     expect(circles.length).toBe(2);
-    for (const c of circles) expect(c.getAttribute('fill')).toBe(SPECIES.pippa.colors.perox);
+    for (const c of circles) expect(c.getAttribute('fill')).toBe(SPECIES.peachy.colors.perox);
   });
 
   it('keeps them one size as she buds', () => {
-    const player = makeGroup('pippa', { isPlayer: true });
+    const player = makeGroup('peachy', { isPlayer: true });
     const start = sizes(player);
     for (let i = 0; i < 12; i++) {
       player.budding = null;
@@ -581,7 +581,7 @@ describe('a yeast with peroxisomes (Pippa)', () => {
   });
 
   it('gives a daughter her own scattered peroxisomes', () => {
-    const daughter = makeGroup('pippa');
+    const daughter = makeGroup('peachy');
     expect(sizes(daughter)).toHaveLength(3);
   });
 
