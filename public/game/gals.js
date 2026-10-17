@@ -408,7 +408,9 @@ export const GALS = [
   },
 ];
 
-const HOME = ['penelope', 'sasha', 'miri', 'candi', 'fumi', 'olive', 'yara', 'pippa'];
+// Yeasts on both ends, with the three molds spread out between them, and no
+// two neighbors in similar colors. Phones show only the first six.
+const HOME = ['yara', 'fumi', 'sasha', 'candi', 'miri', 'pippa', 'penelope', 'olive'];
 export const HOME_GALS = HOME.map((id) => GALS.find((gal) => gal.id === id));
 
 // How many gals fit on one page of the picker: four across, two down.
