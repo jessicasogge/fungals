@@ -385,9 +385,30 @@ export const GALS = [
       ${face(94, 106, '#6e2f17')}
     `,
   },
+  // Pippa: Pichia pastoris, a methanol-eating yeast, drawn as one plump
+  // rose-pink oval with a bud on her shoulder and round peroxisomes inside.
+  {
+    id: 'pippa',
+    name: 'Pippa',
+    looks: 'a rose-pink Pichia pastoris yeast: one plump oval cell with round peroxisomes inside and a small bud on top',
+    motion: 'squish',
+    frames: { home: '14 14 176 176', picker: '20 18 168 168', dish: '14 14 176 176' },
+    art: `
+      <!-- a small bud on her shoulder -->
+      <ellipse cx="152" cy="56" rx="22" ry="19" fill="#fcd5e3" stroke="#be3f73" stroke-width="4" transform="rotate(-30 152 56)" />
+      <!-- her plump, oval cell -->
+      <ellipse cx="96" cy="110" rx="64" ry="54" fill="#fcd5e3" stroke="#be3f73" stroke-width="4" transform="rotate(-8 96 110)" />
+      <!-- peroxisomes: little bags that swell when she lives on methanol -->
+      <circle cx="66" cy="134" r="10" fill="#f6a6c6" stroke="#be3f73" stroke-opacity="0.6" stroke-width="2" />
+      <circle cx="84" cy="147" r="7" fill="#f6a6c6" stroke="#be3f73" stroke-opacity="0.6" stroke-width="2" />
+      <circle cx="128" cy="138" r="8.5" fill="#f6a6c6" stroke="#be3f73" stroke-opacity="0.6" stroke-width="2" />
+      <ellipse cx="70" cy="80" rx="13" ry="6" fill="#fff1f6" transform="rotate(-18 70 80)" />
+      ${face(97, 102, '#6d1d3f')}
+    `,
+  },
 ];
 
-const HOME = ['penelope', 'sasha', 'miri', 'candi', 'fumi', 'olive', 'yara'];
+const HOME = ['penelope', 'sasha', 'miri', 'candi', 'fumi', 'olive', 'yara', 'pippa'];
 export const HOME_GALS = HOME.map((id) => GALS.find((gal) => gal.id === id));
 
 // How many gals fit on one page of the picker: four across, two down.

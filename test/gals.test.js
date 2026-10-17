@@ -177,7 +177,7 @@ describe('the pages', () => {
     const labels = [...document.querySelectorAll('.friends svg')].map((s) => s.getAttribute('aria-label'));
     expect(labels).toEqual(HOME_GALS.map((gal) => `${gal.name}, ${gal.looks}`));
     // Every gal, each once: the yeasts with Olive in the middle, then Fumi.
-    expect(HOME_GALS.map((gal) => gal.id)).toEqual(['penelope', 'sasha', 'miri', 'candi', 'fumi', 'olive', 'yara']);
+    expect(HOME_GALS.map((gal) => gal.id)).toEqual(['penelope', 'sasha', 'miri', 'candi', 'fumi', 'olive', 'yara', 'pippa']);
     expect([...HOME_GALS].sort((a, b) => a.id.localeCompare(b.id))).toEqual(
       [...GALS].sort((a, b) => a.id.localeCompare(b.id)));
   });

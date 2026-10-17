@@ -53,4 +53,11 @@ export const QUIZ_FACTS = {
     "Yara can eat hydrocarbons from oil, so scientists study her for cleaning up spills.",
     "Companies grow Yara to make omega-3 fats for fish feed and supplements.",
   ],
+  pippa: [
+    "Pippa can live on methanol, a simple alcohol that most living things can't eat.",
+    "On methanol, Pippa's peroxisomes swell until they fill most of her cell.",
+    "Labs give Pippa new genes, and she makes proteins like insulin and vaccine parts.",
+    "Pippa was first found in 1919, in sap oozing from a chestnut tree in France.",
+    "Scientists renamed Pippa *Komagataella phaffii*, but most labs still call her *Pichia*.",
+  ],
 };

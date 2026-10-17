@@ -132,6 +132,37 @@ export const SPECIES = {
       { code: 'FLC', name: 'fluconazole', zone: 14 },
     ],
   },
+  pippa: {
+    facts: [
+      "Pippa can live on methanol, a simple alcohol that most living things can't eat.",
+      "On methanol, Pippa's peroxisomes swell until they fill most of her cell.",
+      "Pippa breaks methanol down inside her peroxisomes, little bags that keep it contained.",
+      "Labs give Pippa new genes, and she makes proteins like insulin and vaccine parts.",
+      "Pippa sends many of the proteins she makes out of her cell, so they're easy to collect.",
+      "Unlike Sasha, Pippa barely turns sugar into alcohol, so her cultures can grow very thick.",
+      "Pippa was first found in 1919, in sap oozing from a chestnut tree in France.",
+      "In the 1970s, an oil company grew Pippa on methanol to make animal feed.",
+      "Scientists renamed Pippa *Komagataella phaffii*, but most labs still call her *Pichia*.",
+      "Pippa is an ascomycete, a yeast cousin of Sasha and Candi.",
+      "Pippa isn't known to cause infections in people.",
+    ],
+    scientific: 'Pichia pastoris',
+    color: '#be3f73', // for her name above the dish
+    kind: 'yeast',
+    // Pink peroxisomes inside her cells, which swell as she eats (see yeast.js).
+    peroxisomes: true,
+    // All rose; `perox` is her peroxisomes.
+    colors: { fill: '#fcd5e3', stroke: '#be3f73', highlight: '#fff1f6', dark: '#6d1d3f', perox: '#f6a6c6' },
+    // There are no standard disk sizes for Pichia, so these are estimates.
+    // She's a lab yeast that common antifungals work on well.
+    antifungals: [
+      { code: 'AMB', name: 'amphotericin B', zone: 17 },
+      { code: 'FLC', name: 'fluconazole', zone: 22 },
+      { code: 'VOR', name: 'voriconazole', zone: 28 },
+      { code: 'CAS', name: 'caspofungin', zone: 21 },
+      { code: 'NY', name: 'nystatin', zone: 19 },
+    ],
+  },
   fumi: {
     facts: [
       "Fumi's species name, *fumigatus*, means \"smoky,\" for her smoky grey-green colonies.",
