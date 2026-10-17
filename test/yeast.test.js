@@ -569,30 +569,18 @@ describe('a yeast with peroxisomes (Pippa)', () => {
     for (const c of circles) expect(c.getAttribute('fill')).toBe(SPECIES.pippa.colors.perox);
   });
 
-  it('swells them a little with every bud, up to a limit', () => {
+  it('keeps them one size as she buds', () => {
     const player = makeGroup('pippa', { isPlayer: true });
-    const start = sizes(player)[0];
-    player.startBud();
-    player.update(1);
-    expect(sizes(player)[0]).toBeGreaterThan(start);
-    for (let i = 0; i < 30; i++) {
+    const start = sizes(player);
+    for (let i = 0; i < 12; i++) {
       player.budding = null;
       player.startBud();
     }
     player.update(1);
-    const full = sizes(player)[0];
-    expect(full).toBeCloseTo(start * (1.3 / 0.8), 1);
-    expect(player.buds).toBe(31);
+    expect(sizes(player)).toEqual(start);
   });
 
-  it('counts a bud once, however many times she is asked while it grows', () => {
-    const player = makeGroup('pippa', { isPlayer: true });
-    player.startBud();
-    player.startBud();
-    expect(player.buds).toBe(1);
-  });
-
-  it('gives a daughter her own small, scattered peroxisomes', () => {
+  it('gives a daughter her own scattered peroxisomes', () => {
     const daughter = makeGroup('pippa');
     expect(sizes(daughter)).toHaveLength(3);
   });

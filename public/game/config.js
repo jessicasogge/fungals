@@ -149,7 +149,7 @@ export const SPECIES = {
     scientific: 'Komagataella phaffii',
     color: '#be3f73', // for her name above the dish
     kind: 'yeast',
-    // Pink peroxisomes inside her cells, which swell as she eats (see yeast.js).
+    // Pink peroxisomes inside her cells (see yeast.js).
     peroxisomes: true,
     // All rose; `perox` is her peroxisomes.
     colors: { fill: '#fcd5e3', stroke: '#be3f73', highlight: '#fff1f6', dark: '#6d1d3f', perox: '#f6a6c6' },

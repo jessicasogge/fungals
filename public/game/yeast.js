@@ -11,8 +11,7 @@ import { coaster } from './physics.js';
 // `chains` (Yara): egg-shaped cells with fat droplets bud end-to-end into
 // chains up to CHAIN_CAP. The player stays level; daughters tilt freely.
 //
-// `peroxisomes` (Pippa): pink peroxisomes inside her cells. Hers swell a
-// little with every bud, the way they fill up when she lives on methanol.
+// `peroxisomes` (Pippa): pink peroxisomes inside her cells.
 export function yeastGroup({ mover, svg, species, isPlayer }) {
   const CELL_SIZE = 5; // one cell's width, as a percent of the dish
   const OUTLINE = 1.7; // each cell's outline width, in SVG units
@@ -38,7 +37,6 @@ export function yeastGroup({ mover, svg, species, isPlayer }) {
     // The player's bud, while it swells on her side before pinching off:
     // { ms, angle }, how long it's been growing and which way it points.
     budding: null,
-    buds: 0, // how many buds the player has grown, for Pippa's peroxisomes
     twist: Math.random() * Math.PI * 2, // each cluster packs at its own angle
     cellCount: () => group.cells.length,
   };
@@ -135,18 +133,15 @@ export function yeastGroup({ mover, svg, species, isPlayer }) {
   }
 
   // Pippa's peroxisomes, turned with her cell. The player's sit low, under
-  // her face, and swell with every bud she grows (up to SWELL_BUDS buds);
-  // a daughter's are scattered and stay small.
-  const SWELL_BUDS = 10;
+  // her face; a daughter's are scattered.
   function peroxisomes(c) {
     const size = c.grow ?? 1;
-    const swell = c.face ? 0.8 + 0.5 * Math.min(1, group.buds / SWELL_BUDS) : 0.9;
     const spots = c.face
       ? [[-4.2, 6, 1.3], [4.2, 6, 1.3]]
       : [[-4.5, 2.8, 1.7], [3.8, 4.2, 1.4], [4.6, -2.2, 1.2]];
     const paint = `fill="${colors.perox}" stroke="${colors.stroke}" stroke-opacity="0.5" stroke-width="0.5"`;
     return `<g class="peroxisomes" transform="translate(${c.x} ${c.y}) rotate(${c.tilt ?? 0})">` +
-      spots.map(([x, y, r]) => `<circle cx="${x * size}" cy="${y * size}" r="${(r * swell * size).toFixed(2)}" ${paint} />`).join('') +
+      spots.map(([x, y, r]) => `<circle cx="${x * size}" cy="${y * size}" r="${r * size}" ${paint} />`).join('') +
       '</g>';
   }
 
@@ -231,7 +226,6 @@ export function yeastGroup({ mover, svg, species, isPlayer }) {
       let angle = Math.random() * Math.PI * 2;
       if (species.budsFromOneEnd) angle = -Math.PI / 2;
       else if (rods) angle = Math.random() < 0.5 ? 0 : Math.PI;
-      if (!group.budding) group.buds++;
       group.budding ??= { ms: 0, angle };
     },
     // Whether her bud has swelled enough to pinch off.
