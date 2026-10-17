@@ -1,6 +1,6 @@
 // Checks the things every page shares: the FunGals tab icon (not the
 // browser's generic globe) and Jess's signature at the foot.
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 
 const file = (name) => new URL(`../public/${name}`, import.meta.url);
@@ -16,6 +16,21 @@ describe('tab icon', () => {
   it('has both icon files', () => {
     expect(existsSync(file('favicon.svg'))).toBe(true);
     expect(existsSync(file('favicon-32.png'))).toBe(true);
+  });
+});
+
+describe('stylesheet', () => {
+  // The deploy (.github/workflows/pages.yml) stamps this exact link with a
+  // fingerprint of styles.css, so browsers fetch new styles when they change.
+  it.each(PAGES)('%s links styles.css the way the deploy expects', (page) => {
+    const html = readFileSync(file(page), 'utf8');
+    expect(html).toContain('<link rel="stylesheet" href="./styles.css" />');
+  });
+
+  it('every page in public/ is listed here, so none misses the stamp', () => {
+    const pages = readdirSync(new URL('../public/', import.meta.url))
+      .filter((name) => name.endsWith('.html') && !name.startsWith('google'));
+    expect(pages.sort()).toEqual([...PAGES].sort());
   });
 });
 
