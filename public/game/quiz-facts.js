@@ -57,7 +57,7 @@ export const QUIZ_FACTS = {
     "Pippa can live on methanol, a simple alcohol that most living things can't eat.",
     "On methanol, Pippa's peroxisomes swell until they fill most of her cell.",
     "Labs give Pippa new genes, and she makes proteins like insulin and vaccine parts.",
-    "Pippa was first found in 1919, in sap oozing from a chestnut tree in France.",
-    "Scientists renamed Pippa *Komagataella phaffii*, but most labs still call her *Pichia*.",
+    "Pippa's species name, *phaffii*, honors Herman Phaff, a yeast scientist in California.",
+    "Pippa used to be called *Pichia pastoris*, and many labs still use that name.",
   ],
 };

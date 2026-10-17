@@ -385,12 +385,13 @@ export const GALS = [
       ${face(94, 106, '#6e2f17')}
     `,
   },
-  // Pippa: Pichia pastoris, a methanol-eating yeast, drawn as one plump
-  // rose-pink oval with a bud on her shoulder and round peroxisomes inside.
+  // Pippa: Komagataella phaffii (long called Pichia pastoris), a
+  // methanol-eating yeast, drawn as one plump rose-pink oval with a bud on
+  // her shoulder and round peroxisomes inside.
   {
     id: 'pippa',
     name: 'Pippa',
-    looks: 'a rose-pink Pichia pastoris yeast: one plump oval cell with round peroxisomes inside and a small bud on top',
+    looks: 'a rose-pink Komagataella phaffii yeast: one plump oval cell with round peroxisomes inside and a small bud on top',
     motion: 'squish',
     frames: { home: '14 14 176 176', picker: '20 18 168 168', dish: '14 14 176 176' },
     art: `
