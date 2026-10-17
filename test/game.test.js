@@ -87,7 +87,7 @@ beforeEach(() => {
   fake.hit = null;
   nutrients = { stop: vi.fn() };
   sessionStorage.clear();
-  location = { href: 'http://localhost/petri-dish.html?gal=sasha&level=3' };
+  location = { href: 'http://localhost/petri-dish.html?pal=sasha&level=3' };
   vi.stubGlobal('location', location);
   vi.stubGlobal('requestAnimationFrame', (run) => frames.push(run));
   vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] });
@@ -171,7 +171,7 @@ describe('beating a level', () => {
     banner.querySelector('.play-again').click();
     const url = new URL(location.href);
     expect(url.searchParams.get('level')).toBe('4');
-    expect(url.searchParams.get('gal')).toBe('sasha');
+    expect(url.searchParams.get('pal')).toBe('sasha');
   });
 
   it('stops play once the target is reached', () => {

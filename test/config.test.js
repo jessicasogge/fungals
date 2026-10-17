@@ -17,7 +17,7 @@ function contrast(a, b) {
 }
 
 describe('gals', () => {
-  it('keys every gal by a short lowercase id, used in addresses like ?gal=sasha', () => {
+  it('keys every gal by a short lowercase id, used in addresses like ?pal=sasha', () => {
     expect(GALS.length).toBeGreaterThan(1);
     for (const gal of GALS) expect(gal).toMatch(/^[a-z]+$/);
   });

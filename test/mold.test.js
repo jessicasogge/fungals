@@ -196,7 +196,7 @@ describe('playing as a mold', () => {
     frames = [];
     now = 0;
     vi.stubGlobal('requestAnimationFrame', (run) => frames.push(run));
-    vi.stubGlobal('location', { href: 'http://localhost/petri-dish.html?gal=fumi&level=1' });
+    vi.stubGlobal('location', { href: 'http://localhost/petri-dish.html?pal=fumi&level=1' });
     agar = document.querySelector('.agar');
     mover = document.querySelector('.gal-mover');
     vi.spyOn(agar, 'clientWidth', 'get').mockReturnValue(400);

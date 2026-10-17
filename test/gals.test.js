@@ -183,7 +183,7 @@ describe('the pages', () => {
   });
 
   it('the picker has a card for every gal, each once, linking to her dish', async () => {
-    await open('gal-picker.html', 'game/gal-picker.js');
+    await open('pal-picker.html', 'game/gal-picker.js');
     const cards = [...document.querySelectorAll('.gal-card')];
     const names = cards.map((c) => c.querySelector('h2').textContent);
     expect([...names].sort()).toEqual(GALS.map((gal) => gal.name).sort());
@@ -194,7 +194,7 @@ describe('the pages', () => {
       expect(card.querySelector('.species i')).not.toBeNull(); // in italics
       // The whole card is the link that picks her, with no separate button.
       expect(card.tagName).toBe('A');
-      expect(card.getAttribute('href')).toBe(`./petri-dish.html?gal=${id}`);
+      expect(card.getAttribute('href')).toBe(`./petri-dish.html?pal=${id}`);
       expect(card.getAttribute('aria-label')).toBe(`Pick ${name}`);
       expect(card.querySelector('a, button, .pick-btn')).toBeNull();
     }
@@ -203,7 +203,7 @@ describe('the pages', () => {
   it('the picker shuffles all the gals together, then splits them into pages', async () => {
     // With Math.random always 0, the shuffle moves the first gal to the end.
     vi.spyOn(Math, 'random').mockReturnValue(0);
-    await open('gal-picker.html', 'game/gal-picker.js');
+    await open('pal-picker.html', 'game/gal-picker.js');
     const grids = [...document.querySelectorAll('.picker-grid')];
     const names = grids.map((grid) => [...grid.querySelectorAll('.gal-card h2')].map((h) => h.textContent));
     expect(names).toEqual(pickerPages(inRandomOrder(GALS, () => 0)).map((page) => page.map((gal) => gal.name)));
@@ -211,7 +211,7 @@ describe('the pages', () => {
   });
 
   it('the picker hides the pager while every gal fits on one page', async () => {
-    await open('gal-picker.html', 'game/gal-picker.js');
+    await open('pal-picker.html', 'game/gal-picker.js');
     expect(document.querySelectorAll('.picker-grid')).toHaveLength(1);
     expect(document.querySelector('.picker-pager').hidden).toBe(true);
   });
@@ -222,7 +222,7 @@ describe('the pages', () => {
       const real = await importActual();
       return { ...real, pickerPages: (gals) => real.pickerPages(gals, 1) };
     });
-    await open('gal-picker.html', 'game/gal-picker.js');
+    await open('pal-picker.html', 'game/gal-picker.js');
     const grids = [...document.querySelectorAll('.picker-grid')];
     const back = document.querySelector('.pager-back');
     const more = document.querySelector('.pager-more');
@@ -258,7 +258,7 @@ describe('the pages', () => {
   });
 
   it("the pages don't draw any gals by hand", () => {
-    for (const page of ['index.html', 'gal-picker.html', 'petri-dish.html', 'whos-that-gal.html']) {
+    for (const page of ['index.html', 'pal-picker.html', 'petri-dish.html', 'whos-that-gal.html']) {
       expect(file(page), page).not.toContain('<svg');
     }
   });

@@ -5,7 +5,7 @@
 // The home page shows them in its own order (HOME below), and the picker
 // shuffles them.
 // Each gal has:
-//   id      her key, matching SPECIES in config.js and ?gal= in addresses
+//   id      her key, matching SPECIES in config.js and ?pal= in addresses
 //   name    what she's called
 //   looks   what a screen reader says after her name
 //   motion  her idle animation in styles.css (bob, squish, wobble or slither)

@@ -18,7 +18,7 @@ if (startButton) {
     startButton.disabled = true;
 
     setTimeout(() => {
-      goTo('./gal-picker.html');
+      goTo('./pal-picker.html');
     }, 250);
   });
 

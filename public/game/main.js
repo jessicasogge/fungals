@@ -1,6 +1,6 @@
 // Entry point for the petri dish page: find the gal and level picked in the
 // URL and start the game with them:
-//   petri-dish.html?gal=sasha&level=2
+//   petri-dish.html?pal=sasha&level=2
 import { antifungalsFor, placeAntifungals } from './antifungal.js';
 import { GAME, LEVELS, SPECIES } from './config.js';
 import { playGame } from './game.js';
@@ -20,9 +20,11 @@ watchLoading();
 document.querySelector('.gal-mover').append(...GALS.map(dishGal));
 
 const params = new URLSearchParams(window.location.search);
-const choice = params.get('gal');
+// The address still says ?pal= (and the picker is still pal-picker.html) so
+// links people shared from before the pals became gals keep working.
+const choice = params.get('pal');
 // Compare names rather than building a CSS selector from the address, so a
-// mangled link (e.g. ?gal=sasha"]) can't crash the page.
+// mangled link (e.g. ?pal=sasha"]) can't crash the page.
 const gal = [...document.querySelectorAll('.dish-gal')].find((el) => el.dataset.gal === choice);
 // Level 1 unless the URL says otherwise.
 const levelNumber = Math.min(Math.max(parseInt(params.get('level'), 10) || 1, 1), LEVELS.length);
@@ -30,7 +32,7 @@ const level = LEVELS[levelNumber - 1];
 
 if (!gal) {
   // No gal (or an unknown one) in the URL: send them back to choose.
-  window.location.replace('./gal-picker.html');
+  window.location.replace('./pal-picker.html');
 } else {
   start();
   // The dish is set up: take the loading card away.

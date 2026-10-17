@@ -52,7 +52,7 @@ describe('the start button', () => {
     vi.advanceTimersByTime(249);
     expect(location.href).toBe('http://localhost/index.html'); // not yet
     vi.advanceTimersByTime(1);
-    expect(location.href).toBe('./gal-picker.html');
+    expect(location.href).toBe('./pal-picker.html');
   });
 });
 
@@ -79,12 +79,12 @@ describe('coming back with the Back button', () => {
     button.click();
     expect(button.textContent).toBe('Opening picker...');
     vi.advanceTimersByTime(250);
-    expect(location.href).toBe('./gal-picker.html');
+    expect(location.href).toBe('./pal-picker.html');
   });
 });
 
 describe('pages without a start button', () => {
   it("doesn't break the gal picker if it's loaded there", async () => {
-    await expect(open('gal-picker.html')).resolves.toBeNull();
+    await expect(open('pal-picker.html')).resolves.toBeNull();
   });
 });

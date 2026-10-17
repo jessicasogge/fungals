@@ -51,7 +51,7 @@ showPage(0);
 function card(gal) {
   const link = document.createElement('a');
   link.className = 'gal-card';
-  link.href = `./petri-dish.html?gal=${gal.id}`;
+  link.href = `./petri-dish.html?pal=${gal.id}`;
   link.setAttribute('aria-label', `Pick ${gal.name}`);
 
   const name = document.createElement('h2');

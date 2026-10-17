@@ -85,7 +85,7 @@ FunGals started as a copy of the PetriPals engine (steering, nutrients, disks an
 | Path | What's there |
 |---|---|
 | `public/index.html` | Home page |
-| `public/gal-picker.html` | Pick a gal |
+| `public/pal-picker.html` | Pick a gal |
 | `public/petri-dish.html` | The game |
 | `public/whos-that-gal.html` | Who’s That Gal?, a quiz: which gal is this fact about? |
 | `public/game/` | Game code: the game loop (`game.js`), a colony eating and budding (`colony.js`), the mold game, where a spore starts colonies that spread (`mold.js`), the end-of-level pop-up both games share (`banner.js`), how yeast cells bud and cluster (`yeast.js`, with the cluster math in `attach.js`), steering (`keyboard.js`, `touch.js`), antifungal disks and zones (`antifungal.js`), nutrients, physics, settings and fun facts (`config.js`), the fun-fact pop-up (`facts.js`, with italics for scientific names from `italics.js`) the win spores (`spores.js`), and Who’s That Gal? (`whos-that-gal.js`, with the facts' "this gal" swap in `guess.js` and the facts it asks about in `quiz-facts.js`) |
