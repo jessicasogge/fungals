@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { chainSpot, clusterSpot, R, ROD_STEP, SPACING, wobble } from '../public/game/attach.js';
+import { chainSpot, CIGAR_SPACING, clusterSpot, R, ROD_STEP, SPACING, wobble } from '../public/game/attach.js';
 
 const cell = (x, y) => ({ x, y });
 const distance = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
@@ -96,6 +96,18 @@ describe('clusterSpot', () => {
     const before = JSON.stringify(cells);
     clusterSpot(cells, 1.2, 50, 50);
     expect(JSON.stringify(cells)).toBe(before);
+  });
+});
+
+describe('clusterSpot with a scale (Maizey)', () => {
+  it('spaces cells farther apart, and never closer than that', () => {
+    const cells = [{ x: 0, y: 0 }];
+    for (let i = 0; i < 7; i++) {
+      const spot = clusterSpot(cells, 0, 100, 40 * i - 120, () => true, CIGAR_SPACING);
+      cells.push({ x: spot.x, y: spot.y });
+    }
+    expect(distance(cells[1], cells[0])).toBeCloseTo(SPACING * 0.95 * CIGAR_SPACING);
+    for (const a of cells) for (const b of cells) if (a !== b) expect(distance(a, b)).toBeGreaterThan(R * 1.5 * CIGAR_SPACING);
   });
 });
 

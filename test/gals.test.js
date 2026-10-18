@@ -177,7 +177,7 @@ describe('the pages', () => {
     const labels = [...document.querySelectorAll('.friends svg')].map((s) => s.getAttribute('aria-label'));
     expect(labels).toEqual(HOME_GALS.map((gal) => `${gal.name}, ${gal.looks}`));
     // Every gal, each once: the yeasts with Olive in the middle, then Fumi.
-    expect(HOME_GALS.map((gal) => gal.id)).toEqual(['yara', 'penelope', 'sasha', 'candi', 'miri', 'peachy', 'fumi', 'olive']);
+    expect(HOME_GALS.map((gal) => gal.id)).toEqual(['yara', 'penelope', 'sasha', 'candi', 'miri', 'peachy', 'maizey', 'fumi', 'olive']);
     expect([...HOME_GALS].sort((a, b) => a.id.localeCompare(b.id))).toEqual(
       [...GALS].sort((a, b) => a.id.localeCompare(b.id)));
   });
@@ -211,6 +211,11 @@ describe('the pages', () => {
   });
 
   it('the picker hides the pager while every gal fits on one page', async () => {
+    // Pages big enough for everyone, so there's only one.
+    vi.doMock('../public/game/gals.js', async (importActual) => {
+      const real = await importActual();
+      return { ...real, pickerPages: (gals) => real.pickerPages(gals, gals.length) };
+    });
     await open('pal-picker.html', 'game/gal-picker.js');
     expect(document.querySelectorAll('.picker-grid')).toHaveLength(1);
     expect(document.querySelector('.picker-pager').hidden).toBe(true);

@@ -12,17 +12,18 @@ export const wobble = (k, salt) => Math.sin(k * 12.9898 + salt * 78.233);
 // cluster, on the side facing (px, py), preferring nooks that touch several
 // cells so the cluster fills out into a bunch instead of a line. `twist` is
 // the cluster's own packing angle. `allowed(x, y)` can rule spots out (for
-// example, spots on an antifungal disk).
-export function clusterSpot(cells, twist, px, py, allowed = () => true) {
-  const reach = SPACING * 0.95; // how far a new cell sits from one it touches
+// example, spots on an antifungal disk). `scale` spaces the cells farther
+// apart, for cells bigger than a plain oval (Maizey's cigars).
+export function clusterSpot(cells, twist, px, py, allowed = () => true, scale = 1) {
+  const reach = SPACING * 0.95 * scale; // how far a new cell sits from one it touches
   let best = null;
 
   function consider(x, y) {
     if (!allowed(x, y)) return;
-    if (cells.some((o) => Math.hypot(o.x - x, o.y - y) < R * 1.5)) return;
-    const touching = cells.filter((o) => Math.hypot(o.x - x, o.y - y) < SPACING * 1.15).length;
+    if (cells.some((o) => Math.hypot(o.x - x, o.y - y) < R * 1.5 * scale)) return;
+    const touching = cells.filter((o) => Math.hypot(o.x - x, o.y - y) < SPACING * 1.15 * scale).length;
     const distance = Math.hypot(x - px, y - py);
-    const score = distance - touching * SPACING * 1.5;
+    const score = distance - touching * SPACING * 1.5 * scale;
     if (!best || score < best.score) best = { x, y, atStart: false, distance, score };
   }
 
@@ -87,3 +88,10 @@ export function chainSpot(cells, px, py, allowed = () => true) {
   }
   return best;
 }
+
+// Maizey's cigar-shaped cells: CIGAR_LENGTH tip to tip and CIGAR_WIDTH
+// across, in SVG units. They cluster like ovals, spaced CIGAR_SPACING times
+// as far apart so they don't pile on top of each other.
+export const CIGAR_LENGTH = R * 2.4;
+export const CIGAR_WIDTH = R * 1.25;
+export const CIGAR_SPACING = 1.35;

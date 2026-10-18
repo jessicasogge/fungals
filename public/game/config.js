@@ -163,6 +163,38 @@ export const SPECIES = {
       { code: 'NY', name: 'nystatin', zone: 19 },
     ],
   },
+  maizey: {
+    facts: [
+      "Maizey is corn smut: she swells corn kernels into big gray galls full of dark spores.",
+      "In Mexico, Maizey's galls are a delicacy called huitlacoche, the \"Mexican truffle.\"",
+      "On her own, Maizey is a harmless cigar-shaped yeast that buds from her tips.",
+      "To infect corn, two Maizey cells of different mating types must fuse first.",
+      "After fusing, Maizey grows as threads (hyphae) that push into the corn plant.",
+      "Maizey's galls can grow on corn's ears, tassels, leaves and stems.",
+      "Each of Maizey's galls holds millions of tiny, dark spores called teliospores.",
+      "Maizey's spores can wait in the soil for years until new corn grows.",
+      "Maizey is a basidiomycete, a cousin of mushrooms rather than of Sasha.",
+      "Scientists study Maizey to learn how fungi trick plants and cause disease.",
+      "Maizey's species name, *maydis*, means \"of maize,\" another word for corn.",
+    ],
+    scientific: 'Ustilago maydis',
+    color: '#6b3f96', // for her name above the dish
+    kind: 'yeast',
+    // Long cigar-shaped cells that bud from their tips (see yeast.js).
+    cigars: true,
+    // All plum, a nod to huitlacoche's inky color.
+    colors: { fill: '#e6d8f2', stroke: '#6b3f96', highlight: '#f7f0fd', dark: '#3b1f57' },
+    // There are no standard disk sizes for Ustilago, so these are estimates.
+    // Like many basidiomycete yeasts, she's thought to shrug off caspofungin,
+    // so its zone is small.
+    antifungals: [
+      { code: 'AMB', name: 'amphotericin B', zone: 18 },
+      { code: 'VOR', name: 'voriconazole', zone: 26 },
+      { code: 'ITC', name: 'itraconazole', zone: 24 },
+      { code: 'FLC', name: 'fluconazole', zone: 17 },
+      { code: 'CAS', name: 'caspofungin', zone: 12 },
+    ],
+  },
   fumi: {
     facts: [
       "Fumi's species name, *fumigatus*, means \"smoky,\" for her smoky grey-green colonies.",
