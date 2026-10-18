@@ -589,3 +589,53 @@ describe('a yeast with peroxisomes (Peachy)', () => {
     expect(makeGroup('sasha', { isPlayer: true }).svg.querySelector('.peroxisomes')).toBeNull();
   });
 });
+
+describe('a yeast with cigar-shaped cells (Maizey)', () => {
+  it('draws long, cigar-shaped cells with rounded tips', () => {
+    const player = makeGroup('maizey', { isPlayer: true });
+    const body = player.svg.querySelector('.cell-body');
+    expect(body.tagName).toBe('path');
+    // Curves all the way round, no straight edges.
+    expect(body.getAttribute('d')).not.toMatch(/[LHV]/);
+    expect(body.getAttribute('d').match(/C/g)).toHaveLength(4);
+  });
+
+  it('stays level as she swims', () => {
+    const player = makeGroup('maizey', { isPlayer: true });
+    player.vx = 60;
+    player.vy = 90;
+    player.place();
+    expect(player.svg.querySelector('.cell-body').getAttribute('transform')).toContain('rotate(0)');
+  });
+
+  it('buds from one tip or the other', () => {
+    const angles = new Set();
+    for (let i = 0; i < 20; i++) {
+      const player = makeGroup('maizey', { isPlayer: true });
+      player.startBud();
+      angles.add(Math.round(Math.cos(player.budding.angle)));
+      expect(Math.abs(Math.sin(player.budding.angle))).toBeLessThan(1e-9);
+    }
+    expect([...angles].sort()).toEqual([-1, 1]);
+  });
+
+  it('grows her bud out past her tip, farther than an oval would', () => {
+    const maizey = makeGroup('maizey', { isPlayer: true });
+    const sasha = makeGroup('sasha', { isPlayer: true });
+    for (const player of [maizey, sasha]) {
+      player.startBud();
+      player.budding.angle = 0;
+      player.update(1);
+    }
+    expect(maizey.budSpot()[0] - maizey.x).toBeGreaterThan(sasha.budSpot()[0] - sasha.x);
+  });
+
+  it('clusters her daughters a little farther apart than Sasha\'s', () => {
+    const spread = (name) => {
+      const group = makeGroup(name, { x: 30, y: 0 });
+      const spot = group.attachSpot(130, 0, [], DISH_RADIUS);
+      return Math.hypot(spot.x, spot.y);
+    };
+    expect(spread('maizey')).toBeGreaterThan(spread('sasha') * 1.2);
+  });
+});

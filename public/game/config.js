@@ -163,6 +163,38 @@ export const SPECIES = {
       { code: 'NY', name: 'nystatin', zone: 19 },
     ],
   },
+  maizey: {
+    facts: [
+      "Maizey causes corn smut, swelling kernels into galls that darken as spores mature.",
+      "In Mexico, Maizey's young galls are eaten as huitlacoche, the \"Mexican truffle.\"",
+      "Alone, Maizey grows as a cigar-shaped budding yeast that doesn't infect corn.",
+      "To infect corn, two Maizey cells with compatible mating types normally fuse first.",
+      "After mating, Maizey grows as threads called hyphae that enter the corn plant.",
+      "Maizey's galls can grow on corn's ears, tassels, leaves and stems.",
+      "Maizey's mature galls produce masses of dark resting spores called teliospores.",
+      "Maizey's resting spores can survive in soil and corn debris for several years.",
+      "Maizey is a basidiomycete, more closely related to mushrooms than to Sasha.",
+      "Scientists study Maizey to learn how fungi trick plants and cause disease.",
+      "Maizey's species name, *maydis*, means \"of maize,\" another word for corn.",
+    ],
+    scientific: 'Ustilago maydis',
+    color: '#6b3f96', // for her name above the dish
+    kind: 'yeast',
+    // Long cigar-shaped cells that bud from their tips (see yeast.js).
+    cigars: true,
+    // All plum, a nod to huitlacoche's inky color.
+    colors: { fill: '#e6d8f2', stroke: '#6b3f96', highlight: '#f7f0fd', dark: '#3b1f57' },
+    // There are no standard disk sizes for Ustilago, so these are estimates.
+    // Like many basidiomycete yeasts, she's thought to shrug off caspofungin,
+    // so its zone is small.
+    antifungals: [
+      { code: 'AMB', name: 'amphotericin B', zone: 18 },
+      { code: 'VOR', name: 'voriconazole', zone: 26 },
+      { code: 'ITC', name: 'itraconazole', zone: 24 },
+      { code: 'FLC', name: 'fluconazole', zone: 17 },
+      { code: 'CAS', name: 'caspofungin', zone: 12 },
+    ],
+  },
   fumi: {
     facts: [
       "Fumi's species name, *fumigatus*, means \"smoky,\" for her smoky grey-green colonies.",

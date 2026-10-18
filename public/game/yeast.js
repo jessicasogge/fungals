@@ -1,10 +1,13 @@
 import { touchesDisk } from './antifungal.js';
-import { chainSpot, clusterSpot, R, ROD_LENGTH, ROD_WIDTH } from './attach.js';
+import {
+  chainSpot, CIGAR_LENGTH, CIGAR_SPACING, CIGAR_WIDTH, clusterSpot, R, ROD_LENGTH, ROD_WIDTH,
+} from './attach.js';
 import { GAME } from './config.js';
 import { idlePose, newMover } from './mover.js';
 import { coaster } from './physics.js';
 
-// Budding yeast (Sasha, Candi, Olive, Yara, Peachy): the player stays one cell.
+// Budding yeast (Sasha, Candi, Olive, Yara, Peachy, Maizey): the player
+// stays one cell.
 // Eating grows a bud that pinches off; daughters form clusters up to GROUP_CAP,
 // growing toward where the player budded.
 //
@@ -12,15 +15,21 @@ import { coaster } from './physics.js';
 // chains up to CHAIN_CAP. The player stays level; daughters tilt freely.
 //
 // `peroxisomes` (Peachy): pink peroxisomes inside her cells.
+//
+// `cigars` (Maizey): long cigar-shaped cells that bud from their tips and
+// cluster like the ovals, a little farther apart. The player stays level.
 export function yeastGroup({ mover, svg, species, isPlayer }) {
   const CELL_SIZE = 5; // one cell's width, as a percent of the dish
   const OUTLINE = 1.7; // each cell's outline width, in SVG units
   const { colors } = species;
   const rods = Boolean(species.chains);
+  const cigars = Boolean(species.cigars);
   const perox = Boolean(species.peroxisomes);
-  // How far a cell reaches from its middle, at most: half a rod's length, or
-  // an oval's radius.
-  const CELL_REACH = rods ? ROD_LENGTH / 2 : R;
+  // A long cell (a rod or a cigar) buds from her ends; her length tip to tip.
+  const LONG = rods ? ROD_LENGTH : cigars ? CIGAR_LENGTH : 0;
+  // How far a cell reaches from its middle, at most: half a long cell's
+  // length, or an oval's radius.
+  const CELL_REACH = LONG ? LONG / 2 : R;
 
   const group = {
     mover,
@@ -64,10 +73,10 @@ export function yeastGroup({ mover, svg, species, isPlayer }) {
     const { angle } = group.budding;
     const r = R * budSize();
     const sin = Math.sin(angle);
-    if (rods) {
+    if (LONG) {
       // Out past her end, joined to her where the two rounded tips meet.
-      const half = (ROD_LENGTH / 2) * budSize();
-      const d = ROD_LENGTH / 2 + half * 0.75;
+      const half = (LONG / 2) * budSize();
+      const d = LONG / 2 + half * 0.75;
       return [Math.cos(angle) * d, sin * d, half];
     }
     const edge = R * (1 - (1 - OVAL) * sin * sin); // roughly her oval's edge
@@ -112,11 +121,22 @@ export function yeastGroup({ mover, svg, species, isPlayer }) {
     return `M ${x} ${-h} A ${right} ${h} 0 0 1 ${x} ${h} A ${left} ${h} 0 0 1 ${x} ${-h} Z`;
   }
 
+  // A cigar `l` long and `w` wide, centered on (0, 0) and lying along x,
+  // with rounded tips.
+  function cigarPath(l, w) {
+    const [h, k] = [l / 2, w / 2];
+    return `M ${-h} 0 C ${-h} ${-k * 0.58} ${-h * 0.57} ${-k} 0 ${-k} C ${h * 0.57} ${-k} ${h} ${-k * 0.58} ${h} 0 ` +
+      `C ${h} ${k * 0.58} ${h * 0.57} ${k} 0 ${k} C ${-h * 0.57} ${k} ${-h} ${k * 0.58} ${-h} 0 Z`;
+  }
+
   function cellBody(c) {
     const paint = `fill="${colors.fill}" stroke="${colors.stroke}" stroke-width="${OUTLINE}"`;
     const size = c.grow ?? 1;
-    if (rods) {
-      return `<path class="${c.bud ? 'bud' : 'cell-body'}" d="${eggPath(ROD_LENGTH * size, ROD_WIDTH * size)}" ` +
+    if (LONG) {
+      const d = rods
+        ? eggPath(ROD_LENGTH * size, ROD_WIDTH * size)
+        : cigarPath(CIGAR_LENGTH * size, CIGAR_WIDTH * size);
+      return `<path class="${c.bud ? 'bud' : 'cell-body'}" d="${d}" ` +
         `transform="translate(${c.x} ${c.y}) rotate(${c.tilt ?? 0})" ${paint} />`;
     }
     return `<ellipse class="${c.bud ? 'bud' : 'cell-body'}" cx="0" cy="0" rx="${R * size}" ry="${R * OVAL * size}" ` +
@@ -145,14 +165,26 @@ export function yeastGroup({ mover, svg, species, isPlayer }) {
       '</g>';
   }
 
+  // The glint on a cell. A cigar's is a long streak out toward her tip,
+  // turned with her, so it stays clear of her face.
+  function shine(c) {
+    const size = c.grow ?? 1;
+    if (cigars) {
+      return `<ellipse cx="${-CIGAR_LENGTH * 0.27 * size}" cy="${-CIGAR_WIDTH * 0.24 * size}" ` +
+        `rx="${2.6 * size}" ry="${1 * size}" fill="${colors.highlight}" ` +
+        `transform="translate(${c.x} ${c.y}) rotate(${c.tilt ?? 0})" />`;
+    }
+    return `<circle cx="${c.x - 2.7}" cy="${c.y - 3.2}" r="${1.5 * size}" fill="${colors.highlight}" />`;
+  }
+
   function cellMarkup(c) {
-    let out = cellBody(c) + (rods
-      ? droplets(c)
-      : `<circle cx="${c.x - 2.7}" cy="${c.y - 3.2}" r="${1.5 * (c.grow ?? 1)}" fill="${colors.highlight}" />`);
+    let out = cellBody(c) + (rods ? droplets(c) : shine(c));
     if (perox) out += peroxisomes(c);
     if (c.face) {
       out +=
-        `<g transform="translate(${c.x} ${c.y})">` +
+        // A cigar is slimmer than an oval, so her face is a little smaller
+        // and sits a touch higher, to keep her cheeks inside her outline.
+        `<g transform="translate(${c.x} ${c.y})${cigars ? ' translate(0 -0.6) scale(0.82)' : ''}">` +
         `<circle cx="-3.6" cy="0" r="2" fill="${colors.dark}" />` +
         `<circle cx="3.6" cy="0" r="2" fill="${colors.dark}" />` +
         '<circle cx="-3" cy="-0.6" r="0.75" fill="white" />' +
@@ -220,12 +252,12 @@ export function yeastGroup({ mover, svg, species, isPlayer }) {
     },
     // Start a bud swelling on the player's side (if one isn't already
     // growing): from the top for a gal who always buds from the same end
-    // (Olive), from one end or the other for a rod (Yara), or else pointing
-    // a random way.
+    // (Olive), from one end or the other for a long cell (Yara, Maizey), or
+    // else pointing a random way.
     startBud() {
       let angle = Math.random() * Math.PI * 2;
       if (species.budsFromOneEnd) angle = -Math.PI / 2;
-      else if (rods) angle = Math.random() < 0.5 ? 0 : Math.PI;
+      else if (LONG) angle = Math.random() < 0.5 ? 0 : Math.PI;
       group.budding ??= { ms: 0, angle };
     },
     // Whether her bud has swelled enough to pinch off.
@@ -275,7 +307,7 @@ export function yeastGroup({ mover, svg, species, isPlayer }) {
       };
       const spot = rods
         ? chainSpot(group.cells, px, py, allowed)
-        : clusterSpot(group.cells, group.twist, px, py, allowed);
+        : clusterSpot(group.cells, group.twist, px, py, allowed, cigars ? CIGAR_SPACING : 1);
       if (!spot) return null;
       spot.world = toWorld(spot.x, spot.y);
       return spot;

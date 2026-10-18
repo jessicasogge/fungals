@@ -59,4 +59,10 @@ export const QUIZ_FACTS = {
     "Peachy's species name, *phaffii*, honors the yeast scientist Herman Phaff.",
     "Peachy is now *Komagataella phaffii*, but labs often call her *Pichia pastoris*.",
   ],
+  maizey: [
+    "Maizey causes corn smut, swelling kernels into galls that darken as spores mature.",
+    "In Mexico, Maizey's young galls are eaten as huitlacoche, the \"Mexican truffle.\"",
+    "To infect corn, two Maizey cells with compatible mating types normally fuse first.",
+    "Maizey's species name, *maydis*, means \"of maize,\" another word for corn.",
+  ],
 };

@@ -407,11 +407,30 @@ export const GALS = [
       ${face(97, 102, '#6d1d3f')}
     `,
   },
+  // Maizey: Ustilago maydis, corn smut, drawn as she grows on her own: one
+  // long, cigar-shaped plum cell with a small bud at her tip.
+  {
+    id: 'maizey',
+    name: 'Maizey',
+    looks: 'a plum-colored Ustilago maydis yeast: one long, cigar-shaped cell with a small bud at her tip',
+    motion: 'bob',
+    frames: { home: '12 14 184 184', picker: '16 18 176 176', dish: '12 14 184 184' },
+    art: `
+      <g transform="rotate(-14 92 112)">
+        <!-- a small bud at her tip: she buds from her ends -->
+        <path d="M 158 108 C 158 101 164 98 174 98 C 184 98 190 101 190 108 C 190 115 184 118 174 118 C 164 118 158 115 158 108 Z" fill="#e6d8f2" stroke="#6b3f96" stroke-width="4" />
+        <!-- her long, cigar-shaped cell, rounded at both tips -->
+        <path d="M 22 112 C 22 90 52 74 92 74 C 132 74 162 90 162 112 C 162 134 132 150 92 150 C 52 150 22 134 22 112 Z" fill="#e6d8f2" stroke="#6b3f96" stroke-width="4" />
+        <ellipse cx="58" cy="92" rx="16" ry="6" fill="#f7f0fd" />
+      </g>
+      ${face(93, 110, '#3b1f57')}
+    `,
+  },
 ];
 
 // Yeasts on both ends, with the three molds spread out between them.
 // Phones show only the first six.
-const HOME = ['yara', 'penelope', 'sasha', 'candi', 'miri', 'peachy', 'fumi', 'olive'];
+const HOME = ['yara', 'penelope', 'sasha', 'candi', 'miri', 'peachy', 'maizey', 'fumi', 'olive'];
 export const HOME_GALS = HOME.map((id) => GALS.find((gal) => gal.id === id));
 
 // How many gals fit on one page of the picker: four across, two down.

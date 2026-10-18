@@ -50,6 +50,21 @@ body {
   width: 120px;
 }
 
+/* Wider than a phone, keep every gal on one row: they shrink a little to
+   fit instead of leaving one alone on a second row. */
+@media (min-width: 521px) {
+  .friends {
+    flex-wrap: nowrap;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .friends .gal {
+    flex: 0 1 120px;
+    min-width: 0;
+  }
+}
+
 /* On a phone the gals sit two to a row, so show just the first six (three
    even rows) instead of leaving the last one alone on a row of her own. */
 @media (max-width: 520px) {
@@ -430,6 +445,10 @@ a.gal-card:active {
 
 .peachy {
   background: rgba(252, 213, 227, 0.6);
+}
+
+.maizey {
+  background: rgba(214, 196, 236, 0.75);
 }
 
 .pick-btn {
