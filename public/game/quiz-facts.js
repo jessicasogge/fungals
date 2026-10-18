@@ -60,9 +60,9 @@ export const QUIZ_FACTS = {
     "Peachy is now *Komagataella phaffii*, but labs often call her *Pichia pastoris*.",
   ],
   maizey: [
-    "Maizey is corn smut: she swells corn kernels into big gray galls full of dark spores.",
-    "In Mexico, Maizey's galls are a delicacy called huitlacoche, the \"Mexican truffle.\"",
-    "To infect corn, two Maizey cells of different mating types must fuse first.",
+    "Maizey causes corn smut, swelling kernels into galls that darken as spores mature.",
+    "In Mexico, Maizey's young galls are eaten as huitlacoche, the \"Mexican truffle.\"",
+    "To infect corn, two Maizey cells with compatible mating types normally fuse first.",
     "Maizey's species name, *maydis*, means \"of maize,\" another word for corn.",
   ],
 };
