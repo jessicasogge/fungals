@@ -165,14 +165,26 @@ export function yeastGroup({ mover, svg, species, isPlayer }) {
       '</g>';
   }
 
+  // The glint on a cell. A cigar's is a long streak out toward her tip,
+  // turned with her, so it stays clear of her face.
+  function shine(c) {
+    const size = c.grow ?? 1;
+    if (cigars) {
+      return `<ellipse cx="${-CIGAR_LENGTH * 0.27 * size}" cy="${-CIGAR_WIDTH * 0.24 * size}" ` +
+        `rx="${2.6 * size}" ry="${1 * size}" fill="${colors.highlight}" ` +
+        `transform="translate(${c.x} ${c.y}) rotate(${c.tilt ?? 0})" />`;
+    }
+    return `<circle cx="${c.x - 2.7}" cy="${c.y - 3.2}" r="${1.5 * size}" fill="${colors.highlight}" />`;
+  }
+
   function cellMarkup(c) {
-    let out = cellBody(c) + (rods
-      ? droplets(c)
-      : `<circle cx="${c.x - 2.7}" cy="${c.y - 3.2}" r="${1.5 * (c.grow ?? 1)}" fill="${colors.highlight}" />`);
+    let out = cellBody(c) + (rods ? droplets(c) : shine(c));
     if (perox) out += peroxisomes(c);
     if (c.face) {
       out +=
-        `<g transform="translate(${c.x} ${c.y})">` +
+        // A cigar is slimmer than an oval, so her face is a little smaller
+        // and sits a touch higher, to keep her cheeks inside her outline.
+        `<g transform="translate(${c.x} ${c.y})${cigars ? ' translate(0 -0.6) scale(0.82)' : ''}">` +
         `<circle cx="-3.6" cy="0" r="2" fill="${colors.dark}" />` +
         `<circle cx="3.6" cy="0" r="2" fill="${colors.dark}" />` +
         '<circle cx="-3" cy="-0.6" r="0.75" fill="white" />' +
