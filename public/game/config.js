@@ -195,6 +195,42 @@ export const SPECIES = {
       { code: 'CAS', name: 'caspofungin', zone: 12 },
     ],
   },
+  ruby: {
+    facts: [
+      "Ruby is the \"bleeding tooth fungus\": her fuzzy white cap oozes bright red drops.",
+      "Ruby's red drops aren't blood: she pushes extra sap out through her cap.",
+      "Instead of gills, Ruby has tiny spikes, her \"teeth,\" under her cap that drop spores.",
+      "Ruby lives with pine and spruce trees, trading nutrients with their roots.",
+      "Ruby's red pigment, atromentin, slows blood clotting in lab tests.",
+      "Ruby is hard to grow in a lab dish, because she needs a living tree partner.",
+      "Ruby's young caps are white and fuzzy, and they turn brown as they get older.",
+      "Ruby can grow around twigs and needles, so her cap sometimes holds bits of forest.",
+      "Ruby is a basidiomycete, a mushroom-making cousin of Maizey.",
+      "Ruby's species name, *peckii*, honors the American mycologist Charles Peck.",
+      "Ruby tastes very bitter, so she isn't eaten, but people use her to dye wool.",
+    ],
+    scientific: 'Hydnellum peckii',
+    color: '#b0283a', // for her name above the dish
+    kind: 'mold',
+    // Her colonies bead with red drops as they ripen (see mold.js).
+    drops: true,
+    // All white and red: `fill`/`stroke`/`highlight`/`dark` for her cap and
+    // spore, `spores` for the pink blush in her colonies' middles, and
+    // `drop` for her red drops.
+    colors: {
+      fill: '#fdf4f2', stroke: '#a8323f', highlight: '#ffffff', dark: '#5c1a22', spores: '#e8a0a8', drop: '#e0283a',
+    },
+    // There are no standard disk sizes for Hydnellum, so these are
+    // estimates. Like many basidiomycetes she's thought to shrug off
+    // caspofungin, so its zone is small.
+    antifungals: [
+      { code: 'AMB', name: 'amphotericin B', zone: 18 },
+      { code: 'VOR', name: 'voriconazole', zone: 24 },
+      { code: 'ITC', name: 'itraconazole', zone: 22 },
+      { code: 'POS', name: 'posaconazole', zone: 26 },
+      { code: 'CAS', name: 'caspofungin', zone: 13 },
+    ],
+  },
   fumi: {
     facts: [
       "Fumi's species name, *fumigatus*, means \"smoky,\" for her smoky grey-green colonies.",

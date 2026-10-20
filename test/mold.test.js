@@ -20,7 +20,7 @@ vi.mock('../public/game/touch.js', async (importActual) => ({
 vi.mock('../public/game/spores.js', () => ({ sporeBurst: vi.fn() }));
 vi.mock('../public/game/track.js', () => ({ track: vi.fn() }));
 
-const { colonyRadius, moldColonies, playMold, sporeGroup } = await import('../public/game/mold.js');
+const { colonyRadius, DROPS, moldColonies, playMold, sporeGroup } = await import('../public/game/mold.js');
 const { sporeBurst } = await import('../public/game/spores.js');
 const { track } = await import('../public/game/track.js');
 
@@ -91,6 +91,27 @@ describe('the colonies', () => {
     expect(colony.el.style.getPropertyValue('--spores')).toBe(colors.spores);
     // It counts right away.
     expect(colonies.count()).toBe(1);
+  });
+
+  it("beads Ruby's colonies with red drops, one at a time, as they ripen", () => {
+    const ruby = SPECIES.ruby.colors;
+    const colonies = moldColonies({ layer, nutrients: fakeNutrients(), colors: ruby, drops: true });
+    const colony = colonies.plant(0, 0);
+    const drops = [...colony.el.querySelectorAll('.drop')];
+    const shown = () => drops.filter((d) => d.classList.contains('shown')).length;
+    expect(drops).toHaveLength(DROPS.length);
+    expect(drops[0].style.background).toBeTruthy();
+    expect(shown()).toBe(0);
+    colonies.grow(GAME.COLONY_GROW_SECONDS * 0.6);
+    expect(shown()).toBe(DROPS.filter((d) => d.at <= 0.6).length);
+    expect(shown()).toBeGreaterThan(0);
+    colonies.grow(GAME.COLONY_GROW_SECONDS);
+    expect(shown()).toBe(DROPS.length);
+  });
+
+  it("gives other molds' colonies no drops", () => {
+    const colony = moldColonies({ layer, nutrients: fakeNutrients(), colors }).plant(0, 0);
+    expect(colony.el.querySelector('.drop')).toBeNull();
   });
 
   it('starts one even on top of another, drawn over it', () => {

@@ -451,6 +451,10 @@ a.gal-card:active {
   background: rgba(214, 196, 236, 0.75);
 }
 
+.ruby {
+  background: rgba(250, 222, 222, 0.75);
+}
+
 .pick-btn {
   margin-top: 0.75rem;
   padding: 0.7rem 1rem;
@@ -1129,6 +1133,26 @@ body:not(.picker-page) .signature {
     0 0 0 1px rgba(148, 170, 160, 0.25),
     0 0 5px 2px rgba(255, 255, 255, 0.95);
   animation: sprout 0.4s ease-out;
+}
+
+/* Ruby's red drops, beading up on a colony one at a time as it ripens
+   (mold.js). Each colony's set is turned its own way (--turn). */
+.colony:has(.drop) {
+  rotate: var(--turn, 0deg);
+}
+
+.colony .drop {
+  position: absolute;
+  width: 13%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  box-shadow: inset -1px -1px 0 rgba(0, 0, 0, 0.18), inset 1px 1px 1px rgba(255, 255, 255, 0.7);
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.4s ease-out;
+}
+
+.colony .drop.shown {
+  transform: translate(-50%, -50%) scale(1);
 }
 
 /* Killed by an antifungal: the whole colony pops, swelling and vanishing. */

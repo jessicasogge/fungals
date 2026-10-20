@@ -426,11 +426,44 @@ export const GALS = [
       ${face(93, 110, '#3b1f57')}
     `,
   },
+  // Ruby: Hydnellum peckii, the bleeding tooth fungus: a fuzzy white
+  // mushroom cap beaded with red drops, with spikes ("teeth") underneath. In
+  // the dish she plays like Fumi (see mold.js), and her colonies bead with
+  // red drops as they ripen.
+  {
+    id: 'ruby',
+    name: 'Ruby',
+    looks: 'a white Hydnellum peckii mushroom: a fuzzy cap beaded with bright red drops, with little spikes underneath',
+    motion: 'bob',
+    frames: { home: '14 22 172 172', picker: '18 30 164 164', dish: '50 50 100 100' },
+    art: `
+      <!-- her short, stout stalk -->
+      <rect x="83" y="122" width="34" height="50" rx="12" fill="#f6dcd6" stroke="#a8323f" stroke-width="4" />
+      <!-- teeth: little spikes under her cap, where her spores drop from -->
+      <path d="M38 118 L43.8 132 L49.6 118 L55.4 136 L61.2 118 L67.0 132 L72.8 118 L78.6 136 L84.4 118 L90.2 132 L96.0 118 L101.8 136 L107.6 118 L113.4 132 L119.2 118 L125.0 136 L130.8 118 L136.6 132 L142.4 118 L148.2 136 L154.0 118 L159.8 132 L165.6 118 Z" fill="#f2cbc4" stroke="#a8323f" stroke-width="2.5" stroke-linejoin="round" />
+      <!-- her fuzzy white cap, with a wavy edge -->
+      <path d="M 30 118 C 28 76 62 50 100 50 C 138 50 172 76 170 118 C 158 124 148 116 136 123 C 124 116 112 125 100 119 C 88 125 76 116 64 123 C 52 116 42 124 30 118 Z" fill="#fdf4f2" stroke="#a8323f" stroke-width="4" />
+      <ellipse cx="68" cy="70" rx="14" ry="6" fill="#ffffff" transform="rotate(-20 68 70)" />
+      <!-- bright red drops she oozes from her cap -->
+      <g fill="#e0283a" stroke="#8f1c28" stroke-width="1.6">
+        <circle cx="127" cy="67" r="5" /><circle cx="149" cy="93" r="5" /><circle cx="55" cy="97" r="5" /><circle cx="97" cy="61" r="3.8" />
+      </g>
+      <g fill="#ffd6db"><circle cx="125.5" cy="65.5" r="1.4" /><circle cx="147.5" cy="91.5" r="1.4" /><circle cx="53.5" cy="95.5" r="1.4" /><circle cx="96" cy="60" r="1.1" /></g>
+      ${face(100, 94, '#5c1a22')}
+    `,
+    dishArt: `
+      <!-- a round, warty spore -->
+      <g fill="#e9b4b4"><circle cx="144.0" cy="100.0" r="3" /><circle cx="138.1" cy="122.0" r="3" /><circle cx="122.0" cy="138.1" r="3" /><circle cx="100.0" cy="144.0" r="3" /><circle cx="78.0" cy="138.1" r="3" /><circle cx="61.9" cy="122.0" r="3" /><circle cx="56.0" cy="100.0" r="3" /><circle cx="61.9" cy="78.0" r="3" /><circle cx="78.0" cy="61.9" r="3" /><circle cx="100.0" cy="56.0" r="3" /><circle cx="122.0" cy="61.9" r="3" /><circle cx="138.1" cy="78.0" r="3" /></g>
+      <circle cx="100" cy="100" r="42" fill="#fbe3e1" stroke="#a8323f" stroke-width="4" />
+      <ellipse cx="82" cy="80" rx="9" ry="5" fill="#ffffff" transform="rotate(-25 82 80)" />
+      ${face(100, 104, '#5c1a22')}
+    `,
+  },
 ];
 
 // Yeasts on both ends, with the three molds spread out between them.
 // Phones show only the first six.
-const HOME = ['yara', 'penelope', 'sasha', 'candi', 'miri', 'peachy', 'maizey', 'fumi', 'olive'];
+const HOME = ['yara', 'penelope', 'sasha', 'candi', 'miri', 'peachy', 'ruby', 'maizey', 'fumi', 'olive'];
 export const HOME_GALS = HOME.map((id) => GALS.find((gal) => gal.id === id));
 
 // How many gals fit on one page of the picker: four across, two down.
