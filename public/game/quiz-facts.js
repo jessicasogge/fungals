@@ -66,9 +66,9 @@ export const QUIZ_FACTS = {
     "Maizey's species name, *maydis*, means \"of maize,\" another word for corn.",
   ],
   ruby: [
-    "Ruby is the \"bleeding tooth fungus\": her fuzzy white cap oozes bright red drops.",
-    "Instead of gills, Ruby has tiny spikes, her \"teeth,\" under her cap that drop spores.",
-    "Ruby's red pigment, atromentin, slows blood clotting in lab tests.",
-    "Ruby's species name, *peckii*, honors the American mycologist Charles Peck.",
+    "Ruby is the \"bleeding tooth fungus\": her young white cap oozes bright red drops.",
+    "Instead of gills, Ruby has tiny \"teeth\" under her cap that release spores.",
+    "Ruby's young caps are white and fuzzy, then turn brown as they age.",
+    "Ruby's species name, *peckii*, honors American mycologist Charles Horton Peck.",
   ],
 };
