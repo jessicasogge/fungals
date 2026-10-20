@@ -215,10 +215,10 @@ export const SPECIES = {
     // Her colonies bead with red drops as they ripen (see mold.js).
     drops: true,
     // All white and red: `fill`/`stroke`/`highlight`/`dark` for her cap and
-    // spore, `spores` for the pink blush in her colonies' middles, and
-    // `drop` for her red drops.
+    // spore, `spores` for the warm brown her colonies' middles turn as they
+    // age (like her caps), and `drop` for her red drops.
     colors: {
-      fill: '#fdf4f2', stroke: '#a8323f', highlight: '#ffffff', dark: '#5c1a22', spores: '#e8a0a8', drop: '#e0283a',
+      fill: '#fdf4f2', stroke: '#a8323f', highlight: '#ffffff', dark: '#5c1a22', spores: '#c4917c', drop: '#e0283a',
     },
     // There are no standard disk sizes for Hydnellum, so these are
     // estimates. Like many basidiomycetes she's thought to shrug off

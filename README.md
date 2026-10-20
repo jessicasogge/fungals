@@ -21,7 +21,7 @@ Watch out for the disks: **a colony that touches an antifungal disk, or its zone
 
 ### Penelope, Miri and Ruby play like Fumi
 
-Penelope (*Penicillium rubens*), the penicillin mold, plays exactly like Fumi: you're a spore, each nutrient starts a colony, and you grow the same number of colonies each level. Her colonies turn denim blue in the middle, with a white fluffy edge. Miri (*Aspergillus oryzae*), the koji mold, plays the same way; her colonies turn olive yellow-green. Ruby (*Hydnellum peckii*), the bleeding tooth fungus, is a mushroom but plays the same way too: her white, fuzzy colonies blush pink in the middle and bead with red drops as they ripen.
+Penelope (*Penicillium rubens*), the penicillin mold, plays exactly like Fumi: you're a spore, each nutrient starts a colony, and you grow the same number of colonies each level. Her colonies turn denim blue in the middle, with a white fluffy edge. Miri (*Aspergillus oryzae*), the koji mold, plays the same way; her colonies turn olive yellow-green. Ruby (*Hydnellum peckii*), the bleeding tooth fungus, is a mushroom but plays the same way too: her colonies look like little white caps from above, browning in the middle and beading with red drops as they ripen.
 
 ### Who’s That Gal?
 
