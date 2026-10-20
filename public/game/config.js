@@ -214,9 +214,6 @@ export const SPECIES = {
     kind: 'mold',
     // Her colonies bead with red drops as they ripen (see mold.js).
     drops: true,
-    // All white and red: `fill`/`stroke`/`highlight`/`dark` for her cap and
-    // spore, `spores` for the warm brown her colonies' middles turn as they
-    // age (like her caps), and `drop` for her red drops.
     colors: {
       fill: '#fdf4f2', stroke: '#a8323f', highlight: '#ffffff', dark: '#5c1a22', spores: '#c4917c', drop: '#e0283a',
     },
