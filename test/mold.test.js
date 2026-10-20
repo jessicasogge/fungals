@@ -99,7 +99,7 @@ describe('the colonies', () => {
     const colony = colonies.plant(0, 0);
     const drops = [...colony.el.querySelectorAll('.drop')];
     const shown = () => drops.filter((d) => d.classList.contains('shown')).length;
-    expect(DROPS).toHaveLength(4);
+    expect(DROPS).toHaveLength(3);
     expect(drops).toHaveLength(DROPS.length);
     expect(drops[0].style.background).toBeTruthy();
     expect(shown()).toBe(0);
