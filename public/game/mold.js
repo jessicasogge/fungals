@@ -20,8 +20,17 @@ export function colonyRadius(seconds) {
 
 // Colonies: `layer` draws them; `nutrients` seed new ones, even underneath.
 // `colors` are the gal's palette; `spores` colors their centers.
-// Positions and sizes use fractions of the dish radius.
-export function moldColonies({ layer, disks = [], nutrients, colors }) {
+// With `drops` (Ruby), each colony beads with red drops, one at a time, as
+// it ripens. Positions and sizes use fractions of the dish radius.
+export const DROPS = [
+  // Where each drop sits on the colony (percent across and down), and how
+  // ripe the colony is when it appears.
+  { x: 50, y: 35, at: 0.4 },
+  { x: 63, y: 59, at: 0.65 },
+  { x: 37, y: 59, at: 0.9 },
+];
+
+export function moldColonies({ layer, disks = [], nutrients, colors, drops = false }) {
   const colonies = [];
 
   function draw(colony) {
@@ -33,6 +42,7 @@ export function moldColonies({ layer, disks = [], nutrients, colors }) {
     // rest stays white and fluffy.
     const ripe = Math.min(1, colony.age / GAME.COLONY_GROW_SECONDS);
     el.style.setProperty('--ripe', `${Math.round(ripe * 40)}%`);
+    for (const drop of colony.drops) drop.el.classList.toggle('shown', ripe >= drop.at);
   }
 
   function remove(colony) {
@@ -55,7 +65,21 @@ export function moldColonies({ layer, disks = [], nutrients, colors }) {
       const wobble = () => `${47 + Math.random() * 6}%`;
       el.style.borderRadius =
         `${wobble()} ${wobble()} ${wobble()} ${wobble()} / ${wobble()} ${wobble()} ${wobble()} ${wobble()}`;
-      const colony = { fx, fy, r: colonyRadius(0), age: 0, el };
+      const colony = { fx, fy, r: colonyRadius(0), age: 0, el, drops: [] };
+      if (drops) {
+        // Each colony's drops sit at their own turn around its middle.
+        const turn = Math.random() * Math.PI * 2;
+        const [cos, sin] = [Math.cos(turn), Math.sin(turn)];
+        for (const { x, y, at } of DROPS) {
+          const drop = document.createElement('span');
+          drop.className = 'drop';
+          drop.style.left = `${(50 + (x - 50) * cos - (y - 50) * sin).toFixed(1)}%`;
+          drop.style.top = `${(50 + (x - 50) * sin + (y - 50) * cos).toFixed(1)}%`;
+          drop.style.background = colors.drop;
+          el.appendChild(drop);
+          colony.drops.push({ el: drop, at });
+        }
+      }
       draw(colony);
       layer.appendChild(el);
       colonies.push(colony);
@@ -136,7 +160,7 @@ export function playMold(galEl, species, nutrients, disks, { level = 1, target =
   const layer = document.createElement('div');
   layer.className = 'colonies';
   agar.prepend(layer);
-  const colonies = moldColonies({ layer, disks, nutrients, colors: species.colors });
+  const colonies = moldColonies({ layer, disks, nutrients, colors: species.colors, drops: Boolean(species.drops) });
 
   let finished = false;
   let lastTime = null;

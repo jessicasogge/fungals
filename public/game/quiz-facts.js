@@ -65,4 +65,10 @@ export const QUIZ_FACTS = {
     "To infect corn, two Maizey cells with compatible mating types normally fuse first.",
     "Maizey's species name, *maydis*, means \"of maize,\" another word for corn.",
   ],
+  ruby: [
+    "Ruby is the \"bleeding tooth fungus\": her young white cap oozes bright red drops.",
+    "Instead of gills, Ruby has tiny \"teeth\" under her cap that release spores.",
+    "Ruby's young caps are white and fuzzy, then turn brown as they age.",
+    "Ruby's species name, *peckii*, honors American mycologist Charles Horton Peck.",
+  ],
 };

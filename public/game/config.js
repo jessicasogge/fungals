@@ -195,6 +195,39 @@ export const SPECIES = {
       { code: 'CAS', name: 'caspofungin', zone: 12 },
     ],
   },
+  ruby: {
+    facts: [
+      "Ruby is the \"bleeding tooth fungus\": her young white cap oozes bright red drops.",
+      "Ruby's red drops aren't blood: they're watery fluid released by \"guttation.\"",
+      "Instead of gills, Ruby has tiny \"teeth\" under her cap that release spores.",
+      "Ruby lives with pine and spruce trees, trading nutrients with their roots.",
+      "Atromentin, a pigment linked to Ruby, has slowed blood clotting in lab tests.",
+      "Ruby gets sugars from tree roots and helps her tree partner gather soil nutrients.",
+      "Ruby's young caps are white and fuzzy, and they turn brown as they get older.",
+      "Ruby can grow around forest litter, trapping little bits as she grows.",
+      "Ruby is a basidiomycete, a mushroom-making cousin of Maizey.",
+      "Ruby's species name, *peckii*, honors American mycologist Charles Horton Peck.",
+      "Ruby is too acrid to eat, but people use her to dye wool.",
+    ],
+    scientific: 'Hydnellum peckii',
+    color: '#b0283a', // for her name above the dish
+    kind: 'mold',
+    // Her colonies bead with red drops as they ripen (see mold.js).
+    drops: true,
+    colors: {
+      fill: '#fdf4f2', stroke: '#a8323f', highlight: '#ffffff', dark: '#5c1a22', spores: '#c4917c', drop: '#e0283a',
+    },
+    // There are no standard disk sizes for Hydnellum, so these are
+    // estimates. Like many basidiomycetes she's thought to shrug off
+    // caspofungin, so its zone is small.
+    antifungals: [
+      { code: 'AMB', name: 'amphotericin B', zone: 18 },
+      { code: 'VOR', name: 'voriconazole', zone: 24 },
+      { code: 'ITC', name: 'itraconazole', zone: 22 },
+      { code: 'POS', name: 'posaconazole', zone: 26 },
+      { code: 'CAS', name: 'caspofungin', zone: 13 },
+    ],
+  },
   fumi: {
     facts: [
       "Fumi's species name, *fumigatus*, means \"smoky,\" for her smoky grey-green colonies.",
