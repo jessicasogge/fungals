@@ -459,11 +459,48 @@ export const GALS = [
       ${face(100, 104, '#5c1a22')}
     `,
   },
+  // Rosie: Sporothrix schenckii, behind "rose gardener's disease": her
+  // spore stalk with a crown of teardrop spores at its tip and dark spores
+  // along her thread. In the dish she plays like Fumi (see mold.js), and her
+  // colonies darken and wrinkle as they ripen.
+  {
+    id: 'rosie',
+    name: 'Rosie',
+    looks: 'a Sporothrix schenckii mold: a short stalk crowned with a fan of cream and dusty-rose teardrop spores, with dark spores along her thread',
+    motion: 'bob',
+    frames: { home: '10 10 180 180', picker: '14 14 172 172', dish: '50 50 100 100' },
+    art: `
+      <!-- her thread (hypha) along the agar, and the short stalk (conidiophore) rising from it -->
+      <g fill="none" stroke-linecap="round">
+      <path d="M 18 156 C 56 146 78 168 100 160 C 124 151 152 166 186 150" stroke="#3d3632" stroke-width="9" />
+      <path d="M 100 160 C 96 144 104 128 100 109" stroke="#3d3632" stroke-width="9" />
+      <path d="M 18 156 C 56 146 78 168 100 160 C 124 151 152 166 186 150" stroke="#f4ece6" stroke-width="4" />
+      <path d="M 100 160 C 96 144 104 128 100 109" stroke="#f4ece6" stroke-width="4" />
+      </g>
+      <!-- dark, cocoa spores that grow straight on the thread -->
+      <g fill="#6b5548" stroke="#3d3632" stroke-width="2.2"><ellipse cx="40" cy="148.5" rx="8" ry="5.2" transform="rotate(-18 40 148.5)" /><ellipse cx="64" cy="154.5" rx="8" ry="5.2" transform="rotate(12 64 154.5)" /><ellipse cx="140" cy="152.5" rx="8" ry="5.2" transform="rotate(-10 140 152.5)" /><ellipse cx="164" cy="145.5" rx="8" ry="5.2" transform="rotate(20 164 145.5)" /></g>
+      <!-- short attachments at her tip, where her spores sit -->
+      <g stroke="#3d3632" stroke-width="2.6" stroke-linecap="round"><path d="M73.4 86.7 L68.5 87.6" /><path d="M73.7 75.9 L67.4 74.5" /><path d="M78.2 66.1 L73.7 62.9" /><path d="M86.1 58.9 L82.5 52.9" /><path d="M95.3 55.4 L94.4 50.0" /><path d="M105.2 55.5 L106.5 48.6" /><path d="M114.3 59.1 L117.2 54.4" /><path d="M122.1 66.5 L127.4 62.8" /><path d="M126.4 76.4 L131.3 75.3" /><path d="M126.6 86.7 L132.5 87.7" /></g>
+      <!-- her crown: a loose fan of teardrop spores, a few in dusty rose -->
+      <g stroke="#3d3632" stroke-width="2.8" stroke-linejoin="round"><path d="M 0 7.5 C 6.9 3.4 6.9 -7.5 0 -7.5 C -6.9 -7.5 -6.9 3.4 0 7.5 Z" fill="#f4ece6" transform="translate(62.6 88.6) rotate(-100)" /><path d="M 0 8.5 C 7.8 3.8 7.8 -8.5 0 -8.5 C -7.8 -8.5 -7.8 3.8 0 8.5 Z" fill="#e8c6c4" transform="translate(60.5 72.9) rotate(-77)" /><path d="M 0 9.0 C 8.3 4.0 8.3 -9.0 0 -9.0 C -8.3 -9.0 -8.3 4.0 0 9.0 Z" fill="#f4ece6" transform="translate(67.6 58.5) rotate(-54)" /><path d="M 0 9.5 C 8.7 4.3 8.7 -9.5 0 -9.5 C -8.7 -9.5 -8.7 4.3 0 9.5 Z" fill="#f4ece6" transform="translate(78.4 46.0) rotate(-31)" /><path d="M 0 9.8 C 9.0 4.4 9.0 -9.8 0 -9.8 C -9.0 -9.8 -9.0 4.4 0 9.8 Z" fill="#e8c6c4" transform="translate(92.9 41.9) rotate(-10)" /><path d="M 0 9.8 C 9.0 4.4 9.0 -9.8 0 -9.8 C -9.0 -9.8 -9.0 4.4 0 9.8 Z" fill="#f4ece6" transform="translate(108.1 40.5) rotate(11)" /><path d="M 0 9.5 C 8.7 4.3 8.7 -9.5 0 -9.5 C -8.7 -9.5 -8.7 4.3 0 9.5 Z" fill="#f4ece6" transform="translate(121.5 47.7) rotate(32)" /><path d="M 0 9.0 C 8.3 4.0 8.3 -9.0 0 -9.0 C -8.3 -9.0 -8.3 4.0 0 9.0 Z" fill="#e8c6c4" transform="translate(133.6 58.5) rotate(55)" /><path d="M 0 8.5 C 7.8 3.8 7.8 -8.5 0 -8.5 C -7.8 -8.5 -7.8 3.8 0 8.5 Z" fill="#f4ece6" transform="translate(138.1 73.9) rotate(78)" /><path d="M 0 7.5 C 6.9 3.4 6.9 -7.5 0 -7.5 C -6.9 -7.5 -6.9 3.4 0 7.5 Z" fill="#f4ece6" transform="translate(138.4 88.8) rotate(100)" /></g>
+      <!-- her round tip, with her face -->
+      <circle cx="100" cy="82" r="27" fill="#f8f3ee" stroke="#3d3632" stroke-width="4" />
+      <ellipse cx="88" cy="69" rx="7" ry="3.6" fill="#ffffff" transform="rotate(-25 88 69)" />
+      <!-- her own, slightly smaller face, to fit her round tip -->
+      <g class="face"><circle cx="91" cy="84" r="5" fill="#1f1a17" /><circle cx="109" cy="84" r="5" fill="#1f1a17" /><circle cx="92.6" cy="82.4" r="1.7" fill="white" /><circle cx="110.6" cy="82.4" r="1.7" fill="white" /><ellipse cx="84" cy="93" rx="4.6" ry="2.7" fill="#f9a8d4" opacity="0.95" /><ellipse cx="116" cy="93" rx="4.6" ry="2.7" fill="#f9a8d4" opacity="0.95" /><path d="M95 93 Q100 98 105 93" stroke="#1f1a17" stroke-width="2.8" fill="none" stroke-linecap="round" /></g>
+    `,
+    dishArt: `
+      <!-- one small, oval spore (conidium) -->
+      <ellipse cx="100" cy="100" rx="38" ry="44" fill="#f4ece6" stroke="#3d3632" stroke-width="4" />
+      <ellipse cx="84" cy="78" rx="8" ry="4.5" fill="#ffffff" transform="rotate(-25 84 78)" />
+      ${face(100, 104, '#1f1a17')}
+    `,
+  },
 ];
 
 // Yeasts on both ends, with the three molds spread out between them.
 // Phones show only the first six.
-const HOME = ['yara', 'penelope', 'sasha', 'candi', 'miri', 'peachy', 'ruby', 'maizey', 'fumi', 'olive'];
+const HOME = ['yara', 'penelope', 'sasha', 'rosie', 'candi', 'miri', 'peachy', 'ruby', 'maizey', 'fumi', 'olive'];
 export const HOME_GALS = HOME.map((id) => GALS.find((gal) => gal.id === id));
 
 // How many gals fit on one page of the picker: four across, two down.

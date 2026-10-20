@@ -71,4 +71,10 @@ export const QUIZ_FACTS = {
     "Ruby's young caps are white and fuzzy, then turn brown as they age.",
     "Ruby's species name, *peckii*, honors American mycologist Charles Horton Peck.",
   ],
+  rosie: [
+    "Rosie causes \"rose gardener's disease\" by sneaking into skin through a thorn prick.",
+    "Rosie's infections often spread up the arm as a line of bumps along lymph vessels.",
+    "Rosie's cousin, *Sporothrix brasiliensis*, spreads between cats and people in Brazil.",
+    "Rosie's genus name, *Sporothrix*, means \"spore hair,\" for her thin spore threads.",
+  ],
 };

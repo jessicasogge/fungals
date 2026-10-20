@@ -228,6 +228,40 @@ export const SPECIES = {
       { code: 'CAS', name: 'caspofungin', zone: 13 },
     ],
   },
+  rosie: {
+    facts: [
+      "Rosie causes \"rose gardener's disease\" by sneaking into skin through a thorn prick.",
+      "Rosie lives in soil, moss, hay and on plants like rose bushes.",
+      "Rosie's tiny spores crowd into little bunches at the tips of her threads.",
+      "Rosie also makes dark spores that sit right along her threads.",
+      "Rosie is two-faced: a mold in cool soil, but a budding yeast in a warm body.",
+      "Rosie's colonies start cream and turn wrinkly and dark brown-black as they age.",
+      "Rosie's dark color comes from melanin, the same kind of pigment that colors our skin.",
+      "Rosie's infections often spread up the arm as a line of bumps along lymph vessels.",
+      "Itraconazole is the usual medicine for Rosie's infections.",
+      "Rosie's cousin, *Sporothrix brasiliensis*, spreads between cats and people in Brazil.",
+      "Rosie's genus name, *Sporothrix*, means \"spore hair,\" for her thin spore threads.",
+    ],
+    scientific: 'Sporothrix schenckii',
+    color: '#3d3632', // for her name above the dish
+    kind: 'mold',
+    // Her colonies darken and wrinkle as they ripen (see mold.js).
+    wrinkled: true,
+    // Cream and charcoal-brown: `fill`/`stroke`/`highlight`/`dark` for her
+    // stalk, crown and spore, and `spores` for the dark brown-black her
+    // colonies turn from the middle out.
+    colors: { fill: '#f4ece6', stroke: '#3d3632', highlight: '#ffffff', dark: '#1f1a17', spores: '#3d3632' },
+    // There are no standard disk sizes for Sporothrix, so these are
+    // estimates. Itraconazole is her usual treatment and terbinafine works
+    // well too; fluconazole works poorly on her, so its zone is small.
+    antifungals: [
+      { code: 'ITC', name: 'itraconazole', zone: 28 },
+      { code: 'TRB', name: 'terbinafine', zone: 26 },
+      { code: 'AMB', name: 'amphotericin B', zone: 20 },
+      { code: 'POS', name: 'posaconazole', zone: 22 },
+      { code: 'FLC', name: 'fluconazole', zone: 12 },
+    ],
+  },
   fumi: {
     facts: [
       "Fumi's species name, *fumigatus*, means \"smoky,\" for her smoky grey-green colonies.",
