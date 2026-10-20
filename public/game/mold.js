@@ -69,14 +69,14 @@ export function moldColonies({ layer, disks = [], nutrients, colors, drops = fal
         `${wobble()} ${wobble()} ${wobble()} ${wobble()} / ${wobble()} ${wobble()} ${wobble()} ${wobble()}`;
       const colony = { fx, fy, r: colonyRadius(0), age: 0, el, drops: [] };
       if (drops) {
-        // Each colony's drops sit at a slightly different turn.
-        const turn = Math.floor(Math.random() * 360);
-        el.style.setProperty('--turn', `${turn}deg`);
+        // Each colony's drops sit at their own turn around its middle.
+        const turn = Math.random() * Math.PI * 2;
+        const [cos, sin] = [Math.cos(turn), Math.sin(turn)];
         for (const { x, y, at } of DROPS) {
           const drop = document.createElement('span');
           drop.className = 'drop';
-          drop.style.left = `${x}%`;
-          drop.style.top = `${y}%`;
+          drop.style.left = `${(50 + (x - 50) * cos - (y - 50) * sin).toFixed(1)}%`;
+          drop.style.top = `${(50 + (x - 50) * sin + (y - 50) * cos).toFixed(1)}%`;
           drop.style.background = colors.drop;
           el.appendChild(drop);
           colony.drops.push({ el: drop, at });

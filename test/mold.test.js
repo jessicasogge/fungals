@@ -109,6 +109,22 @@ describe('the colonies', () => {
     expect(shown()).toBe(DROPS.length);
   });
 
+  it("keeps Ruby's colonies where they started as they grow", () => {
+    const colonies = moldColonies({ layer, nutrients: fakeNutrients(), colors: SPECIES.ruby.colors, drops: true });
+    const colony = colonies.plant(0.3, -0.2);
+    colonies.grow(GAME.COLONY_GROW_SECONDS);
+    expect(colony.el.style.left).toBe('65%');
+    expect(colony.el.style.top).toBe('40%');
+    // Turning her drops moves only the drops, never the colony itself.
+    expect(colony.el.style.rotate).toBe('');
+    for (const drop of colony.el.querySelectorAll('.drop')) {
+      for (const at of [drop.style.left, drop.style.top]) {
+        expect(parseFloat(at)).toBeGreaterThan(10);
+        expect(parseFloat(at)).toBeLessThan(90);
+      }
+    }
+  });
+
   it("gives other molds' colonies no drops", () => {
     const colony = moldColonies({ layer, nutrients: fakeNutrients(), colors }).plant(0, 0);
     expect(colony.el.querySelector('.drop')).toBeNull();
