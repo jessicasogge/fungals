@@ -25,11 +25,10 @@ export function colonyRadius(seconds) {
 export const DROPS = [
   // Where each drop sits on the colony (percent across and down), and how
   // ripe the colony is when it appears.
-  { x: 38, y: 34, at: 0.35 },
-  { x: 64, y: 42, at: 0.5 },
-  { x: 44, y: 64, at: 0.65 },
-  { x: 66, y: 66, at: 0.8 },
-  { x: 30, y: 52, at: 0.95 },
+  { x: 38, y: 36, at: 0.35 },
+  { x: 64, y: 40, at: 0.55 },
+  { x: 40, y: 63, at: 0.75 },
+  { x: 63, y: 65, at: 0.95 },
 ];
 
 export function moldColonies({ layer, disks = [], nutrients, colors, drops = false }) {
