@@ -455,6 +455,10 @@ a.gal-card:active {
   background: rgba(250, 222, 222, 0.75);
 }
 
+.rosie {
+  background: rgba(226, 222, 217, 0.85);
+}
+
 .pick-btn {
   margin-top: 0.75rem;
   padding: 0.7rem 1rem;
@@ -1164,6 +1168,22 @@ body:not(.picker-page) .signature {
 
 .colony .drop.shown {
   transform: translate(-50%, -50%) scale(1);
+}
+
+/* Rosie's colonies: cream at first, then darkening to a dark brown-black
+   from the middle out (her --spores color) with wrinkly folds, the way
+   Sporothrix colonies age on a real plate. */
+.colony.wrinkled {
+  background:
+    repeating-conic-gradient(rgba(255, 250, 244, 0.13) 0 2deg, transparent 2deg 19deg),
+    radial-gradient(circle, color-mix(in srgb, var(--spores) 90%, white) 0 calc(var(--ripe, 0%) * 0.6),
+      color-mix(in srgb, var(--spores) 50%, white) calc(var(--ripe, 0%) * 1.2), transparent calc(var(--ripe, 0%) * 1.6)),
+    repeating-conic-gradient(rgba(45, 34, 28, 0.16) 0 3deg, transparent 3deg 17deg),
+    repeating-radial-gradient(circle, transparent 0 12%, rgba(90, 72, 60, 0.12) 13.5% 15%, transparent 16.5%),
+    radial-gradient(circle, #f6f0e6 0 70%, #fbf8f2 90%, rgba(255, 255, 255, 0.8) 100%);
+  box-shadow:
+    0 0 0 1px rgba(110, 90, 76, 0.3),
+    0 0 4px 1px rgba(255, 255, 255, 0.9);
 }
 
 /* Killed by an antifungal: the whole colony pops, swelling and vanishing. */

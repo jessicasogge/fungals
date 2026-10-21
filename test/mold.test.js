@@ -126,6 +126,14 @@ describe('the colonies', () => {
     }
   });
 
+  it("draws Rosie's colonies wrinkled, darkening to her brown-black", () => {
+    const colonies = moldColonies({ layer, nutrients: fakeNutrients(), colors: SPECIES.rosie.colors, wrinkled: true });
+    const colony = colonies.plant(0, 0);
+    expect(colony.el.classList).toContain('wrinkled');
+    expect(colony.el.style.getPropertyValue('--spores')).toBe(SPECIES.rosie.colors.spores);
+    expect(moldColonies({ layer, nutrients: fakeNutrients(), colors }).plant(0, 0).el.classList).not.toContain('wrinkled');
+  });
+
   it("gives other molds' colonies no drops", () => {
     const colony = moldColonies({ layer, nutrients: fakeNutrients(), colors }).plant(0, 0);
     expect(colony.el.querySelector('.drop')).toBeNull();
