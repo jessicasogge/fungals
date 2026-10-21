@@ -72,9 +72,9 @@ export const QUIZ_FACTS = {
     "Ruby's species name, *peckii*, honors American mycologist Charles Horton Peck.",
   ],
   rosie: [
-    "Rosie causes \"rose gardener's disease\" by sneaking into skin through a thorn prick.",
-    "Rosie's infections often spread up the arm as a line of bumps along lymph vessels.",
-    "Rosie's cousin, *Sporothrix brasiliensis*, spreads between cats and people in Brazil.",
-    "Rosie's genus name, *Sporothrix*, means \"spore hair,\" for her thin spore threads.",
+    "Rosie can cause \"rose gardener's disease\" after entering skin through a thorn prick.",
+    "Rosie's skin infections can form a line of bumps up an arm along lymph vessels.",
+    "In Brazil, Rosie's cousin *Sporothrix brasiliensis* spreads from cats to people.",
+    "Rosie's genus name, *Sporothrix*, comes from words meaning \"spore\" and \"hair\".",
   ],
 };
