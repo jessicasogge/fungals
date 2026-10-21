@@ -1,5 +1,5 @@
 // Checks the things every page shares: the FunGals tab icon (not the
-// browser's generic globe) and Jess's signature at the foot.
+// browser's generic globe), the home-screen icon, and Jess's signature at the foot.
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 
@@ -11,6 +11,19 @@ describe('tab icon', () => {
     const html = readFileSync(file(page), 'utf8');
     expect(html).toContain('<link rel="icon" href="./favicon.svg" type="image/svg+xml" />');
     expect(html).toContain('<link rel="icon" href="./favicon-32.png" type="image/png" sizes="32x32" />');
+  });
+
+  it.each(PAGES)('%s links the home-screen icon, named FunGals', (page) => {
+    const html = readFileSync(file(page), 'utf8');
+    expect(html).toContain('<link rel="apple-touch-icon" href="./apple-touch-icon.png" />');
+    expect(html).toContain('<meta name="apple-mobile-web-app-title" content="FunGals" />');
+  });
+
+  it('has a 180 x 180 home-screen icon with no see-through parts', () => {
+    const png = readFileSync(file('apple-touch-icon.png'));
+    expect(png.readUInt32BE(16)).toBe(180); // width, from the PNG header
+    expect(png.readUInt32BE(20)).toBe(180); // height
+    expect(png[25]).toBe(2); // plain RGB, no alpha: iOS fills see-through parts with black
   });
 
   it('has both icon files', () => {
