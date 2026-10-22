@@ -264,25 +264,23 @@ export const SPECIES = {
   },
   neve: {
     facts: [
-      "Neve wears a thick sugar coat, her capsule, that shows up as a bright halo in ink.",
-      "Neve's capsule helps her hide from the immune system, her main trick for causing disease.",
-      "Neve lives in soil and old pigeon droppings, and people catch her by breathing her in.",
-      "Neve can cause meningitis, mostly in people with weakened immune systems.",
-      "Neve buds through a narrow neck, unlike Olive's wide one.",
+      "Neve's sugar capsule appears as a clear halo against dark India ink.",
+      "Neve's capsule helps protect her from the immune system.",
+      "Neve lives in soil and old pigeon droppings, and infection starts by breathing her in.",
+      "Neve can cause meningitis, especially in people with weakened immune systems.",
+      "Neve makes buds attached by a narrow neck.",
       "Neve can grow at body temperature, 37 °C, which helps her cause disease.",
-      "Neve makes melanin, a dark pigment that protects her like a suit of armor.",
-      "On birdseed agar, Neve's melanin turns her colonies brown, a classic lab test.",
+      "Neve makes melanin, a dark pigment that helps protect her from damage.",
+      "On birdseed agar, Neve makes melanin that turns her colonies brown.",
       "Neve is a basidiomycete, a yeast cousin of Maizey and Ruby.",
-      "Doctors treat Neve with amphotericin B and flucytosine, then fluconazole.",
-      "Echinocandin drugs like caspofungin don't work on Neve at all.",
-      "Neve's species name, *neoformans*, means \"new form.\"",
+      "Neve's meningitis is treated with amphotericin B and flucytosine, then fluconazole.",
+      "Neve is naturally resistant to echinocandin drugs like caspofungin.",
+      "Neve's species name, *neoformans*, means \"new-forming.\"",
     ],
     scientific: 'Cryptococcus neoformans',
     color: '#0e7490', // for her name above the dish
     kind: 'yeast',
-    // Round cells, each in a thick, glossy capsule (see yeast.js).
     capsule: true,
-    // Cream and deep cyan; `capsule` is her capsule's soft rim.
     colors: { fill: '#fbf6ea', stroke: '#0e7490', highlight: '#ffffff', dark: '#0b3b46', capsule: '#c9e6eb' },
     // There are no standard disk sizes for Cryptococcus, so these are
     // estimates. She's treated with amphotericin B and flucytosine, then
