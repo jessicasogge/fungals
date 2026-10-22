@@ -507,12 +507,12 @@ export const GALS = [
     frames: { home: '14 14 176 176', picker: '18 18 168 168', dish: '14 14 176 176' },
     art: `
       <!-- her capsule: a thick, glossy, see-through sugar coat, the bright halo
-           you see around her in ink. The bud has a thinner one of its own. -->
+           you see around her in ink. The bud has one of its own. -->
       <circle cx="94" cy="110" r="70" fill="#ffffff" fill-opacity="0.55" stroke="#c9e6eb" stroke-width="3.5" />
-      <circle cx="137.9" cy="69.5" r="24" fill="#ffffff" fill-opacity="0.55" stroke="#c9e6eb" stroke-width="3" />
+      <circle cx="137.9" cy="69.5" r="31" fill="#ffffff" fill-opacity="0.55" stroke="#c9e6eb" stroke-width="3" />
       <path d="M40 92 Q50 58 84 46" stroke="#ffffff" stroke-width="4.5" fill="none" stroke-linecap="round" opacity="0.95" />
       <circle cx="146" cy="150" r="3.2" fill="#ffffff" opacity="0.95" />
-      <path d="M125.9 57.5 Q131.9 50.5 140.9 49.5" stroke="#ffffff" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.95" />
+      <path d="M120 51.5 Q127 42 138.5 40.5" stroke="#ffffff" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.95" />
       <!-- her round cell and her small bud, still joined by a narrow neck: she
            buds through a small opening, not a wide one like Olive's. Both
            outlines go down first, then both fills on top, so the two read as
