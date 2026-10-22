@@ -96,8 +96,6 @@ export const CIGAR_LENGTH = R * 2.4;
 export const CIGAR_WIDTH = R * 1.25;
 export const CIGAR_SPACING = 1.35;
 
-// Neve's capsule: a glossy coat CAPSULE times her cell's radius. Her
-// clusters are spaced CAPSULE_SPACING times as far apart, so the capsules
-// touch instead of the cells.
+// Neve's capsule
 export const CAPSULE = 1.5;
 export const CAPSULE_SPACING = 1.4;
