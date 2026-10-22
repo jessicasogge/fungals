@@ -281,7 +281,11 @@ export const SPECIES = {
     color: '#0e7490', // for her name above the dish
     kind: 'yeast',
     capsule: true,
-    colors: { fill: '#fbf6ea', stroke: '#0e7490', highlight: '#ffffff', dark: '#0b3b46', capsule: '#c9e6eb' },
+    // `capsule` is her capsule's rim and `capsuleFill` its faint cyan tint,
+    // so in the dish her cells stand out a little from the white disks.
+    colors: {
+      fill: '#fbf6ea', stroke: '#0e7490', highlight: '#ffffff', dark: '#0b3b46', capsule: '#a8d6de', capsuleFill: '#e3f5f8',
+    },
     // There are no standard disk sizes for Cryptococcus, so these are
     // estimates. She's treated with amphotericin B and flucytosine, then
     // fluconazole. Echinocandins like caspofungin don't work on her at all,

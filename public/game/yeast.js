@@ -211,15 +211,15 @@ export function yeastGroup({ mover, svg, species, isPlayer }) {
     return cellMarkup({ x: bx, y: by, grow: budSize(), tilt: 0, bud: true });
   }
 
-  // Neve's capsule around a cell: see-through white with a soft rim and a
-  // curved shine, like Pearl's in PetriPals.
+  // Neve's capsule around a cell: see-through, faintly tinted, with a soft
+  // rim and a curved white shine, like Pearl's in PetriPals.
   function capsuleMarkup(c) {
     const r = R * CAPSULE * (c.grow ?? 1);
     const [a1, a2] = [Math.PI * 1.08, Math.PI * 1.42];
     const [sx, sy, ex, ey] = [Math.cos(a1), Math.sin(a1), Math.cos(a2), Math.sin(a2)]
       .map((v) => v * r * 0.8);
-    return `<circle class="capsule" cx="${c.x}" cy="${c.y}" r="${r}" fill="#ffffff" fill-opacity="0.55" ` +
-      `stroke="${colors.capsule}" stroke-width="1.3" />` +
+    return `<circle class="capsule" cx="${c.x}" cy="${c.y}" r="${r}" fill="${colors.capsuleFill}" fill-opacity="0.7" ` +
+      `stroke="${colors.capsule}" stroke-width="1.5" />` +
       `<path d="M ${c.x + sx} ${c.y + sy} A ${r * 0.8} ${r * 0.8} 0 0 1 ${c.x + ex} ${c.y + ey}" ` +
       'stroke="#ffffff" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.95" />';
   }
