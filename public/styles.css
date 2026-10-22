@@ -459,6 +459,10 @@ a.gal-card:active {
   background: rgba(226, 222, 217, 0.85);
 }
 
+.neve {
+  background: rgba(207, 238, 242, 0.75);
+}
+
 .pick-btn {
   margin-top: 0.75rem;
   padding: 0.7rem 1rem;

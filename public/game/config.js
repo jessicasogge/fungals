@@ -262,6 +262,40 @@ export const SPECIES = {
       { code: 'FLC', name: 'fluconazole', zone: 12 },
     ],
   },
+  neve: {
+    facts: [
+      "Neve wears a thick sugar coat, her capsule, that shows up as a bright halo in ink.",
+      "Neve's capsule helps her hide from the immune system, her main trick for causing disease.",
+      "Neve lives in soil and old pigeon droppings, and people catch her by breathing her in.",
+      "Neve can cause meningitis, mostly in people with weakened immune systems.",
+      "Neve buds through a narrow neck, unlike Olive's wide one.",
+      "Neve can grow at body temperature, 37 °C, which helps her cause disease.",
+      "Neve makes melanin, a dark pigment that protects her like a suit of armor.",
+      "On birdseed agar, Neve's melanin turns her colonies brown, a classic lab test.",
+      "Neve is a basidiomycete, a yeast cousin of Maizey and Ruby.",
+      "Doctors treat Neve with amphotericin B and flucytosine, then fluconazole.",
+      "Echinocandin drugs like caspofungin don't work on Neve at all.",
+      "Neve's species name, *neoformans*, means \"new form.\"",
+    ],
+    scientific: 'Cryptococcus neoformans',
+    color: '#0e7490', // for her name above the dish
+    kind: 'yeast',
+    // Round cells, each in a thick, glossy capsule (see yeast.js).
+    capsule: true,
+    // Cream and deep cyan; `capsule` is her capsule's soft rim.
+    colors: { fill: '#fbf6ea', stroke: '#0e7490', highlight: '#ffffff', dark: '#0b3b46', capsule: '#c9e6eb' },
+    // There are no standard disk sizes for Cryptococcus, so these are
+    // estimates. She's treated with amphotericin B and flucytosine, then
+    // fluconazole. Echinocandins like caspofungin don't work on her at all,
+    // so she gets no CAS disk, the way Fumi gets no FLC disk.
+    antifungals: [
+      { code: 'AMB', name: 'amphotericin B', zone: 20 },
+      { code: '5FC', name: 'flucytosine', zone: 18 },
+      { code: 'FLC', name: 'fluconazole', zone: 24 },
+      { code: 'VOR', name: 'voriconazole', zone: 28 },
+      { code: 'ITC', name: 'itraconazole', zone: 22 },
+    ],
+  },
   fumi: {
     facts: [
       "Fumi's species name, *fumigatus*, means \"smoky,\" for her smoky grey-green colonies.",

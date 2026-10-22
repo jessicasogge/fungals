@@ -77,4 +77,10 @@ export const QUIZ_FACTS = {
     "In Brazil, Rosie's cousin *Sporothrix brasiliensis* spreads from cats to people.",
     "Rosie's genus name, *Sporothrix*, comes from words meaning \"spore\" and \"hair\".",
   ],
+  neve: [
+    "Neve wears a thick sugar coat, her capsule, that shows up as a bright halo in ink.",
+    "Neve lives in soil and old pigeon droppings, and people catch her by breathing her in.",
+    "On birdseed agar, Neve's melanin turns her colonies brown, a classic lab test.",
+    "Neve's species name, *neoformans*, means \"new form.\"",
+  ],
 };

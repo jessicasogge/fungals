@@ -639,3 +639,38 @@ describe('a yeast with cigar-shaped cells (Maizey)', () => {
     expect(spread('maizey')).toBeGreaterThan(spread('sasha') * 1.2);
   });
 });
+
+describe('a yeast in a capsule (Neve)', () => {
+  it('wraps her round cell in a glossy capsule, drawn behind it', () => {
+    const player = makeGroup('neve', { isPlayer: true });
+    const capsule = player.svg.querySelector('.capsule');
+    const body = player.svg.querySelector('.cell-body');
+    expect(capsule).not.toBeNull();
+    expect(Number(capsule.getAttribute('r'))).toBeGreaterThan(R * 1.4);
+    expect(capsule.getAttribute('stroke')).toBe(SPECIES.neve.colors.capsule);
+    // Behind her: it comes first in the drawing.
+    expect(capsule.compareDocumentPosition(body) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    // Round, not oval.
+    expect(body.getAttribute('rx')).toBe(body.getAttribute('ry'));
+  });
+
+  it('gives her swelling bud a capsule too', () => {
+    const player = makeGroup('neve', { isPlayer: true });
+    player.startBud();
+    player.update(1);
+    expect(player.svg.querySelectorAll('.capsule')).toHaveLength(2);
+  });
+
+  it('clusters her daughters far enough apart for their capsules', () => {
+    const spread = (name) => {
+      const group = makeGroup(name, { x: 30, y: 0 });
+      const spot = group.attachSpot(130, 0, [], DISH_RADIUS);
+      return Math.hypot(spot.x, spot.y);
+    };
+    expect(spread('neve')).toBeGreaterThan(spread('sasha') * 1.3);
+  });
+
+  it("leaves other yeasts' cells without one", () => {
+    expect(makeGroup('sasha', { isPlayer: true }).svg.querySelector('.capsule')).toBeNull();
+  });
+});
