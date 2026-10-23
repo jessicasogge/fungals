@@ -1,13 +1,14 @@
 import { touchesDisk } from './antifungal.js';
 import {
-  chainSpot, CIGAR_LENGTH, CIGAR_SPACING, CIGAR_WIDTH, clusterSpot, R, ROD_LENGTH, ROD_WIDTH,
+  CAPSULE, CAPSULE_SPACING, chainSpot, CIGAR_LENGTH, CIGAR_SPACING, CIGAR_WIDTH, clusterSpot, R, ROD_LENGTH,
+  ROD_WIDTH,
 } from './attach.js';
 import { GAME } from './config.js';
 import { idlePose, newMover } from './mover.js';
 import { coaster } from './physics.js';
 
-// Budding yeast (Sasha, Candi, Olive, Yara, Peachy, Maizey): the player
-// stays one cell.
+// Budding yeast (Sasha, Candi, Olive, Yara, Peachy, Maizey, Neve): the
+// player stays one cell.
 // Eating grows a bud that pinches off; daughters form clusters up to GROUP_CAP,
 // growing toward where the player budded.
 //
@@ -18,18 +19,22 @@ import { coaster } from './physics.js';
 //
 // `cigars` (Maizey): long cigar-shaped cells that bud from their tips and
 // cluster like the ovals, a little farther apart. The player stays level.
+//
+// `capsule` (Neve): round cells, each in a thick, glossy, see-through
+// capsule, drawn under all the cells; her clusters are spaced to fit them.
 export function yeastGroup({ mover, svg, species, isPlayer }) {
   const CELL_SIZE = 5; // one cell's width, as a percent of the dish
   const OUTLINE = 1.7; // each cell's outline width, in SVG units
   const { colors } = species;
   const rods = Boolean(species.chains);
   const cigars = Boolean(species.cigars);
+  const capsule = Boolean(species.capsule);
   const perox = Boolean(species.peroxisomes);
   // A long cell (a rod or a cigar) buds from her ends; her length tip to tip.
   const LONG = rods ? ROD_LENGTH : cigars ? CIGAR_LENGTH : 0;
   // How far a cell reaches from its middle, at most: half a long cell's
   // length, or an oval's radius.
-  const CELL_REACH = LONG ? LONG / 2 : R;
+  const CELL_REACH = LONG ? LONG / 2 : capsule ? R * CAPSULE : R;
 
   const group = {
     mover,
@@ -51,7 +56,7 @@ export function yeastGroup({ mover, svg, species, isPlayer }) {
   };
 
   // Yeast cells are a little oval, each tipped its own way.
-  const OVAL = 0.86; // height over width
+  const OVAL = capsule ? 1 : 0.86; // height over width (Neve is round)
   // A daughter starts as a bud BUD_START of full size. On the player it
   // swells on her side for BUD_SWELL_MS, to BUD_PINCH of full size, then
   // pinches off. Every daughter then grows to full size at a steady pace,
@@ -94,8 +99,9 @@ export function yeastGroup({ mover, svg, species, isPlayer }) {
     }
     if (group.budding) {
       const [bx, by, br] = budCenter();
-      mx = Math.max(mx, Math.abs(bx) + br);
-      my = Math.max(my, Math.abs(by) + br);
+      const reach = capsule ? br * CAPSULE : br;
+      mx = Math.max(mx, Math.abs(bx) + reach);
+      my = Math.max(my, Math.abs(by) + reach);
     }
     return [mx + 2, my + 2];
   }
@@ -205,13 +211,33 @@ export function yeastGroup({ mover, svg, species, isPlayer }) {
     return cellMarkup({ x: bx, y: by, grow: budSize(), tilt: 0, bud: true });
   }
 
+  // Neve's capsule around a cell: see-through, faintly tinted, with a soft
+  // rim and a curved white shine, like Pearl's in PetriPals.
+  function capsuleMarkup(c) {
+    const r = R * CAPSULE * (c.grow ?? 1);
+    const [a1, a2] = [Math.PI * 1.08, Math.PI * 1.42];
+    const [sx, sy, ex, ey] = [Math.cos(a1), Math.sin(a1), Math.cos(a2), Math.sin(a2)]
+      .map((v) => v * r * 0.8);
+    return `<circle class="capsule" cx="${c.x}" cy="${c.y}" r="${r}" fill="${colors.capsuleFill}" fill-opacity="0.7" ` +
+      `stroke="${colors.capsule}" stroke-width="1.5" />` +
+      `<path d="M ${c.x + sx} ${c.y + sy} A ${r * 0.8} ${r * 0.8} 0 0 1 ${c.x + ex} ${c.y + ey}" ` +
+      'stroke="#ffffff" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.95" />';
+  }
+
   function draw() {
     const [mx, my] = extent();
     svg.setAttribute('viewBox', `${-mx} ${-my} ${2 * mx} ${2 * my}`);
     mover.style.width = `${(mx / R) * CELL_SIZE}%`;
     // Cells higher up sit behind lower ones.
     const order = [...group.cells].sort((a, b) => a.y - b.y);
-    svg.innerHTML = budMarkup() + order.map(cellMarkup).join('');
+    let capsules = '';
+    if (capsule) {
+      // Under everything, so every cell sits inside its own glossy coat.
+      const bud = group.budding ? budCenter() : null;
+      capsules = (bud ? capsuleMarkup({ x: bud[0], y: bud[1], grow: budSize() }) : '') +
+        order.map(capsuleMarkup).join('');
+    }
+    svg.innerHTML = capsules + budMarkup() + order.map(cellMarkup).join('');
   }
 
   Object.assign(group, {
@@ -305,9 +331,11 @@ export function yeastGroup({ mover, svg, species, isPlayer }) {
         return !disks.some((disk) =>
           touchesDisk(disk, [[sx, sy, cellRadius]], dishRadius));
       };
+      // Maizey's cigars and Neve's capsules need a little more room.
+      const spacing = cigars ? CIGAR_SPACING : capsule ? CAPSULE_SPACING : 1;
       const spot = rods
         ? chainSpot(group.cells, px, py, allowed)
-        : clusterSpot(group.cells, group.twist, px, py, allowed, cigars ? CIGAR_SPACING : 1);
+        : clusterSpot(group.cells, group.twist, px, py, allowed, spacing);
       if (!spot) return null;
       spot.world = toWorld(spot.x, spot.y);
       return spot;

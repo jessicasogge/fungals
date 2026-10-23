@@ -496,11 +496,40 @@ export const GALS = [
       ${face(100, 104, '#1f1a17')}
     `,
   },
+  // Neve: Cryptococcus neoformans, a round yeast in a thick, glossy capsule
+  // (like Pearl's in PetriPals), with a small bud on a narrow neck that has
+  // a capsule of its own. In the dish every cell wears one (see yeast.js).
+  {
+    id: 'neve',
+    name: 'Neve',
+    looks: 'a round, soft-aqua Cryptococcus neoformans yeast in a thick, glossy, see-through capsule, with a small bud joined to her by a narrow neck',
+    motion: 'bob',
+    frames: { home: '14 14 176 176', picker: '18 18 168 168', dish: '14 14 176 176' },
+    art: `
+      <!-- her capsule: a thick, glossy, see-through sugar coat, the bright halo
+           you see around her in ink. The bud has one of its own. -->
+      <circle cx="94" cy="110" r="70" fill="#ffffff" fill-opacity="0.55" stroke="#c9e6eb" stroke-width="3.5" />
+      <circle cx="137.9" cy="69.5" r="31" fill="#ffffff" fill-opacity="0.55" stroke="#c9e6eb" stroke-width="3" />
+      <path d="M40 92 Q50 58 84 46" stroke="#ffffff" stroke-width="4.5" fill="none" stroke-linecap="round" opacity="0.95" />
+      <circle cx="146" cy="150" r="3.2" fill="#ffffff" opacity="0.95" />
+      <path d="M120 51.5 Q127 42 138.5 40.5" stroke="#ffffff" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.95" />
+      <!-- her round cell and her small bud, still joined by a narrow neck: she
+           buds through a small opening, not a wide one like Olive's. Both
+           outlines go down first, then both fills on top, so the two read as
+           one pinched shape. -->
+      <circle cx="94" cy="110" r="46" fill="none" stroke="#0e7490" stroke-width="9" />
+      <circle cx="137.9" cy="69.5" r="15" fill="none" stroke="#0e7490" stroke-width="8" />
+      <circle cx="94" cy="110" r="46" fill="#b9e1e8" />
+      <circle cx="137.9" cy="69.5" r="15" fill="#b9e1e8" />
+      <ellipse cx="74" cy="88" rx="12" ry="6" fill="#ffffff" transform="rotate(-30 74 88)" />
+      ${face(94, 110, '#0b3b46')}
+    `,
+  },
 ];
 
 // Yeasts on both ends, with the three molds spread out between them.
 // Phones show only the first six.
-const HOME = ['yara', 'penelope', 'sasha', 'rosie', 'candi', 'miri', 'peachy', 'ruby', 'maizey', 'fumi', 'olive'];
+const HOME = ['yara', 'penelope', 'sasha', 'rosie', 'candi', 'miri', 'peachy', 'neve', 'ruby', 'maizey', 'fumi', 'olive'];
 export const HOME_GALS = HOME.map((id) => GALS.find((gal) => gal.id === id));
 
 // How many gals fit on one page of the picker: four across, two down.
