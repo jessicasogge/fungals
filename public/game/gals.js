@@ -502,7 +502,7 @@ export const GALS = [
   {
     id: 'neve',
     name: 'Neve',
-    looks: 'a round, cream Cryptococcus neoformans yeast in a thick, glossy, see-through capsule, with a small bud joined to her by a narrow neck',
+    looks: 'a round, soft-aqua Cryptococcus neoformans yeast in a thick, glossy, see-through capsule, with a small bud joined to her by a narrow neck',
     motion: 'bob',
     frames: { home: '14 14 176 176', picker: '18 18 168 168', dish: '14 14 176 176' },
     art: `
@@ -519,8 +519,8 @@ export const GALS = [
            one pinched shape. -->
       <circle cx="94" cy="110" r="46" fill="none" stroke="#0e7490" stroke-width="9" />
       <circle cx="137.9" cy="69.5" r="15" fill="none" stroke="#0e7490" stroke-width="8" />
-      <circle cx="94" cy="110" r="46" fill="#fbf6ea" />
-      <circle cx="137.9" cy="69.5" r="15" fill="#fbf6ea" />
+      <circle cx="94" cy="110" r="46" fill="#b9e1e8" />
+      <circle cx="137.9" cy="69.5" r="15" fill="#b9e1e8" />
       <ellipse cx="74" cy="88" rx="12" ry="6" fill="#ffffff" transform="rotate(-30 74 88)" />
       ${face(94, 110, '#0b3b46')}
     `,

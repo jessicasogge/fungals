@@ -39,7 +39,7 @@ Tap **Who’s That Gal?** on the home page for a quiz on the gals' fun facts, li
 | **Yara** | *Yarrowia lipolytica* | An apricot yeast: one plump, egg-shaped cell with droplets of fat inside, budding at her end |
 | **Rosie** | *Sporothrix schenckii* | A short spore stalk crowned with a loose fan of cream and dusty-rose teardrop spores, with dark spores along her thread. In the dish, one oval spore |
 | **Ruby** | *Hydnellum peckii* | The bleeding tooth fungus: a fuzzy white mushroom cap beaded with red drops, with little spikes underneath. In the dish, one round, warty spore |
-| **Neve** | *Cryptococcus neoformans* | A round, cream yeast in a thick, glossy, see-through capsule, with a small bud on a narrow neck |
+| **Neve** | *Cryptococcus neoformans* | A round, soft-aqua yeast in a thick, glossy, see-through capsule, with a small bud on a narrow neck |
 | **Maizey** | *Ustilago maydis* | A plum yeast: one long, cigar-shaped cell with a small bud at her tip |
 | **Peachy** | *Komagataella phaffii* | A rose-pink yeast: one plump oval cell with round peroxisomes inside and a small bud on top |
 | **Miri** | *Aspergillus oryzae* | A golden puff of spore chains pointing every way, on a tall, bumpy stalk. In the dish, one round golden spore |
