@@ -22,7 +22,7 @@ export function colonyRadius(seconds) {
 // `colors` are the gal's palette; `spores` colors their centers.
 // With `drops` (Ruby), each colony beads with red drops, one at a time, as
 // it ripens. With `wrinkled` (Rosie), each colony gets wrinkly folds as it
-// darkens, and with `powdery` (Trixie) a fine powdery texture (styles.css).
+// darkens, and with `powdery` (Trixie) a soft white look with a tan middle (styles.css).
 // Positions and sizes use fractions of the dish radius.
 export const DROPS = [
   // Where each drop sits on the colony (percent across and down), and how

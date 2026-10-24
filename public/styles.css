@@ -1199,12 +1199,10 @@ body:not(.picker-page) .signature {
     0 0 4px 1px rgba(255, 255, 255, 0.9);
 }
 
-/* Trixie's colonies: white and powdery, with a fine grainy texture and a
-   warm tan middle (her --spores color) that shows through as they age. */
+/* Trixie's colonies: smooth, soft white, with a warm tan middle (her
+   --spores color) that shows through as they age. */
 .colony.powdery {
   background:
-    radial-gradient(circle, rgba(140, 105, 60, 0.22) 0 0.9px, transparent 1.4px) 0 0 / 9% 9%,
-    radial-gradient(circle, rgba(140, 105, 60, 0.16) 0 0.8px, transparent 1.3px) 4% 5% / 13% 13%,
     radial-gradient(circle, color-mix(in srgb, var(--spores) 75%, white) 0 calc(var(--ripe, 0%) * 0.5),
       color-mix(in srgb, var(--spores) 30%, white) calc(var(--ripe, 0%) * 1.1), transparent calc(var(--ripe, 0%) * 1.6)),
     radial-gradient(circle, #fdfbf6 0 70%, #fefdfa 90%, rgba(255, 255, 255, 0.8) 100%);
