@@ -300,25 +300,22 @@ export const SPECIES = {
   },
   trixie: {
     facts: [
-      "Trixie is a dermatophyte, a mold that lives on skin, hair and nails.",
-      "Trixie is one of the molds behind athlete's foot, the itchy rash between toes.",
-      "Trixie can make the round, red \"ringworm\" rash, which isn't a worm at all.",
-      "Trixie eats keratin, the tough protein in skin, hair and nails.",
-      "Trixie's round spores grow in bunches like grapes along her threads.",
-      "Some of Trixie's threads curl into tight spirals, like springs.",
-      "Trixie lives on pets and rodents too, and can spread from them to people.",
-      "Trixie spreads by touch, from shared floors, towels, combs and furry friends.",
-      "Trixie's colonies are white and powdery, with a warm tan or brown underside.",
-      "Terbinafine is the usual medicine for Trixie's infections.",
+      "Trixie is a dermatophyte, a mold that can infect skin, hair and nails.",
+      "Trixie can spread from animals such as guinea pigs and rabbits to people.",
+      "Trixie can cause an itchy, ring-shaped \"ringworm\" rash, but she isn't a worm.",
+      "Trixie feeds on keratin, the tough protein in skin, hair and nails.",
+      "Trixie's round spores often grow in dense bunches, like grapes.",
+      "Some of Trixie's threads curl into spirals, like springs.",
+      "Trixie has many animal hosts, including rodents, cats and rabbits.",
+      "Trixie can spread through infected animals, people or contaminated objects.",
+      "Trixie's colonies can be white and powdery, with a yellowish or brown underside.",
+      "Terbinafine is one antifungal medicine used to treat Trixie's infections.",
       "Trixie's genus name, *Trichophyton*, means \"hair plant.\"",
     ],
     scientific: 'Trichophyton mentagrophytes',
     color: '#1c8a60', // for her name above the dish
     kind: 'mold',
-    // Her colonies are white and powdery, with a warm tan middle (see mold.js).
     powdery: true,
-    // All mint: `fill`/`stroke`/`highlight`/`dark` for her head, spores and
-    // stalk, and `spores` for the warm tan her colonies' middles turn.
     colors: { fill: '#d3f3e3', stroke: '#1c8a60', highlight: '#ffffff', dark: '#0e4a33', spores: '#c99a5e' },
     // There are no standard disk sizes for Trichophyton, so these are
     // estimates. Terbinafine is her usual treatment; itraconazole and the
