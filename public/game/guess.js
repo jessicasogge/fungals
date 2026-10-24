@@ -2,6 +2,22 @@
 
 import { withItalics } from './italics.js';
 
+export const MAX_CHOICES = 12;
+
+// The gals to offer for a fact about `answer`: all of them if they fit, or
+// else her plus a random pick of the others, up to `max`, kept in the usual
+// order so she's never given away by where she sits.
+export function pickChoices(gals, answer, max = MAX_CHOICES, random = Math.random) {
+  if (gals.length <= max) return [...gals];
+  const others = gals.filter((gal) => gal.id !== answer.id);
+  for (let i = others.length - 1; i > 0; i--) {
+    const j = Math.floor(random() * (i + 1));
+    [others[i], others[j]] = [others[j], others[i]];
+  }
+  const keep = new Set([answer.id, ...others.slice(0, max - 1).map((gal) => gal.id)]);
+  return gals.filter((gal) => keep.has(gal.id));
+}
+
 // Shuffled { gal, fact } pairs
 export function factDeck(gals, facts, random = Math.random) {
   const deck = gals.flatMap((gal) => facts[gal.id].map((fact) => ({ gal, fact })));

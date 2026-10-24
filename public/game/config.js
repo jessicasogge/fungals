@@ -298,6 +298,36 @@ export const SPECIES = {
       { code: 'ITC', name: 'itraconazole', zone: 22 },
     ],
   },
+  trixie: {
+    facts: [
+      "Trixie is a dermatophyte, a mold that can infect skin, hair and nails.",
+      "Trixie can spread from animals such as guinea pigs and rabbits to people.",
+      "Trixie can cause an itchy, ring-shaped \"ringworm\" rash, but she isn't a worm.",
+      "Trixie feeds on keratin, the tough protein in skin, hair and nails.",
+      "Trixie's round spores often grow in dense bunches, like grapes.",
+      "Some of Trixie's threads curl into spirals, like springs.",
+      "Trixie has many animal hosts, including rodents, cats and rabbits.",
+      "Trixie can spread through infected animals, people or contaminated objects.",
+      "Trixie's colonies can be white and powdery, with a yellowish or brown underside.",
+      "Terbinafine is one antifungal medicine used to treat Trixie's infections.",
+      "Trixie's genus name, *Trichophyton*, means \"hair plant.\"",
+    ],
+    scientific: 'Trichophyton mentagrophytes',
+    color: '#1c8a60', // for her name above the dish
+    kind: 'mold',
+    powdery: true,
+    colors: { fill: '#d3f3e3', stroke: '#1c8a60', highlight: '#ffffff', dark: '#0e4a33', spores: '#c99a5e' },
+    // There are no standard disk sizes for Trichophyton, so these are
+    // estimates. Terbinafine is her usual treatment; itraconazole and the
+    // older griseofulvin work too, and fluconazole works poorly.
+    antifungals: [
+      { code: 'TRB', name: 'terbinafine', zone: 30 },
+      { code: 'ITC', name: 'itraconazole', zone: 24 },
+      { code: 'GRI', name: 'griseofulvin', zone: 20 },
+      { code: 'VOR', name: 'voriconazole', zone: 22 },
+      { code: 'FLC', name: 'fluconazole', zone: 12 },
+    ],
+  },
   fumi: {
     facts: [
       "Fumi's species name, *fumigatus*, means \"smoky,\" for her smoky grey-green colonies.",

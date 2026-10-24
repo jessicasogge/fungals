@@ -1,7 +1,7 @@
 // Who’s That Gal?: a quiz to tell which gal a fun fact is about. No score,
 // just tries until you find her.
 import { SPECIES } from './config.js';
-import { factDeck, fillBlanks, withBlanks } from './guess.js';
+import { factDeck, fillBlanks, pickChoices, withBlanks } from './guess.js';
 import { shortSpeciesName, speciesName } from './italics.js';
 import { pageReady, watchLoading } from './loading.js';
 import { GALS, galTile } from './gals.js';
@@ -15,7 +15,9 @@ const status = document.querySelector('.guess-status');
 const next = document.querySelector('.next-fact');
 const ASK = 'Who is this fact about? Tap her!';
 
-// Every gal, in the same order every time, so it's easy to find her again.
+// A button for every gal, in the same order every time, so it's easy to
+// find her again. Each fact shows at most MAX_CHOICES of them (guess.js):
+// always the gal it's about, plus a random pick of the others.
 const buttons = GALS.map((gal) => {
   const button = document.createElement('button');
   button.type = 'button';
@@ -51,7 +53,9 @@ function showNext() {
   factEl.replaceChildren(...withBlanks(current.fact, current.gal.name));
   status.textContent = ASK;
   next.hidden = true;
+  const offered = new Set(pickChoices(GALS, current.gal).map((gal) => gal.id));
   for (const button of buttons) {
+    button.hidden = !offered.has(button.dataset.gal);
     button.disabled = false;
     button.classList.remove('right');
   }

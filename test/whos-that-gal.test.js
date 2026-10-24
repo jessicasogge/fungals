@@ -1,11 +1,11 @@
 // @vitest-environment jsdom
 // Who’s That Gal? shows a fact with "this gal" in place of her name, and a button for
-// every gal. No score, just tries until you find her.
+// up to 12 gals, always including her. No score, just tries until you find her.
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { SPECIES } from '../public/game/config.js';
-import { factDeck } from '../public/game/guess.js';
+import { factDeck, MAX_CHOICES } from '../public/game/guess.js';
 import { GALS } from '../public/game/gals.js';
 import { QUIZ_FACTS } from '../public/game/quiz-facts.js';
 
@@ -32,11 +32,23 @@ beforeEach(() => vi.spyOn(Math, 'random').mockReturnValue(0));
 afterEach(() => vi.restoreAllMocks());
 
 describe('Who’s That Gal?', () => {
-  it('offers every gal, in order', async () => {
+  const offered = () => [...document.querySelectorAll('.guess-btn')].filter((b) => !b.hidden).map((b) => b.dataset.gal);
+
+  it('offers 12 gals at most, in order, always including the one the fact is about', async () => {
     await open();
-    const offered = [...document.querySelectorAll('.guess-btn')].map((b) => b.dataset.gal);
-    expect(offered).toEqual(GALS.map((gal) => gal.id));
+    const ids = GALS.map((gal) => gal.id);
+    expect(offered()).toHaveLength(Math.min(MAX_CHOICES, GALS.length));
+    expect(offered()).toContain(dealt(0).gal.id);
+    expect(offered()).toEqual(ids.filter((id) => offered().includes(id)));
     expect(document.querySelector('.loading-overlay').hidden).toBe(true);
+  });
+
+  it('offers a fresh pick of gals with each fact', async () => {
+    await open();
+    button(dealt(0).gal.id).click();
+    next().click();
+    expect(offered()).toHaveLength(Math.min(MAX_CHOICES, GALS.length));
+    expect(offered()).toContain(dealt(1).gal.id);
   });
 
   it("shows each gal's species, shortened, under her name", async () => {

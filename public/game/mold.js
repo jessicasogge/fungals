@@ -22,7 +22,8 @@ export function colonyRadius(seconds) {
 // `colors` are the gal's palette; `spores` colors their centers.
 // With `drops` (Ruby), each colony beads with red drops, one at a time, as
 // it ripens. With `wrinkled` (Rosie), each colony gets wrinkly folds as it
-// darkens (styles.css). Positions and sizes use fractions of the dish radius.
+// darkens, and with `powdery` (Trixie) a soft white look with a tan middle (styles.css).
+// Positions and sizes use fractions of the dish radius.
 export const DROPS = [
   // Where each drop sits on the colony (percent across and down), and how
   // ripe the colony is when it appears.
@@ -31,7 +32,9 @@ export const DROPS = [
   { x: 37, y: 59, at: 0.9 },
 ];
 
-export function moldColonies({ layer, disks = [], nutrients, colors, drops = false, wrinkled = false }) {
+export function moldColonies({
+  layer, disks = [], nutrients, colors, drops = false, wrinkled = false, powdery = false,
+}) {
   const colonies = [];
 
   function draw(colony) {
@@ -59,7 +62,7 @@ export function moldColonies({ layer, disks = [], nutrients, colors, drops = fal
     // another one. Returns the new colony.
     plant(fx, fy) {
       const el = document.createElement('div');
-      el.className = wrinkled ? 'colony wrinkled' : 'colony';
+      el.className = ['colony', wrinkled && 'wrinkled', powdery && 'powdery'].filter(Boolean).join(' ');
       el.setAttribute('aria-hidden', 'true');
       el.style.setProperty('--spores', colors.spores);
       // A slightly uneven edge, different for each colony.
@@ -163,7 +166,7 @@ export function playMold(galEl, species, nutrients, disks, { level = 1, target =
   agar.prepend(layer);
   const colonies = moldColonies({
     layer, disks, nutrients, colors: species.colors,
-    drops: Boolean(species.drops), wrinkled: Boolean(species.wrinkled),
+    drops: Boolean(species.drops), wrinkled: Boolean(species.wrinkled), powdery: Boolean(species.powdery),
   });
 
   let finished = false;
