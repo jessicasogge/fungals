@@ -84,8 +84,8 @@ export const QUIZ_FACTS = {
     "Neve's species name, *neoformans*, comes from words meaning \"new\" and \"form\".",
   ],
   trixie: [
-    "Trixie is one of the molds behind athlete's foot, the itchy rash between toes.",
-    "Trixie can make the round, red \"ringworm\" rash, which isn't a worm at all.",
+    "Trixie's round spores often grow in bunches like grapes along her threads.",
+    "Trixie can cause an itchy, ring-shaped \"ringworm\" rash, but she isn't a worm.",
     "Some of Trixie's threads curl into tight spirals, like springs.",
     "Trixie's genus name, *Trichophyton*, means \"hair plant.\"",
   ],

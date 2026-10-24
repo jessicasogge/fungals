@@ -2,8 +2,6 @@
 
 import { withItalics } from './italics.js';
 
-// The most gals Who's That Gal? shows at once (two rows on a phone, three
-// on a computer).
 export const MAX_CHOICES = 12;
 
 // The gals to offer for a fact about `answer`: all of them if they fit, or

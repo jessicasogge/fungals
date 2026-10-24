@@ -525,10 +525,9 @@ export const GALS = [
       ${face(94, 110, '#0b3b46')}
     `,
   },
-  // Trixie: Trichophyton mentagrophytes, a dermatophyte behind athlete's
-  // foot and ringworm: her round head on a stalk, ringed by a grape-like
-  // bunch of round spores, with a springy spiral thread branching off. In
-  // the dish she plays like Fumi (see mold.js), with powdery colonies.
+  // Trixie: Trichophyton mentagrophytes, behind athlete's foot and ringworm.
+  // Round head on a stalk, grape-like spores, and a branching spiral thread.
+  // Plays like Fumi (see mold.js), with powdery colonies.
   {
     id: 'trixie',
     name: 'Trixie',
