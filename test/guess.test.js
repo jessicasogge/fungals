@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 // Who’s That Gal? facts: shuffled into a deck, with "this gal" in place of the gal's name.
 import { describe, expect, it } from 'vitest';
-import { factDeck, fillBlanks, withBlanks } from '../public/game/guess.js';
+import { factDeck, fillBlanks, MAX_CHOICES, pickChoices, withBlanks } from '../public/game/guess.js';
 import { GALS } from '../public/game/gals.js';
 import { QUIZ_FACTS } from '../public/game/quiz-facts.js';
 
@@ -22,6 +22,35 @@ describe('the quiz facts', () => {
 
   it('covers every gal in the game, and only them', () => {
     expect(Object.keys(QUIZ_FACTS).sort()).toEqual(GALS.map((gal) => gal.id).sort());
+  });
+});
+
+describe('choosing which gals to offer', () => {
+  it('offers at most 12', () => {
+    expect(MAX_CHOICES).toBe(12);
+  });
+
+  it('offers every gal when they all fit', () => {
+    expect(pickChoices(GALS.slice(0, 5), GALS[2])).toEqual(GALS.slice(0, 5));
+  });
+
+  it('always offers the right gal, plus a random pick of the others, in the usual order', () => {
+    expect(GALS.length).toBeGreaterThan(MAX_CHOICES);
+    const seen = new Set();
+    for (const answer of GALS) {
+      for (let k = 0; k < 6; k++) {
+        let seed = k * 0.13 + 0.07;
+        const random = () => { seed = (seed * 9301 + 0.49297) % 1; return seed; };
+        const offered = pickChoices(GALS, answer, MAX_CHOICES, random);
+        expect(offered).toHaveLength(MAX_CHOICES);
+        expect(offered).toContain(answer);
+        expect(new Set(offered).size).toBe(MAX_CHOICES);
+        expect(offered).toEqual(GALS.filter((gal) => offered.includes(gal)));
+        for (const gal of GALS) if (!offered.includes(gal)) seen.add(gal.id);
+      }
+    }
+    // Over many facts, different gals sit out, not always the same one.
+    expect(seen.size).toBeGreaterThan(1);
   });
 });
 

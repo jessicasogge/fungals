@@ -463,6 +463,10 @@ a.gal-card:active {
   background: rgba(207, 238, 242, 0.75);
 }
 
+.trixie {
+  background: rgba(211, 243, 227, 0.75);
+}
+
 .pick-btn {
   margin-top: 0.75rem;
   padding: 0.7rem 1rem;
@@ -560,6 +564,11 @@ a.gal-card:active {
 .gal-grid > .gal-btn {
   flex: 0 0 calc((100% - 3.75rem) / 6);
   min-width: 0;
+}
+
+/* A gal left out of this fact's pick (whos-that-gal.js). */
+.gal-btn[hidden] {
+  display: none;
 }
 
 @media (max-width: 760px) {
@@ -1188,6 +1197,20 @@ body:not(.picker-page) .signature {
   box-shadow:
     0 0 0 1px rgba(110, 90, 76, 0.3),
     0 0 4px 1px rgba(255, 255, 255, 0.9);
+}
+
+/* Trixie's colonies: white and powdery, with a fine grainy texture and a
+   warm tan middle (her --spores color) that shows through as they age. */
+.colony.powdery {
+  background:
+    radial-gradient(circle, rgba(140, 105, 60, 0.22) 0 0.9px, transparent 1.4px) 0 0 / 9% 9%,
+    radial-gradient(circle, rgba(140, 105, 60, 0.16) 0 0.8px, transparent 1.3px) 4% 5% / 13% 13%,
+    radial-gradient(circle, color-mix(in srgb, var(--spores) 75%, white) 0 calc(var(--ripe, 0%) * 0.5),
+      color-mix(in srgb, var(--spores) 30%, white) calc(var(--ripe, 0%) * 1.1), transparent calc(var(--ripe, 0%) * 1.6)),
+    radial-gradient(circle, #fdfbf6 0 70%, #fefdfa 90%, rgba(255, 255, 255, 0.8) 100%);
+  box-shadow:
+    0 0 0 1px rgba(170, 150, 120, 0.25),
+    0 0 5px 2px rgba(255, 255, 255, 0.95);
 }
 
 /* Killed by an antifungal: the whole colony pops, swelling and vanishing. */

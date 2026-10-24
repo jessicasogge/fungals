@@ -7,7 +7,7 @@ import { resolve } from 'node:path';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { SPECIES } from '../public/game/config.js';
 import { plainText } from '../public/game/italics.js';
-import { dishGal, HOME_GALS, homeGal, inRandomOrder, PAGE_SIZE, galById, GALS, galTile, pickerPages } from '../public/game/gals.js';
+import { dishGal, HOME_GALS, HOME_MAX, homeGal, inRandomOrder, PAGE_SIZE, galById, GALS, galTile, pickerPages } from '../public/game/gals.js';
 
 // (jsdom changes import.meta.url to a web address, so find files from the project folder.)
 const file = (name) => readFileSync(resolve(process.cwd(), 'public', name), 'utf8');
@@ -172,14 +172,16 @@ describe('the pages', () => {
     vi.restoreAllMocks();
   });
 
-  it('home shows every gal in its row, in order', async () => {
+  it('home shows up to 12 gals in its row, in order, each once', async () => {
     await open('index.html', 'script.js');
     const labels = [...document.querySelectorAll('.friends svg')].map((s) => s.getAttribute('aria-label'));
     expect(labels).toEqual(HOME_GALS.map((gal) => `${gal.name}, ${gal.looks}`));
-    // Every gal, each once: the yeasts with Olive in the middle, then Fumi.
     expect(HOME_GALS.map((gal) => gal.id)).toEqual(['yara', 'penelope', 'sasha', 'rosie', 'candi', 'miri', 'peachy', 'neve', 'ruby', 'maizey', 'fumi', 'olive']);
-    expect([...HOME_GALS].sort((a, b) => a.id.localeCompare(b.id))).toEqual(
-      [...GALS].sort((a, b) => a.id.localeCompare(b.id)));
+    // No more than fit, each a real gal, none twice.
+    expect(HOME_MAX).toBe(12);
+    expect(HOME_GALS.length).toBeLessThanOrEqual(HOME_MAX);
+    expect(HOME_GALS.every(Boolean)).toBe(true);
+    expect(new Set(HOME_GALS).size).toBe(HOME_GALS.length);
   });
 
   it('the picker has a card for every gal, each once, linking to her dish', async () => {

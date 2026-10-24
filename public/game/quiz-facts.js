@@ -83,4 +83,10 @@ export const QUIZ_FACTS = {
     "On birdseed agar, Neve makes melanin that turns her colonies brown.",
     "Neve's species name, *neoformans*, comes from words meaning \"new\" and \"form\".",
   ],
+  trixie: [
+    "Trixie is one of the molds behind athlete's foot, the itchy rash between toes.",
+    "Trixie can make the round, red \"ringworm\" rash, which isn't a worm at all.",
+    "Some of Trixie's threads curl into tight spirals, like springs.",
+    "Trixie's genus name, *Trichophyton*, means \"hair plant.\"",
+  ],
 };
