@@ -330,22 +330,20 @@ export const SPECIES = {
   },
   velma: {
     facts: [
-      "Velma is the \"velvet shank,\" a wild mushroom with orange caps and dark, velvety stems.",
-      "Velma's close cousin, *Flammulina filiformis*, is the long, pale enoki sold in stores.",
-      "Velma's stems turn dark brown and velvety toward the bottom, like little stockings.",
-      "Velma fruits in winter, and she can keep growing after thawing from a frost.",
-      "Velma's species name, *velutipes*, means \"velvet foot,\" for her fuzzy stem.",
+      "Velma is the \"velvet shank,\" with orange caps and dark, velvety lower stems.",
+      "Velma's cousin, *Flammulina filiformis*, is the long, pale enoki sold in stores.",
+      "Velma's stems become dark and velvety near the bottom, like little stockings.",
+      "Velma fruits in cold weather and can resume growing after freezing and thawing.",
+      "Velma's species name, *velutipes*, means \"velvet foot,\" for her fuzzy lower stem.",
       "Velma's genus name, *Flammulina*, means \"little flame,\" for her orange caps.",
-      "Velma grows on dead wood, breaking it down and returning nutrients to the soil.",
+      "Velma breaks down dead wood, helping recycle its nutrients.",
       "Velma is a basidiomycete, a mushroom-making cousin of Ruby and Maizey.",
-      "Velma grows in tight bunches, with many stems rising from one spot on the wood.",
-      "Velma should be cooked before eating: heat breaks down a protein in her.",
+      "Velma grows in tight bunches, with many stems rising together from wood.",
+      "Velma has pale gills under her caps, where she makes her spores.",
     ],
     scientific: 'Flammulina velutipes',
     color: '#b4500a', // for her name above the dish
     kind: 'mold',
-    // Her colonies are cottony, and sprout a little bunch of caps as they
-    // ripen (see mold.js).
     caps: true,
     colors: { fill: '#ffd9a0', stroke: '#d2600a', highlight: '#fff4e3', dark: '#6b2c05', spores: '#f2b46a' },
     // There are no standard disk sizes for Flammulina, so these are
