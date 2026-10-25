@@ -171,20 +171,20 @@ describe('antifungal facts', () => {
     const line = () => document.querySelector('.fun-fact');
 
     it('shows how the drug works', () => {
-      showDrugFact('AMB');
+      showDrugFact('AMB', 'sasha', SPECIES.sasha);
       expect(line().hidden).toBe(false);
       expect(line().querySelector('.fun-fact-text').textContent).toBe(ANTIFUNGAL_FACTS.AMB);
     });
 
-    it('hides the line for a drug with no fact', () => {
-      line().hidden = false;
-      showDrugFact('XYZ');
-      expect(line().hidden).toBe(true);
+    it('falls back to a fact about the gal for a drug with no fact', () => {
+      showDrugFact('XYZ', 'sasha', SPECIES.sasha);
+      expect(line().hidden).toBe(false);
+      expect(SPECIES.sasha.facts).toContain(line().querySelector('.fun-fact-text').textContent);
     });
 
     it('does nothing on a page without the line', () => {
       document.body.innerHTML = '';
-      expect(() => showDrugFact('AMB')).not.toThrow();
+      expect(() => showDrugFact('AMB', 'sasha', SPECIES.sasha)).not.toThrow();
     });
   });
 });

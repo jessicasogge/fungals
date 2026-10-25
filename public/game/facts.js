@@ -1,7 +1,7 @@
 // "Did you know?" facts on the end-of-level pop-up. When she wins, a random
 // fact about your gal from her `facts` in config.js, never the same one twice
 // in a row. When she hits a disk, how that antifungal works instead
-// (ANTIFUNGAL_FACTS in config.js).
+// (ANTIFUNGAL_FACTS in config.js), or a fact about her if that drug has none.
 //
 // A fact can put words in italics between asterisks, for scientific names
 // of other species: "Candi's cousin *Candida auris* was ...".
@@ -48,16 +48,17 @@ export function showFact(gal, species) {
   }
 }
 
-// Show how the antifungal with disk code `code` (e.g. "VOR") works, or hide
-// the fact line if there's nothing written for it.
-export function showDrugFact(code) {
-  const line = document.querySelector('.fun-fact');
-  if (!line) return;
+// Show how the antifungal with disk code `code` (e.g. "VOR") works. If
+// there's nothing written for that drug, show a fact about `gal` instead,
+// as showFact does.
+export function showDrugFact(code, gal, species) {
   const fact = ANTIFUNGAL_FACTS[code];
   if (!fact) {
-    line.hidden = true;
+    showFact(gal, species);
     return;
   }
+  const line = document.querySelector('.fun-fact');
+  if (!line) return;
   writeFact(line.querySelector('.fun-fact-text'), fact);
   line.hidden = false;
 }

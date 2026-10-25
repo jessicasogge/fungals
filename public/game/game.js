@@ -118,7 +118,7 @@ export function playGame(galEl, species, nutrients, disks, { level = 1, target =
 
   function showGameOver(disk) {
     const { code, name } = disk.antifungal;
-    showDrugFact(code); // how the drug that got her works
+    showDrugFact(code, galEl.dataset.gal, species); // how the drug that got her works
     track(`game-over/${galEl.dataset.gal}/level-${level}/${code}`,
       `${galEl.dataset.name} hit ${name} on level ${level}`);
     banner.show(
