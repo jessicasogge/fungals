@@ -90,8 +90,8 @@ export const QUIZ_FACTS = {
     "Trixie's genus name, *Trichophyton*, means \"hair plant.\"",
   ],
   velma: [
-    "Velma is enoki, the long, thin mushroom often cooked in hot pot and ramen.",
-    "In the wild, Velma is the \"velvet shank\": orange caps on dark, velvety stems.",
+    "Velma is the \"velvet shank,\" a wild mushroom with orange caps and dark, velvety stems.",
+    "Velma's stems turn dark brown and velvety toward the bottom, like little stockings.",
     "Velma's species name, *velutipes*, means \"velvet foot,\" for her fuzzy stem.",
     "Velma's genus name, *Flammulina*, means \"little flame,\" for her orange caps.",
   ],
