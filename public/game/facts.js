@@ -1,9 +1,12 @@
-// "Did you know?" facts on the end-of-level pop-up, win or lose: a random fact about your gal from
-// her `facts` in config.js, never the same one twice in a row.
+// "Did you know?" facts on the end-of-level pop-up. When she wins, a random
+// fact about your gal from her `facts` in config.js, never the same one twice
+// in a row. When she hits a disk, how that antifungal works instead
+// (ANTIFUNGAL_FACTS in config.js), or a fact about her if that drug has none.
 //
 // A fact can put words in italics between asterisks, for scientific names
 // of other species: "Candi's cousin *Candida auris* was ...".
 
+import { ANTIFUNGAL_FACTS } from './config.js';
 import { withItalics } from './italics.js';
 
 // Write `fact` into `element`, with the parts between asterisks in <i>.
@@ -45,7 +48,22 @@ export function showFact(gal, species) {
   }
 }
 
-// Hide the fact line (e.g. on a game over).
+// Show how the antifungal with disk code `code` (e.g. "VOR") works. If
+// there's nothing written for that drug, show a fact about `gal` instead,
+// as showFact does.
+export function showDrugFact(code, gal, species) {
+  const fact = ANTIFUNGAL_FACTS[code];
+  if (!fact) {
+    showFact(gal, species);
+    return;
+  }
+  const line = document.querySelector('.fun-fact');
+  if (!line) return;
+  writeFact(line.querySelector('.fun-fact-text'), fact);
+  line.hidden = false;
+}
+
+// Hide the fact line.
 export function hideFact() {
   const line = document.querySelector('.fun-fact');
   if (line) line.hidden = true;

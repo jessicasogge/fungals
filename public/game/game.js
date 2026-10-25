@@ -5,7 +5,7 @@ import { levelBanner } from './banner.js';
 import { makeColony, moveGroups } from './colony.js';
 import { GAME, LEVELS } from './config.js';
 import { yeastGroup } from './yeast.js';
-import { showFact } from './facts.js';
+import { showDrugFact, showFact } from './facts.js';
 import { arrowKeys } from './keyboard.js';
 import { sporeBurst } from './spores.js';
 import { steer, touchSteering } from './touch.js';
@@ -117,8 +117,8 @@ export function playGame(galEl, species, nutrients, disks, { level = 1, target =
   }
 
   function showGameOver(disk) {
-    showFact(galEl.dataset.gal, species);
     const { code, name } = disk.antifungal;
+    showDrugFact(code, galEl.dataset.gal, species); // how the drug that got her works
     track(`game-over/${galEl.dataset.gal}/level-${level}/${code}`,
       `${galEl.dataset.name} hit ${name} on level ${level}`);
     banner.show(

@@ -9,7 +9,7 @@ A cute mycology game for the browser, and the sister game to [PetriPals](https:/
 1. **Pick a gal.** Each one is a real fungus, drawn as a cartoon.
 2. **Swim around the dish.** Use the arrow keys, or on a touch screen, drag your gal like a trackpad: touch anywhere on the dish and slide your finger, and she moves the same way.
 3. **Eat nutrients to bud.** Every cell that eats a nutrient buds: a little daughter cell swells out of her side and grows to full size. Daughters stick together in clusters, the way budding yeast does on a plate. Yara's line up end to end in chains instead.
-4. **Don't touch the antifungals.** Touching a disk, or the clear zone of inhibition around it, ends the game. The zones start small and spread outward over the first few seconds, so grab the nutrients near the disks early.
+4. **Don't touch the antifungals.** Touching a disk, or the clear zone of inhibition around it, ends the game. The zones start small and spread outward over the first few seconds, so grab the nutrients near the disks early. The game-over card's "Did you know?" line then says how that drug works (`ANTIFUNGAL_FACTS` in `public/game/config.js`), or shows a fact about your gal if that drug has none; beating a level shows a fact about your gal.
 
 There are seven levels. Each one adds another antifungal disk and doubles the colony you need to grow, from 4 cells up to 256. Each yeast has four or five antifungals, so the later levels start over from her first drugs.
 
