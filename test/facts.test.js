@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { SPECIES } from '../public/game/config.js';
-import { hideFact, pickFact, showFact, writeFact } from '../public/game/facts.js';
+import { ANTIFUNGAL_FACTS, SPECIES } from '../public/game/config.js';
+import { hideFact, pickFact, showDrugFact, showFact, writeFact } from '../public/game/facts.js';
 import { plainText } from '../public/game/italics.js';
 
 describe('every gal\'s facts', () => {
@@ -149,5 +149,42 @@ describe('the pop-up line', () => {
     showFact('sasha', SPECIES.sasha);
     hideFact();
     expect(line().hidden).toBe(true);
+  });
+});
+
+describe('antifungal facts', () => {
+  const codes = [...new Set(Object.values(SPECIES).flatMap((s) => s.antifungals.map((d) => d.code)))];
+
+  it.each(codes)('%s has a short fact about how it works, naming the drug', (code) => {
+    const fact = ANTIFUNGAL_FACTS[code];
+    expect(fact, code).toBeTruthy();
+    expect(fact.length).toBeLessThanOrEqual(90);
+    const name = Object.values(SPECIES).flatMap((s) => s.antifungals).find((d) => d.code === code).name;
+    expect(fact.toLowerCase()).toContain(name.toLowerCase());
+  });
+
+  describe('on the pop-up', () => {
+    beforeEach(() => {
+      document.body.innerHTML =
+        '<p class="fun-fact" hidden><strong>Did you know?</strong> <span class="fun-fact-text"></span></p>';
+    });
+    const line = () => document.querySelector('.fun-fact');
+
+    it('shows how the drug works', () => {
+      showDrugFact('AMB');
+      expect(line().hidden).toBe(false);
+      expect(line().querySelector('.fun-fact-text').textContent).toBe(ANTIFUNGAL_FACTS.AMB);
+    });
+
+    it('hides the line for a drug with no fact', () => {
+      line().hidden = false;
+      showDrugFact('XYZ');
+      expect(line().hidden).toBe(true);
+    });
+
+    it('does nothing on a page without the line', () => {
+      document.body.innerHTML = '';
+      expect(() => showDrugFact('AMB')).not.toThrow();
+    });
   });
 });

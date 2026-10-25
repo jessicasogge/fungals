@@ -429,6 +429,23 @@ export const SPECIES = {
   },
 };
 
+// How each antifungal works, keyed by its disk's code. On a game over, the
+// "Did you know?" line shows the one for the disk she hit (facts.js).
+export const ANTIFUNGAL_FACTS = {
+  VOR: 'Voriconazole blocks ergosterol production, weakening her cell membrane.',
+  AMB: 'Amphotericin B binds ergosterol and makes her cell membrane leak.',
+  ITC: 'Itraconazole blocks ergosterol production, weakening her cell membrane.',
+  CAS: 'Caspofungin blocks production of a cell wall building block, weakening her wall.',
+  FLC: 'Fluconazole blocks ergosterol production, weakening her cell membrane.',
+  POS: 'Posaconazole blocks ergosterol production, weakening her cell membrane.',
+  NY: 'Nystatin binds ergosterol and makes her cell membrane leak.',
+  TRB: 'Terbinafine blocks ergosterol production and makes harmful squalene build up.',
+  MCF: 'Micafungin blocks production of a cell wall building block, weakening her wall.',
+  KCA: 'Ketoconazole blocks ergosterol production, weakening her cell membrane.',
+  '5FC': 'Flucytosine turns into chemicals that disrupt her DNA and protein production.',
+  GRI: 'Griseofulvin disrupts the tiny fibers that separate her chromosomes during division.',
+};
+
 // Each level adds an antifungal disk and doubles the colony you need to grow.
 // A mold (Fumi) needs `colonies` colonies instead: 6 on level 1, and 6 more
 // each level.

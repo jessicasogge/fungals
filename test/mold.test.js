@@ -6,7 +6,7 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { GAME, LEVELS, SPECIES } from '../public/game/config.js';
+import { ANTIFUNGAL_FACTS, GAME, LEVELS, SPECIES } from '../public/game/config.js';
 
 const fake = vi.hoisted(() => ({ keys: [0, 0] }));
 
@@ -409,6 +409,8 @@ describe('playing as a mold', () => {
       .toBe('Fumi swam into the voriconazole zone of inhibition. Antifungals kill fungi!');
     expect(banner.querySelector('.play-again').textContent).toBe('Try level 2 again');
     expect(banner.querySelector('.start-over').hidden).toBe(false);
+    // The "Did you know?" line says how voriconazole works, not a fact about Fumi.
+    expect(banner.querySelector('.fun-fact-text').textContent).toBe(ANTIFUNGAL_FACTS.VOR);
     expect(track).toHaveBeenCalledWith('game-over/fumi/level-2/VOR', 'Fumi hit voriconazole on level 2');
   });
 });

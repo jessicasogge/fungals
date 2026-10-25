@@ -8,7 +8,7 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { GAME, LEVELS, SPECIES } from '../public/game/config.js';
+import { ANTIFUNGAL_FACTS, GAME, LEVELS, SPECIES } from '../public/game/config.js';
 import { plainText } from '../public/game/italics.js';
 
 // A stand-in colony whose cell count and division timing each test sets.
@@ -303,12 +303,12 @@ describe('the fun fact', () => {
     expect(SPECIES.candi.facts.map(plainText)).toContain(factShown()); // as it reads, without asterisks
   });
 
-  it("shows one of the gal's facts on a game over", () => {
+  it('shows how the antifungal that got her works on a game over', () => {
     start({ level: 2, gal: 'sasha' });
     fake.hit = disk(0.05);
     frame();
     vi.runAllTimers();
-    expect(SPECIES.sasha.facts.map(plainText)).toContain(factShown());
+    expect(factShown()).toBe(ANTIFUNGAL_FACTS.FLC);
   });
 });
 
