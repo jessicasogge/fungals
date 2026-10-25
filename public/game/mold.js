@@ -22,7 +22,9 @@ export function colonyRadius(seconds) {
 // `colors` are the gal's palette; `spores` colors their centers.
 // With `drops` (Ruby), each colony beads with red drops, one at a time, as
 // it ripens. With `wrinkled` (Rosie), each colony gets wrinkly folds as it
-// darkens, and with `powdery` (Trixie) a soft white look with a tan middle (styles.css).
+// darkens, and with `powdery` (Trixie) a soft white look with a tan middle
+// (styles.css). With `caps` (Velma), each colony is soft and cottony, and a
+// tiny bunch of her orange caps pops up in its middle as it ripens.
 // Positions and sizes use fractions of the dish radius.
 export const DROPS = [
   // Where each drop sits on the colony (percent across and down), and how
@@ -32,8 +34,19 @@ export const DROPS = [
   { x: 37, y: 59, at: 0.9 },
 ];
 
+// Velma's bunch of caps, in the middle of the colony, the same way: the
+// biggest first, then the rest one by one as the colony reaches full size.
+export const CAPS = [
+  { x: 50, y: 50, at: 0.7, big: true },
+  { x: 60, y: 45, at: 0.76 },
+  { x: 41, y: 44, at: 0.82 },
+  { x: 56, y: 59, at: 0.88 },
+  { x: 43, y: 57, at: 0.94 },
+  { x: 51, y: 38, at: 1 },
+];
+
 export function moldColonies({
-  layer, disks = [], nutrients, colors, drops = false, wrinkled = false, powdery = false,
+  layer, disks = [], nutrients, colors, drops = false, wrinkled = false, powdery = false, caps = false,
 }) {
   const colonies = [];
 
@@ -46,7 +59,7 @@ export function moldColonies({
     // rest stays white and fluffy.
     const ripe = Math.min(1, colony.age / GAME.COLONY_GROW_SECONDS);
     el.style.setProperty('--ripe', `${Math.round(ripe * 40)}%`);
-    for (const drop of colony.drops) drop.el.classList.toggle('shown', ripe >= drop.at);
+    for (const bit of colony.bits) bit.el.classList.toggle('shown', ripe >= bit.at);
   }
 
   function remove(colony) {
@@ -62,27 +75,32 @@ export function moldColonies({
     // another one. Returns the new colony.
     plant(fx, fy) {
       const el = document.createElement('div');
-      el.className = ['colony', wrinkled && 'wrinkled', powdery && 'powdery'].filter(Boolean).join(' ');
+      el.className = ['colony', wrinkled && 'wrinkled', powdery && 'powdery', caps && 'cottony'].filter(Boolean).join(' ');
       el.setAttribute('aria-hidden', 'true');
       el.style.setProperty('--spores', colors.spores);
       // A slightly uneven edge, different for each colony.
       const wobble = () => `${47 + Math.random() * 6}%`;
       el.style.borderRadius =
         `${wobble()} ${wobble()} ${wobble()} ${wobble()} / ${wobble()} ${wobble()} ${wobble()} ${wobble()}`;
-      const colony = { fx, fy, r: colonyRadius(0), age: 0, el, drops: [] };
-      if (drops) {
-        // Each colony's drops sit at their own turn around its middle.
-        const turn = Math.random() * Math.PI * 2;
-        const [cos, sin] = [Math.cos(turn), Math.sin(turn)];
-        for (const { x, y, at } of DROPS) {
-          const drop = document.createElement('span');
-          drop.className = 'drop';
-          drop.style.left = `${(50 + (x - 50) * cos - (y - 50) * sin).toFixed(1)}%`;
-          drop.style.top = `${(50 + (x - 50) * sin + (y - 50) * cos).toFixed(1)}%`;
-          drop.style.background = colors.drop;
-          el.appendChild(drop);
-          colony.drops.push({ el: drop, at });
+      const colony = { fx, fy, r: colonyRadius(0), age: 0, el, bits: [] };
+      // Ruby's drops or Velma's caps, at their own turn around the middle
+      // for each colony.
+      const bits = (drops && DROPS) || (caps && CAPS) || [];
+      const turn = Math.random() * Math.PI * 2;
+      const [cos, sin] = [Math.cos(turn), Math.sin(turn)];
+      for (const { x, y, at, big } of bits) {
+        const bit = document.createElement('span');
+        bit.className = drops ? 'drop' : big ? 'cap big' : 'cap';
+        bit.style.left = `${(50 + (x - 50) * cos - (y - 50) * sin).toFixed(1)}%`;
+        bit.style.top = `${(50 + (x - 50) * sin + (y - 50) * cos).toFixed(1)}%`;
+        if (drops) {
+          bit.style.background = colors.drop;
+        } else {
+          bit.style.setProperty('--cap', colors.fill);
+          bit.style.setProperty('--cap-edge', colors.stroke);
         }
+        el.appendChild(bit);
+        colony.bits.push({ el: bit, at });
       }
       draw(colony);
       layer.appendChild(el);
@@ -167,6 +185,7 @@ export function playMold(galEl, species, nutrients, disks, { level = 1, target =
   const colonies = moldColonies({
     layer, disks, nutrients, colors: species.colors,
     drops: Boolean(species.drops), wrinkled: Boolean(species.wrinkled), powdery: Boolean(species.powdery),
+    caps: Boolean(species.caps),
   });
 
   let finished = false;

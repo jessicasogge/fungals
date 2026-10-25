@@ -557,6 +557,43 @@ export const GALS = [
       ${face(100, 104, '#0e4a33')}
     `,
   },
+  // Velma: Flammulina velutipes, enoki: a tight bunch of long, thin stems
+  // from one base, each with a tiny round cap, and her face on the biggest
+  // cap. In the dish she plays like Fumi (see mold.js), with cottony
+  // colonies that sprout a little bunch of caps.
+  {
+    id: 'velma',
+    name: 'Velma',
+    looks: 'an orange Flammulina velutipes mushroom, enoki: a bunch of long, thin stems from one base, each with a tiny round cap',
+    motion: 'bob',
+    frames: { home: '10 10 180 180', picker: '14 14 172 172', dish: '50 50 100 100' },
+    art: `
+      <!-- a tight bundle of long, thin stems from one base -->
+      <g fill="none" stroke-linecap="round">
+      <path d="M 95.2 184 Q 79.0 130 40.0 82.4 M 96.2 184 Q 83.2 130 52.0 59.0 M 97.6 184 Q 89.5 130 70.0 41.2 M 99.0 184 Q 95.8 130 88.0 28.1 M 101.0 184 Q 104.2 130 112.0 28.1 M 102.4 184 Q 110.5 130 130.0 41.2 M 103.8 184 Q 116.8 130 148.0 59.0 M 104.8 184 Q 121.0 130 160.0 82.4 M 100 184 L 100 92" stroke="#d2600a" stroke-width="6.5" />
+      <path d="M 95.2 184 Q 79.0 130 40.0 82.4 M 96.2 184 Q 83.2 130 52.0 59.0 M 97.6 184 Q 89.5 130 70.0 41.2 M 99.0 184 Q 95.8 130 88.0 28.1 M 101.0 184 Q 104.2 130 112.0 28.1 M 102.4 184 Q 110.5 130 130.0 41.2 M 103.8 184 Q 116.8 130 148.0 59.0 M 104.8 184 Q 121.0 130 160.0 82.4 M 100 184 L 100 92" stroke="#ffe6bf" stroke-width="3.6" />
+      </g>
+      <!-- where the stems join, like a bunch from the store -->
+      <path d="M 86 176 Q 100 170 114 176 L 116 188 Q 100 192 84 188 Z" fill="#f6c27a" stroke="#d2600a" stroke-width="3" stroke-linejoin="round" />
+      <!-- tiny round caps -->
+      <g fill="#ffd9a0" stroke="#d2600a" stroke-width="2.6" stroke-linejoin="round"><path d="M 32.0 81.6 Q 32.0 71.2 40.0 71.2 Q 48.0 71.2 48.0 81.6 Q 40.0 84.0 32.0 81.6 Z" /><path d="M 43.0 58.0 Q 43.0 46.4 52.0 46.4 Q 61.0 46.4 61.0 58.0 Q 52.0 60.8 43.0 58.0 Z" /><path d="M 60.5 40.3 Q 60.5 27.9 70.0 27.9 Q 79.5 27.9 79.5 40.3 Q 70.0 43.1 60.5 40.3 Z" /><path d="M 80.5 27.4 Q 80.5 17.6 88.0 17.6 Q 95.5 17.6 95.5 27.4 Q 88.0 29.6 80.5 27.4 Z" /><path d="M 104.5 27.4 Q 104.5 17.6 112.0 17.6 Q 119.5 17.6 119.5 27.4 Q 112.0 29.6 104.5 27.4 Z" /><path d="M 120.5 40.3 Q 120.5 27.9 130.0 27.9 Q 139.5 27.9 139.5 40.3 Q 130.0 43.1 120.5 40.3 Z" /><path d="M 139.0 58.0 Q 139.0 46.4 148.0 46.4 Q 157.0 46.4 157.0 58.0 Q 148.0 60.8 139.0 58.0 Z" /><path d="M 152.0 81.6 Q 152.0 71.2 160.0 71.2 Q 168.0 71.2 168.0 81.6 Q 160.0 84.0 152.0 81.6 Z" /></g>
+      <!-- her cap, with her face -->
+      <path d="M 72 86 Q 70 50 100 50 Q 130 50 128 86 Q 100 98 72 86 Z" fill="#ffd9a0" stroke="#d2600a" stroke-width="4" stroke-linejoin="round" />
+      <ellipse cx="86" cy="60" rx="6.5" ry="3.2" fill="#ffffff" transform="rotate(-22 86 60)" />
+      <g class="face">
+      <circle cx="91" cy="73" r="4.6" fill="#6b2c05" /><circle cx="109" cy="73" r="4.6" fill="#6b2c05" />
+      <circle cx="92.5" cy="71.5" r="1.6" fill="white" /><circle cx="110.5" cy="71.5" r="1.6" fill="white" />
+      <ellipse cx="84" cy="81" rx="4.4" ry="2.5" fill="#f9a8d4" opacity="0.95" /><ellipse cx="116" cy="81" rx="4.4" ry="2.5" fill="#f9a8d4" opacity="0.95" />
+      <path d="M96 81 Q100 85.5 104 81" stroke="#6b2c05" stroke-width="2.6" fill="none" stroke-linecap="round" />
+      </g>
+    `,
+    dishArt: `
+      <!-- one small, round spore (a basidiospore) -->
+      <circle cx="100" cy="100" r="42" fill="#ffd9a0" stroke="#d2600a" stroke-width="4" />
+      <ellipse cx="82" cy="80" rx="9" ry="5" fill="#fff4e3" transform="rotate(-25 82 80)" />
+      ${face(100, 104, '#6b2c05')}
+    `,
+  },
 ];
 
 // The home row shows at most HOME_MAX gals, so not every gal is on it.
