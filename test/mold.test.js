@@ -20,7 +20,7 @@ vi.mock('../public/game/touch.js', async (importActual) => ({
 vi.mock('../public/game/spores.js', () => ({ sporeBurst: vi.fn() }));
 vi.mock('../public/game/track.js', () => ({ track: vi.fn() }));
 
-const { colonyRadius, DROPS, moldColonies, playMold, sporeGroup } = await import('../public/game/mold.js');
+const { CAPS, colonyRadius, DROPS, moldColonies, playMold, sporeGroup } = await import('../public/game/mold.js');
 const { sporeBurst } = await import('../public/game/spores.js');
 const { track } = await import('../public/game/track.js');
 
@@ -140,6 +140,25 @@ describe('the colonies', () => {
     expect(colony.el.classList).toContain('powdery');
     expect(colony.el.classList).not.toContain('wrinkled');
     expect(colony.el.style.getPropertyValue('--spores')).toBe(SPECIES.trixie.colors.spores);
+  });
+
+  it("sprouts a bunch of Velma's caps on her cottony colonies, one at a time, as they ripen", () => {
+    const velma = SPECIES.velma.colors;
+    const colonies = moldColonies({ layer, nutrients: fakeNutrients(), colors: velma, caps: true });
+    const colony = colonies.plant(0, 0);
+    expect(colony.el.classList).toContain('cottony');
+    expect(colony.el.querySelector('.drop')).toBeNull();
+    const caps = [...colony.el.querySelectorAll('.cap')];
+    const shown = () => caps.filter((c) => c.classList.contains('shown')).length;
+    expect(caps).toHaveLength(CAPS.length);
+    expect(caps.filter((c) => c.classList.contains('big'))).toHaveLength(1);
+    expect(caps[0].style.getPropertyValue('--cap')).toBe(velma.fill);
+    expect(caps[0].style.getPropertyValue('--cap-edge')).toBe(velma.stroke);
+    expect(shown()).toBe(0);
+    colonies.grow(GAME.COLONY_GROW_SECONDS * 0.8);
+    expect(shown()).toBe(CAPS.filter((c) => c.at <= 0.8).length);
+    colonies.grow(GAME.COLONY_GROW_SECONDS);
+    expect(shown()).toBe(CAPS.length);
   });
 
   it("gives other molds' colonies no drops", () => {

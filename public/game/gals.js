@@ -557,6 +557,46 @@ export const GALS = [
       ${face(100, 104, '#0e4a33')}
     `,
   },
+  // Velma: Flammulina velutipes, the velvet shank: a bunch of broad orange
+  // caps on stems that darken to dark, velvety brown "stockings," growing
+  // from a bit of dead wood, with her face on the biggest cap. In the dish she plays like Fumi (see mold.js), with cottony
+  // colonies that sprout a little bunch of caps.
+  {
+    id: 'velma',
+    name: 'Velma',
+    looks: 'an orange Flammulina velutipes mushroom, the velvet shank: a bunch of broad orange caps on stems that turn dark, velvety brown at the bottom, growing from a bit of dead wood',
+    motion: 'bob',
+    frames: { home: '10 13 180 180', picker: '14 21 172 172', dish: '50 50 100 100' },
+    art: `
+      <!-- the bit of dead wood she grows from -->
+      <path d="M 66 176 Q 64 170 72 169 L 128 169 Q 136 170 134 176 L 134 184 Q 134 190 126 190 L 74 190 Q 66 190 66 184 Z" fill="#b8835a" stroke="#43220e" stroke-width="3" stroke-linejoin="round" />
+      <ellipse cx="128.5" cy="179.5" rx="4.5" ry="8" fill="#d9a77a" stroke="#43220e" stroke-width="2" />
+      <path d="M 76 177 L 98 177 M 84 183 L 112 183" stroke="#8a5a35" stroke-width="1.6" stroke-linecap="round" />
+      <!-- her stems: apricot at the top, darkening to dark, velvety "stockings" -->
+      <g fill="none" stroke-linecap="round">
+      <path d="M 94.0 176.0 Q 73.0 140.0 40.0 115.6 M 95.3 176.0 Q 78.8 140.0 53.0 82.0 M 97.3 176.0 Q 87.8 140.0 73.0 43.8 M 102.7 176.0 Q 112.2 140.0 127.0 39.8 M 104.7 176.0 Q 121.2 140.0 147.0 78.0 M 106.1 176.0 Q 127.5 140.0 161.0 113.6 M 100.0 176.0 Q 100.0 140.0 100.0 100.0" stroke="#d2600a" stroke-width="7" />
+      <path d="M 94.0 176.0 Q 73.0 140.0 40.0 115.6 M 95.3 176.0 Q 78.8 140.0 53.0 82.0 M 97.3 176.0 Q 87.8 140.0 73.0 43.8 M 102.7 176.0 Q 112.2 140.0 127.0 39.8 M 104.7 176.0 Q 121.2 140.0 147.0 78.0 M 106.1 176.0 Q 127.5 140.0 161.0 113.6 M 100.0 176.0 Q 100.0 140.0 100.0 100.0" stroke="#ffd9a0" stroke-width="4" />
+      <path d="M 94.0 176.0 Q 78.0 148.7 55.2 128.0 M 95.3 176.0 Q 86.0 155.5 73.6 128.0 M 97.3 176.0 Q 92.8 158.8 87.1 128.0 M 102.7 176.0 Q 107.1 159.1 112.8 128.0 M 104.7 176.0 Q 113.8 156.0 125.9 128.0 M 106.1 176.0 Q 121.9 149.4 144.4 128.0 M 100.0 176.0 Q 100.0 152.8 100.0 128.0" stroke="#8a4513" stroke-width="7" />
+      <path d="M 94.0 176.0 Q 78.0 148.7 55.2 128.0 M 95.3 176.0 Q 86.0 155.5 73.6 128.0 M 97.3 176.0 Q 92.8 158.8 87.1 128.0 M 102.7 176.0 Q 107.1 159.1 112.8 128.0 M 104.7 176.0 Q 113.8 156.0 125.9 128.0 M 106.1 176.0 Q 121.9 149.4 144.4 128.0 M 100.0 176.0 Q 100.0 152.8 100.0 128.0" stroke="#c27a3e" stroke-width="4" />
+      <path d="M 94.0 176.0 Q 81.0 153.8 63.5 136.0 M 95.3 176.0 Q 87.3 158.6 77.2 136.0 M 97.3 176.0 Q 93.4 161.1 88.6 136.0 M 102.7 176.0 Q 106.6 161.3 111.3 136.0 M 104.7 176.0 Q 112.5 158.9 122.4 136.0 M 106.1 176.0 Q 119.0 154.2 136.4 136.0 M 100.0 176.0 Q 100.0 156.6 100.0 136.0" stroke="#43220e" stroke-width="7.5" />
+      <path d="M 94.0 176.0 Q 81.0 153.8 63.5 136.0 M 95.3 176.0 Q 87.3 158.6 77.2 136.0 M 97.3 176.0 Q 93.4 161.1 88.6 136.0 M 102.7 176.0 Q 106.6 161.3 111.3 136.0 M 104.7 176.0 Q 112.5 158.9 122.4 136.0 M 106.1 176.0 Q 119.0 154.2 136.4 136.0 M 100.0 176.0 Q 100.0 156.6 100.0 136.0" stroke="#7a4321" stroke-width="4.5" />
+      </g>
+      <g fill="#b77a4f" opacity="0.85"><circle cx="87.9" cy="167.5" r="0.9" /><circle cx="84.1" cy="159.4" r="0.9" /><circle cx="92.1" cy="167.0" r="0.9" /><circle cx="86.0" cy="157.5" r="0.9" /><circle cx="94.1" cy="166.5" r="0.9" /><circle cx="93.4" cy="155.2" r="0.9" /><circle cx="105.9" cy="166.4" r="0.9" /><circle cx="106.6" cy="155.0" r="0.9" /><circle cx="107.9" cy="167.0" r="0.9" /><circle cx="114.0" cy="157.2" r="0.9" /><circle cx="112.3" cy="167.5" r="0.9" /><circle cx="116.2" cy="159.3" r="0.9" /><circle cx="99.1" cy="167.3" r="0.9" /><circle cx="100.9" cy="158.5" r="0.9" /></g>
+      <!-- her broad, gently domed caps -->
+      <g fill="#ffd9a0" stroke="#d2600a" stroke-width="2.8" stroke-linejoin="round"><path d="M 28.0 115.6 Q 28.0 100.6 40.0 100.6 Q 52.0 100.6 52.0 115.6 Q 40.0 119.4 28.0 115.6 Z" /><path d="M 39.5 82.0 Q 39.5 65.2 53.0 65.2 Q 66.5 65.2 66.5 82.0 Q 53.0 86.4 39.5 82.0 Z" /><path d="M 60.5 43.8 Q 60.5 28.1 73.0 28.1 Q 85.5 28.1 85.5 43.8 Q 73.0 47.8 60.5 43.8 Z" /><path d="M 114.5 39.8 Q 114.5 24.1 127.0 24.1 Q 139.5 24.1 139.5 39.8 Q 127.0 43.8 114.5 39.8 Z" /><path d="M 133.5 78.0 Q 133.5 61.2 147.0 61.2 Q 160.5 61.2 160.5 78.0 Q 147.0 82.4 133.5 78.0 Z" /><path d="M 149.0 113.6 Q 149.0 98.6 161.0 98.6 Q 173.0 98.6 173.0 113.6 Q 161.0 117.4 149.0 113.6 Z" /></g>
+      <g fill="#fff4e3"><ellipse cx="35.2" cy="106.6" rx="3.4" ry="1.6" transform="rotate(-20 35.2 106.6)" /><ellipse cx="47.6" cy="71.9" rx="3.8" ry="1.8" transform="rotate(-20 47.6 71.9)" /><ellipse cx="68.0" cy="34.4" rx="3.5" ry="1.6" transform="rotate(-20 68.0 34.4)" /><ellipse cx="122.0" cy="30.4" rx="3.5" ry="1.6" transform="rotate(-20 122.0 30.4)" /><ellipse cx="141.6" cy="67.9" rx="3.8" ry="1.8" transform="rotate(-20 141.6 67.9)" /><ellipse cx="156.2" cy="104.6" rx="3.4" ry="1.6" transform="rotate(-20 156.2 104.6)" /></g>
+      <!-- her cap, with her face -->
+      <path d="M 70 96 Q 68 57 100 57 Q 132 57 130 96 Q 100 108 70 96 Z" fill="#ffd9a0" stroke="#d2600a" stroke-width="4" stroke-linejoin="round" />
+      <ellipse cx="85" cy="68" rx="7" ry="3.4" fill="#fff4e3" transform="rotate(-22 85 68)" />
+      <g class="face"><circle cx="91" cy="82.0" r="4.8" fill="#6b2c05" /><circle cx="109" cy="82.0" r="4.8" fill="#6b2c05" /><circle cx="92.6" cy="80.4" r="1.7" fill="white" /><circle cx="110.6" cy="80.4" r="1.7" fill="white" /><ellipse cx="83.5" cy="90.5" rx="4.6" ry="2.6" fill="#f9a8d4" opacity="0.95" /><ellipse cx="116.5" cy="90.5" rx="4.6" ry="2.6" fill="#f9a8d4" opacity="0.95" /><path d="M96 90.5 Q100 95 104 90.5" stroke="#6b2c05" stroke-width="2.6" fill="none" stroke-linecap="round" /></g>
+    `,
+    dishArt: `
+      <!-- one small, round spore (a basidiospore) -->
+      <circle cx="100" cy="100" r="42" fill="#ffd9a0" stroke="#d2600a" stroke-width="4" />
+      <ellipse cx="82" cy="80" rx="9" ry="5" fill="#fff4e3" transform="rotate(-25 82 80)" />
+      ${face(100, 104, '#6b2c05')}
+    `,
+  },
 ];
 
 // The home row shows at most HOME_MAX gals, so not every gal is on it.
