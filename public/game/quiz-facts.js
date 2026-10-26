@@ -96,9 +96,9 @@ export const QUIZ_FACTS = {
     "Velma's genus name, *Flammulina*, means \"little flame,\" for her orange caps.",
   ],
   bea: [
-    "Bea is a chytrid, one of the only kinds of fungi that can swim.",
+    "Bea is a chytrid, one of the few kinds of fungi with swimming spores.",
     "Bea's genus name, *Batrachochytrium*, means \"frog chytrid.\"",
-    "Bea's species name, *dendrobatidis*, comes from the poison dart frogs she was found on.",
-    "Bea causes chytridiomycosis, a skin disease that upsets how frogs breathe and drink.",
+    "Bea's species name, *dendrobatidis*, refers to the poison dart frogs she was found on.",
+    "Bea causes chytridiomycosis, a skin disease that disrupts water and salt balance."
   ],
 };
