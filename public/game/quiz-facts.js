@@ -89,6 +89,12 @@ export const QUIZ_FACTS = {
     "Some of Trixie's threads curl into tight spirals, like springs.",
     "Trixie's genus name, *Trichophyton*, means \"hair plant.\"",
   ],
+  velma: [
+    "Velma is the \"velvet shank,\" with orange caps and dark, velvety lower stems.",
+    "Velma is a winter mushroom, fruiting on wood even in cold weather.",
+    "Velma's species name, *velutipes*, means \"velvet foot,\" for her fuzzy lower stem.",
+    "Velma's genus name, *Flammulina*, means \"little flame,\" for her orange caps.",
+  ],
   bea: [
     "Bea is a chytrid, one of the only kinds of fungi that can swim.",
     "Bea's genus name, *Batrachochytrium*, means \"frog chytrid.\"",

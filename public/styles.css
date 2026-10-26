@@ -467,6 +467,10 @@ a.gal-card:active {
   background: rgba(211, 243, 227, 0.75);
 }
 
+.velma {
+  background: rgba(255, 224, 178, 0.8);
+}
+
 .bea {
   background: rgba(240, 212, 248, 0.85);
 }
@@ -1119,6 +1123,67 @@ body:not(.picker-page) .signature {
   }
 }
 
+/* A phone turned sideways is too short for the dish under its title: size
+   the dish by the screen's height and put the name, cell count and
+   directions beside it, so the whole dish fits without scrolling. */
+@media (orientation: landscape) and (max-height: 500px) {
+  .picker-page:has(.dish-shell) {
+    min-height: 100dvh;
+    padding: 0.5rem max(0.75rem, env(safe-area-inset-right)) 0.5rem max(0.75rem, env(safe-area-inset-left));
+  }
+
+  .picker-page:has(.dish-shell) .signature {
+    display: none;
+  }
+
+  .dish-shell {
+    width: min(1000px, 100%);
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-rows: 1fr auto auto auto auto 1fr;
+    column-gap: 1.5rem;
+    align-items: center;
+    padding: 0.75rem;
+  }
+
+  .dish-shell .petri-dish {
+    grid-column: 1;
+    grid-row: 1 / -1;
+    width: min(600px, calc(100dvh - 2.75rem));
+    padding: 8px;
+  }
+
+  .dish-shell > :not(.petri-dish) {
+    grid-column: 2;
+  }
+
+  .dish-shell .dish-title {
+    grid-row: 2;
+    margin-bottom: 0.5rem;
+  }
+
+  .dish-title .gal-name {
+    font-size: 1.6rem;
+  }
+
+  .dish-shell .cell-count {
+    grid-row: 3;
+    margin-top: 0;
+  }
+
+  .dish-shell .how-to-play {
+    grid-row: 4;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    line-height: 1.45;
+  }
+
+  .dish-shell .back-link {
+    grid-row: 5;
+    margin-top: 0.75rem;
+  }
+}
+
 /* A mold's spore (game/mold.js) is a single, tiny cell. */
 .gal-mover.spore {
   width: 4.5%;
@@ -1213,6 +1278,36 @@ body:not(.picker-page) .signature {
   box-shadow:
     0 0 0 1px rgba(170, 150, 120, 0.25),
     0 0 5px 2px rgba(255, 255, 255, 0.95);
+}
+
+/* Velma's colonies: soft, white and cottony, with fine threads reaching
+   out at the edge. As one ripens, a tiny bunch of her orange caps pops up
+   in its middle (mold.js), like an enoki bunch seen from above. */
+.colony.cottony {
+  background:
+    repeating-conic-gradient(rgba(210, 96, 10, 0.09) 0 1deg, transparent 1deg 12deg),
+    radial-gradient(circle, #fffdf6 0 55%, rgba(255, 252, 242, 0.95) 75%, rgba(255, 255, 255, 0.6) 100%);
+  box-shadow: 0 0 5px 2px rgba(255, 255, 255, 0.95);
+}
+
+.colony .cap {
+  position: absolute;
+  width: 10%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--cap);
+  border: 1.5px solid var(--cap-edge);
+  box-sizing: border-box;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.3s ease-out;
+}
+
+.colony .cap.big {
+  width: 13%;
+}
+
+.colony .cap.shown {
+  transform: translate(-50%, -50%) scale(1);
 }
 
 /* Bea's pods (mold.js): small, round, see-through sacs with tiny root-like

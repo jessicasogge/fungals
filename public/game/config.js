@@ -328,6 +328,35 @@ export const SPECIES = {
       { code: 'FLC', name: 'fluconazole', zone: 12 },
     ],
   },
+  velma: {
+    facts: [
+      "Velma is the \"velvet shank,\" with orange caps and dark, velvety lower stems.",
+      "Velma's cousin, *Flammulina filiformis*, is the long, pale enoki sold in stores.",
+      "Velma's stems become dark and velvety near the bottom, like little stockings.",
+      "Velma fruits in cold weather and can resume growing after freezing and thawing.",
+      "Velma's species name, *velutipes*, means \"velvet foot,\" for her fuzzy lower stem.",
+      "Velma's genus name, *Flammulina*, means \"little flame,\" for her orange caps.",
+      "Velma breaks down dead wood, helping recycle its nutrients.",
+      "Velma is a basidiomycete, a mushroom-making cousin of Ruby and Maizey.",
+      "Velma grows in tight bunches, with many stems rising together from wood.",
+      "Velma has pale gills under her caps, where she makes her spores.",
+    ],
+    scientific: 'Flammulina velutipes',
+    color: '#b4500a', // for her name above the dish
+    kind: 'mold',
+    caps: true,
+    colors: { fill: '#ffd9a0', stroke: '#d2600a', highlight: '#fff4e3', dark: '#6b2c05', spores: '#f2b46a' },
+    // There are no standard disk sizes for Flammulina, so these are
+    // estimates. Like many basidiomycetes she's thought to shrug off
+    // fluconazole, so its zone is small.
+    antifungals: [
+      { code: 'AMB', name: 'amphotericin B', zone: 18 },
+      { code: 'TRB', name: 'terbinafine', zone: 26 },
+      { code: 'VOR', name: 'voriconazole', zone: 22 },
+      { code: 'ITC', name: 'itraconazole', zone: 20 },
+      { code: 'FLC', name: 'fluconazole', zone: 12 },
+    ],
+  },
   bea: {
     facts: [
       "Bea is a chytrid, one of the only kinds of fungi that can swim.",
