@@ -359,17 +359,17 @@ export const SPECIES = {
   },
   bea: {
     facts: [
-      "Bea is a chytrid, one of the only kinds of fungi that can swim.",
-      "Bea's spores swim with a single tail, called a flagellum, through water.",
+      "Bea is a chytrid, one of the few kinds of fungi with swimming spores.",
+      "Bea's spores swim through water with one tail, called a flagellum.",
       "Bea's genus name, *Batrachochytrium*, means \"frog chytrid.\"",
-      "Bea's species name, *dendrobatidis*, comes from the poison dart frogs she was found on.",
+      "Bea's species name, *dendrobatidis*, refers to the poison dart frogs she was found on.",
       "Scientists call Bea \"Bd\" for short.",
-      "Bea lives in the skin of frogs and other amphibians, where she feeds on keratin.",
-      "Bea causes chytridiomycosis, a skin disease that upsets how frogs breathe and drink.",
-      "Bea has spread around the world and caused many frog species to decline.",
-      "Each of Bea's spores settles and swells into a round pod with tiny, root-like threads.",
-      "When Bea's pod is ripe, it pours out new swimming spores through little spouts.",
-      "Frogs in zoos and labs can be treated for Bea with baths of itraconazole.",
+      "Bea infects the outer skin of frogs and other amphibians.",
+      "Bea causes chytridiomycosis, a skin disease that disrupts water and salt balance.",
+      "Bea has spread worldwide and helped drive many amphibian species into decline.",
+      "Bea's spores settle and grow into round pods with tiny threads called rhizoids.",
+      "Bea's mature pods release new swimming spores through little discharge tubes.",
+      "Vets can treat Bea infections in captive frogs with itraconazole baths."
     ],
     scientific: 'Batrachochytrium dendrobatidis',
     color: '#9d1fa8', // for her name above the dish
