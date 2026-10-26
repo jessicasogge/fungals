@@ -89,4 +89,10 @@ export const QUIZ_FACTS = {
     "Some of Trixie's threads curl into tight spirals, like springs.",
     "Trixie's genus name, *Trichophyton*, means \"hair plant.\"",
   ],
+  bea: [
+    "Bea is a chytrid, one of the only kinds of fungi that can swim.",
+    "Bea's genus name, *Batrachochytrium*, means \"frog chytrid.\"",
+    "Bea's species name, *dendrobatidis*, comes from the poison dart frogs she was found on.",
+    "Bea causes chytridiomycosis, a skin disease that upsets how frogs breathe and drink.",
+  ],
 };

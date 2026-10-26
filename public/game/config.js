@@ -328,6 +328,38 @@ export const SPECIES = {
       { code: 'FLC', name: 'fluconazole', zone: 12 },
     ],
   },
+  bea: {
+    facts: [
+      "Bea is a chytrid, one of the only kinds of fungi that can swim.",
+      "Bea's spores swim with a single tail, called a flagellum, through water.",
+      "Bea's genus name, *Batrachochytrium*, means \"frog chytrid.\"",
+      "Bea's species name, *dendrobatidis*, comes from the poison dart frogs she was found on.",
+      "Scientists call Bea \"Bd\" for short.",
+      "Bea lives in the skin of frogs and other amphibians, where she feeds on keratin.",
+      "Bea causes chytridiomycosis, a skin disease that upsets how frogs breathe and drink.",
+      "Bea has spread around the world and caused many frog species to decline.",
+      "Each of Bea's spores settles and swells into a round pod with tiny, root-like threads.",
+      "When Bea's pod is ripe, it pours out new swimming spores through little spouts.",
+      "Frogs in zoos and labs can be treated for Bea with baths of itraconazole.",
+    ],
+    scientific: 'Batrachochytrium dendrobatidis',
+    color: '#9d1fa8', // for her name above the dish
+    kind: 'mold',
+    // Her spores settle into round pods that burst into little swimmers,
+    // which start new pods on their own (see mold.js).
+    pods: true,
+    colors: { fill: '#f3d6f7', stroke: '#9d1fa8', highlight: '#ffffff', dark: '#4f0b55', spores: '#c25fcb' },
+    // There are no standard disk sizes for Batrachochytrium, so these are
+    // estimates. Itraconazole baths are the usual treatment for infected
+    // frogs, and terbinafine and voriconazole work on her in the lab too.
+    antifungals: [
+      { code: 'ITC', name: 'itraconazole', zone: 28 },
+      { code: 'TRB', name: 'terbinafine', zone: 24 },
+      { code: 'VOR', name: 'voriconazole', zone: 22 },
+      { code: 'AMB', name: 'amphotericin B', zone: 18 },
+      { code: 'FLC', name: 'fluconazole', zone: 14 },
+    ],
+  },
   fumi: {
     facts: [
       "Fumi's species name, *fumigatus*, means \"smoky,\" for her smoky grey-green colonies.",
@@ -500,4 +532,14 @@ export const GAME = {
   COLONY_START: 0.025,
   COLONY_FULL: 0.15,
   COLONY_GROW_SECONDS: 5,
+  // Bea's pods (mold.js) are this much the size of a colony. A ripe pod
+  // bursts into SWIMMERS little swimmers that paddle at SWIM_SPEED (dish
+  // radii a second) to the nearest nutrient within SWIM_RANGE, and give up
+  // after SWIM_SECONDS. SWIMMER_R is a swimmer's radius.
+  POD_SCALE: 0.5,
+  SWIMMERS: 3,
+  SWIM_SPEED: 0.32,
+  SWIM_RANGE: 0.5,
+  SWIM_SECONDS: 5,
+  SWIMMER_R: 0.016,
 };
