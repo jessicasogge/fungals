@@ -10,7 +10,7 @@ export const TREE = {
   kids: [
     {
       id: 'chytrids', name: 'Chytrids', sci: 'Chytridiomycota',
-      note: 'The oldest branch here. Their spores still swim with a tail.',
+      note: 'One of the earliest branches of the fungal family tree.',
       kids: gals('bea'),
     },
     {
