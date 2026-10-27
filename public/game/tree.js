@@ -32,7 +32,7 @@ export const TREE = {
               note: 'Threads that spread, and stalks that make spores.',
               kids: [
                 {
-                  id: 'aspergillus', name: 'Aspergillus and friends', sci: 'Eurotiomycetes',
+                  id: 'aspergillus', name: 'Eurotiomycetes',
                   note: 'Spores in chains or bunches.',
                   kids: gals('fumi', 'miri', 'penelope', 'trixie'),
                 },
