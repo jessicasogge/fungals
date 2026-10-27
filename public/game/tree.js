@@ -28,7 +28,7 @@ export const TREE = {
               kids: gals('sasha', 'candi', 'peachy', 'yara'),
             },
             {
-              id: 'molds', name: 'Molds', sci: 'Pezizomycotina',
+              id: 'molds', name: 'Filamentous sac fungi', sci: 'Pezizomycotina',
               note: 'Threads that spread, and stalks that make spores.',
               kids: [
                 {
