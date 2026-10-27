@@ -26,8 +26,9 @@ afterEach(() => { window.location.hash = ''; });
 describe('the family tree page', () => {
   it('opens at the top, the fungi, with a card for the chytrids and one for the rest', async () => {
     await open();
-    expect(trail()).toEqual(['Fungi']);
-    expect(note()).toMatch(/chitin/);
+    // At the top there's no trail to go back up, and no note.
+    expect(document.querySelector('.tree-trail').hidden).toBe(true);
+    expect(document.querySelector('.tree-note').hidden).toBe(true);
     expect([...document.querySelectorAll('.tree-branch')].map((b) => b.dataset.branch)).toEqual(['chytrids', 'dikarya']);
     expect(branch('dikarya').querySelector('.tree-count').textContent).toBe('14 gals ›');
     expect(branch('dikarya').querySelectorAll('.tree-faces .gal-icon')).toHaveLength(14);
@@ -41,6 +42,8 @@ describe('the family tree page', () => {
     branch('dikarya').click();
     branch('club').click();
     expect(trail()).toEqual(['Fungi', 'Dikarya', 'Club fungi']);
+    expect(document.querySelector('.tree-trail').hidden).toBe(false);
+    expect(note()).toBe('Make their spores on tiny club-shaped cells.');
     expect(document.querySelector('.tree-view > div').className).toContain('tree-branches');
   });
 

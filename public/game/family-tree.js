@@ -29,7 +29,11 @@ function element(tag, className, text) {
 }
 
 // Where you are, as a trail of steps; each step above this one goes back up.
+// At the top of the tree there's nowhere to go back to, so no trail.
 function showTrail() {
+  const top = branch === TREE;
+  trail.hidden = top;
+  note.hidden = top;
   const steps = lineage(branch.id);
   trail.replaceChildren(...steps.flatMap((step, i) => {
     if (i === steps.length - 1) return [element('span', 'tree-here', step.name)];

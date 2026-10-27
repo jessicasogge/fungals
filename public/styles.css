@@ -787,7 +787,7 @@ a.gal-card:active {
 }
 
 .tree-lede {
-  margin: 0.25rem 0 0;
+  margin: 0.25rem 0 1rem;
   color: #475569;
 }
 
@@ -797,7 +797,6 @@ a.gal-card:active {
   justify-content: center;
   align-items: center;
   gap: 0.1rem 0.35rem;
-  margin-top: 1rem;
   font-weight: 700;
 }
 
@@ -836,7 +835,7 @@ a.gal-card:active {
   gap: 0.75rem;
 }
 
-/* A branch is a dish of agar, with the faces of the gals on it. */
+/* A branch: its name, its note, and the faces of the gals on it. */
 .tree-branch {
   display: grid;
   grid-template-columns: 1fr auto;
@@ -849,8 +848,8 @@ a.gal-card:active {
   color: inherit;
   cursor: pointer;
   border-radius: 20px;
-  background: radial-gradient(circle at 20% 10%, #fffdf0, #f7f2c8 70%, #ece4a6);
-  border: 3px solid rgba(15, 118, 110, 0.3);
+  background: #f8f4fe;
+  border: 3px solid #d8cdee;
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -934,7 +933,9 @@ a.gal-card:active {
   border-radius: 20px;
 }
 
-.tree-gal[hidden] {
+.tree-gal[hidden],
+.tree-trail[hidden],
+.tree-note[hidden] {
   display: none;
 }
 
@@ -987,12 +988,6 @@ a.gal-card:active {
   padding: 0.2rem 0;
   text-decoration: underline;
   cursor: pointer;
-}
-
-.tree-simplified {
-  margin: 1rem 0 0;
-  font-size: 0.85rem;
-  color: #64748b;
 }
 
 @media (prefers-reduced-motion: reduce) {
