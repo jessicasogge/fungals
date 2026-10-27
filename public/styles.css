@@ -902,6 +902,17 @@ a.gal-card:active {
   height: 32px;
 }
 
+/* The gals at the tip of a branch: a little room on each side of her picture. */
+.tree-tips > .gal-btn .gal-icon {
+  width: 60px;
+  height: 60px;
+}
+
+.tree-tips > .gal-btn .gal-icon svg {
+  width: 50px;
+  height: 50px;
+}
+
 /* A new branch slides in from the side you're going. */
 .tree-slide {
   animation: tree-in 0.25s ease-out;
