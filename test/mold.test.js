@@ -303,7 +303,9 @@ describe("Bea's swimmers", () => {
   it('give up after a while, or at the edge of the dish', () => {
     const swimmers = swimmerGroup({ layer, nutrients: fakeNutrients(), plant: vi.fn(), colors: SPECIES.bea.colors });
     swimmers.release(0, 0, 0);
-    swimmers.release(0.94, 0, 0);
+    // Spread around a pod by the rim, at least one of these is always past
+    // the edge, whichever way they happen to face.
+    swimmers.release(0.94, 0, 0.03);
     swimmers.step(0.05, 200);
     expect(swimmers.swimmers.length).toBeLessThan(2 * GAME.SWIMMERS);
     swimmers.step(GAME.SWIM_SECONDS, 200);
