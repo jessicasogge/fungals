@@ -14,6 +14,8 @@ const trail = document.querySelector('.tree-trail');
 const note = document.querySelector('.tree-note');
 const view = document.querySelector('.tree-view');
 const card = document.querySelector('.tree-gal');
+const home = document.querySelector('.tree-home');
+const back = document.querySelector('.tree-back');
 let branch = TREE;
 
 // "Velma, Ruby and Neve".
@@ -34,6 +36,8 @@ function showTrail() {
   const top = branch === TREE;
   trail.hidden = top;
   note.hidden = top;
+  home.hidden = !top;
+  back.hidden = top;
   const steps = lineage(branch.id);
   trail.replaceChildren(...steps.flatMap((step, i) => {
     if (i === steps.length - 1) return [element('span', 'tree-here', step.name)];
@@ -92,8 +96,15 @@ function go(to, { back = false } = {}) {
 }
 
 // Her card: her name, species, her branches, and her closest cousins.
+// Tapping her again closes it.
 function openGal(id) {
-  for (const b of view.querySelectorAll('.tree-gal-btn')) b.setAttribute('aria-pressed', String(b.dataset.gal === id));
+  const again = !card.hidden && card.dataset.gal === id;
+  for (const b of view.querySelectorAll('.tree-gal-btn')) b.setAttribute('aria-pressed', String(!again && b.dataset.gal === id));
+  if (again) {
+    card.hidden = true;
+    return;
+  }
+  card.dataset.gal = id;
   const gal = galById(id);
   const name = element('h2', 'tree-gal-name', gal.name);
   name.style.color = SPECIES[id].color;
@@ -110,15 +121,12 @@ function openGal(id) {
   if (!ids.length) text = `${gal.name} is the only one on her branch here. Every other gal is a distant cousin.`;
   else if (near) text = `${gal.name}'s closest cousins here: ${names}.`;
   else text = `${gal.name} is the only one on her little branch. Her nearest cousins are ${names}.`;
-  const close = element('button', 'tree-close', 'Close');
-  close.type = 'button';
-  close.addEventListener('click', () => {
-    card.hidden = true;
-    for (const b of view.querySelectorAll('.tree-gal-btn')) b.setAttribute('aria-pressed', 'false');
-  });
-  card.replaceChildren(top, line, element('p', 'tree-cousins', text), close);
+  card.replaceChildren(top, line, element('p', 'tree-cousins', text));
   card.hidden = false;
 }
+
+// Back goes up to the branch this one is on.
+back.addEventListener('click', () => go(branch.parent, { back: true }));
 
 // Open a branch from the address, like family-tree.html#club, so a link can
 // land right on it.

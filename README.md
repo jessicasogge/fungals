@@ -34,7 +34,7 @@ Tap **Who’s That Gal?** on the home page for a quiz on the gals' fun facts, li
 
 ### Family Tree
 
-Tap **Family Tree** on the home page to see how the gals are related. It shows one branch at a time, phone-sized: each branch is a card with a kid-friendly name, its science name, a short note and the faces of the gals on it. Tap a branch to go in, or a step in the trail at the top to go back up. Tap a gal at the tip of a branch to see her branches and her closest cousins. It starts from the fungi, then splits into the chytrids (Bea, whose spores swim) and the sac fungi and club fungi. A link like `family-tree.html#club` opens right on a branch. The tree, simplified to show only the gals in the game, is in `public/game/tree.js`; a new gal needs a spot on it, and a test checks that every gal is there.
+Tap **Family Tree** on the home page to see how the gals are related. It shows one branch at a time, phone-sized: each branch is a card with a kid-friendly name, its science name, a short note and the faces of the gals on it. Tap a branch to go in, and **Back** (or a step in the trail at the top) to go back up; Back to home shows only at the top of the tree. Tap a gal at the tip of a branch to see her branches and her closest cousins, and tap her again to close it. It starts from the fungi, then splits into the chytrids (Bea, whose spores swim) and the sac fungi and club fungi. A link like `family-tree.html#club` opens right on a branch. The tree, simplified to show only the gals in the game, is in `public/game/tree.js`; a new gal needs a spot on it, and a test checks that every gal is there.
 ## The gals
 
 The home page shows 12 of them at most (`HOME` in `public/game/gals.js`), so not every gal is on it; the picker shows them all.

@@ -35,7 +35,6 @@
     </div>
     <main class="picker-shell tree-shell">
       <h1>The FunGals Family Tree</h1>
-      <p class="tree-lede">Tap a branch to go in. Tap a gal to see who her closest cousins are.</p>
       <!-- Where you are in the tree, from game/family-tree.js. Tap a step to go back up. -->
       <nav class="tree-trail" aria-label="Where you are in the tree"></nav>
       <p class="tree-note"></p>
@@ -43,7 +42,9 @@
       <div class="tree-view" aria-live="polite"></div>
       <!-- The gal you tapped: her branches and her closest cousins. -->
       <section class="tree-gal" hidden aria-live="polite"></section>
-      <a class="back-link" href="./index.html">Back to home</a>
+      <!-- Back to home at the top of the tree; anywhere else, back up a branch. -->
+      <a class="back-link tree-home" href="./index.html">Back to home</a>
+      <button class="back-link tree-back" type="button" hidden>Back</button>
     </main>
     <footer class="signature">jsogge 2026</footer>
     <script type="module" src="./game/family-tree.js"></script>

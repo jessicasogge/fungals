@@ -786,12 +786,8 @@ a.gal-card:active {
   gap: 0 0.75rem;
 }
 
-.tree-lede {
-  margin: 0.25rem 0 1rem;
-  color: #475569;
-}
-
 .tree-trail {
+  margin-top: 1rem;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -812,7 +808,7 @@ a.gal-card:active {
 
 .tree-step:focus-visible,
 .tree-branch:focus-visible,
-.tree-close:focus-visible {
+.tree-back:focus-visible {
   outline: 3px solid #0f766e;
   outline-offset: 2px;
 }
@@ -932,6 +928,16 @@ a.gal-card:active {
   to { opacity: 1; transform: none; }
 }
 
+/* Back up a branch: looks like the "Back to home" link. */
+.tree-back {
+  font: inherit;
+  font-weight: 700;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
 /* The gal you tapped. */
 .tree-gal {
   display: grid;
@@ -946,7 +952,9 @@ a.gal-card:active {
 
 .tree-gal[hidden],
 .tree-trail[hidden],
-.tree-note[hidden] {
+.tree-note[hidden],
+.tree-home[hidden],
+.tree-back[hidden] {
   display: none;
 }
 
@@ -987,18 +995,6 @@ a.gal-card:active {
 .tree-gal-line {
   font-weight: 700;
   color: #134e4a;
-}
-
-.tree-close {
-  justify-self: start;
-  font: inherit;
-  font-weight: 700;
-  color: #0f766e;
-  background: none;
-  border: 0;
-  padding: 0.2rem 0;
-  text-decoration: underline;
-  cursor: pointer;
 }
 
 @media (prefers-reduced-motion: reduce) {

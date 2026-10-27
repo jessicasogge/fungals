@@ -63,7 +63,7 @@ describe('the family tree page', () => {
     expect(document.querySelector('.tree-view > div').classList).toContain('back');
   });
 
-  it('opens a gal card with her branches and her closest cousins, and closes it', async () => {
+  it('opens a gal card with her branches and her closest cousins, and closes it when she is tapped again', async () => {
     await open('#mushrooms');
     expect(card().hidden).toBe(true);
     gal('neve').click();
@@ -73,9 +73,13 @@ describe('the family tree page', () => {
     expect(card().querySelector('.tree-gal-species').textContent).toBe(SPECIES.neve.scientific);
     expect(card().querySelector('.tree-gal-line').textContent).toBe('Fungi › Dikarya › Club fungi › Mushrooms and jelly fungi');
     expect(card().querySelector('.tree-cousins').textContent).toBe("Neve's closest cousins here: Velma and Ruby.");
-    card().querySelector('.tree-close').click();
-    expect(card().hidden).toBe(true);
+    expect(card().querySelector('button')).toBeNull();
+    gal('ruby').click();
+    expect(card().querySelector('.tree-gal-name').textContent).toBe('Ruby');
     expect(gal('neve').getAttribute('aria-pressed')).toBe('false');
+    gal('ruby').click();
+    expect(card().hidden).toBe(true);
+    expect(gal('ruby').getAttribute('aria-pressed')).toBe('false');
   });
 
   it('names the nearest cousins for a gal alone on her branch, and none for Bea', async () => {
@@ -94,6 +98,25 @@ describe('the family tree page', () => {
     gal('olive').click();
     document.querySelector('.tree-step').click();
     expect(card().hidden).toBe(true);
+  });
+
+  it('has Back to home only at the top, and Back up a branch everywhere else', async () => {
+    const home = () => document.querySelector('.tree-home');
+    const back = () => document.querySelector('.tree-back');
+    await open();
+    expect(home().hidden).toBe(false);
+    expect(home().getAttribute('href')).toBe('./index.html');
+    expect(back().hidden).toBe(true);
+    branch('dikarya').click();
+    branch('club').click();
+    expect(home().hidden).toBe(true);
+    expect(back().hidden).toBe(false);
+    back().click();
+    expect(trail()).toEqual(['Fungi', 'Dikarya']);
+    expect(document.querySelector('.tree-view > div').classList).toContain('back');
+    back().click();
+    expect(home().hidden).toBe(false);
+    expect(back().hidden).toBe(true);
   });
 
   it('starts at the top for a link to a gal or an unknown branch', async () => {
