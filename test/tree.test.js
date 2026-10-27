@@ -1,7 +1,7 @@
 // tree.js: how the gals are related, simplified to the gals in the game.
 import { describe, expect, it } from 'vitest';
 import { GALS } from '../public/game/gals.js';
-import { branchById, cousins, galsOn, lineage, TREE } from '../public/game/tree.js';
+import { branchById, galsOn, lineage, TREE } from '../public/game/tree.js';
 
 const names = (branches) => branches.map((b) => b.name);
 
@@ -39,11 +39,5 @@ describe('the family tree', () => {
   it('finds the gals on any branch, however far down', () => {
     expect(galsOn(branchById('molds'))).toEqual(['fumi', 'miri', 'penelope', 'trixie', 'rosie']);
     expect(branchById('nope')).toBeNull();
-  });
-
-  it("names a gal's closest cousins: her own branch, the one above if she's alone, or none for Bea", () => {
-    expect(cousins('neve')).toEqual({ near: true, ids: ['velma', 'ruby'] });
-    expect(cousins('rosie')).toEqual({ near: false, ids: ['fumi', 'miri', 'penelope', 'trixie'] });
-    expect(cousins('bea')).toEqual({ near: true, ids: [] });
   });
 });

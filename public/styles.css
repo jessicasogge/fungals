@@ -983,9 +983,16 @@ a.gal-card:active {
 }
 
 .tree-gal-species,
-.tree-gal-line,
-.tree-cousins {
+.tree-gal-line {
   margin: 0;
+}
+
+.tree-facts {
+  margin: 0;
+  padding-left: 1.2rem;
+  display: grid;
+  gap: 0.35rem;
+  line-height: 1.4;
 }
 
 .tree-gal-species {

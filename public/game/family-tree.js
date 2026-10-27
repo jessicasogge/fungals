@@ -1,11 +1,11 @@
 // The FunGals family tree: one branch at a time. Tap a branch card to go in,
 // tap a step in the trail above to go back up, and tap a gal to see her
-// branch and her closest cousins.
+// branches and all her fun facts.
 import { SPECIES } from './config.js';
-import { speciesName } from './italics.js';
+import { speciesName, withItalics } from './italics.js';
 import { pageReady, watchLoading } from './loading.js';
 import { galById, galTile } from './gals.js';
-import { branchById, cousins, galsOn, lineage, TREE } from './tree.js';
+import { branchById, galsOn, lineage, TREE } from './tree.js';
 
 // "Growing the colony…" while the next screen loads.
 watchLoading();
@@ -17,11 +17,6 @@ const card = document.querySelector('.tree-gal');
 const home = document.querySelector('.tree-home');
 const back = document.querySelector('.tree-back');
 let branch = TREE;
-
-// "Velma, Ruby and Neve".
-const listOf = (names) => (names.length < 2 ? names.join('')
-  : `${names.slice(0, -1).join(', ')} and ${names.at(-1)}`);
-const nameOf = (id) => galById(id).name;
 
 function element(tag, className, text) {
   const el = document.createElement(tag);
@@ -95,7 +90,7 @@ function go(to, { back = false } = {}) {
   show({ back });
 }
 
-// Her card: her name, species, her branches, and her closest cousins.
+// Her card: her name, species, her branches, and all her fun facts.
 // Tapping her again closes it.
 function openGal(id) {
   const again = !card.hidden && card.dataset.gal === id;
@@ -115,13 +110,13 @@ function openGal(id) {
   words.append(name, species);
   top.append(galTile(gal), words);
   const line = element('p', 'tree-gal-line', lineage(id).map((b) => b.name).join(' › '));
-  const { near, ids } = cousins(id);
-  const names = listOf(ids.map(nameOf));
-  let text;
-  if (!ids.length) text = `${gal.name} is the only one on her branch here. Every other gal is a distant cousin.`;
-  else if (near) text = `${gal.name}'s closest cousins here: ${names}.`;
-  else text = `${gal.name} is the only one on her little branch. Her nearest cousins are ${names}.`;
-  card.replaceChildren(top, line, element('p', 'tree-cousins', text));
+  const facts = element('ul', 'tree-facts');
+  facts.append(...SPECIES[id].facts.map((fact) => {
+    const item = element('li');
+    item.append(...withItalics(fact));
+    return item;
+  }));
+  card.replaceChildren(top, line, facts);
   card.hidden = false;
 }
 

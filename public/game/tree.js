@@ -88,13 +88,3 @@ export function lineage(id) {
 export function galsOn(branch) {
   return branch.kids.flatMap((kid) => (kid.leaf ? [kid.leaf] : galsOn(kid)));
 }
-
-// Who a gal's closest cousins in the game are, as ids: the other gals on
-// her own branch, or if she's alone there, the gals on the branch above.
-// Bea, the only chytrid, has none close by.
-export function cousins(id) {
-  const branch = byId.get(id).parent;
-  const sisters = galsOn(branch).filter((other) => other !== id);
-  if (sisters.length || branch.parent.id === 'fungi') return { near: true, ids: sisters };
-  return { near: false, ids: galsOn(branch.parent).filter((other) => other !== id) };
-}

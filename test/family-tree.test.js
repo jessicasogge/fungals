@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 // The family tree page: one branch at a time. Tap a branch to go in, a step
-// in the trail to go back up, and a gal to see her branches and cousins.
+// in the trail to go back up, and a gal to see her branches and fun facts.
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { afterEach, describe, expect, it, vi } from 'vitest';
@@ -63,7 +63,7 @@ describe('the family tree page', () => {
     expect(document.querySelector('.tree-view > div').classList).toContain('back');
   });
 
-  it('opens a gal card with her branches and her closest cousins, and closes it when she is tapped again', async () => {
+  it('opens a gal card with her branches and all her fun facts, and closes it when she is tapped again', async () => {
     await open('#mushrooms');
     expect(card().hidden).toBe(true);
     gal('neve').click();
@@ -72,7 +72,10 @@ describe('the family tree page', () => {
     expect(card().querySelector('.tree-gal-name').textContent).toBe('Neve');
     expect(card().querySelector('.tree-gal-species').textContent).toBe(SPECIES.neve.scientific);
     expect(card().querySelector('.tree-gal-line').textContent).toBe('Fungi › Dikarya › Club fungi › Mushrooms and jelly fungi');
-    expect(card().querySelector('.tree-cousins').textContent).toBe("Neve's closest cousins here: Velma and Ruby.");
+    const facts = [...card().querySelectorAll('.tree-facts li')];
+    expect(facts.map((li) => li.textContent)).toEqual(SPECIES.neve.facts.map((f) => f.replaceAll('*', '')));
+    // Science names in a fact are in italics.
+    expect(card().querySelector('.tree-facts i')).not.toBeNull();
     expect(card().querySelector('button')).toBeNull();
     gal('ruby').click();
     expect(card().querySelector('.tree-gal-name').textContent).toBe('Ruby');
@@ -80,17 +83,6 @@ describe('the family tree page', () => {
     gal('ruby').click();
     expect(card().hidden).toBe(true);
     expect(gal('ruby').getAttribute('aria-pressed')).toBe('false');
-  });
-
-  it('names the nearest cousins for a gal alone on her branch, and none for Bea', async () => {
-    await open('#flask');
-    gal('rosie').click();
-    expect(card().querySelector('.tree-cousins').textContent)
-      .toBe('Rosie is the only one on her little branch. Her nearest cousins are Fumi, Miri, Penelope and Trixie.');
-    await open('#chytrids');
-    gal('bea').click();
-    expect(card().querySelector('.tree-cousins').textContent)
-      .toBe('Bea is the only one on her branch here. Every other gal is a distant cousin.');
   });
 
   it('closes the gal card when you go to another branch', async () => {
