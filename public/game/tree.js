@@ -1,0 +1,109 @@
+// The FunGals family tree: how the gals are related, simplified to show
+// only the gals in the game. Each branch has a kid-friendly name, its
+// science name (sci) where it has one, and a short note. Leaves are gal ids,
+// plus 'you' on the animal side.
+const gals = (...ids) => ids.map((leaf) => ({ leaf }));
+
+export const TREE = {
+  id: 'opis',
+  name: 'Fungi + animals',
+  note: 'One big branch of life. Fungi are closer cousins to you than to plants!',
+  kids: [
+    { id: 'animals', name: 'Animals', note: 'Including you.', kids: gals('you') },
+    {
+      id: 'fungi',
+      name: 'Fungi',
+      note: 'They soak up food from around them, and their cell walls are made of chitin.',
+      kids: [
+        {
+          id: 'chytrids', name: 'Chytrids', sci: 'Chytridiomycota',
+          note: 'The oldest branch here. Their spores still swim with a tail.',
+          kids: gals('bea'),
+        },
+        {
+          id: 'dikarya',
+          name: 'Dikarya',
+          note: "Spores that don't swim. Their cells can carry two nuclei at once.",
+          kids: [
+            {
+              id: 'sac', name: 'Sac fungi', sci: 'Ascomycota',
+              note: 'Make their spores inside a tiny sac.',
+              kids: [
+                {
+                  id: 'budding', name: 'Budding yeasts', sci: 'Saccharomycotina',
+                  note: 'Single cells that bud to multiply.',
+                  kids: gals('sasha', 'candi', 'peachy', 'yara'),
+                },
+                {
+                  id: 'molds', name: 'Molds', sci: 'Pezizomycotina',
+                  note: 'Threads that spread, and stalks that make spores.',
+                  kids: [
+                    {
+                      id: 'aspergillus', name: 'Aspergillus and friends', sci: 'Eurotiomycetes',
+                      note: 'Spores in chains or bunches.',
+                      kids: gals('fumi', 'miri', 'penelope', 'trixie'),
+                    },
+                    {
+                      id: 'flask', name: 'Flask fungi', sci: 'Sordariomycetes',
+                      note: 'Many make their spores in flask-shaped bodies.',
+                      kids: gals('rosie'),
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              id: 'club', name: 'Club fungi', sci: 'Basidiomycota',
+              note: 'Make their spores on tiny club-shaped cells.',
+              kids: [
+                {
+                  id: 'mushrooms', name: 'Mushrooms and jelly fungi', sci: 'Agaricomycotina',
+                  note: 'Most of the mushrooms you know, plus some yeasts.',
+                  kids: gals('velma', 'ruby', 'neve'),
+                },
+                {
+                  id: 'smuts', name: 'Smuts and cousins', sci: 'Ustilaginomycotina',
+                  note: 'Plant smuts, and some yeasts that live on skin.',
+                  kids: gals('maizey', 'olive'),
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
+// Every branch and leaf by id, each knowing its parent.
+const byId = new Map();
+(function index(node, parent) {
+  node.parent = parent;
+  byId.set(node.id ?? node.leaf, node);
+  for (const kid of node.kids ?? []) index(kid, node);
+})(TREE, null);
+
+export const branchById = (id) => byId.get(id) ?? null;
+
+// The branches from the top of the tree down to `id` (a branch or a gal),
+// not counting the gal herself.
+export function lineage(id) {
+  const out = [];
+  for (let node = byId.get(id); node; node = node.parent) if (!node.leaf) out.unshift(node);
+  return out;
+}
+
+// Every gal on a branch, however far down, in order.
+export function galsOn(branch) {
+  return branch.kids.flatMap((kid) => (kid.leaf ? [kid.leaf].filter((id) => id !== 'you') : galsOn(kid)));
+}
+
+// Who a gal's closest cousins in the game are, as ids: the other gals on
+// her own branch, or if she's alone there, the gals on the branch above.
+// Bea, the only chytrid, has none close by.
+export function cousins(id) {
+  const branch = byId.get(id).parent;
+  const sisters = galsOn(branch).filter((other) => other !== id);
+  if (sisters.length || branch.parent.id === 'fungi') return { near: true, ids: sisters };
+  return { near: false, ids: galsOn(branch.parent).filter((other) => other !== id) };
+}
