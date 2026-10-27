@@ -16,7 +16,7 @@ export const TREE = {
     {
       id: 'dikarya',
       name: 'Dikarya',
-      note: "Spores that don't swim. Their cells can carry two nuclei at once.",
+      note: 'Spores that don’t swim. Cells that can hold two separate nuclei.',
       kids: [
         {
           id: 'sac', name: 'Sac fungi', sci: 'Ascomycota',

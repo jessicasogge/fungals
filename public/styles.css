@@ -945,7 +945,7 @@ a.gal-card:active {
   margin-top: 1rem;
   padding: 1rem;
   text-align: left;
-  background: rgba(255, 255, 255, 0.7);
+  background: #f8f4fe;
   border: 2px solid #0f766e;
   border-radius: 20px;
 }
