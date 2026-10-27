@@ -1,72 +1,63 @@
 // The FunGals family tree: how the gals are related, simplified to show
 // only the gals in the game. Each branch has a kid-friendly name, its
-// science name (sci) where it has one, and a short note. Leaves are gal ids,
-// plus 'you' on the animal side.
+// science name (sci) where it has one, and a short note. Leaves are gal ids.
 const gals = (...ids) => ids.map((leaf) => ({ leaf }));
 
 export const TREE = {
-  id: 'opis',
-  name: 'Fungi + animals',
-  note: 'One big branch of life. Fungi are closer cousins to you than to plants!',
+  id: 'fungi',
+  name: 'Fungi',
+  note: 'They soak up food from around them, and their cell walls are made of chitin.',
   kids: [
-    { id: 'animals', name: 'Animals', note: 'Including you.', kids: gals('you') },
     {
-      id: 'fungi',
-      name: 'Fungi',
-      note: 'They soak up food from around them, and their cell walls are made of chitin.',
+      id: 'chytrids', name: 'Chytrids', sci: 'Chytridiomycota',
+      note: 'The oldest branch here. Their spores still swim with a tail.',
+      kids: gals('bea'),
+    },
+    {
+      id: 'dikarya',
+      name: 'Dikarya',
+      note: "Spores that don't swim. Their cells can carry two nuclei at once.",
       kids: [
         {
-          id: 'chytrids', name: 'Chytrids', sci: 'Chytridiomycota',
-          note: 'The oldest branch here. Their spores still swim with a tail.',
-          kids: gals('bea'),
-        },
-        {
-          id: 'dikarya',
-          name: 'Dikarya',
-          note: "Spores that don't swim. Their cells can carry two nuclei at once.",
+          id: 'sac', name: 'Sac fungi', sci: 'Ascomycota',
+          note: 'Make their spores inside a tiny sac.',
           kids: [
             {
-              id: 'sac', name: 'Sac fungi', sci: 'Ascomycota',
-              note: 'Make their spores inside a tiny sac.',
+              id: 'budding', name: 'Budding yeasts', sci: 'Saccharomycotina',
+              note: 'Single cells that bud to multiply.',
+              kids: gals('sasha', 'candi', 'peachy', 'yara'),
+            },
+            {
+              id: 'molds', name: 'Molds', sci: 'Pezizomycotina',
+              note: 'Threads that spread, and stalks that make spores.',
               kids: [
                 {
-                  id: 'budding', name: 'Budding yeasts', sci: 'Saccharomycotina',
-                  note: 'Single cells that bud to multiply.',
-                  kids: gals('sasha', 'candi', 'peachy', 'yara'),
+                  id: 'aspergillus', name: 'Aspergillus and friends', sci: 'Eurotiomycetes',
+                  note: 'Spores in chains or bunches.',
+                  kids: gals('fumi', 'miri', 'penelope', 'trixie'),
                 },
                 {
-                  id: 'molds', name: 'Molds', sci: 'Pezizomycotina',
-                  note: 'Threads that spread, and stalks that make spores.',
-                  kids: [
-                    {
-                      id: 'aspergillus', name: 'Aspergillus and friends', sci: 'Eurotiomycetes',
-                      note: 'Spores in chains or bunches.',
-                      kids: gals('fumi', 'miri', 'penelope', 'trixie'),
-                    },
-                    {
-                      id: 'flask', name: 'Flask fungi', sci: 'Sordariomycetes',
-                      note: 'Many make their spores in flask-shaped bodies.',
-                      kids: gals('rosie'),
-                    },
-                  ],
+                  id: 'flask', name: 'Flask fungi', sci: 'Sordariomycetes',
+                  note: 'Many make their spores in flask-shaped bodies.',
+                  kids: gals('rosie'),
                 },
               ],
             },
+          ],
+        },
+        {
+          id: 'club', name: 'Club fungi', sci: 'Basidiomycota',
+          note: 'Make their spores on tiny club-shaped cells.',
+          kids: [
             {
-              id: 'club', name: 'Club fungi', sci: 'Basidiomycota',
-              note: 'Make their spores on tiny club-shaped cells.',
-              kids: [
-                {
-                  id: 'mushrooms', name: 'Mushrooms and jelly fungi', sci: 'Agaricomycotina',
-                  note: 'Most of the mushrooms you know, plus some yeasts.',
-                  kids: gals('velma', 'ruby', 'neve'),
-                },
-                {
-                  id: 'smuts', name: 'Smuts and cousins', sci: 'Ustilaginomycotina',
-                  note: 'Plant smuts, and some yeasts that live on skin.',
-                  kids: gals('maizey', 'olive'),
-                },
-              ],
+              id: 'mushrooms', name: 'Mushrooms and jelly fungi', sci: 'Agaricomycotina',
+              note: 'Most of the mushrooms you know, plus some yeasts.',
+              kids: gals('velma', 'ruby', 'neve'),
+            },
+            {
+              id: 'smuts', name: 'Smuts and cousins', sci: 'Ustilaginomycotina',
+              note: 'Plant smuts, and some yeasts that live on skin.',
+              kids: gals('maizey', 'olive'),
             },
           ],
         },
@@ -95,7 +86,7 @@ export function lineage(id) {
 
 // Every gal on a branch, however far down, in order.
 export function galsOn(branch) {
-  return branch.kids.flatMap((kid) => (kid.leaf ? [kid.leaf].filter((id) => id !== 'you') : galsOn(kid)));
+  return branch.kids.flatMap((kid) => (kid.leaf ? [kid.leaf] : galsOn(kid)));
 }
 
 // Who a gal's closest cousins in the game are, as ids: the other gals on

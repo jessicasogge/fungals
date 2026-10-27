@@ -903,18 +903,6 @@ a.gal-card:active {
   height: 32px;
 }
 
-/* "You", on the animal branch. */
-.tree-you {
-  display: grid;
-  place-items: center;
-  width: 76px;
-  height: 76px;
-  border-radius: 50%;
-  border: 2px dashed rgba(15, 118, 110, 0.35);
-  font-weight: 700;
-  color: #475569;
-}
-
 /* A new branch slides in from the side you're going. */
 .tree-slide {
   animation: tree-in 0.25s ease-out;

@@ -24,26 +24,23 @@ const card = () => document.querySelector('.tree-gal');
 afterEach(() => { window.location.hash = ''; });
 
 describe('the family tree page', () => {
-  it('opens at the top, with a card for animals and one for the fungi', async () => {
+  it('opens at the top, the fungi, with a card for the chytrids and one for the rest', async () => {
     await open();
-    expect(trail()).toEqual(['Fungi + animals']);
-    expect(note()).toMatch(/closer cousins to you than to plants/);
-    expect([...document.querySelectorAll('.tree-branch')].map((b) => b.dataset.branch)).toEqual(['animals', 'fungi']);
-    expect(branch('fungi').querySelector('.tree-count').textContent).toBe('15 gals ›');
-    expect(branch('fungi').querySelectorAll('.tree-faces .gal-icon')).toHaveLength(15);
-    expect(branch('animals').querySelector('.tree-count').textContent).toBe('Open ›');
+    expect(trail()).toEqual(['Fungi']);
+    expect(note()).toMatch(/chitin/);
+    expect([...document.querySelectorAll('.tree-branch')].map((b) => b.dataset.branch)).toEqual(['chytrids', 'dikarya']);
+    expect(branch('dikarya').querySelector('.tree-count').textContent).toBe('14 gals ›');
+    expect(branch('dikarya').querySelectorAll('.tree-faces .gal-icon')).toHaveLength(14);
     expect(document.querySelector('.loading-overlay').hidden).toBe(true);
   });
 
   it("goes in one branch at a time, showing each one's science name", async () => {
     await open();
-    branch('fungi').click();
-    expect(trail()).toEqual(['Fungi + animals', 'Fungi']);
     expect(branch('chytrids').querySelector('.tree-branch-name').textContent).toBe('Chytrids Chytridiomycota');
     expect(branch('chytrids').querySelector('.tree-count').textContent).toBe('1 gal ›');
     branch('dikarya').click();
     branch('club').click();
-    expect(trail()).toEqual(['Fungi + animals', 'Fungi', 'Dikarya', 'Club fungi']);
+    expect(trail()).toEqual(['Fungi', 'Dikarya', 'Club fungi']);
     expect(document.querySelector('.tree-view > div').className).toContain('tree-branches');
   });
 
@@ -54,18 +51,12 @@ describe('the family tree page', () => {
     expect(document.querySelector('.tree-view > div').className).toContain('gal-grid');
   });
 
-  it('shows "You" on the animal branch', async () => {
-    await open();
-    branch('animals').click();
-    expect(document.querySelector('.tree-you').textContent).toBe('You');
-  });
-
   it('goes back up from a step in the trail', async () => {
     await open('#budding');
     const steps = [...document.querySelectorAll('.tree-step')];
-    expect(steps.map((s) => s.textContent)).toEqual(['Fungi + animals', 'Fungi', 'Dikarya', 'Sac fungi']);
-    steps[2].click();
-    expect(trail()).toEqual(['Fungi + animals', 'Fungi', 'Dikarya']);
+    expect(steps.map((s) => s.textContent)).toEqual(['Fungi', 'Dikarya', 'Sac fungi']);
+    steps[1].click();
+    expect(trail()).toEqual(['Fungi', 'Dikarya']);
     expect(document.querySelector('.tree-view > div').classList).toContain('back');
   });
 
@@ -104,8 +95,8 @@ describe('the family tree page', () => {
 
   it('starts at the top for a link to a gal or an unknown branch', async () => {
     await open('#neve');
-    expect(trail()).toEqual(['Fungi + animals']);
+    expect(trail()).toEqual(['Fungi']);
     await open('#nope');
-    expect(trail()).toEqual(['Fungi + animals']);
+    expect(trail()).toEqual(['Fungi']);
   });
 });

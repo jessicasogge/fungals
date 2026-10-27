@@ -51,8 +51,7 @@ function branchCard(kid) {
   title.append(element('b', '', kid.name));
   if (kid.sci) title.append(' ', element('i', '', kid.sci));
   const ids = galsOn(kid);
-  const count = element('span', 'tree-count', ids.length
-    ? `${ids.length} ${ids.length === 1 ? 'gal' : 'gals'} ›` : 'Open ›');
+  const count = element('span', 'tree-count', `${ids.length} ${ids.length === 1 ? 'gal' : 'gals'} ›`);
   const faces = element('span', 'tree-faces');
   faces.append(...ids.map((id) => galTile(galById(id))));
   button.append(title, count, element('span', 'tree-branch-note', kid.note), faces);
@@ -78,10 +77,7 @@ function show({ back = false } = {}) {
   showTrail();
   const tips = branch.kids.every((kid) => kid.leaf);
   const list = element('div', `${tips ? 'gal-grid tree-tips' : 'tree-branches'} tree-slide${back ? ' back' : ''}`);
-  list.append(...branch.kids.map((kid) => {
-    if (kid.leaf === 'you') return element('span', 'tree-you', 'You');
-    return kid.leaf ? galButton(kid.leaf) : branchCard(kid);
-  }));
+  list.append(...branch.kids.map((kid) => (kid.leaf ? galButton(kid.leaf) : branchCard(kid))));
   view.replaceChildren(list);
 }
 
@@ -103,7 +99,7 @@ function openGal(id) {
   const words = element('div');
   words.append(name, species);
   top.append(galTile(gal), words);
-  const line = element('p', 'tree-gal-line', lineage(id).slice(1).map((b) => b.name).join(' › '));
+  const line = element('p', 'tree-gal-line', lineage(id).map((b) => b.name).join(' › '));
   const { near, ids } = cousins(id);
   const names = listOf(ids.map(nameOf));
   let text;
