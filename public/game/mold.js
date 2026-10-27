@@ -255,13 +255,15 @@ export function sporeGroup({ mover, agar }) {
   return spore;
 }
 
-// "1 colony", "3 colonies".
+// "1 colony", "3 colonies", or for Bea, whose spores grow pods, "3 pods".
 const colonyCount = (n) => `${n} ${n === 1 ? 'colony' : 'colonies'}`;
+const podCount = (n) => `${n} ${n === 1 ? 'pod' : 'pods'}`;
 
 // The mold game loop: like the yeast game (game.js), but you plant colonies
 // instead of budding, and `target` is how many colonies win the level.
 export function playMold(galEl, species, nutrients, disks, { level = 1, target = LEVELS[0].colonies } = {}) {
   const agar = document.querySelector('.agar');
+  const count = species.pods ? podCount : colonyCount;
   const counter = document.querySelector('.cell-count');
   const dishRadius = () => agar.clientWidth / 2;
 
@@ -294,7 +296,7 @@ export function playMold(galEl, species, nutrients, disks, { level = 1, target =
 
   function updateCounter() {
     const shown = Math.min(colonies.count(), target);
-    counter.textContent = `Level ${level} · ${shown} / ${colonyCount(target)}`;
+    counter.textContent = `Level ${level} · ${shown} / ${count(target)}`;
   }
 
   function stop() {
@@ -349,10 +351,10 @@ export function playMold(galEl, species, nutrients, disks, { level = 1, target =
     if (level === LEVELS.length) track(`won-all-levels/${gal}`, `${name} beat every level`);
     showFact(gal, species);
     if (level < LEVELS.length) {
-      banner.show(`Level ${level} complete!`, `You grew ${colonyCount(target)}!`,
+      banner.show(`Level ${level} complete!`, `You grew ${count(target)}!`,
         `Play level ${level + 1}`, { next: level + 1 });
     } else {
-      banner.show('You won!', `You beat all ${LEVELS.length} levels with ${colonyCount(target)}!`,
+      banner.show('You won!', `You beat all ${LEVELS.length} levels with ${count(target)}!`,
         'Play again', { next: 1 });
     }
   }

@@ -109,13 +109,15 @@ describe('a mold', () => {
     expect(flecks()).toBeGreaterThan(GAME.MOLD_NUTRIENTS);
   });
 
-  it('shows the mold directions, and the yeast ones for a yeast', async () => {
+  it("shows the mold directions, Bea's pod ones for Bea, and the yeast ones for a yeast", async () => {
     const shown = () => [...document.querySelectorAll('.how-to-play')]
-      .filter((p) => !p.hidden).map((p) => p.classList.contains('for-mold'));
+      .filter((p) => !p.hidden).map((p) => p.className);
     await openMold('?pal=fumi');
-    expect(shown()).toEqual([true]);
+    expect(shown()).toEqual(['how-to-play for-mold']);
+    await openMold('?pal=bea');
+    expect(shown()).toEqual(['how-to-play for-pods']);
     await open('?pal=sasha');
-    expect(shown()).toEqual([false]);
+    expect(shown()).toEqual(['how-to-play']);
   });
 });
 

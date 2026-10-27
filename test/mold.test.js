@@ -524,7 +524,10 @@ describe('playing as a mold', () => {
     play(2);
     // A swimmer settled on the other nutrient and won the level.
     expect(colonyEls()).toHaveLength(2);
-    expect(counter()).toBe('Level 1 · 2 / 2 colonies');
+    // She counts pods, not colonies, and says so when she wins.
+    expect(counter()).toBe('Level 1 · 2 / 2 pods');
+    vi.runAllTimers();
+    expect(document.querySelector('.win-message').textContent).toBe('You grew 2 pods!');
   });
 
   it('is game over when the spore touches a disk or its zone', () => {
