@@ -20,7 +20,7 @@ vi.mock('../public/game/touch.js', async (importActual) => ({
 vi.mock('../public/game/spores.js', () => ({ sporeBurst: vi.fn() }));
 vi.mock('../public/game/track.js', () => ({ track: vi.fn() }));
 
-const { CAPS, colonyRadius, DROPS, moldColonies, playMold, sporeGroup } = await import('../public/game/mold.js');
+const { CAPS, colonyRadius, DROPS, moldColonies, playMold, POD_SPORES, sporeGroup, swimmerGroup } = await import('../public/game/mold.js');
 const { sporeBurst } = await import('../public/game/spores.js');
 const { track } = await import('../public/game/track.js');
 
@@ -46,6 +46,7 @@ function fakeNutrients(spots = []) {
       }
       return before - flecks.length;
     }),
+    positions: () => flecks.map(([fx, fy]) => ({ fx, fy })),
     stop: vi.fn(),
   };
 }
@@ -237,6 +238,93 @@ describe('the colonies', () => {
   });
 });
 
+describe("Bea's pods", () => {
+  let layer;
+  beforeEach(() => {
+    layer = document.createElement('div');
+    document.querySelector('.agar').append(layer);
+  });
+
+  it('are small, fill with spores as they ripen, then burst once, without spreading over nutrients', () => {
+    const nutrients = fakeNutrients([[0.06, 0]]);
+    const onBurst = vi.fn();
+    const pods = moldColonies({ layer, nutrients, colors: SPECIES.bea.colors, pods: true, onBurst });
+    const pod = pods.plant(0, 0);
+    expect(pod.el.className).toBe('colony pod');
+    expect(pod.r).toBeCloseTo(GAME.COLONY_START * GAME.POD_SCALE);
+    const spores = [...pod.el.querySelectorAll('.pod-spore')];
+    expect(spores).toHaveLength(POD_SPORES.length);
+    const shown = () => spores.filter((s) => s.classList.contains('shown')).length;
+    pods.grow(GAME.COLONY_GROW_SECONDS * 0.5);
+    expect(shown()).toBe(POD_SPORES.filter((s) => s.at <= 0.5).length);
+    expect(onBurst).not.toHaveBeenCalled();
+    pods.grow(GAME.COLONY_GROW_SECONDS);
+    expect(pod.r).toBeCloseTo(GAME.COLONY_FULL * GAME.POD_SCALE);
+    expect(onBurst).toHaveBeenCalledWith(pod);
+    expect(pod.el.classList).toContain('burst');
+    pods.grow(1);
+    expect(onBurst).toHaveBeenCalledTimes(1);
+    // A pod never spreads over a nutrient to start another one.
+    expect(nutrients.eatNear).not.toHaveBeenCalled();
+    expect(pods.count()).toBe(1);
+  });
+});
+
+describe("Bea's swimmers", () => {
+  let layer;
+  beforeEach(() => {
+    layer = document.createElement('div');
+    document.querySelector('.agar').append(layer);
+  });
+  const swimmerEls = () => [...layer.querySelectorAll('.swimmer')];
+
+  it('come out of a burst pod, spread evenly around it', () => {
+    const swimmers = swimmerGroup({ layer, nutrients: fakeNutrients(), plant: vi.fn(), colors: SPECIES.bea.colors });
+    swimmers.release(0.2, 0.2, 0.05);
+    expect(swimmers.swimmers).toHaveLength(GAME.SWIMMERS);
+    expect(swimmerEls()).toHaveLength(GAME.SWIMMERS);
+    for (const s of swimmers.swimmers) expect(Math.hypot(s.fx - 0.2, s.fy - 0.2)).toBeCloseTo(0.05);
+    expect(swimmerEls()[0].style.getPropertyValue('--edge')).toBe(SPECIES.bea.colors.stroke);
+  });
+
+  it('paddle to the nearest nutrient in range and start a new pod there', () => {
+    const plant = vi.fn();
+    const nutrients = fakeNutrients([[0.3, 0], [0.9, 0.3]]);
+    const swimmers = swimmerGroup({ layer, nutrients, plant, colors: SPECIES.bea.colors });
+    swimmers.release(0, 0, 0);
+    for (let t = 0; t < 2 && swimmers.swimmers.length; t += 0.05) swimmers.step(0.05, 200);
+    expect(plant).toHaveBeenCalledWith(0.3, 0);
+    expect(plant).toHaveBeenCalledTimes(1);
+    // The others found nothing else in range, and keep swimming for now.
+    expect(swimmers.swimmers.length).toBe(GAME.SWIMMERS - 1);
+    expect(swimmerEls()[0].style.rotate).toMatch(/deg$/);
+  });
+
+  it('give up after a while, or at the edge of the dish', () => {
+    const swimmers = swimmerGroup({ layer, nutrients: fakeNutrients(), plant: vi.fn(), colors: SPECIES.bea.colors });
+    swimmers.release(0, 0, 0);
+    // Spread around a pod by the rim, at least one of these is always past
+    // the edge, whichever way they happen to face.
+    swimmers.release(0.94, 0, 0.03);
+    swimmers.step(0.05, 200);
+    expect(swimmers.swimmers.length).toBeLessThan(2 * GAME.SWIMMERS);
+    swimmers.step(GAME.SWIM_SECONDS, 200);
+    expect(swimmers.swimmers).toHaveLength(0);
+    expect(swimmerEls()).toHaveLength(0);
+  });
+
+  it('pop in a zone', () => {
+    const plant = vi.fn();
+    const swimmers = swimmerGroup({
+      layer, nutrients: fakeNutrients([[0.5, 0]]), disks: [disk(0.25, 0, 0.02)], plant, colors: SPECIES.bea.colors,
+    });
+    swimmers.release(0, 0, 0);
+    for (let t = 0; t < 2; t += 0.05) swimmers.step(0.05, 200);
+    expect(plant).not.toHaveBeenCalled();
+    expect(document.querySelector('.pop')).not.toBeNull();
+  });
+});
+
 describe('the spore', () => {
   it('is one small round cell that stays in the dish', () => {
     const agar = document.querySelector('.agar');
@@ -415,6 +503,33 @@ describe('playing as a mold', () => {
     expect(counter()).toBe('Level 1 · 0 / 2 colonies');
     vi.runAllTimers();
     expect(banner.hidden).toBe(true);
+  });
+
+  it("as Bea, a ripe pod bursts into swimmers that start more pods toward the win", () => {
+    frames = [];
+    now = 0;
+    vi.stubGlobal('requestAnimationFrame', (run) => frames.push(run));
+    agar = document.querySelector('.agar');
+    mover = document.querySelector('.gal-mover');
+    vi.spyOn(agar, 'clientWidth', 'get').mockReturnValue(400);
+    vi.spyOn(mover, 'offsetWidth', 'get').mockReturnValue(20);
+    const galEl = document.createElement('div');
+    galEl.dataset.gal = 'bea';
+    galEl.dataset.name = 'Bea';
+    const nutrients = fakeNutrients([[0, 0], [0.3, 0.3]]);
+    playMold(galEl, SPECIES.bea, nutrients, [], { level: 1, target: 2 });
+    frame();
+    expect(colonyEls()).toHaveLength(1);
+    expect(colonyEls()[0].classList).toContain('pod');
+    play(GAME.COLONY_GROW_SECONDS + 0.2);
+    expect(agar.querySelectorAll('.swimmer').length).toBeGreaterThan(0);
+    play(2);
+    // A swimmer settled on the other nutrient and won the level.
+    expect(colonyEls()).toHaveLength(2);
+    // She counts pods, not colonies, and says so when she wins.
+    expect(counter()).toBe('Level 1 · 2 / 2 pods');
+    vi.runAllTimers();
+    expect(document.querySelector('.win-message').textContent).toBe('You grew 2 pods!');
   });
 
   it('is game over when the spore touches a disk or its zone', () => {

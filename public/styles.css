@@ -471,6 +471,10 @@ a.gal-card:active {
   background: rgba(255, 224, 178, 0.8);
 }
 
+.bea {
+  background: rgba(240, 212, 248, 0.85);
+}
+
 .pick-btn {
   margin-top: 0.75rem;
   padding: 0.7rem 1rem;
@@ -1306,6 +1310,99 @@ body:not(.picker-page) .signature {
   transform: translate(-50%, -50%) scale(1);
 }
 
+/* Bea's pods (mold.js): small, round, see-through sacs with tiny root-like
+   threads around them, filling with spores as they ripen. A burst pod is
+   an empty, faded shell. */
+.colony.pod {
+  border: 1.5px solid var(--edge, #9d1fa8);
+  box-sizing: border-box;
+  background: radial-gradient(circle at 38% 34%, rgba(255, 255, 255, 0.85) 0 12%, transparent 30%), #f3d6f7;
+  box-shadow: none;
+  overflow: visible;
+}
+
+.colony.pod::before {
+  content: '';
+  position: absolute;
+  inset: -55%;
+  border-radius: 50%;
+  background: repeating-conic-gradient(from 12deg, rgba(157, 31, 168, 0.4) 0 2.5deg, transparent 2.5deg 61deg);
+  -webkit-mask: radial-gradient(circle closest-side, transparent 0 47%, #000 49%, transparent 100%);
+  mask: radial-gradient(circle closest-side, transparent 0 47%, #000 49%, transparent 100%);
+  z-index: -1;
+}
+
+.colony.pod.burst {
+  background: rgba(253, 244, 254, 0.55);
+  opacity: 0.7;
+}
+
+.colony .pod-spore {
+  position: absolute;
+  width: 16%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--spores);
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.3s ease-out;
+}
+
+.colony .pod-spore.shown {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.colony.burst .pod-spore {
+  display: none;
+}
+
+/* Bea's little swimmers: a tiny round spore with a wiggling tail behind
+   it, turned to face where it's going (mold.js). */
+.colonies .swimmer {
+  position: absolute;
+  width: 1.8%;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: var(--fill);
+  border: 1px solid var(--edge);
+  box-sizing: border-box;
+}
+
+.colonies .swimmer::after {
+  content: '';
+  position: absolute;
+  right: 85%;
+  top: 50%;
+  width: 280%;
+  height: 1px;
+  margin-top: -0.5px;
+  background: var(--edge);
+  border-radius: 1px;
+  transform-origin: right center;
+  animation: swimmer-tail 0.35s ease-in-out infinite alternate;
+}
+
+@keyframes swimmer-tail {
+  from { transform: rotate(-14deg); }
+  to { transform: rotate(14deg); }
+}
+
+/* Bea's tail sticks out behind her, past the edge of her drawing, and
+   wiggles as she swims. */
+.dish-gal[data-gal='bea'] {
+  overflow: visible;
+}
+
+.dish-gal[data-gal='bea'] .tail {
+  transform-origin: 58px 104px;
+  animation: bea-tail 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes bea-tail {
+  from { transform: rotate(-9deg); }
+  to { transform: rotate(9deg); }
+}
+
 /* Killed by an antifungal: the whole colony pops, swelling and vanishing. */
 .colony.dying {
   animation: colony-pop 0.35s ease-out forwards;
@@ -1354,6 +1451,11 @@ body:not(.picker-page) .signature {
   .colony,
   .colony.dying {
     animation-duration: 0.01s;
+  }
+
+  .colonies .swimmer::after,
+  .dish-gal[data-gal='bea'] .tail {
+    animation: none;
   }
 }
 

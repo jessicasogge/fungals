@@ -597,6 +597,39 @@ export const GALS = [
       ${face(100, 104, '#6b2c05')}
     `,
   },
+  // Bea: Batrachochytrium dendrobatidis, the frog chytrid ("Bd"), one of
+  // the only fungi that swim: a round spore with a long, wavy tail and a
+  // fat droplet inside. In the dish her spore settles into round pods that
+  // burst into little swimmers (see mold.js).
+  {
+    id: 'bea',
+    name: 'Bea',
+    looks: 'an orchid Batrachochytrium dendrobatidis chytrid: a round, swimming spore with a long, wavy tail and a little fat droplet inside',
+    motion: 'bob',
+    frames: { home: '10 10 180 180', picker: '14 14 172 172', dish: '50 50 100 100' },
+    art: `
+      <!-- her tail (flagellum), the one thing that lets her swim -->
+      <path d="M 118 114 C 132 132 112 142 128 158 C 142 172 160 160 172 178" fill="none" stroke="#9d1fa8" stroke-width="5.5" stroke-linecap="round" />
+      <!-- water bubbles -->
+      <g fill="none" stroke="#c98bd1" stroke-width="2"><circle cx="152" cy="52" r="6" /><circle cx="166" cy="76" r="3.5" /><circle cx="40" cy="138" r="4.5" /></g>
+      <!-- her round body, with a fat droplet inside -->
+      <circle cx="92" cy="86" r="42" fill="#f3d6f7" stroke="#9d1fa8" stroke-width="4" />
+      <circle cx="114" cy="66" r="9.5" fill="#e2a6ea" />
+      <circle cx="111" cy="63" r="2.6" fill="#ffffff" opacity="0.8" />
+      <ellipse cx="72" cy="64" rx="9" ry="4.5" fill="#ffffff" transform="rotate(-28 72 64)" />
+      <!-- her own face, sized to fit her round body -->
+      <g class="face"><circle cx="81" cy="92" r="5.5" fill="#4f0b55" /><circle cx="101" cy="92" r="5.5" fill="#4f0b55" /><circle cx="82.8" cy="90.2" r="1.9" fill="white" /><circle cx="102.8" cy="90.2" r="1.9" fill="white" /><ellipse cx="72" cy="102" rx="5" ry="2.9" fill="#f9a8d4" opacity="0.95" /><ellipse cx="110" cy="102" rx="5" ry="2.9" fill="#f9a8d4" opacity="0.95" /><path d="M86 102 Q91 107.5 96 102" stroke="#4f0b55" stroke-width="2.8" fill="none" stroke-linecap="round" /></g>
+    `,
+    // Her tail sticks out behind her, past the edge of her drawing
+    // (styles.css lets it show), so it doesn't make her body bigger.
+    dishArt: `
+      <path class="tail" d="M 58 104 C 46 96 38 116 26 106 C 16 98 8 112 -2 104" fill="none" stroke="#9d1fa8" stroke-width="6" stroke-linecap="round" />
+      <circle cx="100" cy="100" r="42" fill="#f3d6f7" stroke="#9d1fa8" stroke-width="4" />
+      <circle cx="120" cy="80" r="9" fill="#e2a6ea" />
+      <ellipse cx="82" cy="80" rx="9" ry="5" fill="#ffffff" transform="rotate(-25 82 80)" />
+      ${face(100, 104, '#4f0b55')}
+    `,
+  },
 ];
 
 // The home row shows at most HOME_MAX gals, so not every gal is on it.

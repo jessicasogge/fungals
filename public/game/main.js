@@ -55,8 +55,11 @@ function start() {
   // start new ones.
   const mold = species.kind === 'mold';
   const nutrients = scatterNutrients({ avoid: disks, count: mold ? GAME.MOLD_NUTRIENTS : GAME.YEAST_NUTRIENTS });
+  // Directions for a yeast, a mold, or Bea, whose spores grow pods.
+  const directions = (species.pods && 'for-pods') || (mold && 'for-mold');
   for (const how of document.querySelectorAll('.how-to-play')) {
-    how.hidden = how.classList.contains('for-mold') !== mold;
+    const kind = ['for-mold', 'for-pods'].find((c) => how.classList.contains(c));
+    how.hidden = kind !== (directions || undefined);
   }
   if (mold) {
     playMold(gal, species, nutrients, disks, { level: levelNumber, target: level.colonies });
