@@ -31,6 +31,10 @@ Bea (*Batrachochytrium dendrobatidis*), the frog chytrid, plays like Fumi with a
 
 Tap **Who’s That Gal?** on the home page for a quiz on the gals' fun facts, like PetriPals' Who’s That Pal?. You get one fact with "this gal" in place of her name: tap the gal it's about. Each fact shows 12 gals at most, always including the right one, so with more than 12 a different few sit out each time. A wrong guess greys that gal out so you can try again, and the right one puts her name back in and shows her species. There's no score, so it's just for learning. The quiz skips facts that fit any yeast (like having a nucleus); the ones it uses are listed in `public/game/quiz-facts.js`.
 
+
+### Family Tree
+
+Tap **Family Tree** on the home page to see how the gals are related. It shows one branch at a time, phone-sized: each branch is a card with a kid-friendly name, its science name, a short note and the faces of the gals on it. Tap a branch to go in, and **Back** (or a step in the trail at the top) to go back up; Back to home shows only at the top of the tree. Tap a gal at the tip of a branch to see her branches and all her fun facts, and tap her again to close it. It starts from the fungi, then splits into the chytrids (Bea, whose spores swim) and the sac fungi and club fungi. A link like `family-tree.html#club` opens right on a branch. The tree, simplified to show only the gals in the game, is in `public/game/tree.js`; a new gal needs a spot on it, and a test checks that every gal is there.
 ## The gals
 
 The home page shows 12 of them at most (`HOME` in `public/game/gals.js`), so not every gal is on it; the picker shows them all.
