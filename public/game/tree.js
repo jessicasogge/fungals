@@ -29,7 +29,7 @@ export const TREE = {
             },
             {
               id: 'molds', name: 'Filamentous sac fungi', sci: 'Pezizomycotina',
-              note: 'Threads that spread, and stalks that make spores.',
+              note: 'Branching threads that spread and make spores.',
               kids: [
                 {
                   id: 'aspergillus', name: 'Molds and more', sci: 'Eurotiomycetes',
