@@ -599,8 +599,8 @@ export const GAME = {
   // after SWIM_SECONDS. SWIMMER_R is a swimmer's radius.
   POD_SCALE: 0.5,
   // Ember's colonies (mold.js) grow to FAST_FULL over FAST_GROW_SECONDS:
-  // about half again as fast as anyone else's, and about a fifth wider.
-  FAST_FULL: 0.18,
+  // about a third faster than anyone else's, and just a little wider.
+  FAST_FULL: 0.16,
   FAST_GROW_SECONDS: 4,
   SWIMMERS: 3,
   SWIM_SPEED: 0.32,
