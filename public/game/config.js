@@ -389,6 +389,38 @@ export const SPECIES = {
       { code: 'FLC', name: 'fluconazole', zone: 14 },
     ],
   },
+  ember: {
+    facts: [
+      "Ember is one of the first fungi to grow on burnt sugarcane after a fire.",
+      "Heat wakes up Ember's spores, so a fire can help her get started.",
+      "Ember is one of the fastest-growing fungi: her threads grow millimeters an hour.",
+      "In Indonesia, Ember ferments leftovers like peanut press cake into a food called oncom.",
+      "Ember's bright orange comes from carotenoids, the pigments that make carrots orange.",
+      "Ember's genus name, *Neurospora*, means \"nerve spore,\" for the ridges on her spores.",
+      "Ember's spores grow in branching chains that crumble into an orange powder.",
+      "Ember's cousin *Neurospora crassa* helped scientists learn that genes make enzymes.",
+      "Ember is a sac fungus: her sexual spores form in sacs inside flask-shaped bodies.",
+      "Ember's light, powdery spores ride the wind to find new food.",
+    ],
+    scientific: 'Neurospora intermedia',
+    color: '#c2361a', // for her name above the dish
+    kind: 'mold',
+    // Her colonies grow about twice as fast as anyone else's, and bigger, and
+    // turn orange with tufts of spores as they ripen (see mold.js).
+    fast: true,
+    tufts: true,
+    colors: { fill: '#ffe1bf', stroke: '#e0421b', highlight: '#fff4ea', dark: '#6e1a06', spores: '#ff8a3d' },
+    // There are no standard disk sizes for Neurospora, so these are
+    // estimates. Lab strains are killed by amphotericin B and the azoles
+    // voriconazole, itraconazole and posaconazole, and fluconazole works poorly.
+    antifungals: [
+      { code: 'VOR', name: 'voriconazole', zone: 24 },
+      { code: 'AMB', name: 'amphotericin B', zone: 18 },
+      { code: 'POS', name: 'posaconazole', zone: 24 },
+      { code: 'ITC', name: 'itraconazole', zone: 20 },
+      { code: 'FLC', name: 'fluconazole', zone: 12 },
+    ],
+  },
   fumi: {
     facts: [
       "Fumi's species name, *fumigatus*, means \"smoky,\" for her smoky grey-green colonies.",
@@ -566,6 +598,10 @@ export const GAME = {
   // radii a second) to the nearest nutrient within SWIM_RANGE, and give up
   // after SWIM_SECONDS. SWIMMER_R is a swimmer's radius.
   POD_SCALE: 0.5,
+  // Ember's colonies (mold.js) grow to FAST_FULL over FAST_GROW_SECONDS:
+  // about twice as fast as anyone else's, and bigger.
+  FAST_FULL: 0.24,
+  FAST_GROW_SECONDS: 4,
   SWIMMERS: 3,
   SWIM_SPEED: 0.32,
   SWIM_RANGE: 0.5,

@@ -101,4 +101,10 @@ export const QUIZ_FACTS = {
     "Bea's species name, *dendrobatidis*, refers to the poison dart frogs she was found on.",
     "Bea causes chytridiomycosis, a skin disease that disrupts water and salt balance."
   ],
+  ember: [
+    "Ember is one of the first fungi to grow on burnt sugarcane after a fire.",
+    "In Indonesia, Ember ferments leftovers like peanut press cake into a food called oncom.",
+    "Ember's bright orange comes from carotenoids, the pigments that make carrots orange.",
+    "Ember's genus name, *Neurospora*, means \"nerve spore,\" for the ridges on her spores.",
+  ],
 };

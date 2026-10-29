@@ -12,10 +12,11 @@ import { sporeBurst } from './spores.js';
 import { steer, touchSteering } from './touch.js';
 import { track } from './track.js';
 
-// Colony radius after `seconds`, in dish radii; grows steadily to full size.
-export function colonyRadius(seconds) {
-  const t = Math.min(1, Math.max(0, seconds / GAME.COLONY_GROW_SECONDS));
-  return GAME.COLONY_START + (GAME.COLONY_FULL - GAME.COLONY_START) * t;
+// Colony radius after `seconds`, in dish radii; grows steadily to `full`
+// size over `grow` seconds.
+export function colonyRadius(seconds, { full = GAME.COLONY_FULL, grow = GAME.COLONY_GROW_SECONDS } = {}) {
+  const t = Math.min(1, Math.max(0, seconds / grow));
+  return GAME.COLONY_START + (full - GAME.COLONY_START) * t;
 }
 
 // Colonies: `layer` draws them; `nutrients` seed new ones, even underneath.
@@ -27,7 +28,10 @@ export function colonyRadius(seconds) {
 // tiny bunch of her orange caps pops up in its middle as it ripens. With
 // `pods` (Bea), each "colony" is a small, round spore pod that fills with
 // spores and, once ripe, bursts: `onBurst(pod)` is called once, and her
-// pods don't spread over nutrients. Positions and sizes use fractions of
+// pods don't spread over nutrients. With `fast` (Ember), colonies grow
+// quicker and bigger (GAME.FAST_GROW_SECONDS, GAME.FAST_FULL), and with
+// `tufts` they turn orange and sprout tufts of spores as they ripen.
+// Positions and sizes use fractions of
 // the dish radius.
 export const DROPS = [
   // Where each drop sits on the colony (percent across and down), and how
@@ -48,6 +52,19 @@ export const CAPS = [
   { x: 51, y: 38, at: 1 },
 ];
 
+// Ember's orange tufts of spores, the same way: scattered over the middle,
+// popping up one at a time as the colony ripens.
+export const TUFTS = [
+  { x: 50, y: 50, at: 0.3 },
+  { x: 62, y: 42, at: 0.4 },
+  { x: 38, y: 44, at: 0.5 },
+  { x: 58, y: 63, at: 0.6 },
+  { x: 40, y: 60, at: 0.7 },
+  { x: 70, y: 54, at: 0.8 },
+  { x: 49, y: 30, at: 0.9 },
+  { x: 29, y: 52, at: 1 },
+];
+
 // The spores filling one of Bea's pods, the same way: one by one as it ripens.
 export const POD_SPORES = [
   { x: 50, y: 50, at: 0.15 },
@@ -60,11 +77,14 @@ export const POD_SPORES = [
 
 export function moldColonies({
   layer, disks = [], nutrients, colors, drops = false, wrinkled = false, powdery = false, caps = false,
-  pods = false, onBurst = () => {},
+  pods = false, onBurst = () => {}, fast = false, tufts = false,
 }) {
   const colonies = [];
-  // A colony's radius after `seconds`: Bea's pods stay small.
-  const size = (seconds) => colonyRadius(seconds) * (pods ? GAME.POD_SCALE : 1);
+  // How long a colony takes to reach full size, and its radius after
+  // `seconds`: Ember's grow quicker and bigger, and Bea's pods stay small.
+  const growFor = fast ? GAME.FAST_GROW_SECONDS : GAME.COLONY_GROW_SECONDS;
+  const full = fast ? GAME.FAST_FULL : GAME.COLONY_FULL;
+  const size = (seconds) => colonyRadius(seconds, { full, grow: growFor }) * (pods ? GAME.POD_SCALE : 1);
 
   function draw(colony) {
     const { el, fx, fy, r } = colony;
@@ -73,7 +93,7 @@ export function moldColonies({
     el.style.width = `${r * 100}%`;
     // The greenish, sporing middle spreads out a little as it grows; the
     // rest stays white and fluffy.
-    const ripe = Math.min(1, colony.age / GAME.COLONY_GROW_SECONDS);
+    const ripe = Math.min(1, colony.age / growFor);
     el.style.setProperty('--ripe', `${Math.round(ripe * 40)}%`);
     for (const bit of colony.bits) bit.el.classList.toggle('shown', ripe >= bit.at);
   }
@@ -91,8 +111,8 @@ export function moldColonies({
     // another one. Returns the new colony.
     plant(fx, fy) {
       const el = document.createElement('div');
-      el.className = ['colony', wrinkled && 'wrinkled', powdery && 'powdery', caps && 'cottony', pods && 'pod']
-        .filter(Boolean).join(' ');
+      el.className = ['colony', wrinkled && 'wrinkled', powdery && 'powdery', caps && 'cottony', pods && 'pod',
+        tufts && 'fiery'].filter(Boolean).join(' ');
       el.setAttribute('aria-hidden', 'true');
       el.style.setProperty('--spores', colors.spores);
       // A slightly uneven edge, different for each colony.
@@ -100,14 +120,14 @@ export function moldColonies({
       el.style.borderRadius =
         `${wobble()} ${wobble()} ${wobble()} ${wobble()} / ${wobble()} ${wobble()} ${wobble()} ${wobble()}`;
       const colony = { fx, fy, r: size(0), age: 0, el, bits: [] };
-      // Ruby's drops, Velma's caps or the spores in Bea's pods, at their own
-      // turn around the middle for each colony.
-      const bits = (drops && DROPS) || (caps && CAPS) || (pods && POD_SPORES) || [];
+      // Ruby's drops, Velma's caps, the spores in Bea's pods or Ember's tufts,
+      // at their own turn around the middle for each colony.
+      const bits = (drops && DROPS) || (caps && CAPS) || (pods && POD_SPORES) || (tufts && TUFTS) || [];
       const turn = Math.random() * Math.PI * 2;
       const [cos, sin] = [Math.cos(turn), Math.sin(turn)];
       for (const { x, y, at, big } of bits) {
         const bit = document.createElement('span');
-        bit.className = (drops && 'drop') || (caps && (big ? 'cap big' : 'cap')) || 'pod-spore';
+        bit.className = (drops && 'drop') || (caps && (big ? 'cap big' : 'cap')) || (pods && 'pod-spore') || 'tuft';
         bit.style.left = `${(50 + (x - 50) * cos - (y - 50) * sin).toFixed(1)}%`;
         bit.style.top = `${(50 + (x - 50) * sin + (y - 50) * cos).toFixed(1)}%`;
         if (drops) {
@@ -130,14 +150,14 @@ export function moldColonies({
     // centered exactly where the fleck was.
     grow(seconds) {
       for (const colony of [...colonies]) {
-        if (colony.age < GAME.COLONY_GROW_SECONDS) {
+        if (colony.age < growFor) {
           colony.age += seconds;
           colony.r = size(colony.age);
           draw(colony);
         }
         if (!pods) {
           nutrients.eatNear(colony.fx, colony.fy, colony.r, api.plant);
-        } else if (!colony.burst && colony.age >= GAME.COLONY_GROW_SECONDS) {
+        } else if (!colony.burst && colony.age >= growFor) {
           // A ripe pod bursts once, leaving an empty shell.
           colony.burst = true;
           colony.el.classList.add('burst');
@@ -283,7 +303,7 @@ export function playMold(galEl, species, nutrients, disks, { level = 1, target =
   const colonies = moldColonies({
     layer, disks, nutrients, colors: species.colors,
     drops: Boolean(species.drops), wrinkled: Boolean(species.wrinkled), powdery: Boolean(species.powdery),
-    caps: Boolean(species.caps),
+    caps: Boolean(species.caps), fast: Boolean(species.fast), tufts: Boolean(species.tufts),
     pods: Boolean(species.pods), onBurst: (pod) => swimmers.release(pod.fx, pod.fy, pod.r),
   });
 

@@ -20,7 +20,7 @@ vi.mock('../public/game/touch.js', async (importActual) => ({
 vi.mock('../public/game/spores.js', () => ({ sporeBurst: vi.fn() }));
 vi.mock('../public/game/track.js', () => ({ track: vi.fn() }));
 
-const { CAPS, colonyRadius, DROPS, moldColonies, playMold, POD_SPORES, sporeGroup, swimmerGroup } = await import('../public/game/mold.js');
+const { CAPS, colonyRadius, DROPS, moldColonies, playMold, POD_SPORES, sporeGroup, swimmerGroup, TUFTS } = await import('../public/game/mold.js');
 const { sporeBurst } = await import('../public/game/spores.js');
 const { track } = await import('../public/game/track.js');
 
@@ -235,6 +235,52 @@ describe('the colonies', () => {
     expect(colonies.killInZones(200)).toBe(1);
     vi.runAllTimers();
     expect(colony.el.isConnected).toBe(false);
+  });
+});
+
+describe("Ember's colonies", () => {
+  let layer;
+  beforeEach(() => {
+    layer = document.createElement('div');
+    document.querySelector('.agar').append(layer);
+  });
+
+  it("grow faster and bigger than anyone else's", () => {
+    expect(GAME.FAST_GROW_SECONDS).toBeLessThan(GAME.COLONY_GROW_SECONDS);
+    expect(GAME.FAST_FULL).toBeGreaterThan(GAME.COLONY_FULL);
+    expect(colonyRadius(GAME.FAST_GROW_SECONDS, { full: GAME.FAST_FULL, grow: GAME.FAST_GROW_SECONDS })).toBe(GAME.FAST_FULL);
+    // They start the same size as anyone's.
+    const fast = moldColonies({ layer, nutrients: fakeNutrients(), colors: SPECIES.ember.colors, fast: true }).plant(0, 0);
+    const steady = moldColonies({ layer, nutrients: fakeNutrients(), colors }).plant(0, 0);
+    expect(fast.r).toBe(steady.r);
+  });
+
+  it('reach full size sooner, and spread over nutrients further', () => {
+    const ember = moldColonies({ layer, nutrients: fakeNutrients([[0.2, 0]]), colors: SPECIES.ember.colors, fast: true });
+    const fumi = moldColonies({ layer, nutrients: fakeNutrients([[0.2, 0]]), colors });
+    const e = ember.plant(0, 0);
+    const f = fumi.plant(0, 0);
+    ember.grow(GAME.FAST_GROW_SECONDS);
+    fumi.grow(GAME.FAST_GROW_SECONDS);
+    expect(e.r).toBeCloseTo(GAME.FAST_FULL);
+    expect(f.r).toBeLessThan(GAME.COLONY_FULL);
+    // Hers reached the nutrient and started a new colony; Fumi's didn't.
+    expect(ember.count()).toBe(2);
+    expect(fumi.count()).toBe(1);
+  });
+
+  it('turn orange and sprout tufts of spores, one at a time, as they ripen', () => {
+    const colonies = moldColonies({ layer, nutrients: fakeNutrients(), colors: SPECIES.ember.colors, fast: true, tufts: true });
+    const colony = colonies.plant(0, 0);
+    expect(colony.el.classList).toContain('fiery');
+    const tufts = [...colony.el.querySelectorAll('.tuft')];
+    expect(tufts).toHaveLength(TUFTS.length);
+    const shown = () => tufts.filter((t) => t.classList.contains('shown')).length;
+    expect(shown()).toBe(0);
+    colonies.grow(GAME.FAST_GROW_SECONDS * 0.5);
+    expect(shown()).toBe(TUFTS.filter((t) => t.at <= 0.5).length);
+    colonies.grow(GAME.FAST_GROW_SECONDS);
+    expect(shown()).toBe(TUFTS.length);
   });
 });
 
