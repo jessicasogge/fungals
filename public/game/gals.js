@@ -630,6 +630,43 @@ export const GALS = [
       ${face(100, 104, '#4f0b55')}
     `,
   },
+  // Ember: Neurospora intermedia, the fire mold that blooms on burnt
+  // sugarcane: her face on a slightly wider stretch of stalk, which splits
+  // above into uneven branches carrying chains of orange spores at different
+  // heights, fading to gold like flames. In the dish she
+  // plays like Fumi (see mold.js), but her colonies grow faster and bigger.
+  {
+    id: 'ember',
+    name: 'Ember',
+    looks: 'an orange Neurospora intermedia mold: a stalk that splits into uneven branches, carrying chains of orange spores like flames',
+    motion: 'bob',
+    frames: { home: '10 10 180 180', picker: '14 14 172 172', dish: '50 50 100 100' },
+    art: `
+      <!-- her thread along the agar, her stalk, and the uneven branches it splits into above her face -->
+      <path d="M 28 182 C 58 176 80 186 100 180 C 122 174 144 184 172 178 M 100 180 L 100 160" fill="none" stroke="#e0421b" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M 100 112 C 100 102 101 94 100 86 C 99 80 100 75 101 70 M 100 102 C 92 99 84 96 76 93 C 70 91 65 89 60 86 M 99 86 C 95 82 90 78 86 73 M 100 94 C 109 90 117 86 124 79 C 128 75 131 72 134 68 M 120 85 C 126 88 132 90 138 91" fill="none" stroke="#e0421b" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M 28 182 C 58 176 80 186 100 180 C 122 174 144 184 172 178 M 100 180 L 100 160" fill="none" stroke="#ffe1bf" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M 100 112 C 100 102 101 94 100 86 C 99 80 100 75 101 70 M 100 102 C 92 99 84 96 76 93 C 70 91 65 89 60 86 M 99 86 C 95 82 90 78 86 73 M 100 94 C 109 90 117 86 124 79 C 128 75 131 72 134 68 M 120 85 C 126 88 132 90 138 91" fill="none" stroke="#ffe1bf" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" />
+      <!-- chains of orange spores on the branches, at different heights, fading to gold like flames -->
+      <g stroke="#e0421b" stroke-width="1.8"><circle cx="104.1" cy="28.4" r="3.2" fill="#ffd88a" /><circle cx="104.4" cy="33.2" r="3.2" fill="#ffcf82" /><circle cx="104.9" cy="38.0" r="3.6" fill="#ffc67a" /><circle cx="104.5" cy="43.4" r="4.1" fill="#ffbd72" /><circle cx="102.9" cy="49.3" r="4.6" fill="#ffb46a" /><circle cx="101.4" cy="56.1" r="5.3" fill="#ffab62" /><circle cx="101.2" cy="64.0" r="6.0" fill="#ffa25a" /></g>
+      <g stroke="#e0421b" stroke-width="1.8"><circle cx="80.0" cy="36.5" r="3.2" fill="#ffd88a" /><circle cx="80.4" cy="41.3" r="3.6" fill="#ffcd80" /><circle cx="81.9" cy="46.5" r="4.1" fill="#ffc277" /><circle cx="83.3" cy="52.4" r="4.6" fill="#ffb86d" /><circle cx="83.7" cy="59.4" r="5.3" fill="#ffad64" /><circle cx="84.1" cy="67.3" r="6.0" fill="#ffa25a" /></g>
+      <g stroke="#e0421b" stroke-width="1.8"><circle cx="43.4" cy="53.7" r="3.2" fill="#ffd88a" /><circle cx="43.7" cy="58.5" r="3.6" fill="#ffcd80" /><circle cx="44.7" cy="63.8" r="4.1" fill="#ffc277" /><circle cx="47.6" cy="69.2" r="4.6" fill="#ffb86d" /><circle cx="51.9" cy="74.7" r="5.3" fill="#ffad64" /><circle cx="56.5" cy="81.1" r="6.0" fill="#ffa25a" /></g>
+      <g stroke="#e0421b" stroke-width="1.8"><circle cx="142.8" cy="32.1" r="3.2" fill="#ffd88a" /><circle cx="142.8" cy="36.9" r="3.6" fill="#ffcd80" /><circle cx="141.4" cy="42.1" r="4.1" fill="#ffc277" /><circle cx="139.1" cy="47.8" r="4.6" fill="#ffb86d" /><circle cx="137.3" cy="54.5" r="5.3" fill="#ffad64" /><circle cx="136.1" cy="62.4" r="6.0" fill="#ffa25a" /></g>
+      <g stroke="#e0421b" stroke-width="1.8"><circle cx="158.7" cy="67.6" r="3.6" fill="#ffd88a" /><circle cx="157.5" cy="72.9" r="4.1" fill="#ffca7e" /><circle cx="154.5" cy="78.2" r="4.6" fill="#ffbd72" /><circle cx="149.3" cy="82.9" r="5.3" fill="#ffb066" /><circle cx="142.9" cy="87.6" r="6.0" fill="#ffa25a" /></g>
+      <g stroke="#e0421b" stroke-width="1.8"><circle cx="67.3" cy="65.7" r="4.1" fill="#ffd88a" /><circle cx="69.2" cy="71.5" r="4.6" fill="#ffc67a" /><circle cx="71.2" cy="78.2" r="5.3" fill="#ffb46a" /><circle cx="72.2" cy="86.1" r="6.0" fill="#ffa25a" /></g>
+      <g stroke="#e0421b" stroke-width="1.8"><circle cx="123.4" cy="54.2" r="4.1" fill="#ffd88a" /><circle cx="122.2" cy="60.2" r="4.6" fill="#ffc67a" /><circle cx="122.1" cy="67.2" r="5.3" fill="#ffb46a" /><circle cx="122.2" cy="75.1" r="6.0" fill="#ffa25a" /></g>
+      <!-- a slightly wider stretch of stalk, with her face -->
+      <rect x="81" y="110" width="38" height="52" rx="17" fill="#ffe1bf" stroke="#e0421b" stroke-width="4" />
+      <ellipse cx="90" cy="121" rx="5" ry="2.6" fill="#ffffff" transform="rotate(-25 90 121)" />
+      <g class="face"><circle cx="92.5" cy="135" r="4.4" fill="#6e1a06" /><circle cx="107.5" cy="135" r="4.4" fill="#6e1a06" /><circle cx="94" cy="133.5" r="1.5" fill="white" /><circle cx="109" cy="133.5" r="1.5" fill="white" /><ellipse cx="87" cy="144" rx="3.8" ry="2.3" fill="#f9a8d4" opacity="0.95" /><ellipse cx="113" cy="144" rx="3.8" ry="2.3" fill="#f9a8d4" opacity="0.95" /><path d="M96.5 144 Q100 148 103.5 144" stroke="#6e1a06" stroke-width="2.6" fill="none" stroke-linecap="round" /></g>
+    `,
+    dishArt: `
+      <!-- one small, round orange spore (a conidium) -->
+      <circle cx="100" cy="100" r="42" fill="#ffd2a6" stroke="#e0421b" stroke-width="4" />
+      <ellipse cx="82" cy="80" rx="9" ry="5" fill="#fff4ea" transform="rotate(-25 82 80)" />
+      ${face(100, 104, '#6e1a06')}
+    `,
+  },
 ];
 
 // The home row shows at most HOME_MAX gals, so not every gal is on it.

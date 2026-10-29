@@ -5,6 +5,7 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { SPECIES } from '../public/game/config.js';
+import { GALS } from '../public/game/gals.js';
 
 const page = readFileSync(resolve(process.cwd(), 'public/family-tree.html'), 'utf8');
 
@@ -30,8 +31,9 @@ describe('the family tree page', () => {
     expect(document.querySelector('.tree-trail').hidden).toBe(true);
     expect(document.querySelector('.tree-note').hidden).toBe(true);
     expect([...document.querySelectorAll('.tree-branch')].map((b) => b.dataset.branch)).toEqual(['chytrids', 'dikarya']);
-    expect(branch('dikarya').querySelector('.tree-count').textContent).toBe('14 gals ›');
-    expect(branch('dikarya').querySelectorAll('.tree-faces .gal-icon')).toHaveLength(14);
+    // Every gal but Bea, the only chytrid.
+    expect(branch('dikarya').querySelector('.tree-count').textContent).toBe(`${GALS.length - 1} gals ›`);
+    expect(branch('dikarya').querySelectorAll('.tree-faces .gal-icon')).toHaveLength(GALS.length - 1);
     expect(document.querySelector('.loading-overlay').hidden).toBe(true);
   });
 

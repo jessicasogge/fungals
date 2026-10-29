@@ -475,6 +475,10 @@ a.gal-card:active {
   background: rgba(240, 212, 248, 0.85);
 }
 
+.ember {
+  background: rgba(255, 214, 170, 0.8);
+}
+
 .pick-btn {
   margin-top: 0.75rem;
   padding: 0.7rem 1rem;
@@ -1639,6 +1643,32 @@ body:not(.picker-page) .signature {
 @keyframes bea-tail {
   from { transform: rotate(-9deg); }
   to { transform: rotate(9deg); }
+}
+
+/* Ember's colonies (mold.js): white and fluffy at the spreading edge,
+   turning bright orange (her --spores color) from the middle out as she
+   makes her powdery spores, with orange tufts popping up as they ripen. */
+.colony.fiery {
+  background:
+    repeating-conic-gradient(rgba(224, 66, 27, 0.08) 0 1deg, transparent 1deg 13deg),
+    radial-gradient(circle, color-mix(in srgb, var(--spores) 85%, white) 0 calc(var(--ripe, 0%) * 0.8),
+      color-mix(in srgb, var(--spores) 40%, white) calc(var(--ripe, 0%) * 1.5), transparent calc(var(--ripe, 0%) * 2)),
+    radial-gradient(circle, #fffaf4 0 70%, #fffdf9 90%, rgba(255, 255, 255, 0.8) 100%);
+  box-shadow: 0 0 5px 2px rgba(255, 255, 255, 0.95);
+}
+
+.colony .tuft {
+  position: absolute;
+  width: 9%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ffc879, #f0682a);
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.3s ease-out;
+}
+
+.colony .tuft.shown {
+  transform: translate(-50%, -50%) scale(1);
 }
 
 /* Killed by an antifungal: the whole colony pops, swelling and vanishing. */

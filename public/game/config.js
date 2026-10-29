@@ -389,6 +389,38 @@ export const SPECIES = {
       { code: 'FLC', name: 'fluconazole', zone: 14 },
     ],
   },
+  ember: {
+    facts: [
+      "Ember can quickly colonize burnt sugarcane after a fire.",
+      "Heat can wake Ember's resting spores, helping her grow after a fire.",
+      "Ember grows fast: her threads can spread several millimeters an hour.",
+      "In Indonesia, Ember ferments soy pulp into a food called red oncom.",
+      "Ember's orange color comes from carotenoids, the pigment family found in carrots.",
+      "Ember's genus name, *Neurospora*, means \"nerve spore,\" for ridges on some spores.",
+      "Ember makes branching chains of spores that break apart into orange powder.",
+      "Ember's cousin *Neurospora crassa* helped scientists link genes to enzymes.",
+      "Ember is a sac fungus, making some spores in tiny sacs inside flasklike bodies.",
+      "Ember's powdery spores ride the wind to reach new places to grow."
+    ],
+    scientific: 'Neurospora intermedia',
+    color: '#c2361a', // for her name above the dish
+    kind: 'mold',
+    // Her colonies grow faster than anyone else's, and a little wider, and
+    // turn orange with tufts of spores as they ripen (see mold.js).
+    fast: true,
+    tufts: true,
+    colors: { fill: '#ffe1bf', stroke: '#e0421b', highlight: '#fff4ea', dark: '#6e1a06', spores: '#ff8a3d' },
+    // There are no standard disk sizes for Neurospora, so these are
+    // estimates. Lab strains are killed by amphotericin B and the azoles
+    // voriconazole, itraconazole and posaconazole, and fluconazole works poorly.
+    antifungals: [
+      { code: 'VOR', name: 'voriconazole', zone: 24 },
+      { code: 'AMB', name: 'amphotericin B', zone: 18 },
+      { code: 'POS', name: 'posaconazole', zone: 24 },
+      { code: 'ITC', name: 'itraconazole', zone: 20 },
+      { code: 'FLC', name: 'fluconazole', zone: 12 },
+    ],
+  },
   fumi: {
     facts: [
       "Fumi's species name, *fumigatus*, means \"smoky,\" for her smoky grey-green colonies.",
@@ -566,6 +598,10 @@ export const GAME = {
   // radii a second) to the nearest nutrient within SWIM_RANGE, and give up
   // after SWIM_SECONDS. SWIMMER_R is a swimmer's radius.
   POD_SCALE: 0.5,
+  // Ember's colonies (mold.js) grow to FAST_FULL over FAST_GROW_SECONDS:
+  // about a third faster than anyone else's, and just a little wider.
+  FAST_FULL: 0.16,
+  FAST_GROW_SECONDS: 4,
   SWIMMERS: 3,
   SWIM_SPEED: 0.32,
   SWIM_RANGE: 0.5,
