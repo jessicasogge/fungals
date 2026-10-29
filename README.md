@@ -49,7 +49,7 @@ The home page shows 12 of them at most (`HOME` in `public/game/gals.js`), so not
 | **Yara** | *Yarrowia lipolytica* | An apricot yeast: one plump, egg-shaped cell with droplets of fat inside, budding at her end |
 | **Trixie** | *Trichophyton mentagrophytes* | A mint mold: a round head on a stalk in a grape-like bunch of round spores, with a springy spiral thread. In the dish, one round spore |
 | **Velma** | *Flammulina velutipes* | The velvet shank: a bunch of broad orange caps on stems that turn dark, velvety brown at the bottom, growing from a bit of dead wood. In the dish, one round spore |
-| **Ember** | *Neurospora intermedia* | A fire mold: a round head on a short stalk, crowned with wavy chains of orange spores that fade to gold at the tips, like flames. In the dish, one round orange spore |
+| **Ember** | *Neurospora intermedia* | A fire mold: her face on a slightly wider stretch of stalk, which splits above into uneven branches carrying chains of orange spores at different heights, fading to gold like flames. In the dish, one round orange spore |
 | **Bea** | *Batrachochytrium dendrobatidis* | An orchid chytrid: a round, swimming spore with a long, wavy tail and a little fat droplet inside. In the dish, the same, with her tail wiggling |
 | **Rosie** | *Sporothrix schenckii* | A short spore stalk crowned with a loose fan of cream and dusty-rose teardrop spores, with dark spores along her thread. In the dish, one oval spore |
 | **Ruby** | *Hydnellum peckii* | The bleeding tooth fungus: a fuzzy white mushroom cap beaded with red drops, with little spikes underneath. In the dish, one round, warty spore |
