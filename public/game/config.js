@@ -391,16 +391,16 @@ export const SPECIES = {
   },
   ember: {
     facts: [
-      "Ember is one of the first fungi to grow on burnt sugarcane after a fire.",
-      "Heat wakes up Ember's spores, so a fire can help her get started.",
-      "Ember is one of the fastest-growing fungi: her threads grow millimeters an hour.",
-      "In Indonesia, Ember ferments leftovers like peanut press cake into a food called oncom.",
-      "Ember's bright orange comes from carotenoids, the pigments that make carrots orange.",
-      "Ember's genus name, *Neurospora*, means \"nerve spore,\" for the ridges on her spores.",
-      "Ember's spores grow in branching chains that crumble into an orange powder.",
-      "Ember's cousin *Neurospora crassa* helped scientists learn that genes make enzymes.",
-      "Ember is a sac fungus: her sexual spores form in sacs inside flask-shaped bodies.",
-      "Ember's light, powdery spores ride the wind to find new food.",
+      "Ember can quickly colonize burnt sugarcane after a fire.",
+      "Heat can wake Ember's resting spores, helping her grow after a fire.",
+      "Ember grows fast: her threads can spread several millimeters an hour.",
+      "In Indonesia, Ember ferments soy pulp into a food called red oncom.",
+      "Ember's orange color comes from carotenoids, the pigment family found in carrots.",
+      "Ember's genus name, *Neurospora*, means \"nerve spore,\" for ridges on some spores.",
+      "Ember makes branching chains of spores that break apart into orange powder.",
+      "Ember's cousin *Neurospora crassa* helped scientists link genes to enzymes.",
+      "Ember is a sac fungus, making some spores in tiny sacs inside flasklike bodies.",
+      "Ember's powdery spores ride the wind to reach new places to grow."
     ],
     scientific: 'Neurospora intermedia',
     color: '#c2361a', // for her name above the dish
