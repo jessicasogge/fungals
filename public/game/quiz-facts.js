@@ -102,9 +102,9 @@ export const QUIZ_FACTS = {
     "Bea causes chytridiomycosis, a skin disease that disrupts water and salt balance."
   ],
   ember: [
-    "Ember is one of the first fungi to grow on burnt sugarcane after a fire.",
-    "In Indonesia, Ember ferments leftovers like peanut press cake into a food called oncom.",
-    "Ember's bright orange comes from carotenoids, the pigments that make carrots orange.",
-    "Ember's genus name, *Neurospora*, means \"nerve spore,\" for the ridges on her spores.",
+    "Ember quickly grows on scorched sugarcane after a fire.",
+    "In Indonesia, Ember ferments soy pulp into a food called red oncom.",
+    "Ember's orange color comes from carotenoids, the pigment family found in carrots.",
+    "Ember's genus name, *Neurospora*, means \"nerve spore,\" for ridges on some spores."
   ],
 };
