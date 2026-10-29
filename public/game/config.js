@@ -405,7 +405,7 @@ export const SPECIES = {
     scientific: 'Neurospora intermedia',
     color: '#c2361a', // for her name above the dish
     kind: 'mold',
-    // Her colonies grow about twice as fast as anyone else's, and bigger, and
+    // Her colonies grow nearly twice as fast as anyone else's, and wider, and
     // turn orange with tufts of spores as they ripen (see mold.js).
     fast: true,
     tufts: true,
@@ -599,8 +599,8 @@ export const GAME = {
   // after SWIM_SECONDS. SWIMMER_R is a swimmer's radius.
   POD_SCALE: 0.5,
   // Ember's colonies (mold.js) grow to FAST_FULL over FAST_GROW_SECONDS:
-  // about twice as fast as anyone else's, and bigger.
-  FAST_FULL: 0.24,
+  // nearly twice as fast as anyone else's, and about a third wider.
+  FAST_FULL: 0.2,
   FAST_GROW_SECONDS: 4,
   SWIMMERS: 3,
   SWIM_SPEED: 0.32,

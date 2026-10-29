@@ -256,8 +256,8 @@ describe("Ember's colonies", () => {
   });
 
   it('reach full size sooner, and spread over nutrients further', () => {
-    const ember = moldColonies({ layer, nutrients: fakeNutrients([[0.2, 0]]), colors: SPECIES.ember.colors, fast: true });
-    const fumi = moldColonies({ layer, nutrients: fakeNutrients([[0.2, 0]]), colors });
+    const ember = moldColonies({ layer, nutrients: fakeNutrients([[0.18, 0]]), colors: SPECIES.ember.colors, fast: true });
+    const fumi = moldColonies({ layer, nutrients: fakeNutrients([[0.18, 0]]), colors });
     const e = ember.plant(0, 0);
     const f = fumi.plant(0, 0);
     ember.grow(GAME.FAST_GROW_SECONDS);
