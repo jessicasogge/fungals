@@ -30,9 +30,18 @@ describe('gals', () => {
     }
   });
 
+  it("makes Quinn resistant to caspofungin and fluconazole, like other Fusarium molds", () => {
+    const resistant = SPECIES.quinn.antifungals.filter((a) => a.zone === null).map((a) => a.code);
+    expect(resistant).toEqual(['CAS', 'FLC']);
+    // Voriconazole and amphotericin B still work on her.
+    for (const code of ['VOR', 'AMB']) {
+      expect(SPECIES.quinn.antifungals.find((a) => a.code === code).zone).toBeGreaterThan(0);
+    }
+  });
+
   it('gives a mold the green her colonies turn as they make spores', () => {
     const molds = GALS.filter((gal) => SPECIES[gal].kind === 'mold');
-    expect(molds).toEqual(['ruby', 'rosie', 'trixie', 'velma', 'bea', 'ember', 'fumi', 'penelope', 'miri']);
+    expect(molds).toEqual(['ruby', 'rosie', 'trixie', 'velma', 'bea', 'ember', 'quinn', 'fumi', 'penelope', 'miri']);
     for (const gal of molds) expect(SPECIES[gal].colors.spores).toMatch(/^#[0-9a-f]{6}$/i);
   });
 });

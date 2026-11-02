@@ -667,6 +667,39 @@ export const GALS = [
       ${face(100, 104, '#6e1a06')}
     `,
   },
+  // Quinn: Fusarium venenatum, the fungus in Quorn: her face on a slightly
+  // thicker stretch of stem, topped with a loose bunch of long, curved,
+  // canoe-shaped spores split into cells. In the dish she plays like Fumi
+  // (see mold.js), but some of her disks have no zone: she's resistant.
+  {
+    id: 'quinn',
+    name: 'Quinn',
+    looks: 'a magenta Fusarium venenatum mold: a stem topped with a loose bunch of long, curved, canoe-shaped spores, each split into cells',
+    motion: 'bob',
+    frames: { home: '10 10 180 180', picker: '14 14 172 172', dish: '50 50 100 100' },
+    art: `
+      <!-- her thread along the agar, and her stem -->
+      <path d="M 24 184 C 54 176 80 190 100 182 C 122 174 146 188 176 178 M 100 182 L 100 162 M 100 110 L 100 98" fill="none" stroke="#b3207f" stroke-width="7" stroke-linecap="round" />
+      <path d="M 24 184 C 54 176 80 190 100 182 C 122 174 146 188 176 178 M 100 182 L 100 162 M 100 110 L 100 98" fill="none" stroke="#f9d6ec" stroke-width="3.6" stroke-linecap="round" />
+      <!-- a loose bunch of long, curved spores (macroconidia) growing from the top of her stem, each split into cells by thin walls -->
+      <g transform="translate(100.0 99.0) rotate(-140)"><path d="M 0 0 Q 28.0 -25.6 56 0 Q 28.0 1.5999999999999996 0 0 Z" fill="#fdeef6" /><line x1="11.2" y1="-8.2" x2="11.2" y2="0.5" stroke="#d0569f" stroke-width="1.8" stroke-linecap="round" transform="rotate(-14.4 11.2 -3.8)" /><line x1="22.4" y1="-12.3" x2="22.4" y2="0.8" stroke="#d0569f" stroke-width="1.8" stroke-linecap="round" transform="rotate(-4.9 22.4 -5.8)" /><line x1="33.6" y1="-12.3" x2="33.6" y2="0.8" stroke="#d0569f" stroke-width="1.8" stroke-linecap="round" transform="rotate(4.9 33.6 -5.8)" /><line x1="44.8" y1="-8.2" x2="44.8" y2="0.5" stroke="#d0569f" stroke-width="1.8" stroke-linecap="round" transform="rotate(14.4 44.8 -3.8)" /><path d="M 0 0 Q 28.0 -25.6 56 0 Q 28.0 1.5999999999999996 0 0 Z" fill="none" stroke="#b3207f" stroke-width="2.2" stroke-linejoin="round" /></g>
+      <g transform="translate(100.0 99.0) rotate(-38)"><path d="M 0 0 Q 27.0 -19.2 54 0 Q 27.0 7.199999999999999 0 0 Z" fill="#fdeef6" /><line x1="10.8" y1="-6.1" x2="10.8" y2="2.3" stroke="#d0569f" stroke-width="1.8" stroke-linecap="round" transform="rotate(-7.6 10.8 -1.9)" /><line x1="21.6" y1="-9.2" x2="21.6" y2="3.5" stroke="#d0569f" stroke-width="1.8" stroke-linecap="round" transform="rotate(-2.5 21.6 -2.9)" /><line x1="32.4" y1="-9.2" x2="32.4" y2="3.5" stroke="#d0569f" stroke-width="1.8" stroke-linecap="round" transform="rotate(2.5 32.4 -2.9)" /><line x1="43.2" y1="-6.1" x2="43.2" y2="2.3" stroke="#d0569f" stroke-width="1.8" stroke-linecap="round" transform="rotate(7.6 43.2 -1.9)" /><path d="M 0 0 Q 27.0 -19.2 54 0 Q 27.0 7.199999999999999 0 0 Z" fill="none" stroke="#b3207f" stroke-width="2.2" stroke-linejoin="round" /></g>
+      <g transform="translate(100.0 99.0) rotate(-114)"><path d="M 0 0 Q 34.0 -26.4 68 0 Q 34.0 2.4000000000000004 0 0 Z" fill="#fdeef6" /><line x1="11.3" y1="-7.3" x2="11.3" y2="0.7" stroke="#d0569f" stroke-width="1.8" stroke-linecap="round" transform="rotate(-13.2 11.3 -3.3)" /><line x1="22.7" y1="-11.7" x2="22.7" y2="1.1" stroke="#d0569f" stroke-width="1.8" stroke-linecap="round" transform="rotate(-6.7 22.7 -5.3)" /><line x1="34.0" y1="-13.2" x2="34.0" y2="1.2" stroke="#d0569f" stroke-width="1.8" stroke-linecap="round" transform="rotate(-0.0 34.0 -6.0)" /><line x1="45.3" y1="-11.7" x2="45.3" y2="1.1" stroke="#d0569f" stroke-width="1.8" stroke-linecap="round" transform="rotate(6.7 45.3 -5.3)" /><line x1="56.7" y1="-7.3" x2="56.7" y2="0.7" stroke="#d0569f" stroke-width="1.8" stroke-linecap="round" transform="rotate(13.2 56.7 -3.3)" /><path d="M 0 0 Q 34.0 -26.4 68 0 Q 34.0 2.4000000000000004 0 0 Z" fill="none" stroke="#b3207f" stroke-width="2.2" stroke-linejoin="round" /></g>
+      <g transform="translate(100.0 99.0) rotate(-63)"><path d="M 0 0 Q 33.0 -22 66 0 Q 33.0 6 0 0 Z" fill="#fdeef6" /><line x1="11.0" y1="-6.1" x2="11.0" y2="1.7" stroke="#d0569f" stroke-width="1.8" stroke-linecap="round" transform="rotate(-9.2 11.0 -2.2)" /><line x1="22.0" y1="-9.8" x2="22.0" y2="2.7" stroke="#d0569f" stroke-width="1.8" stroke-linecap="round" transform="rotate(-4.6 22.0 -3.6)" /><line x1="33.0" y1="-11.0" x2="33.0" y2="3.0" stroke="#d0569f" stroke-width="1.8" stroke-linecap="round" transform="rotate(-0.0 33.0 -4.0)" /><line x1="44.0" y1="-9.8" x2="44.0" y2="2.7" stroke="#d0569f" stroke-width="1.8" stroke-linecap="round" transform="rotate(4.6 44.0 -3.6)" /><line x1="55.0" y1="-6.1" x2="55.0" y2="1.7" stroke="#d0569f" stroke-width="1.8" stroke-linecap="round" transform="rotate(9.2 55.0 -2.2)" /><path d="M 0 0 Q 33.0 -22 66 0 Q 33.0 6 0 0 Z" fill="none" stroke="#b3207f" stroke-width="2.2" stroke-linejoin="round" /></g>
+      <g transform="translate(100.0 99.0) rotate(-88)"><path d="M 0 0 Q 37.0 -24.4 74 0 Q 37.0 4.4 0 0 Z" fill="#fdeef6" /><line x1="10.6" y1="-6.0" x2="10.6" y2="1.1" stroke="#d0569f" stroke-width="1.8" stroke-linecap="round" transform="rotate(-10.9 10.6 -2.4)" /><line x1="21.1" y1="-10.0" x2="21.1" y2="1.8" stroke="#d0569f" stroke-width="1.8" stroke-linecap="round" transform="rotate(-6.6 21.1 -4.1)" /><line x1="31.7" y1="-12.0" x2="31.7" y2="2.2" stroke="#d0569f" stroke-width="1.8" stroke-linecap="round" transform="rotate(-2.2 31.7 -4.9)" /><line x1="42.3" y1="-12.0" x2="42.3" y2="2.2" stroke="#d0569f" stroke-width="1.8" stroke-linecap="round" transform="rotate(2.2 42.3 -4.9)" /><line x1="52.9" y1="-10.0" x2="52.9" y2="1.8" stroke="#d0569f" stroke-width="1.8" stroke-linecap="round" transform="rotate(6.6 52.9 -4.1)" /><line x1="63.4" y1="-6.0" x2="63.4" y2="1.1" stroke="#d0569f" stroke-width="1.8" stroke-linecap="round" transform="rotate(10.9 63.4 -2.4)" /><path d="M 0 0 Q 37.0 -24.4 74 0 Q 37.0 4.4 0 0 Z" fill="none" stroke="#b3207f" stroke-width="2.2" stroke-linejoin="round" /></g>
+      <!-- a slightly thicker stretch of stem, with her face -->
+      <rect x="81" y="108" width="38" height="56" rx="17" fill="#f9d6ec" stroke="#b3207f" stroke-width="4" />
+      <ellipse cx="90" cy="119" rx="5" ry="2.6" fill="#ffffff" transform="rotate(-25 90 119)" />
+      <g class="face"><circle cx="92.5" cy="135" r="4.4" fill="#5a0b3e" /><circle cx="107.5" cy="135" r="4.4" fill="#5a0b3e" /><circle cx="94" cy="133.5" r="1.5" fill="white" /><circle cx="109" cy="133.5" r="1.5" fill="white" /><ellipse cx="87" cy="144" rx="3.8" ry="2.3" fill="#f9a8d4" opacity="0.95" /><ellipse cx="113" cy="144" rx="3.8" ry="2.3" fill="#f9a8d4" opacity="0.95" /><path d="M96.5 144 Q100 148 103.5 144" stroke="#5a0b3e" stroke-width="2.6" fill="none" stroke-linecap="round" /></g>
+    `,
+    dishArt: `
+      <!-- one curved, canoe-shaped spore, split into cells -->
+      <path d="M 52 114 Q 100 30 148 114 Q 100 94 52 114 Z" fill="#f9d6ec" stroke="#b3207f" stroke-width="4" stroke-linejoin="round" />
+      <g stroke="#d0569f" stroke-width="2.2" stroke-linecap="round" opacity="0.7"><line x1="66" y1="94" x2="66" y2="108" /><line x1="134" y1="94" x2="134" y2="108" /></g>
+      <ellipse cx="80" cy="80" rx="7" ry="3.6" fill="#ffffff" transform="rotate(-35 80 80)" />
+      ${face(100, 86, '#5a0b3e')}
+    `,
+  },
 ];
 
 // The home row shows at most HOME_MAX gals, so not every gal is on it.

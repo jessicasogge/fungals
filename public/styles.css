@@ -479,6 +479,10 @@ a.gal-card:active {
   background: rgba(255, 214, 170, 0.8);
 }
 
+.quinn {
+  background: rgba(248, 212, 236, 0.85);
+}
+
 .pick-btn {
   margin-top: 0.75rem;
   padding: 0.7rem 1rem;

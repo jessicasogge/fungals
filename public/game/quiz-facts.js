@@ -107,4 +107,10 @@ export const QUIZ_FACTS = {
     "Ember's orange color comes from carotenoids, the pigment family found in carrots.",
     "Ember's genus name, *Neurospora*, means \"nerve spore,\" for ridges on some spores."
   ],
+  quinn: [
+    "Quinn is the fungus in Quorn, a meat-free food made from her called mycoprotein.",
+    "Quinn was found in 1967 in soil from a field near Marlow, England.",
+    "Quinn's genus name, *Fusarium*, means \"spindle,\" for her spindle-shaped spores.",
+    "Like most *Fusarium* molds, Quinn shrugs off many antifungal medicines.",
+  ],
 };
