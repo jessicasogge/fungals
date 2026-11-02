@@ -423,16 +423,16 @@ export const SPECIES = {
   },
   quinn: {
     facts: [
-      "Quinn is the fungus in Quorn, a meat-free food made from her called mycoprotein.",
-      "Quinn is grown in huge tanks fed with sugar and air, then pressed into food.",
-      "Quinn was found in 1967 in soil from a field near Marlow, England.",
-      "Quinn's long spores are curved like canoes and split into cells by thin walls.",
-      "Quinn's genus name, *Fusarium*, means \"spindle,\" for her spindle-shaped spores.",
+      "Quinn is grown to make mycoprotein, the fungal food ingredient used in Quorn.",
+      "Quinn grows in huge tanks supplied with sugar, nutrients and air.",
+      "Quinn was discovered in 1967 in soil from Buckinghamshire, England.",
+      "Quinn's long spores curve like canoes, with thin walls dividing them into cells.",
+      "Quinn's genus name, *Fusarium*, comes from the Latin word for spindle.",
       "Quinn's cousins include *Fusarium* molds that cause wilts and blights in crops.",
-      "Like most *Fusarium* molds, Quinn shrugs off many antifungal medicines.",
-      "Food made from Quinn is high in protein and fiber, and low in fat.",
-      "Quinn's colonies are fluffy and white, often turning pink to purple.",
-      "Quinn is a sac fungus, a cousin of Ember and Rosie on the family tree.",
+      "Quinn was first mistaken for her cousin *Fusarium graminearum*.",
+      "Quinn's mycoprotein supplies both protein and fiber.",
+      "Quinn's colonies can be fluffy and white, with pink or reddish colors.",
+      "Quinn belongs to the filamentous sac fungi, a branch called Pezizomycotina.",
     ],
     scientific: 'Fusarium venenatum',
     color: '#a01c72', // for her name above the dish
@@ -445,9 +445,7 @@ export const SPECIES = {
     antifungals: [
       { code: 'VOR', name: 'voriconazole', zone: 24 },
       { code: 'AMB', name: 'amphotericin B', zone: 20 },
-      { code: 'CAS', name: 'caspofungin', zone: null },
       { code: 'POS', name: 'posaconazole', zone: 14 },
-      { code: 'FLC', name: 'fluconazole', zone: null },
     ],
   },
   fumi: {
