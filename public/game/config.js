@@ -421,6 +421,33 @@ export const SPECIES = {
       { code: 'FLC', name: 'fluconazole', zone: 12 },
     ],
   },
+  quinn: {
+    facts: [
+      "Quinn is grown to make mycoprotein, the fungal food ingredient used in Quorn.",
+      "Quinn grows in huge tanks supplied with sugar, nutrients and air.",
+      "Quinn was discovered in 1967 in soil from Buckinghamshire, England.",
+      "Quinn's long spores curve like canoes, with thin walls dividing them into cells.",
+      "Quinn's genus name, *Fusarium*, comes from the Latin word for spindle.",
+      "Quinn's cousins include *Fusarium* molds that cause wilts and blights in crops.",
+      "Quinn was first mistaken for her cousin *Fusarium graminearum*.",
+      "Quinn's mycoprotein supplies both protein and fiber.",
+      "Quinn's colonies can be fluffy and white, with pink or reddish colors.",
+      "Quinn belongs to the filamentous sac fungi, a branch called Pezizomycotina.",
+    ],
+    scientific: 'Fusarium venenatum',
+    color: '#a01c72', // for her name above the dish
+    kind: 'mold',
+    colors: { fill: '#f9d6ec', stroke: '#b3207f', highlight: '#fdeef6', dark: '#5a0b3e', spores: '#c2479a' },
+    // There are no standard disk sizes for Fusarium, so these are estimates.
+    // Like other Fusarium molds she's naturally resistant to caspofungin and
+    // fluconazole (no zone at all), and amphotericin B and voriconazole are
+    // what work on her.
+    antifungals: [
+      { code: 'VOR', name: 'voriconazole', zone: 24 },
+      { code: 'AMB', name: 'amphotericin B', zone: 20 },
+      { code: 'POS', name: 'posaconazole', zone: 14 },
+    ],
+  },
   fumi: {
     facts: [
       "Fumi's species name, *fumigatus*, means \"smoky,\" for her smoky grey-green colonies.",

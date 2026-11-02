@@ -107,4 +107,10 @@ export const QUIZ_FACTS = {
     "Ember's orange color comes from carotenoids, the pigment family found in carrots.",
     "Ember's genus name, *Neurospora*, means \"nerve spore,\" for ridges on some spores."
   ],
+  quinn: [
+    "Quinn makes the mycoprotein used in Quorn, a meat-free food brand.",
+    "Quinn was discovered in 1967 in a soil sample from England.",
+    "Quinn was first mistaken for her cousin *Fusarium graminearum*.",
+    "Quinn's mycoprotein was approved for sale as food in the UK in 1985.",
+  ],
 };
