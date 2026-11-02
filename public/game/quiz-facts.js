@@ -108,9 +108,9 @@ export const QUIZ_FACTS = {
     "Ember's genus name, *Neurospora*, means \"nerve spore,\" for ridges on some spores."
   ],
   quinn: [
-    "Quinn is the fungus in Quorn, a meat-free food made from her called mycoprotein.",
-    "Quinn was found in 1967 in soil from a field near Marlow, England.",
-    "Quinn's genus name, *Fusarium*, means \"spindle,\" for her spindle-shaped spores.",
-    "Like most *Fusarium* molds, Quinn shrugs off many antifungal medicines.",
+    "Quinn makes the mycoprotein used in Quorn, a meat-free food brand.",
+    "Quinn was discovered in 1967 in a soil sample from England.",
+    "Quinn was first mistaken for her cousin *Fusarium graminearum*.",
+    "Quinn's mycoprotein was approved for sale as food in the UK in 1985.",
   ],
 };
