@@ -696,7 +696,6 @@ export const GALS = [
       <!-- one curved, canoe-shaped spore, split into cells -->
       <path d="M 52 114 Q 100 30 148 114 Q 100 94 52 114 Z" fill="#f9d6ec" stroke="#b3207f" stroke-width="4" stroke-linejoin="round" />
       <g stroke="#d0569f" stroke-width="2.2" stroke-linecap="round" opacity="0.7"><line x1="66" y1="94" x2="66" y2="108" /><line x1="134" y1="94" x2="134" y2="108" /></g>
-      <ellipse cx="80" cy="80" rx="7" ry="3.6" fill="#ffffff" transform="rotate(-35 80 80)" />
       ${face(100, 86, '#5a0b3e')}
     `,
   },
