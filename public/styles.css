@@ -1680,8 +1680,8 @@ body:not(.picker-page) .signature {
 }
 
 /* Inka's colonies (mold.js): white and cottony while they grow. Once one is
-   full size it melts from the middle out into a black ink puddle (--melt,
-   0 to 1), with ink drops splashed around its edge. */
+   full size, a soft gray ink wash spreads from its middle (--melt, 0 to 1),
+   with a few faint ink drops splashed around its edge. */
 .colony.inky {
   background:
     repeating-conic-gradient(rgba(43, 45, 58, 0.08) 0 1deg, transparent 1deg 15deg),
@@ -1694,18 +1694,19 @@ body:not(.picker-page) .signature {
   position: absolute;
   inset: 0;
   margin: auto;
-  width: calc(var(--melt, 0) * 76%);
+  width: calc(var(--melt, 0) * 50%);
   aspect-ratio: 1;
   border-radius: 48% 52% 50% 50% / 52% 47% 53% 48%;
-  background: radial-gradient(circle at 40% 35%, #3a3c4c, var(--spores) 70%);
+  /* A soft ink wash: darkest in the middle, fading out at its edge. */
+  background: radial-gradient(circle, rgba(34, 35, 46, 0.5) 0 30%, rgba(34, 35, 46, 0.28) 60%, rgba(34, 35, 46, 0) 100%);
 }
 
 .colony .ink-drop {
   position: absolute;
-  width: 7%;
+  width: 4.5%;
   aspect-ratio: 1;
   border-radius: 50%;
-  background: var(--spores);
+  background: rgba(34, 35, 46, 0.45);
   transform: translate(-50%, -50%) scale(0);
   transition: transform 0.3s ease-out;
 }
