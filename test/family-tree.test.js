@@ -51,7 +51,7 @@ describe('the family tree page', () => {
 
   it('shows the gals at the tip of a branch, in her own color', async () => {
     await open('#mushrooms');
-    expect([...document.querySelectorAll('.tree-gal-btn')].map((b) => b.dataset.gal)).toEqual(['velma', 'ruby', 'neve']);
+    expect([...document.querySelectorAll('.tree-gal-btn')].map((b) => b.dataset.gal)).toEqual(['velma', 'ruby', 'neve', 'inka']);
     expect(gal('neve').querySelector('span:last-child').style.color).toBeTruthy();
     expect(document.querySelector('.tree-view > div').className).toContain('gal-grid');
   });

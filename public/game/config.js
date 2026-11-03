@@ -448,6 +448,36 @@ export const SPECIES = {
       { code: 'POS', name: 'posaconazole', zone: 14 },
     ],
   },
+  inka: {
+    facts: [
+      "Inka is the shaggy ink cap, a tall white mushroom covered in shaggy scales.",
+      "As Inka ripens, her cap melts from the bottom up into black ink full of spores.",
+      "People once used Inka's ink for writing and drawing.",
+      "Inka's threads can catch and digest tiny roundworms called nematodes.",
+      "Inka's species name, *comatus*, means \"hairy,\" for her shaggy scales.",
+      "Inka's genus name, *Coprinus*, comes from a Greek word for dung, where cousins grow.",
+      "Inka often pops up in lawns, fields and along roadsides after rain.",
+      "Inka's cap digests itself as it melts, which frees her spores.",
+      "Inka's spores are black, which is what makes her ink so dark.",
+      "Inka is a basidiomycete, a mushroom cousin of Velma and Ruby.",
+    ],
+    scientific: 'Coprinus comatus',
+    color: '#2b2d3a', // for her name above the dish
+    kind: 'mold',
+    // Her full-size colonies melt into black ink (see mold.js).
+    inky: true,
+    colors: { fill: '#fbfbfd', stroke: '#2b2d3a', highlight: '#ffffff', dark: '#1a1b24', spores: '#22232e' },
+    // There are no standard disk sizes for Coprinus, so these are estimates.
+    // Like many basidiomycetes she's thought to shrug off fluconazole, so
+    // its zone is small.
+    antifungals: [
+      { code: 'TRB', name: 'terbinafine', zone: 24 },
+      { code: 'VOR', name: 'voriconazole', zone: 22 },
+      { code: 'AMB', name: 'amphotericin B', zone: 18 },
+      { code: 'ITC', name: 'itraconazole', zone: 20 },
+      { code: 'FLC', name: 'fluconazole', zone: 12 },
+    ],
+  },
   fumi: {
     facts: [
       "Fumi's species name, *fumigatus*, means \"smoky,\" for her smoky grey-green colonies.",
@@ -629,6 +659,9 @@ export const GAME = {
   // about a third faster than anyone else's, and just a little wider.
   FAST_FULL: 0.16,
   FAST_GROW_SECONDS: 4,
+  // Inka's colonies (mold.js) melt into ink over MELT_SECONDS once they're
+  // full size.
+  MELT_SECONDS: 3,
   SWIMMERS: 3,
   SWIM_SPEED: 0.32,
   SWIM_RANGE: 0.5,

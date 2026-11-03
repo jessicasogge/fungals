@@ -113,4 +113,10 @@ export const QUIZ_FACTS = {
     "Quinn was first mistaken for her cousin *Fusarium graminearum*.",
     "Quinn's mycoprotein was approved for sale as food in the UK in 1985.",
   ],
+  inka: [
+    "As Inka ripens, her cap melts from the bottom up into black ink full of spores.",
+    "People once used Inka's ink for writing and drawing.",
+    "Inka's threads can catch and digest tiny roundworms called nematodes.",
+    "Inka's species name, *comatus*, means \"hairy,\" for her shaggy scales.",
+  ],
 };

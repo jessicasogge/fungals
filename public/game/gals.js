@@ -699,6 +699,37 @@ export const GALS = [
       ${face(100, 86, '#5a0b3e')}
     `,
   },
+  // Inka: Coprinus comatus, the shaggy ink cap: a tall, shaggy white bell
+  // cap on a slim stem with a ring, its bottom edge melting into black ink
+  // that drips off. In the dish she plays like Fumi (see mold.js), and her
+  // full-grown colonies melt into ink.
+  {
+    id: 'inka',
+    name: 'Inka',
+    looks: 'a white Coprinus comatus mushroom, the shaggy ink cap: a tall, shaggy bell cap on a slim stem, its edge melting into dripping black ink',
+    motion: 'bob',
+    frames: { home: '10 10 180 180', picker: '14 14 172 172', dish: '50 50 100 100' },
+    art: `
+      <!-- her slim stem, with a little ring -->
+      <path d="M 92 132 L 90 182 Q 100 186 110 182 L 108 132 Z" fill="#fbfbfd" stroke="#2b2d3a" stroke-width="3.5" stroke-linejoin="round" />
+      <ellipse cx="100" cy="150" rx="12" ry="3.5" fill="#fbfbfd" stroke="#2b2d3a" stroke-width="2.5" />
+      <!-- her tall, shaggy bell cap -->
+      <path d="M 62 128 C 56 90 62 38 100 26 C 138 38 144 90 138 128 Z" fill="#fbfbfd" stroke="#2b2d3a" stroke-width="4" stroke-linejoin="round" />
+      <g fill="none" stroke="#9a9cab" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M 85 48 Q 90 47 93 41 Q 95 38 92 38" /><path d="M 115 48 Q 110 47 107 41 Q 105 38 108 38" /><path d="M 71 64 Q 76 63 79 57 Q 81 54 78 54" /><path d="M 95 62 Q 100 61 103 55 Q 105 52 102 52" /><path d="M 129 64 Q 124 63 121 57 Q 119 54 122 54" /><path d="M 63 84 Q 68 83 71 77 Q 73 74 70 74" /><path d="M 137 84 Q 132 83 129 77 Q 127 74 130 74" /><path d="M 61 110 Q 66 109 69 103 Q 71 100 68 100" /><path d="M 139 110 Q 134 109 131 103 Q 129 100 132 100" /><path d="M 79 118 Q 84 117 87 111 Q 89 108 86 108" /><path d="M 121 118 Q 116 117 113 111 Q 111 108 114 108" /></g>
+      <!-- the edge of her cap melting into black ink, with drips -->
+      <path d="M 61 120 Q 70 126 78 119 Q 86 127 94 120 Q 102 128 110 120 Q 118 127 126 119 Q 133 126 139 120 L 138 128 Q 100 136 62 128 Z" fill="#22232e" stroke="#2b2d3a" stroke-width="3" stroke-linejoin="round" />
+      <path d="M 70 129 C 71 135 73.8 137.2 73.8 141 A 3.8 3.8 0 0 1 66.2 141 C 66.2 137.2 69 135 70 129 Z" fill="#22232e" />
+      <path d="M 119 133 C 120 139 123.4 140.6 123.4 145 A 4.4 4.4 0 0 1 114.6 145 C 114.6 140.6 118 139 119 133 Z" fill="#22232e" />
+      <path d="M 132 127 C 133 133 135.2 135.8 135.2 139 A 3.2 3.2 0 0 1 128.8 139 C 128.8 135.8 131 133 132 127 Z" fill="#22232e" />
+      <ellipse cx="78" cy="46" rx="6.5" ry="3.2" fill="#ffffff" transform="rotate(-55 78 46)" />
+      <g class="face"><circle cx="91" cy="92" r="5" fill="#1a1b24" /><circle cx="109" cy="92" r="5" fill="#1a1b24" /><circle cx="92.7" cy="90.3" r="1.8" fill="white" /><circle cx="110.7" cy="90.3" r="1.8" fill="white" /><ellipse cx="82" cy="102" rx="4.6" ry="2.6" fill="#f9a8d4" opacity="0.95" /><ellipse cx="118" cy="102" rx="4.6" ry="2.6" fill="#f9a8d4" opacity="0.95" /><path d="M95.5 101.5 Q100 106 104.5 101.5" stroke="#1a1b24" stroke-width="2.7" fill="none" stroke-linecap="round" /></g>
+    `,
+    dishArt: `
+      <!-- one small, dark, oval spore -->
+      <ellipse cx="100" cy="100" rx="44" ry="38" fill="#e4e5ec" stroke="#2b2d3a" stroke-width="4" />
+      ${face(100, 102, '#1a1b24')}
+    `,
+  },
 ];
 
 // The home row shows at most HOME_MAX gals, so not every gal is on it.

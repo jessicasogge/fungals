@@ -30,9 +30,10 @@ export function colonyRadius(seconds, { full = GAME.COLONY_FULL, grow = GAME.COL
 // spores and, once ripe, bursts: `onBurst(pod)` is called once, and her
 // pods don't spread over nutrients. With `fast` (Ember), colonies grow
 // quicker and bigger (GAME.FAST_GROW_SECONDS, GAME.FAST_FULL), and with
-// `tufts` they turn orange and sprout tufts of spores as they ripen.
-// Positions and sizes use fractions of
-// the dish radius.
+// `tufts` they turn orange and sprout tufts of spores as they ripen. With
+// `inky` (Inka), a full-size colony goes on to melt from the middle out into
+// a black ink puddle over GAME.MELT_SECONDS, splashing ink drops at its edge.
+// Positions and sizes use fractions of the dish radius.
 export const DROPS = [
   // Where each drop sits on the colony (percent across and down), and how
   // ripe the colony is when it appears.
@@ -65,6 +66,17 @@ export const TUFTS = [
   { x: 29, y: 52, at: 1 },
 ];
 
+// The ink drops splashed around one of Inka's melting colonies, the same
+// way, but `at` is how far it has melted.
+export const INK_DROPS = [
+  { x: 50, y: 6, at: 0.4 },
+  { x: 92, y: 40, at: 0.5 },
+  { x: 80, y: 88, at: 0.6 },
+  { x: 22, y: 86, at: 0.7 },
+  { x: 8, y: 44, at: 0.8 },
+  { x: 30, y: 12, at: 0.9 },
+];
+
 // The spores filling one of Bea's pods, the same way: one by one as it ripens.
 export const POD_SPORES = [
   { x: 50, y: 50, at: 0.15 },
@@ -77,7 +89,7 @@ export const POD_SPORES = [
 
 export function moldColonies({
   layer, disks = [], nutrients, colors, drops = false, wrinkled = false, powdery = false, caps = false,
-  pods = false, onBurst = () => {}, fast = false, tufts = false,
+  pods = false, onBurst = () => {}, fast = false, tufts = false, inky = false,
 }) {
   const colonies = [];
   // How long a colony takes to reach full size, and its radius after
@@ -95,7 +107,10 @@ export function moldColonies({
     // rest stays white and fluffy.
     const ripe = Math.min(1, colony.age / growFor);
     el.style.setProperty('--ripe', `${Math.round(ripe * 40)}%`);
-    for (const bit of colony.bits) bit.el.classList.toggle('shown', ripe >= bit.at);
+    // How far a full-size inky colony has melted into ink, 0 to 1.
+    const melt = inky ? Math.min(1, Math.max(0, (colony.age - growFor) / GAME.MELT_SECONDS)) : 0;
+    if (inky) el.style.setProperty('--melt', melt.toFixed(2));
+    for (const bit of colony.bits) bit.el.classList.toggle('shown', (inky ? melt : ripe) >= bit.at);
   }
 
   function remove(colony) {
@@ -112,7 +127,7 @@ export function moldColonies({
     plant(fx, fy) {
       const el = document.createElement('div');
       el.className = ['colony', wrinkled && 'wrinkled', powdery && 'powdery', caps && 'cottony', pods && 'pod',
-        tufts && 'fiery'].filter(Boolean).join(' ');
+        tufts && 'fiery', inky && 'inky'].filter(Boolean).join(' ');
       el.setAttribute('aria-hidden', 'true');
       el.style.setProperty('--spores', colors.spores);
       // A slightly uneven edge, different for each colony.
@@ -122,12 +137,14 @@ export function moldColonies({
       const colony = { fx, fy, r: size(0), age: 0, el, bits: [] };
       // Ruby's drops, Velma's caps, the spores in Bea's pods or Ember's tufts,
       // at their own turn around the middle for each colony.
-      const bits = (drops && DROPS) || (caps && CAPS) || (pods && POD_SPORES) || (tufts && TUFTS) || [];
+      const bits = (drops && DROPS) || (caps && CAPS) || (pods && POD_SPORES) || (tufts && TUFTS)
+        || (inky && INK_DROPS) || [];
       const turn = Math.random() * Math.PI * 2;
       const [cos, sin] = [Math.cos(turn), Math.sin(turn)];
       for (const { x, y, at, big } of bits) {
         const bit = document.createElement('span');
-        bit.className = (drops && 'drop') || (caps && (big ? 'cap big' : 'cap')) || (pods && 'pod-spore') || 'tuft';
+        bit.className = (drops && 'drop') || (caps && (big ? 'cap big' : 'cap')) || (pods && 'pod-spore')
+          || (tufts && 'tuft') || 'ink-drop';
         bit.style.left = `${(50 + (x - 50) * cos - (y - 50) * sin).toFixed(1)}%`;
         bit.style.top = `${(50 + (x - 50) * sin + (y - 50) * cos).toFixed(1)}%`;
         if (drops) {
@@ -150,7 +167,8 @@ export function moldColonies({
     // centered exactly where the fleck was.
     grow(seconds) {
       for (const colony of [...colonies]) {
-        if (colony.age < growFor) {
+        // An inky colony keeps going after it's full size, to melt.
+        if (colony.age < growFor + (inky ? GAME.MELT_SECONDS : 0)) {
           colony.age += seconds;
           colony.r = size(colony.age);
           draw(colony);
@@ -304,6 +322,7 @@ export function playMold(galEl, species, nutrients, disks, { level = 1, target =
     layer, disks, nutrients, colors: species.colors,
     drops: Boolean(species.drops), wrinkled: Boolean(species.wrinkled), powdery: Boolean(species.powdery),
     caps: Boolean(species.caps), fast: Boolean(species.fast), tufts: Boolean(species.tufts),
+    inky: Boolean(species.inky),
     pods: Boolean(species.pods), onBurst: (pod) => swimmers.release(pod.fx, pod.fy, pod.r),
   });
 

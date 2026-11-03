@@ -483,6 +483,10 @@ a.gal-card:active {
   background: rgba(248, 212, 236, 0.85);
 }
 
+.inka {
+  background: rgba(222, 224, 232, 0.9);
+}
+
 .pick-btn {
   margin-top: 0.75rem;
   padding: 0.7rem 1rem;
@@ -1672,6 +1676,41 @@ body:not(.picker-page) .signature {
 }
 
 .colony .tuft.shown {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Inka's colonies (mold.js): white and cottony while they grow. Once one is
+   full size it melts from the middle out into a black ink puddle (--melt,
+   0 to 1), with ink drops splashed around its edge. */
+.colony.inky {
+  background:
+    repeating-conic-gradient(rgba(43, 45, 58, 0.08) 0 1deg, transparent 1deg 15deg),
+    radial-gradient(circle, #ffffff 0 65%, #fafafc 85%, rgba(255, 255, 255, 0.7) 100%);
+  box-shadow: 0 0 5px 2px rgba(255, 255, 255, 0.95);
+}
+
+.colony.inky::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: calc(var(--melt, 0) * 76%);
+  aspect-ratio: 1;
+  border-radius: 48% 52% 50% 50% / 52% 47% 53% 48%;
+  background: radial-gradient(circle at 40% 35%, #3a3c4c, var(--spores) 70%);
+}
+
+.colony .ink-drop {
+  position: absolute;
+  width: 7%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--spores);
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.3s ease-out;
+}
+
+.colony .ink-drop.shown {
   transform: translate(-50%, -50%) scale(1);
 }
 

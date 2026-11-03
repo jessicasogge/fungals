@@ -20,7 +20,7 @@ vi.mock('../public/game/touch.js', async (importActual) => ({
 vi.mock('../public/game/spores.js', () => ({ sporeBurst: vi.fn() }));
 vi.mock('../public/game/track.js', () => ({ track: vi.fn() }));
 
-const { CAPS, colonyRadius, DROPS, moldColonies, playMold, POD_SPORES, sporeGroup, swimmerGroup, TUFTS } = await import('../public/game/mold.js');
+const { CAPS, colonyRadius, DROPS, INK_DROPS, moldColonies, playMold, POD_SPORES, sporeGroup, swimmerGroup, TUFTS } = await import('../public/game/mold.js');
 const { sporeBurst } = await import('../public/game/spores.js');
 const { track } = await import('../public/game/track.js');
 
@@ -281,6 +281,43 @@ describe("Ember's colonies", () => {
     expect(shown()).toBe(TUFTS.filter((t) => t.at <= 0.5).length);
     colonies.grow(GAME.FAST_GROW_SECONDS);
     expect(shown()).toBe(TUFTS.length);
+  });
+});
+
+describe("Inka's colonies", () => {
+  let layer;
+  beforeEach(() => {
+    layer = document.createElement('div');
+    document.querySelector('.agar').append(layer);
+  });
+
+  it('melt into ink once they are full size, splashing ink drops one at a time', () => {
+    const colonies = moldColonies({ layer, nutrients: fakeNutrients(), colors: SPECIES.inka.colors, inky: true });
+    const colony = colonies.plant(0, 0);
+    expect(colony.el.classList).toContain('inky');
+    const drops = [...colony.el.querySelectorAll('.ink-drop')];
+    expect(drops).toHaveLength(INK_DROPS.length);
+    const shown = () => drops.filter((d) => d.classList.contains('shown')).length;
+    const melt = () => Number(colony.el.style.getPropertyValue('--melt'));
+    // Growing: no ink yet.
+    colonies.grow(GAME.COLONY_GROW_SECONDS);
+    expect(colony.r).toBeCloseTo(GAME.COLONY_FULL);
+    expect(melt()).toBe(0);
+    expect(shown()).toBe(0);
+    // Halfway melted, then all the way, and it stays full size.
+    colonies.grow(GAME.MELT_SECONDS / 2);
+    expect(melt()).toBeCloseTo(0.5);
+    expect(shown()).toBe(INK_DROPS.filter((d) => d.at <= 0.5).length);
+    colonies.grow(GAME.MELT_SECONDS);
+    expect(melt()).toBe(1);
+    expect(shown()).toBe(INK_DROPS.length);
+    expect(colony.r).toBeCloseTo(GAME.COLONY_FULL);
+  });
+
+  it("leaves other molds' colonies without ink", () => {
+    const colony = moldColonies({ layer, nutrients: fakeNutrients(), colors }).plant(0, 0);
+    expect(colony.el.style.getPropertyValue('--melt')).toBe('');
+    expect(colony.el.querySelector('.ink-drop')).toBeNull();
   });
 });
 
