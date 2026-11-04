@@ -451,15 +451,15 @@ export const SPECIES = {
   inka: {
     facts: [
       "Inka is the shaggy ink cap, a tall white mushroom covered in shaggy scales.",
-      "As Inka ripens, her cap melts from the bottom up into black ink full of spores.",
+      "As Inka matures, her cap melts from its lower edge upward into black, spore-filled ink.",
       "People once used Inka's ink for writing and drawing.",
-      "Inka's threads can catch and digest tiny roundworms called nematodes.",
+      "Inka's threads can attack and digest tiny roundworms called nematodes.",
       "Inka's species name, *comatus*, means \"hairy,\" for her shaggy scales.",
-      "Inka's genus name, *Coprinus*, comes from a Greek word for dung, where cousins grow.",
-      "Inka often pops up in lawns, fields and along roadsides after rain.",
-      "Inka's cap digests itself as it melts, which frees her spores.",
-      "Inka's spores are black, which is what makes her ink so dark.",
-      "Inka is a basidiomycete, a mushroom cousin of Velma and Ruby.",
+      "Inka's genus name, *Coprinus*, comes from a Greek word for dung.",
+      "Inka often pops up in lawns, fields and along roadsides.",
+      "Inka's shaggy white cap also earned her the nickname \"lawyer's wig.\"",
+      "Inka leaves a black spore print when her spores collect on a surface.",
+      "Inka is a basidiomycete, a fungus that makes spores on cells called basidia.",
     ],
     scientific: 'Coprinus comatus',
     color: '#2b2d3a', // for her name above the dish
