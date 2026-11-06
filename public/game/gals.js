@@ -729,6 +729,48 @@ export const GALS = [
       ${face(100, 102, '#1a1b24')}
     `,
   },
+  // Pippa: Rhizopus stolonifer, the black bread mold: runners arching along
+  // the agar with root tufts where they touch down, and tall stalks topped
+  // with black pinhead spore pods, her face on a pale young one. In the
+  // dish she plays like Fumi (see mold.js), and her full-grown colonies send
+  // runners that start new colonies.
+  {
+    id: 'pippa',
+    name: 'Pippa',
+    looks: 'a Rhizopus stolonifer bread mold: arching runners with root tufts, and tall stalks topped with round black pinhead spore pods',
+    motion: 'bob',
+    frames: { home: '10 10 180 180', picker: '14 14 172 172', dish: '50 50 100 100' },
+    art: `
+      <!-- her runners (stolons) arching along the agar, with root tufts (rhizoids) where they touch down, and tall stalks -->
+      <path d="M 62 176 l -6 8 M 62 176 l 0 9 M 62 176 l 6 8 M 138 176 l -6 8 M 138 176 l 0 9 M 138 176 l 6 8" fill="none" stroke="#3a2f28" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M 62 176 l -6 8 M 62 176 l 0 9 M 62 176 l 6 8 M 138 176 l -6 8 M 138 176 l 0 9 M 138 176 l 6 8" fill="none" stroke="#fffaf0" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M 20 176 C 34 158 52 158 62 176 C 74 150 120 150 138 176 C 148 160 166 160 180 172" fill="none" stroke="#3a2f28" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M 20 176 C 34 158 52 158 62 176 C 74 150 120 150 138 176 C 148 160 166 160 180 172" fill="none" stroke="#fffaf0" stroke-width="3.0" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M 62 174 C 60 140 56 112 48 86 M 62 174 C 62 150 60 136 62 122 M 62 174 C 70 160 76 150 80 142 M 138 174 C 140 140 144 112 152 86 M 138 174 C 138 150 140 136 138 122 M 138 174 C 130 160 124 150 120 142 M 100 156 L 100 116" fill="none" stroke="#3a2f28" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M 62 174 C 60 140 56 112 48 86 M 62 174 C 62 150 60 136 62 122 M 62 174 C 70 160 76 150 80 142 M 138 174 C 140 140 144 112 152 86 M 138 174 C 138 150 140 136 138 122 M 138 174 C 130 160 124 150 120 142 M 100 156 L 100 116" fill="none" stroke="#fffaf0" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+      <!-- round black pinhead spore pods (sporangia) -->
+      <circle cx="48" cy="77" r="11" fill="#2c2420" stroke="#3a2f28" stroke-width="3" />
+      <circle cx="44.1" cy="73.2" r="2.4" fill="#ffffff" opacity="0.5" />
+      <circle cx="62" cy="114" r="9" fill="#2c2420" stroke="#3a2f28" stroke-width="3" />
+      <circle cx="58.9" cy="110.8" r="2.0" fill="#ffffff" opacity="0.5" />
+      <circle cx="82" cy="136" r="7.5" fill="#2c2420" stroke="#3a2f28" stroke-width="3" />
+      <circle cx="79.4" cy="133.4" r="1.6" fill="#ffffff" opacity="0.5" />
+      <circle cx="152" cy="77" r="11" fill="#2c2420" stroke="#3a2f28" stroke-width="3" />
+      <circle cx="148.2" cy="73.2" r="2.4" fill="#ffffff" opacity="0.5" />
+      <circle cx="138" cy="114" r="9" fill="#2c2420" stroke="#3a2f28" stroke-width="3" />
+      <circle cx="134.8" cy="110.8" r="2.0" fill="#ffffff" opacity="0.5" />
+      <circle cx="118" cy="136" r="7.5" fill="#2c2420" stroke="#3a2f28" stroke-width="3" />
+      <circle cx="115.4" cy="133.4" r="1.6" fill="#ffffff" opacity="0.5" />
+      <!-- her pod: a young one, still pale, with her face -->
+      <circle cx="100" cy="92" r="26" fill="#efe2cc" stroke="#3a2f28" stroke-width="4" />
+      <g class="face"><circle cx="91" cy="90" r="4.8" fill="#241c17" /><circle cx="109" cy="90" r="4.8" fill="#241c17" /><circle cx="92.6" cy="88.4" r="1.7" fill="white" /><circle cx="110.6" cy="88.4" r="1.7" fill="white" /><ellipse cx="83" cy="99.5" rx="4.4" ry="2.5" fill="#f9a8d4" opacity="0.95" /><ellipse cx="117" cy="99.5" rx="4.4" ry="2.5" fill="#f9a8d4" opacity="0.95" /><path d="M96 99.5 Q100 104 104 99.5" stroke="#241c17" stroke-width="2.6" fill="none" stroke-linecap="round" /></g>
+    `,
+    dishArt: `
+      <!-- one small, round spore -->
+      <circle cx="100" cy="100" r="42" fill="#efe2cc" stroke="#3a2f28" stroke-width="4" />
+      ${face(100, 104, '#241c17')}
+    `,
+  },
 ];
 
 // The home row shows at most HOME_MAX gals, so not every gal is on it.

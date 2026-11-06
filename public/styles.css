@@ -487,6 +487,10 @@ a.gal-card:active {
   background: rgba(222, 224, 232, 0.9);
 }
 
+.pippa {
+  background: rgba(240, 222, 190, 0.85);
+}
+
 .pick-btn {
   margin-top: 0.75rem;
   padding: 0.7rem 1rem;
@@ -1713,6 +1717,51 @@ body:not(.picker-page) .signature {
 
 .colony .ink-drop.shown {
   transform: translate(-50%, -50%) scale(1);
+}
+
+/* Pippa's colonies (mold.js): tall, fluffy and white, filling with little
+   black pinhead spore pods (her --spores color) as they ripen. */
+.colony.pinned {
+  background:
+    repeating-conic-gradient(rgba(58, 47, 40, 0.08) 0 1deg, transparent 1deg 14deg),
+    radial-gradient(circle, #ffffff 0 65%, #fdfcf9 85%, rgba(255, 255, 255, 0.7) 100%);
+  box-shadow: 0 0 5px 2px rgba(255, 255, 255, 0.95);
+}
+
+.colony .pinhead {
+  position: absolute;
+  width: 7%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--spores);
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.3s ease-out;
+}
+
+.colony .pinhead.shown {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Pippa's runners (mold.js): soft gray-brown threads arching across the
+   agar from a colony toward a nutrient. */
+.colonies .runners {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.colonies .runner {
+  fill: none;
+  stroke: color-mix(in srgb, var(--edge) 45%, white);
+  stroke-width: 0.012;
+  stroke-linecap: round;
+}
+
+.colonies .runner.dying {
+  opacity: 0;
+  transition: opacity 0.6s ease-out;
 }
 
 /* Killed by an antifungal: the whole colony pops, swelling and vanishing. */
