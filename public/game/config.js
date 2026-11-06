@@ -478,6 +478,38 @@ export const SPECIES = {
       { code: 'FLC', name: 'fluconazole', zone: 12 },
     ],
   },
+  pippa: {
+    facts: [
+      "Pippa is the black bread mold, the fuzzy white mold with black dots on old bread.",
+      "Each of Pippa's black dots is a pinhead-sized pod packed with thousands of spores.",
+      "Pippa's species name, *stolonifer*, means \"runner-bearer,\" for her runners.",
+      "Pippa's root-like threads, called rhizoids, anchor her and soak up food.",
+      "Pippa's genus name, *Rhizopus*, means \"root foot,\" for her rhizoids.",
+      "Pippa is one of the fastest-growing molds, covering bread in a couple of days.",
+      "Pippa also grows on soft fruit, like strawberries and peaches, causing soft rot.",
+      "Pippa is a pin mold, on a different branch of the family tree from most gals.",
+      "Voriconazole and fluconazole don't work on Pippa, but amphotericin B does.",
+      "Pippa's threads have almost no cross walls, so food flows freely along them.",
+    ],
+    scientific: 'Rhizopus stolonifer',
+    color: '#3a2f28', // for her name above the dish
+    kind: 'mold',
+    // Her colonies fill with black pinhead pods, and full-grown ones send
+    // runners that start new colonies (see mold.js).
+    pinheads: true,
+    colors: { fill: '#efe2cc', stroke: '#3a2f28', highlight: '#fffaf0', dark: '#241c17', spores: '#2c2420' },
+    // There are no standard disk sizes for Rhizopus, so these are estimates.
+    // Like other pin molds she's naturally resistant to voriconazole and
+    // fluconazole (no zone at all); amphotericin B and posaconazole are what
+    // doctors use against her.
+    antifungals: [
+      { code: 'AMB', name: 'amphotericin B', zone: 24 },
+      { code: 'POS', name: 'posaconazole', zone: 20 },
+      { code: 'VOR', name: 'voriconazole', zone: null },
+      { code: 'ITC', name: 'itraconazole', zone: 13 },
+      { code: 'FLC', name: 'fluconazole', zone: null },
+    ],
+  },
   fumi: {
     facts: [
       "Fumi's species name, *fumigatus*, means \"smoky,\" for her smoky grey-green colonies.",
@@ -662,6 +694,10 @@ export const GAME = {
   // Inka's colonies (mold.js) melt into ink over MELT_SECONDS once they're
   // full size.
   MELT_SECONDS: 3,
+  // Pippa's runners (mold.js) reach for a nutrient up to RUN_RANGE (dish
+  // radii) away, arching across the agar at RUN_SPEED dish radii a second.
+  RUN_RANGE: 0.5,
+  RUN_SPEED: 0.3,
   SWIMMERS: 3,
   SWIM_SPEED: 0.32,
   SWIM_RANGE: 0.5,

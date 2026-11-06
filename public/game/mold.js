@@ -33,7 +33,9 @@ export function colonyRadius(seconds, { full = GAME.COLONY_FULL, grow = GAME.COL
 // `tufts` they turn orange and sprout tufts of spores as they ripen. With
 // `inky` (Inka), a full-size colony goes on to melt from the middle out into
 // a black ink puddle over GAME.MELT_SECONDS, splashing ink drops at its edge.
-// Positions and sizes use fractions of the dish radius.
+// With `pinheads` (Pippa), each colony fills with little black spore pods
+// as it ripens, and `onGrown(colony)` is called once when it's full size, to
+// send out a runner. Positions and sizes use fractions of the dish radius.
 export const DROPS = [
   // Where each drop sits on the colony (percent across and down), and how
   // ripe the colony is when it appears.
@@ -77,6 +79,20 @@ export const INK_DROPS = [
   { x: 30, y: 12, at: 0.9 },
 ];
 
+// Pippa's black pinhead spore pods, the same way: scattered over the colony,
+// popping up one at a time as it ripens.
+export const PINHEADS = [
+  { x: 50, y: 48, at: 0.3 },
+  { x: 64, y: 38, at: 0.4 },
+  { x: 36, y: 40, at: 0.5 },
+  { x: 60, y: 64, at: 0.6 },
+  { x: 38, y: 62, at: 0.7 },
+  { x: 74, y: 52, at: 0.8 },
+  { x: 50, y: 26, at: 0.85 },
+  { x: 26, y: 52, at: 0.9 },
+  { x: 50, y: 74, at: 1 },
+];
+
 // The spores filling one of Bea's pods, the same way: one by one as it ripens.
 export const POD_SPORES = [
   { x: 50, y: 50, at: 0.15 },
@@ -90,6 +106,7 @@ export const POD_SPORES = [
 export function moldColonies({
   layer, disks = [], nutrients, colors, drops = false, wrinkled = false, powdery = false, caps = false,
   pods = false, onBurst = () => {}, fast = false, tufts = false, inky = false,
+  pinheads = false, onGrown = () => {},
 }) {
   const colonies = [];
   // How long a colony takes to reach full size, and its radius after
@@ -127,7 +144,7 @@ export function moldColonies({
     plant(fx, fy) {
       const el = document.createElement('div');
       el.className = ['colony', wrinkled && 'wrinkled', powdery && 'powdery', caps && 'cottony', pods && 'pod',
-        tufts && 'fiery', inky && 'inky'].filter(Boolean).join(' ');
+        tufts && 'fiery', inky && 'inky', pinheads && 'pinned'].filter(Boolean).join(' ');
       el.setAttribute('aria-hidden', 'true');
       el.style.setProperty('--spores', colors.spores);
       // A slightly uneven edge, different for each colony.
@@ -138,13 +155,13 @@ export function moldColonies({
       // Ruby's drops, Velma's caps, the spores in Bea's pods or Ember's tufts,
       // at their own turn around the middle for each colony.
       const bits = (drops && DROPS) || (caps && CAPS) || (pods && POD_SPORES) || (tufts && TUFTS)
-        || (inky && INK_DROPS) || [];
+        || (inky && INK_DROPS) || (pinheads && PINHEADS) || [];
       const turn = Math.random() * Math.PI * 2;
       const [cos, sin] = [Math.cos(turn), Math.sin(turn)];
       for (const { x, y, at, big } of bits) {
         const bit = document.createElement('span');
         bit.className = (drops && 'drop') || (caps && (big ? 'cap big' : 'cap')) || (pods && 'pod-spore')
-          || (tufts && 'tuft') || 'ink-drop';
+          || (tufts && 'tuft') || (inky && 'ink-drop') || 'pinhead';
         bit.style.left = `${(50 + (x - 50) * cos - (y - 50) * sin).toFixed(1)}%`;
         bit.style.top = `${(50 + (x - 50) * sin + (y - 50) * cos).toFixed(1)}%`;
         if (drops) {
@@ -172,6 +189,11 @@ export function moldColonies({
           colony.age += seconds;
           colony.r = size(colony.age);
           draw(colony);
+        }
+        if (pinheads && !colony.grown && colony.age >= growFor) {
+          // Full size: time to send out a runner, once.
+          colony.grown = true;
+          onGrown(colony);
         }
         if (!pods) {
           nutrients.eatNear(colony.fx, colony.fy, colony.r, api.plant);
@@ -204,6 +226,77 @@ export function moldColonies({
     },
   };
   return api;
+}
+
+// Pippa's runners (stolons), drawn on an SVG over the colonies' `layer`.
+// `send(colony)` sends one from a full-grown colony's edge toward the nearest
+// nutrient within GAME.RUN_RANGE, arching across the agar at
+// GAME.RUN_SPEED (dish radii a second). A runner that touches a disk or its
+// zone dies; one that reaches its nutrient starts a new colony there with
+// `plant(fx, fy)`, and stays drawn on the agar. Positions are in dish radii.
+export function runnerGroup({ layer, nutrients, disks = [], plant, colors }) {
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('class', 'runners');
+  svg.setAttribute('viewBox', '-1 -1 2 2');
+  svg.setAttribute('aria-hidden', 'true');
+  layer.append(svg);
+  const runners = [];
+
+  // A point and a control point along the arch from `a` to `b` (through the
+  // control `c`) at `t`, 0 to 1: the part of the curve drawn so far.
+  const lerp = (p, q, t) => [p[0] + (q[0] - p[0]) * t, p[1] + (q[1] - p[1]) * t];
+  function drawn(run) {
+    const ctrl = lerp(run.from, run.ctrl, run.t);
+    const tip = lerp(ctrl, lerp(run.ctrl, run.to, run.t), run.t);
+    return { ctrl, tip };
+  }
+
+  return {
+    runners,
+    send(colony) {
+      let best = null;
+      let bestDistance = GAME.RUN_RANGE;
+      for (const { fx, fy } of nutrients.positions()) {
+        const d = Math.hypot(fx - colony.fx, fy - colony.fy);
+        if (d > colony.r && d < bestDistance) [best, bestDistance] = [{ fx, fy }, d];
+      }
+      if (!best) return null;
+      const a = Math.atan2(best.fy - colony.fy, best.fx - colony.fx);
+      const from = [colony.fx + Math.cos(a) * colony.r * 0.4, colony.fy + Math.sin(a) * colony.r * 0.4];
+      const to = [best.fx, best.fy];
+      const length = Math.hypot(to[0] - from[0], to[1] - from[1]);
+      // Arch to one side, like a runner looping over the surface.
+      const ctrl = [(from[0] + to[0]) / 2 - (to[1] - from[1]) * 0.25, (from[1] + to[1]) / 2 + (to[0] - from[0]) * 0.25];
+      const el = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      el.setAttribute('class', 'runner');
+      el.style.setProperty('--edge', colors.stroke);
+      svg.append(el);
+      const run = { el, from, to, ctrl, length, t: 0, done: false };
+      runners.push(run);
+      return run;
+    },
+
+    // Arch every runner along for `seconds`. `radius` is the dish radius in
+    // px, for the pop.
+    step(seconds, radius) {
+      for (const run of runners) {
+        if (run.done) continue;
+        run.t = Math.min(1, run.t + (GAME.RUN_SPEED * seconds) / run.length);
+        const { ctrl, tip } = drawn(run);
+        run.el.setAttribute('d', `M ${run.from.map((v) => v.toFixed(3)).join(' ')} `
+          + `Q ${ctrl.map((v) => v.toFixed(3)).join(' ')} ${tip.map((v) => v.toFixed(3)).join(' ')}`);
+        const circle = [tip[0] * radius, tip[1] * radius, 2];
+        if (touchedDisk(disks, [circle], radius)) {
+          run.done = 'dead';
+          run.el.classList.add('dying');
+          showPop(layer.parentElement, circle, colors.stroke);
+        } else if (run.t >= 1) {
+          run.done = 'landed';
+          nutrients.eatNear(run.to[0], run.to[1], 0.02, plant);
+        }
+      }
+    },
+  };
 }
 
 // Bea's little swimmers (zoospores), on the colonies' `layer`. `release`
@@ -318,11 +411,16 @@ export function playMold(galEl, species, nutrients, disks, { level = 1, target =
   const swimmers = species.pods
     ? swimmerGroup({ layer, nutrients, disks, plant: (fx, fy) => colonies.plant(fx, fy), colors: species.colors })
     : null;
+  // Pippa's full-grown colonies send runners that start more colonies.
+  const runners = species.pinheads
+    ? runnerGroup({ layer, nutrients, disks, plant: (fx, fy) => colonies.plant(fx, fy), colors: species.colors })
+    : null;
   const colonies = moldColonies({
     layer, disks, nutrients, colors: species.colors,
     drops: Boolean(species.drops), wrinkled: Boolean(species.wrinkled), powdery: Boolean(species.powdery),
     caps: Boolean(species.caps), fast: Boolean(species.fast), tufts: Boolean(species.tufts),
     inky: Boolean(species.inky),
+    pinheads: Boolean(species.pinheads), onGrown: (colony) => runners.send(colony),
     pods: Boolean(species.pods), onBurst: (pod) => swimmers.release(pod.fx, pod.fy, pod.r),
   });
 
@@ -376,9 +474,11 @@ export function playMold(galEl, species, nutrients, disks, { level = 1, target =
       }
       updateCounter();
     }
-    // Colonies keep spreading, and swimmers swimming, even after the level ends.
+    // Colonies keep spreading, and swimmers and runners going, even after
+    // the level ends.
     colonies.grow(seconds);
     swimmers?.step(seconds, dishRadius());
+    runners?.step(seconds, dishRadius());
 
     requestAnimationFrame(step);
   }
