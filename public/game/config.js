@@ -480,16 +480,16 @@ export const SPECIES = {
   },
   pippa: {
     facts: [
-      "Pippa is the black bread mold, the fuzzy white mold with black dots on old bread.",
-      "Each of Pippa's black dots is a pinhead-sized pod packed with thousands of spores.",
+      "Pippa is the black bread mold, with white fuzz and dark spore cases on old bread.",
+      "Pippa's tiny black spore cases can each hold thousands of spores.",
       "Pippa's species name, *stolonifer*, means \"runner-bearer,\" for her runners.",
-      "Pippa's root-like threads, called rhizoids, anchor her and soak up food.",
+      "Pippa's root-like threads, called rhizoids, anchor her and absorb nutrients.",
       "Pippa's genus name, *Rhizopus*, means \"root foot,\" for her rhizoids.",
-      "Pippa is one of the fastest-growing molds, covering bread in a couple of days.",
+      "Pippa grows quickly and can spread across moist bread in just a few days.",
       "Pippa also grows on soft fruit, like strawberries and peaches, causing soft rot.",
-      "Pippa is a pin mold, on a different branch of the family tree from most gals.",
-      "Voriconazole and fluconazole don't work on Pippa, but amphotericin B does.",
-      "Pippa's threads have almost no cross walls, so food flows freely along them.",
+      "Pippa is a pin mold, outside the sac-fungus and club-fungus branches.",
+      "Pippa's spore stalks grow in groups above her root-like rhizoids.",
+      "Pippa's threads have few cross-walls, so much of their inside is one connected space.",
     ],
     scientific: 'Rhizopus stolonifer',
     color: '#3a2f28', // for her name above the dish
@@ -504,9 +504,7 @@ export const SPECIES = {
     antifungals: [
       { code: 'AMB', name: 'amphotericin B', zone: 24 },
       { code: 'POS', name: 'posaconazole', zone: 20 },
-      { code: 'VOR', name: 'voriconazole', zone: null },
       { code: 'ITC', name: 'itraconazole', zone: 13 },
-      { code: 'FLC', name: 'fluconazole', zone: null },
     ],
   },
   fumi: {
