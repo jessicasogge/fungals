@@ -31,7 +31,7 @@ describe('the family tree page', () => {
     expect(document.querySelector('.tree-trail').hidden).toBe(true);
     expect(document.querySelector('.tree-note').hidden).toBe(true);
     expect([...document.querySelectorAll('.tree-branch')].map((b) => b.dataset.branch)).toEqual(['chytrids', 'pin', 'dikarya']);
-    // Every gal but Bea, the only chytrid, and Pippa, the only pin mold.
+    // Every gal but Bea, the only chytrid, and Poppy, the only pin mold.
     expect(branch('dikarya').querySelector('.tree-count').textContent).toBe(`${GALS.length - 2} gals ›`);
     expect(branch('dikarya').querySelectorAll('.tree-faces .gal-icon')).toHaveLength(GALS.length - 2);
     expect(document.querySelector('.loading-overlay').hidden).toBe(true);

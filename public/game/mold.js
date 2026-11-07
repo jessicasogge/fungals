@@ -33,7 +33,7 @@ export function colonyRadius(seconds, { full = GAME.COLONY_FULL, grow = GAME.COL
 // `tufts` they turn orange and sprout tufts of spores as they ripen. With
 // `inky` (Inka), a full-size colony goes on to melt from the middle out into
 // a black ink puddle over GAME.MELT_SECONDS, splashing ink drops at its edge.
-// With `pinheads` (Pippa), each colony fills with little dark gray spore
+// With `pinheads` (Poppy), each colony fills with little dark gray spore
 // pods as it ripens. Positions and sizes use fractions of the dish radius.
 export const DROPS = [
   // Where each drop sits on the colony (percent across and down), and how
@@ -78,7 +78,7 @@ export const INK_DROPS = [
   { x: 30, y: 12, at: 0.9 },
 ];
 
-// Pippa's tiny pinhead spore pods, the same way: sprinkled over the colony,
+// Poppy's tiny pinhead spore pods, the same way: sprinkled over the colony,
 // popping up a few at a time as it ripens.
 export const PINHEADS = [
   { x: 57, y: 50, at: 0.2 },

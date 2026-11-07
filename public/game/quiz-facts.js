@@ -119,10 +119,10 @@ export const QUIZ_FACTS = {
     "Inka's threads can attack and digest tiny roundworms called nematodes.",
     "Inka's species name, *comatus*, means \"hairy,\" for her shaggy scales."
   ],
-  pippa: [
-    "Pippa is the black bread mold, with white fuzz and dark spore cases on old bread.",
-    "Pippa's spore stalks grow in groups directly above her root-like rhizoids.",
-    "Pippa's species name, *stolonifer*, means \"runner-bearer,\" for her runners.",
-    "Pippa's genus name, *Rhizopus*, means \"root foot,\" for her rhizoids."
+  poppy: [
+    "Poppy is the black bread mold, with white fuzz and dark spore cases on old bread.",
+    "Poppy's spore stalks grow in groups directly above her root-like rhizoids.",
+    "Poppy's species name, *stolonifer*, means \"runner-bearer,\" for her runners.",
+    "Poppy's genus name, *Rhizopus*, means \"root foot,\" for her rhizoids."
   ],
 };

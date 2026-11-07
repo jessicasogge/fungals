@@ -487,7 +487,7 @@ a.gal-card:active {
   background: rgba(222, 224, 232, 0.9);
 }
 
-.pippa {
+.poppy {
   background: rgba(240, 222, 190, 0.85);
 }
 
@@ -1719,7 +1719,7 @@ body:not(.picker-page) .signature {
   transform: translate(-50%, -50%) scale(1);
 }
 
-/* Pippa's colonies (mold.js): tall, fluffy and grayish white, sprinkled with tiny
+/* Poppy's colonies (mold.js): tall, fluffy and grayish white, sprinkled with tiny
    dark gray pinhead spore pods (her --spores color) as they ripen. */
 .colony.pinned {
   background:

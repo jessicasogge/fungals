@@ -321,16 +321,16 @@ describe("Inka's colonies", () => {
   });
 });
 
-describe("Pippa's colonies", () => {
+describe("Poppy's colonies", () => {
   let layer;
   beforeEach(() => {
     layer = document.createElement('div');
     document.querySelector('.agar').append(layer);
   });
-  const pippa = SPECIES.pippa.colors;
+  const poppy = SPECIES.poppy.colors;
 
   it('fill with tiny pinheads as they ripen', () => {
-    const colonies = moldColonies({ layer, nutrients: fakeNutrients(), colors: pippa, pinheads: true });
+    const colonies = moldColonies({ layer, nutrients: fakeNutrients(), colors: poppy, pinheads: true });
     const colony = colonies.plant(0, 0);
     expect(colony.el.classList).toContain('pinned');
     const pins = [...colony.el.querySelectorAll('.pinhead')];

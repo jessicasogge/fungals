@@ -16,7 +16,7 @@ export const TREE = {
     {
       id: 'pin', name: 'Pin molds', sci: 'Mucoromycota',
       note: 'Fast, fluffy molds with their spores in round pods on tall stalks.',
-      kids: gals('pippa'),
+      kids: gals('poppy'),
     },
     {
       id: 'dikarya',

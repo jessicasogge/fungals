@@ -729,14 +729,14 @@ export const GALS = [
       ${face(100, 102, '#1a1b24')}
     `,
   },
-  // Pippa: Rhizopus stolonifer, the black bread mold: runners arching along
+  // Poppy: Rhizopus stolonifer, the black bread mold: runners arching along
   // the agar with root tufts where they touch down, and tall stalks topped
   // with black pinhead spore pods, her face on a pale young one. In the
   // dish she plays like Fumi (see mold.js), and her colonies fill with tiny
   // dark gray pinheads.
   {
-    id: 'pippa',
-    name: 'Pippa',
+    id: 'poppy',
+    name: 'Poppy',
     looks: 'a Rhizopus stolonifer bread mold: arching runners with root tufts, and tall stalks topped with round black pinhead spore pods',
     motion: 'bob',
     frames: { home: '10 10 180 180', picker: '14 14 172 172', dish: '50 50 100 100' },
