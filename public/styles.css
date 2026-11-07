@@ -1719,13 +1719,13 @@ body:not(.picker-page) .signature {
   transform: translate(-50%, -50%) scale(1);
 }
 
-/* Pippa's colonies (mold.js): tall, fluffy and white, sprinkled with tiny
+/* Pippa's colonies (mold.js): tall, fluffy and grayish white, sprinkled with tiny
    dark gray pinhead spore pods (her --spores color) as they ripen. */
 .colony.pinned {
   background:
     repeating-conic-gradient(rgba(58, 47, 40, 0.08) 0 1deg, transparent 1deg 14deg),
-    radial-gradient(circle, #ffffff 0 65%, #fdfcf9 85%, rgba(255, 255, 255, 0.7) 100%);
-  box-shadow: 0 0 5px 2px rgba(255, 255, 255, 0.95);
+    radial-gradient(circle, #ecebe8 0 65%, #efeeeb 85%, rgba(239, 238, 235, 0.7) 100%);
+  box-shadow: 0 0 5px 2px rgba(239, 238, 235, 0.9);
 }
 
 .colony .pinhead {
