@@ -494,10 +494,9 @@ export const SPECIES = {
     scientific: 'Rhizopus stolonifer',
     color: '#3a2f28', // for her name above the dish
     kind: 'mold',
-    // Her colonies fill with black pinhead pods, and full-grown ones send
-    // runners that start new colonies (see mold.js).
+    // Her colonies fill with tiny dark gray pinhead pods (see mold.js).
     pinheads: true,
-    colors: { fill: '#efe2cc', stroke: '#3a2f28', highlight: '#fffaf0', dark: '#241c17', spores: '#2c2420' },
+    colors: { fill: '#efe2cc', stroke: '#3a2f28', highlight: '#fffaf0', dark: '#241c17', spores: '#5a5658' },
     // There are no standard disk sizes for Rhizopus, so these are estimates.
     // Like other pin molds she's naturally resistant to voriconazole and
     // fluconazole (no zone at all); amphotericin B and posaconazole are what
@@ -694,10 +693,6 @@ export const GAME = {
   // Inka's colonies (mold.js) melt into ink over MELT_SECONDS once they're
   // full size.
   MELT_SECONDS: 3,
-  // Pippa's runners (mold.js) reach for a nutrient up to RUN_RANGE (dish
-  // radii) away, arching across the agar at RUN_SPEED dish radii a second.
-  RUN_RANGE: 0.5,
-  RUN_SPEED: 0.3,
   SWIMMERS: 3,
   SWIM_SPEED: 0.32,
   SWIM_RANGE: 0.5,

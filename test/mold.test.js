@@ -20,7 +20,7 @@ vi.mock('../public/game/touch.js', async (importActual) => ({
 vi.mock('../public/game/spores.js', () => ({ sporeBurst: vi.fn() }));
 vi.mock('../public/game/track.js', () => ({ track: vi.fn() }));
 
-const { CAPS, colonyRadius, DROPS, INK_DROPS, moldColonies, PINHEADS, playMold, POD_SPORES, runnerGroup, sporeGroup, swimmerGroup, TUFTS } = await import('../public/game/mold.js');
+const { CAPS, colonyRadius, DROPS, INK_DROPS, moldColonies, PINHEADS, playMold, POD_SPORES, sporeGroup, swimmerGroup, TUFTS } = await import('../public/game/mold.js');
 const { sporeBurst } = await import('../public/game/spores.js');
 const { track } = await import('../public/game/track.js');
 
@@ -321,7 +321,7 @@ describe("Inka's colonies", () => {
   });
 });
 
-describe("Pippa's colonies and runners", () => {
+describe("Pippa's colonies", () => {
   let layer;
   beforeEach(() => {
     layer = document.createElement('div');
@@ -329,57 +329,18 @@ describe("Pippa's colonies and runners", () => {
   });
   const pippa = SPECIES.pippa.colors;
 
-  it('fill with black pinheads as they ripen, and say once when they are full grown', () => {
-    const onGrown = vi.fn();
-    const colonies = moldColonies({ layer, nutrients: fakeNutrients(), colors: pippa, pinheads: true, onGrown });
+  it('fill with tiny pinheads as they ripen', () => {
+    const colonies = moldColonies({ layer, nutrients: fakeNutrients(), colors: pippa, pinheads: true });
     const colony = colonies.plant(0, 0);
     expect(colony.el.classList).toContain('pinned');
     const pins = [...colony.el.querySelectorAll('.pinhead')];
     expect(pins).toHaveLength(PINHEADS.length);
     colonies.grow(GAME.COLONY_GROW_SECONDS / 2);
-    expect(onGrown).not.toHaveBeenCalled();
     expect(pins.filter((p) => p.classList.contains('shown')).length).toBe(PINHEADS.filter((p) => p.at <= 0.5).length);
     colonies.grow(GAME.COLONY_GROW_SECONDS);
-    expect(onGrown).toHaveBeenCalledWith(colony);
-    colonies.grow(1);
-    expect(onGrown).toHaveBeenCalledTimes(1);
+    expect(pins.every((p) => p.classList.contains('shown'))).toBe(true);
   });
 
-  it('send a runner to the nearest nutrient in range that starts a new colony there', () => {
-    const plant = vi.fn();
-    const nutrients = fakeNutrients([[0.4, 0], [0.9, 0.3]]);
-    const runners = runnerGroup({ layer, nutrients, plant, colors: pippa });
-    const run = runners.send({ fx: 0, fy: 0, r: GAME.COLONY_FULL });
-    expect(run.to).toEqual([0.4, 0]);
-    expect(layer.querySelectorAll('.runners .runner')).toHaveLength(1);
-    runners.step(0.1, 200);
-    expect(run.el.getAttribute('d')).toMatch(/^M .* Q /);
-    expect(plant).not.toHaveBeenCalled();
-    for (let t = 0; t < 3; t += 0.05) runners.step(0.05, 200);
-    expect(run.done).toBe('landed');
-    expect(plant).toHaveBeenCalledWith(0.4, 0);
-    // A landed runner stays drawn.
-    expect(run.el.isConnected).toBe(true);
-  });
-
-  it('send no runner when no nutrient is in range', () => {
-    const runners = runnerGroup({ layer, nutrients: fakeNutrients([[0.95, 0]]), plant: vi.fn(), colors: pippa });
-    expect(runners.send({ fx: -0.5, fy: 0, r: GAME.COLONY_FULL })).toBeNull();
-    expect(runners.runners).toHaveLength(0);
-  });
-
-  it('lose a runner that touches a zone on the way', () => {
-    const plant = vi.fn();
-    const runners = runnerGroup({
-      layer, nutrients: fakeNutrients([[0.45, 0]]), disks: [disk(0.25, 0.05, 0.03)], plant, colors: pippa,
-    });
-    const run = runners.send({ fx: 0, fy: 0, r: GAME.COLONY_FULL });
-    for (let t = 0; t < 3; t += 0.05) runners.step(0.05, 200);
-    expect(run.done).toBe('dead');
-    expect(run.el.classList).toContain('dying');
-    expect(plant).not.toHaveBeenCalled();
-    expect(document.querySelector('.pop')).not.toBeNull();
-  });
 });
 
 describe("Bea's pods", () => {
@@ -647,30 +608,6 @@ describe('playing as a mold', () => {
     expect(counter()).toBe('Level 1 · 0 / 2 colonies');
     vi.runAllTimers();
     expect(banner.hidden).toBe(true);
-  });
-
-  it("as Pippa, a full-grown colony sends a runner that starts another colony toward the win", () => {
-    frames = [];
-    now = 0;
-    vi.stubGlobal('requestAnimationFrame', (run) => frames.push(run));
-    agar = document.querySelector('.agar');
-    mover = document.querySelector('.gal-mover');
-    vi.spyOn(agar, 'clientWidth', 'get').mockReturnValue(400);
-    vi.spyOn(mover, 'offsetWidth', 'get').mockReturnValue(20);
-    const galEl = document.createElement('div');
-    galEl.dataset.gal = 'pippa';
-    galEl.dataset.name = 'Pippa';
-    const nutrients = fakeNutrients([[0, 0], [0.35, 0.1]]);
-    playMold(galEl, SPECIES.pippa, nutrients, [], { level: 1, target: 2 });
-    frame();
-    expect(colonyEls()).toHaveLength(1);
-    expect(colonyEls()[0].classList).toContain('pinned');
-    play(GAME.COLONY_GROW_SECONDS + 0.2);
-    expect(agar.querySelectorAll('.runners .runner')).toHaveLength(1);
-    play(2);
-    // The runner reached the other nutrient and won the level.
-    expect(colonyEls()).toHaveLength(2);
-    expect(counter()).toBe('Level 1 · 2 / 2 colonies');
   });
 
   it("as Bea, a ripe pod bursts into swimmers that start more pods toward the win", () => {

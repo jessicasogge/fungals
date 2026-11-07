@@ -732,8 +732,8 @@ export const GALS = [
   // Pippa: Rhizopus stolonifer, the black bread mold: runners arching along
   // the agar with root tufts where they touch down, and tall stalks topped
   // with black pinhead spore pods, her face on a pale young one. In the
-  // dish she plays like Fumi (see mold.js), and her full-grown colonies send
-  // runners that start new colonies.
+  // dish she plays like Fumi (see mold.js), and her colonies fill with tiny
+  // dark gray pinheads.
   {
     id: 'pippa',
     name: 'Pippa',
