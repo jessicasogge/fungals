@@ -120,9 +120,9 @@ export const QUIZ_FACTS = {
     "Inka's species name, *comatus*, means \"hairy,\" for her shaggy scales."
   ],
   pippa: [
-    "Pippa is the black bread mold, the fuzzy white mold with black dots on old bread.",
-    "Each of Pippa's black dots is a pinhead-sized pod packed with thousands of spores.",
+    "Pippa is the black bread mold, with white fuzz and dark spore cases on old bread.",
+    "Pippa's spore stalks grow in groups directly above her root-like rhizoids.",
     "Pippa's species name, *stolonifer*, means \"runner-bearer,\" for her runners.",
-    "Pippa's genus name, *Rhizopus*, means \"root foot,\" for her rhizoids.",
+    "Pippa's genus name, *Rhizopus*, means \"root foot,\" for her rhizoids."
   ],
 };
