@@ -20,7 +20,7 @@ vi.mock('../public/game/touch.js', async (importActual) => ({
 vi.mock('../public/game/spores.js', () => ({ sporeBurst: vi.fn() }));
 vi.mock('../public/game/track.js', () => ({ track: vi.fn() }));
 
-const { CAPS, colonyRadius, DROPS, INK_DROPS, moldColonies, playMold, POD_SPORES, sporeGroup, swimmerGroup, TUFTS } = await import('../public/game/mold.js');
+const { CAPS, colonyRadius, DROPS, INK_DROPS, moldColonies, PINHEADS, playMold, POD_SPORES, sporeGroup, swimmerGroup, TUFTS } = await import('../public/game/mold.js');
 const { sporeBurst } = await import('../public/game/spores.js');
 const { track } = await import('../public/game/track.js');
 
@@ -319,6 +319,28 @@ describe("Inka's colonies", () => {
     expect(colony.el.style.getPropertyValue('--melt')).toBe('');
     expect(colony.el.querySelector('.ink-drop')).toBeNull();
   });
+});
+
+describe("Poppy's colonies", () => {
+  let layer;
+  beforeEach(() => {
+    layer = document.createElement('div');
+    document.querySelector('.agar').append(layer);
+  });
+  const poppy = SPECIES.poppy.colors;
+
+  it('fill with tiny pinheads as they ripen', () => {
+    const colonies = moldColonies({ layer, nutrients: fakeNutrients(), colors: poppy, pinheads: true });
+    const colony = colonies.plant(0, 0);
+    expect(colony.el.classList).toContain('pinned');
+    const pins = [...colony.el.querySelectorAll('.pinhead')];
+    expect(pins).toHaveLength(PINHEADS.length);
+    colonies.grow(GAME.COLONY_GROW_SECONDS / 2);
+    expect(pins.filter((p) => p.classList.contains('shown')).length).toBe(PINHEADS.filter((p) => p.at <= 0.5).length);
+    colonies.grow(GAME.COLONY_GROW_SECONDS);
+    expect(pins.every((p) => p.classList.contains('shown'))).toBe(true);
+  });
+
 });
 
 describe("Bea's pods", () => {

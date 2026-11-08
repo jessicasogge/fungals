@@ -478,6 +478,35 @@ export const SPECIES = {
       { code: 'FLC', name: 'fluconazole', zone: 12 },
     ],
   },
+  poppy: {
+    facts: [
+      "Poppy is the black bread mold, with white fuzz and dark spore cases on old bread.",
+      "Poppy's tiny black spore cases can each hold thousands of spores.",
+      "Poppy's species name, *stolonifer*, means \"runner-bearer,\" for her runners.",
+      "Poppy's root-like threads, called rhizoids, anchor her and absorb nutrients.",
+      "Poppy's genus name, *Rhizopus*, means \"root foot,\" for her rhizoids.",
+      "Poppy grows quickly and can spread across moist bread in just a few days.",
+      "Poppy also grows on soft fruit, like strawberries and peaches, causing soft rot.",
+      "Poppy is a pin mold, outside the sac-fungus and club-fungus branches.",
+      "Poppy's spore stalks grow in groups above her root-like rhizoids.",
+      "Poppy's threads have few cross-walls, so much of their inside is one connected space.",
+    ],
+    scientific: 'Rhizopus stolonifer',
+    color: '#3a2f28', // for her name above the dish
+    kind: 'mold',
+    // Her colonies fill with tiny dark gray pinhead pods (see mold.js).
+    pinheads: true,
+    colors: { fill: '#efe2cc', stroke: '#3a2f28', highlight: '#fffaf0', dark: '#241c17', spores: '#5a5658' },
+    // There are no standard disk sizes for Rhizopus, so these are estimates.
+    // Like other pin molds she's naturally resistant to voriconazole and
+    // fluconazole (no zone at all); amphotericin B and posaconazole are what
+    // doctors use against her.
+    antifungals: [
+      { code: 'AMB', name: 'amphotericin B', zone: 24 },
+      { code: 'POS', name: 'posaconazole', zone: 20 },
+      { code: 'ITC', name: 'itraconazole', zone: 13 },
+    ],
+  },
   fumi: {
     facts: [
       "Fumi's species name, *fumigatus*, means \"smoky,\" for her smoky grey-green colonies.",

@@ -14,6 +14,11 @@ export const TREE = {
       kids: gals('bea'),
     },
     {
+      id: 'pin', name: 'Pin molds', sci: 'Mucoromycota',
+      note: 'Fast, fluffy molds with their spores in round pods on tall stalks.',
+      kids: gals('poppy'),
+    },
+    {
       id: 'dikarya',
       name: 'Dikarya',
       note: 'Spores that don’t swim. Cells that can hold two separate nuclei.',

@@ -487,6 +487,10 @@ a.gal-card:active {
   background: rgba(222, 224, 232, 0.9);
 }
 
+.poppy {
+  background: rgba(240, 222, 190, 0.85);
+}
+
 .pick-btn {
   margin-top: 0.75rem;
   padding: 0.7rem 1rem;
@@ -1712,6 +1716,29 @@ body:not(.picker-page) .signature {
 }
 
 .colony .ink-drop.shown {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Poppy's colonies (mold.js): tall, fluffy and grayish white, sprinkled with tiny
+   dark gray pinhead spore pods (her --spores color) as they ripen. */
+.colony.pinned {
+  background:
+    repeating-conic-gradient(rgba(58, 47, 40, 0.08) 0 1deg, transparent 1deg 14deg),
+    radial-gradient(circle, #f4f3f0 0 65%, #f6f5f2 85%, rgba(246, 245, 242, 0.7) 100%);
+  box-shadow: 0 0 5px 2px rgba(246, 245, 242, 0.9);
+}
+
+.colony .pinhead {
+  position: absolute;
+  width: 4%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--spores);
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.3s ease-out;
+}
+
+.colony .pinhead.shown {
   transform: translate(-50%, -50%) scale(1);
 }
 

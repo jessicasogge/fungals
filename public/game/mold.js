@@ -33,7 +33,8 @@ export function colonyRadius(seconds, { full = GAME.COLONY_FULL, grow = GAME.COL
 // `tufts` they turn orange and sprout tufts of spores as they ripen. With
 // `inky` (Inka), a full-size colony goes on to melt from the middle out into
 // a black ink puddle over GAME.MELT_SECONDS, splashing ink drops at its edge.
-// Positions and sizes use fractions of the dish radius.
+// With `pinheads` (Poppy), each colony fills with little dark gray spore
+// pods as it ripens. Positions and sizes use fractions of the dish radius.
 export const DROPS = [
   // Where each drop sits on the colony (percent across and down), and how
   // ripe the colony is when it appears.
@@ -77,6 +78,29 @@ export const INK_DROPS = [
   { x: 30, y: 12, at: 0.9 },
 ];
 
+// Poppy's tiny pinhead spore pods, the same way: sprinkled over the colony,
+// popping up a few at a time as it ripens.
+export const PINHEADS = [
+  { x: 57, y: 50, at: 0.2 },
+  { x: 41, y: 58, at: 0.25 },
+  { x: 51, y: 35, at: 0.29 },
+  { x: 61, y: 64, at: 0.34 },
+  { x: 30, y: 47, at: 0.39 },
+  { x: 69, y: 38, at: 0.44 },
+  { x: 44, y: 73, at: 0.48 },
+  { x: 38, y: 27, at: 0.53 },
+  { x: 76, y: 59, at: 0.58 },
+  { x: 23, y: 61, at: 0.62 },
+  { x: 63, y: 22, at: 0.67 },
+  { x: 60, y: 81, at: 0.72 },
+  { x: 21, y: 33, at: 0.76 },
+  { x: 84, y: 43, at: 0.81 },
+  { x: 29, y: 79, at: 0.86 },
+  { x: 45, y: 13, at: 0.91 },
+  { x: 79, y: 75, at: 0.95 },
+  { x: 11, y: 52, at: 1.0 },
+];
+
 // The spores filling one of Bea's pods, the same way: one by one as it ripens.
 export const POD_SPORES = [
   { x: 50, y: 50, at: 0.15 },
@@ -90,6 +114,7 @@ export const POD_SPORES = [
 export function moldColonies({
   layer, disks = [], nutrients, colors, drops = false, wrinkled = false, powdery = false, caps = false,
   pods = false, onBurst = () => {}, fast = false, tufts = false, inky = false,
+  pinheads = false,
 }) {
   const colonies = [];
   // How long a colony takes to reach full size, and its radius after
@@ -127,7 +152,7 @@ export function moldColonies({
     plant(fx, fy) {
       const el = document.createElement('div');
       el.className = ['colony', wrinkled && 'wrinkled', powdery && 'powdery', caps && 'cottony', pods && 'pod',
-        tufts && 'fiery', inky && 'inky'].filter(Boolean).join(' ');
+        tufts && 'fiery', inky && 'inky', pinheads && 'pinned'].filter(Boolean).join(' ');
       el.setAttribute('aria-hidden', 'true');
       el.style.setProperty('--spores', colors.spores);
       // A slightly uneven edge, different for each colony.
@@ -138,13 +163,13 @@ export function moldColonies({
       // Ruby's drops, Velma's caps, the spores in Bea's pods or Ember's tufts,
       // at their own turn around the middle for each colony.
       const bits = (drops && DROPS) || (caps && CAPS) || (pods && POD_SPORES) || (tufts && TUFTS)
-        || (inky && INK_DROPS) || [];
+        || (inky && INK_DROPS) || (pinheads && PINHEADS) || [];
       const turn = Math.random() * Math.PI * 2;
       const [cos, sin] = [Math.cos(turn), Math.sin(turn)];
       for (const { x, y, at, big } of bits) {
         const bit = document.createElement('span');
         bit.className = (drops && 'drop') || (caps && (big ? 'cap big' : 'cap')) || (pods && 'pod-spore')
-          || (tufts && 'tuft') || 'ink-drop';
+          || (tufts && 'tuft') || (inky && 'ink-drop') || 'pinhead';
         bit.style.left = `${(50 + (x - 50) * cos - (y - 50) * sin).toFixed(1)}%`;
         bit.style.top = `${(50 + (x - 50) * sin + (y - 50) * cos).toFixed(1)}%`;
         if (drops) {
@@ -323,6 +348,7 @@ export function playMold(galEl, species, nutrients, disks, { level = 1, target =
     drops: Boolean(species.drops), wrinkled: Boolean(species.wrinkled), powdery: Boolean(species.powdery),
     caps: Boolean(species.caps), fast: Boolean(species.fast), tufts: Boolean(species.tufts),
     inky: Boolean(species.inky),
+    pinheads: Boolean(species.pinheads),
     pods: Boolean(species.pods), onBurst: (pod) => swimmers.release(pod.fx, pod.fy, pod.r),
   });
 
