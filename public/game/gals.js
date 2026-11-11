@@ -781,7 +781,7 @@ export const GALS = [
     name: 'Luna',
     looks: 'a chartreuse Panellus stipticus mushroom, the bitter oyster: a little cluster of fan-shaped caps on short stems on dead wood, with a faint glow',
     motion: 'bob',
-    frames: { home: '10 10 180 180', picker: '14 14 172 172', dish: '50 50 100 100' },
+    frames: { home: '10 26 180 180', picker: '14 30 172 172', dish: '50 50 100 100' },
     art: `
       <!-- her soft green glow -->
       <circle cx="100" cy="116" r="66" fill="#d4f58a" opacity="0.22" />
