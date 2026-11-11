@@ -127,8 +127,8 @@ export const QUIZ_FACTS = {
   ],
   luna: [
     "Luna glows green in the dark, a kind of light called bioluminescence.",
-    "Luna's glow comes from an enzyme called luciferase, like a firefly's.",
+    "Luna uses an enzyme called luciferase to help make her green glow.",
     "Luna is the bitter oyster, a little fan-shaped mushroom that grows on dead wood.",
-    "Luna's species name, *stipticus*, means \"stopping bleeding\"; people tried her on cuts.",
+    "Luna's name, stipticus, refers to her historical use to try to stop bleeding.",
   ],
 };
