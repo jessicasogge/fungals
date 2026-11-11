@@ -507,6 +507,36 @@ export const SPECIES = {
       { code: 'ITC', name: 'itraconazole', zone: 13 },
     ],
   },
+  luna: {
+    facts: [
+      "Luna is the bitter oyster, a little fan-shaped mushroom that grows on dead wood.",
+      "Luna glows green in the dark, a kind of light called bioluminescence.",
+      "Even Luna's threads glow, so a dish of her shines softly with the lights off.",
+      "Luna's glow comes from an enzyme called luciferase, like a firefly's.",
+      "Luna's caps are tiny, often smaller than a thumbnail, and grow in crowded clusters.",
+      "Luna's stems grow from the side of her caps, holding them out like little shelves.",
+      "Luna breaks down fallen logs and stumps, recycling the wood into soil.",
+      "Luna's species name, *stipticus*, means \"stopping bleeding\"; people tried her on cuts.",
+      "Luna is a basidiomycete, a mushroom cousin of Velma, Ruby and Inka.",
+      "Luna's glow may help draw insects that carry her spores to new logs.",
+    ],
+    scientific: 'Panellus stipticus',
+    color: '#5a7a0c', // for her name above the dish
+    kind: 'mold',
+    // Her colonies take on a soft glow as they ripen (see mold.js).
+    glowing: true,
+    colors: { fill: '#f1fad9', stroke: '#6a8f10', highlight: '#ffffff', dark: '#34470a', spores: '#cdf078' },
+    // There are no standard disk sizes for Panellus, so these are estimates.
+    // Like many basidiomycetes she's thought to shrug off fluconazole, so
+    // its zone is small.
+    antifungals: [
+      { code: 'AMB', name: 'amphotericin B', zone: 20 },
+      { code: 'VOR', name: 'voriconazole', zone: 22 },
+      { code: 'TRB', name: 'terbinafine', zone: 24 },
+      { code: 'ITC', name: 'itraconazole', zone: 18 },
+      { code: 'FLC', name: 'fluconazole', zone: 12 },
+    ],
+  },
   fumi: {
     facts: [
       "Fumi's species name, *fumigatus*, means \"smoky,\" for her smoky grey-green colonies.",

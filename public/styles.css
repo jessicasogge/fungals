@@ -491,6 +491,10 @@ a.gal-card:active {
   background: rgba(240, 222, 190, 0.85);
 }
 
+.luna {
+  background: rgba(236, 247, 205, 0.9);
+}
+
 .pick-btn {
   margin-top: 0.75rem;
   padding: 0.7rem 1rem;
@@ -1740,6 +1744,17 @@ body:not(.picker-page) .signature {
 
 .colony .pinhead.shown {
   transform: translate(-50%, -50%) scale(1);
+}
+
+/* Luna's colonies (mold.js): white and cottony, taking on a soft green glow
+   (her --spores color) as they ripen (--glow, 0 to 1). */
+.colony.glowing {
+  background:
+    repeating-conic-gradient(rgba(106, 143, 16, 0.08) 0 1deg, transparent 1deg 14deg),
+    radial-gradient(circle, color-mix(in srgb, var(--spores) calc(var(--glow, 0) * 35%), white) 0 55%, #fbfef4 85%, rgba(255, 255, 255, 0.7) 100%);
+  box-shadow:
+    0 0 calc(4px + var(--glow, 0) * 10px) calc(2px + var(--glow, 0) * 5px)
+      color-mix(in srgb, var(--spores) calc(var(--glow, 0) * 70%), rgba(255, 255, 255, 0.9));
 }
 
 /* Killed by an antifungal: the whole colony pops, swelling and vanishing. */

@@ -125,4 +125,10 @@ export const QUIZ_FACTS = {
     "Poppy's species name, *stolonifer*, means \"runner-bearer,\" for her runners.",
     "Poppy's genus name, *Rhizopus*, means \"root foot,\" for her rhizoids."
   ],
+  luna: [
+    "Luna glows green in the dark, a kind of light called bioluminescence.",
+    "Luna's glow comes from an enzyme called luciferase, like a firefly's.",
+    "Luna is the bitter oyster, a little fan-shaped mushroom that grows on dead wood.",
+    "Luna's species name, *stipticus*, means \"stopping bleeding\"; people tried her on cuts.",
+  ],
 };

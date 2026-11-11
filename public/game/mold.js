@@ -34,7 +34,8 @@ export function colonyRadius(seconds, { full = GAME.COLONY_FULL, grow = GAME.COL
 // `inky` (Inka), a full-size colony goes on to melt from the middle out into
 // a black ink puddle over GAME.MELT_SECONDS, splashing ink drops at its edge.
 // With `pinheads` (Poppy), each colony fills with little dark gray spore
-// pods as it ripens. Positions and sizes use fractions of the dish radius.
+// pods as it ripens, and with `glowing` (Luna) it takes on a soft glow
+// (--glow, 0 to 1). Positions and sizes use fractions of the dish radius.
 export const DROPS = [
   // Where each drop sits on the colony (percent across and down), and how
   // ripe the colony is when it appears.
@@ -114,7 +115,7 @@ export const POD_SPORES = [
 export function moldColonies({
   layer, disks = [], nutrients, colors, drops = false, wrinkled = false, powdery = false, caps = false,
   pods = false, onBurst = () => {}, fast = false, tufts = false, inky = false,
-  pinheads = false,
+  pinheads = false, glowing = false,
 }) {
   const colonies = [];
   // How long a colony takes to reach full size, and its radius after
@@ -135,6 +136,7 @@ export function moldColonies({
     // How far a full-size inky colony has melted into ink, 0 to 1.
     const melt = inky ? Math.min(1, Math.max(0, (colony.age - growFor) / GAME.MELT_SECONDS)) : 0;
     if (inky) el.style.setProperty('--melt', melt.toFixed(2));
+    if (glowing) el.style.setProperty('--glow', ripe.toFixed(2));
     for (const bit of colony.bits) bit.el.classList.toggle('shown', (inky ? melt : ripe) >= bit.at);
   }
 
@@ -152,7 +154,7 @@ export function moldColonies({
     plant(fx, fy) {
       const el = document.createElement('div');
       el.className = ['colony', wrinkled && 'wrinkled', powdery && 'powdery', caps && 'cottony', pods && 'pod',
-        tufts && 'fiery', inky && 'inky', pinheads && 'pinned'].filter(Boolean).join(' ');
+        tufts && 'fiery', inky && 'inky', pinheads && 'pinned', glowing && 'glowing'].filter(Boolean).join(' ');
       el.setAttribute('aria-hidden', 'true');
       el.style.setProperty('--spores', colors.spores);
       // A slightly uneven edge, different for each colony.
@@ -348,7 +350,7 @@ export function playMold(galEl, species, nutrients, disks, { level = 1, target =
     drops: Boolean(species.drops), wrinkled: Boolean(species.wrinkled), powdery: Boolean(species.powdery),
     caps: Boolean(species.caps), fast: Boolean(species.fast), tufts: Boolean(species.tufts),
     inky: Boolean(species.inky),
-    pinheads: Boolean(species.pinheads),
+    pinheads: Boolean(species.pinheads), glowing: Boolean(species.glowing),
     pods: Boolean(species.pods), onBurst: (pod) => swimmers.release(pod.fx, pod.fy, pod.r),
   });
 

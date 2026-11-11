@@ -771,6 +771,42 @@ export const GALS = [
       ${face(100, 104, '#241c17')}
     `,
   },
+  // Luna: Panellus stipticus, the bitter oyster, a mushroom that glows in
+  // the dark: a little cluster of fan-shaped caps on short stems crowded on
+  // a bit of dead wood, with a faint glow behind them and her face on the
+  // biggest cap. In the dish she plays like Fumi (see mold.js), and her
+  // colonies take on a soft glow as they ripen.
+  {
+    id: 'luna',
+    name: 'Luna',
+    looks: 'a chartreuse Panellus stipticus mushroom, the bitter oyster: a little cluster of fan-shaped caps on short stems on dead wood, with a faint glow',
+    motion: 'bob',
+    frames: { home: '10 10 180 180', picker: '14 14 172 172', dish: '50 50 100 100' },
+    art: `
+      <!-- her soft green glow -->
+      <circle cx="100" cy="116" r="66" fill="#d4f58a" opacity="0.22" />
+      <!-- the bit of dead wood she grows on -->
+      <path d="M 22 166 Q 20 152 34 150 L 166 140 Q 180 140 180 154 Q 180 166 166 168 L 36 180 Q 22 180 22 166 Z" fill="#e3efc2" stroke="#6a8f10" stroke-width="3.5" stroke-linejoin="round" />
+      <ellipse cx="170" cy="154" rx="7" ry="12" fill="#f1fad9" stroke="#6a8f10" stroke-width="2.5" transform="rotate(-5 170 154)" />
+      <path d="M 44 164 L 90 160 M 104 157 L 150 152" stroke="#6a8f10" stroke-width="1.8" stroke-linecap="round" opacity="0.5" />
+      <!-- short side stems, holding her fan-shaped caps to the wood -->
+      <path d="M 66 164 Q 69 137 66 110 M 136 159 Q 132 135 136 106 M 46 166 Q 51 155 46 146 M 154 158 Q 149 152 154 140 M 100 162 Q 100 147 100 130 " fill="none" stroke="#6a8f10" stroke-width="7" stroke-linecap="round" />
+      <path d="M 66 164 Q 69 137 66 110 M 136 159 Q 132 135 136 106 M 46 166 Q 51 155 46 146 M 154 158 Q 149 152 154 140 M 100 162 Q 100 147 100 130 " fill="none" stroke="#f1fad9" stroke-width="3.6" stroke-linecap="round" />
+      <!-- a little cluster of fan-shaped caps -->
+      <g transform="rotate(-16 66 112)"><path d="M 47.0 112.0 C 47.0 90.8 56.5 87.0 66.0 87.0 C 75.5 87.0 85.0 90.8 85.0 112.0 Q 75.5 115.0 69.0 110.0 Q 66.0 108.5 63.0 110.0 Q 56.5 115.0 47.0 112.0 Z" fill="#f1fad9" stroke="#6a8f10" stroke-width="3" stroke-linejoin="round" /><path d="M 61.7 108.0 L 53.8 94.5" stroke="#6a8f10" stroke-width="1.4" stroke-linecap="round" opacity="0.28" /><path d="M 64.4 108.0 L 61.4 94.5" stroke="#6a8f10" stroke-width="1.4" stroke-linecap="round" opacity="0.28" /><path d="M 67.6 108.0 L 70.6 94.5" stroke="#6a8f10" stroke-width="1.4" stroke-linecap="round" opacity="0.28" /><path d="M 70.3 108.0 L 78.2 94.5" stroke="#6a8f10" stroke-width="1.4" stroke-linecap="round" opacity="0.28" /></g>
+      <g transform="rotate(14 136 108)"><path d="M 118.0 108.0 C 118.0 87.6 127.0 84.0 136.0 84.0 C 145.0 84.0 154.0 87.6 154.0 108.0 Q 145.0 110.9 139.0 106.1 Q 136.0 104.6 133.0 106.1 Q 127.0 110.9 118.0 108.0 Z" fill="#f1fad9" stroke="#6a8f10" stroke-width="3" stroke-linejoin="round" /><path d="M 132.0 104.2 L 124.5 91.2" stroke="#6a8f10" stroke-width="1.4" stroke-linecap="round" opacity="0.28" /><path d="M 134.5 104.2 L 131.7 91.2" stroke="#6a8f10" stroke-width="1.4" stroke-linecap="round" opacity="0.28" /><path d="M 137.5 104.2 L 140.3 91.2" stroke="#6a8f10" stroke-width="1.4" stroke-linecap="round" opacity="0.28" /><path d="M 140.0 104.2 L 147.5 91.2" stroke="#6a8f10" stroke-width="1.4" stroke-linecap="round" opacity="0.28" /></g>
+      <g transform="rotate(-12 46 148)"><path d="M 23.0 148.0 C 23.0 122.5 34.5 118.0 46.0 118.0 C 57.5 118.0 69.0 122.5 69.0 148.0 Q 57.5 151.6 49.0 145.6 Q 46.0 143.8 43.0 145.6 Q 34.5 151.6 23.0 148.0 Z" fill="#f1fad9" stroke="#6a8f10" stroke-width="3" stroke-linejoin="round" /><path d="M 40.8 143.2 L 31.3 127.0" stroke="#6a8f10" stroke-width="1.4" stroke-linecap="round" opacity="0.28" /><path d="M 44.1 143.2 L 40.5 127.0" stroke="#6a8f10" stroke-width="1.4" stroke-linecap="round" opacity="0.28" /><path d="M 47.9 143.2 L 51.5 127.0" stroke="#6a8f10" stroke-width="1.4" stroke-linecap="round" opacity="0.28" /><path d="M 51.2 143.2 L 60.7 127.0" stroke="#6a8f10" stroke-width="1.4" stroke-linecap="round" opacity="0.28" /></g>
+      <g transform="rotate(10 154 142)"><path d="M 131.0 142.0 C 131.0 116.5 142.5 112.0 154.0 112.0 C 165.5 112.0 177.0 116.5 177.0 142.0 Q 165.5 145.6 157.0 139.6 Q 154.0 137.8 151.0 139.6 Q 142.5 145.6 131.0 142.0 Z" fill="#f1fad9" stroke="#6a8f10" stroke-width="3" stroke-linejoin="round" /><path d="M 148.8 137.2 L 139.3 121.0" stroke="#6a8f10" stroke-width="1.4" stroke-linecap="round" opacity="0.28" /><path d="M 152.1 137.2 L 148.5 121.0" stroke="#6a8f10" stroke-width="1.4" stroke-linecap="round" opacity="0.28" /><path d="M 155.9 137.2 L 159.5 121.0" stroke="#6a8f10" stroke-width="1.4" stroke-linecap="round" opacity="0.28" /><path d="M 159.2 137.2 L 168.7 121.0" stroke="#6a8f10" stroke-width="1.4" stroke-linecap="round" opacity="0.28" /></g>
+      <!-- her cap, the biggest, with her face -->
+      <g transform="rotate(0 100 134)"><path d="M 63.0 134.0 C 63.0 93.2 81.5 86.0 100.0 86.0 C 118.5 86.0 137.0 93.2 137.0 134.0 Q 118.5 139.8 103.0 130.2 Q 100.0 127.3 97.0 130.2 Q 81.5 139.8 63.0 134.0 Z" fill="#f1fad9" stroke="#6a8f10" stroke-width="3" stroke-linejoin="round" /><path d="M 91.7 126.3 L 76.3 100.4" stroke="#6a8f10" stroke-width="1.4" stroke-linecap="round" opacity="0.28" /><path d="M 96.9 126.3 L 91.1 100.4" stroke="#6a8f10" stroke-width="1.4" stroke-linecap="round" opacity="0.28" /><path d="M 103.1 126.3 L 108.9 100.4" stroke="#6a8f10" stroke-width="1.4" stroke-linecap="round" opacity="0.28" /><path d="M 108.3 126.3 L 123.7 100.4" stroke="#6a8f10" stroke-width="1.4" stroke-linecap="round" opacity="0.28" /></g>
+      <g class="face"><circle cx="91" cy="112.0" r="4.8" fill="#34470a" /><circle cx="109" cy="112.0" r="4.8" fill="#34470a" /><circle cx="92.6" cy="110.4" r="1.7" fill="white" /><circle cx="110.6" cy="110.4" r="1.7" fill="white" /><ellipse cx="83" cy="121.0" rx="4.4" ry="2.5" fill="#f9a8d4" opacity="0.95" /><ellipse cx="117" cy="121.0" rx="4.4" ry="2.5" fill="#f9a8d4" opacity="0.95" /><path d="M96 121 Q100 125.5 104 121" stroke="#34470a" stroke-width="2.6" fill="none" stroke-linecap="round" /></g>
+    `,
+    dishArt: `
+      <!-- one small, round spore -->
+      <circle cx="100" cy="100" r="42" fill="#f1fad9" stroke="#6a8f10" stroke-width="4" />
+      ${face(100, 104, '#34470a')}
+    `,
+  },
 ];
 
 // The home row shows at most HOME_MAX gals, so not every gal is on it.
