@@ -53,7 +53,7 @@ The home page shows 12 of them at most (`HOME` in `public/game/gals.js`), so not
 | **Quinn** | *Fusarium venenatum* | The Quorn mold: her face on a slightly thicker stretch of stem, topped with a loose bunch of long, curved, canoe-shaped spores split into cells. In the dish, one canoe-shaped spore |
 | **Inka** | *Coprinus comatus* | The shaggy ink cap: a tall, shaggy white bell cap on a slim stem with a ring, its edge melting into dripping black ink. In the dish, one small, dark oval spore |
 | **Poppy** | *Rhizopus stolonifer* | The black bread mold: arching runners with root tufts where they touch down, and tall stalks topped with round black pinhead spore pods, her face on a pale young one. In the dish, one round spore |
-| **Luna** | *Panellus stipticus* | The bitter oyster: a little cluster of chartreuse fan-shaped caps on short stems, crowded on a bit of dead wood with a faint glow behind them. In the dish, one round spore |
+| **Luna** | *Panellus stipticus* | The bitter oyster: little chartreuse kidney-shaped shelves on short side attachments, sticking out from an upright bit of dead wood, with glowing gills underneath. In the dish, one round spore |
 | **Bea** | *Batrachochytrium dendrobatidis* | An orchid chytrid: a round, swimming spore with a long, wavy tail and a little fat droplet inside. In the dish, the same, with her tail wiggling |
 | **Rosie** | *Sporothrix schenckii* | A short spore stalk crowned with a loose fan of cream and dusty-rose teardrop spores, with dark spores along her thread. In the dish, one oval spore |
 | **Ruby** | *Hydnellum peckii* | The bleeding tooth fungus: a fuzzy white mushroom cap beaded with red drops, with little spikes underneath. In the dish, one round, warty spore |
