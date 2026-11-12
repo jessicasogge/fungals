@@ -771,6 +771,41 @@ export const GALS = [
       ${face(100, 104, '#241c17')}
     `,
   },
+  // Luna: Panellus stipticus, the bitter oyster, a mushroom that glows in
+  // the dark: little kidney-shaped shelves on short side attachments,
+  // sticking out from an upright bit of dead wood, with glowing gills
+  // underneath and her face on the biggest shelf, out front. In the dish she plays like Fumi (see mold.js), and her
+  // colonies take on a soft glow as they ripen.
+  {
+    id: 'luna',
+    name: 'Luna',
+    looks: 'a chartreuse Panellus stipticus mushroom, the bitter oyster: little shelf-shaped caps sticking out from dead wood, with glowing gills underneath',
+    motion: 'bob',
+    frames: { home: '10 10 180 180', picker: '14 14 172 172', dish: '50 50 100 100' },
+    art: `
+      <circle cx="100" cy="104" r="70" fill="#d4f58a" opacity="0.2" />
+      <!-- the upright bit of dead wood she grows on -->
+      <path d="M 84 186 L 86 40 Q 86 28 100 28 Q 114 28 114 40 L 116 186 Z" fill="#e3efc2" stroke="#6a8f10" stroke-width="3.5" stroke-linejoin="round" />
+      <ellipse cx="100" cy="36" rx="14" ry="5" fill="#e3efc2" stroke="#6a8f10" stroke-width="2.5" />
+      <path d="M 94 56 L 95 92 M 106 120 L 107 160 M 93 140 L 93 172" stroke="#6a8f10" stroke-width="1.6" stroke-linecap="round" opacity="0.4" />
+      <!-- little shelves sticking out from both sides at different heights -->
+      <g transform="translate(115 56) scale(1 1)"><path d="M 0 4 Q 18.7 18.0 34.0 2 Q 18.7 8 0 4 Z" fill="#c6f07a" stroke="#6a8f10" stroke-width="2.2" stroke-linejoin="round" /><path d="M 3 5 L 4.6 5.8 M 3 5 L 9.1 7.9 M 3 5 L 13.5 9.1 M 3 5 L 17.9 9.3 M 3 5 L 22.0 8.6 M 3 5 L 26.1 6.9 M 3 5 L 30.1 4.3 " stroke="#6a8f10" stroke-width="0.9" stroke-linecap="round" opacity="0.5" /><path d="M 0 -3 C 6.8 -18.0 25.5 -18.0 34.0 2 Q 18.7 8 0 4 Q 3 0.5 0 -3 Z" fill="#f1fad9" stroke="#6a8f10" stroke-width="3" stroke-linejoin="round" /></g>
+      <g transform="translate(86 74) scale(-1 1)"><path d="M 0 4 Q 24.2 20.0 44.0 2 Q 24.2 8 0 4 Z" fill="#c6f07a" stroke="#6a8f10" stroke-width="2.2" stroke-linejoin="round" /><path d="M 3 5 L 6.0 6.3 M 3 5 L 11.8 8.7 M 3 5 L 17.5 10.0 M 3 5 L 23.1 10.3 M 3 5 L 28.5 9.5 M 3 5 L 33.8 7.7 M 3 5 L 39.0 4.8 " stroke="#6a8f10" stroke-width="0.9" stroke-linecap="round" opacity="0.5" /><path d="M 0 -3 C 3.5 -20.9 22.0 -14.2 34.3 -8.0 C 46.0 -6.8 49.0 1 43.0 4 Q 24.2 8 0 4 Q 3 0.5 0 -3 Z" fill="#f1fad9" stroke="#6a8f10" stroke-width="3" stroke-linejoin="round" /></g>
+      <g transform="translate(115 98) scale(1 1)"><path d="M 0 4 Q 26.4 22.0 48.0 2 Q 26.4 8 0 4 Z" fill="#c6f07a" stroke="#6a8f10" stroke-width="2.2" stroke-linejoin="round" /><path d="M 3 5 L 6.5 6.7 M 3 5 L 12.9 9.4 M 3 5 L 19.1 11.0 M 3 5 L 25.2 11.3 M 3 5 L 31.1 10.5 M 3 5 L 36.9 8.4 M 3 5 L 42.5 5.2 " stroke="#6a8f10" stroke-width="0.9" stroke-linecap="round" opacity="0.5" /><path d="M 0 -3 C 3.8 -22.0 24.0 -15.0 37.4 -8.4 C 50.0 -7.2 53.0 1 47.0 4 Q 26.4 8 0 4 Q 3 0.5 0 -3 Z" fill="#f1fad9" stroke="#6a8f10" stroke-width="3" stroke-linejoin="round" /></g>
+      <g transform="translate(86 140) scale(-1 1)"><path d="M 0 4 Q 24.2 22.0 44.0 2 Q 24.2 8 0 4 Z" fill="#c6f07a" stroke="#6a8f10" stroke-width="2.2" stroke-linejoin="round" /><path d="M 3 5 L 6.0 6.7 M 3 5 L 11.8 9.4 M 3 5 L 17.5 11.0 M 3 5 L 23.1 11.3 M 3 5 L 28.5 10.5 M 3 5 L 33.8 8.4 M 3 5 L 39.0 5.2 " stroke="#6a8f10" stroke-width="0.9" stroke-linecap="round" opacity="0.5" /><path d="M 0 -3 C 8.8 -22.0 33.0 -22.0 44.0 2 Q 24.2 8 0 4 Q 3 0.5 0 -3 Z" fill="#f1fad9" stroke="#6a8f10" stroke-width="3" stroke-linejoin="round" /></g>
+      <g transform="translate(116 156) scale(1 1)"><path d="M 0 4 Q 20.9 18.0 38.0 2 Q 20.9 8 0 4 Z" fill="#c6f07a" stroke="#6a8f10" stroke-width="2.2" stroke-linejoin="round" /><path d="M 3 5 L 5.2 5.8 M 3 5 L 10.2 7.9 M 3 5 L 15.1 9.1 M 3 5 L 20.0 9.3 M 3 5 L 24.6 8.6 M 3 5 L 29.2 6.9 M 3 5 L 33.7 4.3 " stroke="#6a8f10" stroke-width="0.9" stroke-linecap="round" opacity="0.5" /><path d="M 0 -3 C 3.0 -17.6 19.0 -12.0 29.6 -6.7 C 40.0 -5.8 43.0 1 37.0 4 Q 20.9 8 0 4 Q 3 0.5 0 -3 Z" fill="#f1fad9" stroke="#6a8f10" stroke-width="3" stroke-linejoin="round" /></g>
+      <!-- her shelf, the biggest, growing out toward you from the front of the wood -->
+      <path d="M 63.0 137.0 Q 100.0 151.0 137.0 137.0 Q 100.0 141.0 63.0 137.0 Z" fill="#c6f07a" stroke="#6a8f10" stroke-width="2.4" stroke-linejoin="round" />
+      <path d="M 85.0 140.0 L 67.5 142.5 M 88.0 140.0 L 74.0 143.4 M 91.0 140.0 L 80.5 144.3 M 94.0 140.0 L 87.0 145.2 M 97.0 140.0 L 93.5 146.1 M 100.0 140.0 L 100.0 147.0 M 103.0 140.0 L 106.5 146.1 M 106.0 140.0 L 113.0 145.2 M 109.0 140.0 L 119.5 144.3 M 112.0 140.0 L 126.0 143.4 M 115.0 140.0 L 132.5 142.5 " stroke="#6a8f10" stroke-width="0.9" stroke-linecap="round" opacity="0.5" />
+      <path d="M 94.0 93.0 C 59.0 87.0 49.2 128.0 63.0 137.0 Q 100.0 141.0 137.0 137.0 C 150.8 128.0 141.0 87.0 106.0 93.0 Q 100.0 100.0 94.0 93.0 Z" fill="#f1fad9" stroke="#6a8f10" stroke-width="3.5" stroke-linejoin="round" />
+      <g class="face"><circle cx="91" cy="116" r="4.8" fill="#34470a" /><circle cx="109" cy="116" r="4.8" fill="#34470a" /><circle cx="92.6" cy="114.4" r="1.7" fill="white" /><circle cx="110.6" cy="114.4" r="1.7" fill="white" /><ellipse cx="82" cy="125" rx="4.4" ry="2.5" fill="#f9a8d4" opacity="0.95" /><ellipse cx="118" cy="125" rx="4.4" ry="2.5" fill="#f9a8d4" opacity="0.95" /><path d="M96 125 Q100 129.5 104 125" stroke="#34470a" stroke-width="2.6" fill="none" stroke-linecap="round" /></g>
+    `,
+    dishArt: `
+      <!-- one small, round spore -->
+      <circle cx="100" cy="100" r="42" fill="#f1fad9" stroke="#6a8f10" stroke-width="4" />
+      ${face(100, 104, '#34470a')}
+    `,
+  },
 ];
 
 // The home row shows at most HOME_MAX gals, so not every gal is on it.

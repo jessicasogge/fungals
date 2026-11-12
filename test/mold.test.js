@@ -343,6 +343,31 @@ describe("Poppy's colonies", () => {
 
 });
 
+describe("Luna's colonies", () => {
+  let layer;
+  beforeEach(() => {
+    layer = document.createElement('div');
+    document.querySelector('.agar').append(layer);
+  });
+
+  it('take on a soft glow as they ripen', () => {
+    const colonies = moldColonies({ layer, nutrients: fakeNutrients(), colors: SPECIES.luna.colors, glowing: true });
+    const colony = colonies.plant(0, 0);
+    expect(colony.el.classList).toContain('glowing');
+    const glow = () => Number(colony.el.style.getPropertyValue('--glow'));
+    expect(glow()).toBe(0);
+    colonies.grow(GAME.COLONY_GROW_SECONDS / 2);
+    expect(glow()).toBeCloseTo(0.5);
+    colonies.grow(GAME.COLONY_GROW_SECONDS);
+    expect(glow()).toBe(1);
+  });
+
+  it("leave other molds' colonies without a glow", () => {
+    const colony = moldColonies({ layer, nutrients: fakeNutrients(), colors }).plant(0, 0);
+    expect(colony.el.style.getPropertyValue('--glow')).toBe('');
+  });
+});
+
 describe("Bea's pods", () => {
   let layer;
   beforeEach(() => {

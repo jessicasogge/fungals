@@ -57,7 +57,7 @@ export const TREE = {
             {
               id: 'mushrooms', name: 'Mushrooms and jelly fungi', sci: 'Agaricomycotina',
               note: 'Most of the mushrooms you know, plus some yeasts.',
-              kids: gals('velma', 'ruby', 'neve', 'inka'),
+              kids: gals('velma', 'ruby', 'neve', 'inka', 'luna'),
             },
             {
               id: 'smuts', name: 'Smuts and cousins', sci: 'Ustilaginomycotina',
