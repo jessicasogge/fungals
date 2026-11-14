@@ -94,7 +94,7 @@ describe('the family tree page', () => {
     expect(card().hidden).toBe(true);
   });
 
-  it('has Back to home only at the top, and Back up a branch everywhere else', async () => {
+  it('always has Back to home, and Back up a branch everywhere but the top', async () => {
     const home = () => document.querySelector('.tree-home');
     const back = () => document.querySelector('.tree-back');
     await open();
@@ -103,7 +103,7 @@ describe('the family tree page', () => {
     expect(back().hidden).toBe(true);
     branch('dikarya').click();
     branch('club').click();
-    expect(home().hidden).toBe(true);
+    expect(home().hidden).toBe(false);
     expect(back().hidden).toBe(false);
     back().click();
     expect(trail()).toEqual(['Fungi', 'Dikarya']);

@@ -948,6 +948,14 @@ a.gal-card:active {
   to { opacity: 1; transform: none; }
 }
 
+/* Back (up a branch) and Back to home, side by side under the tree. */
+.tree-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0 1.5rem;
+}
+
 /* Back up a branch: looks like the "Back to home" link. */
 .tree-back {
   font: inherit;
@@ -973,7 +981,6 @@ a.gal-card:active {
 .tree-gal[hidden],
 .tree-trail[hidden],
 .tree-note[hidden],
-.tree-home[hidden],
 .tree-back[hidden] {
   display: none;
 }
