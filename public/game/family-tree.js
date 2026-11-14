@@ -14,7 +14,6 @@ const trail = document.querySelector('.tree-trail');
 const note = document.querySelector('.tree-note');
 const view = document.querySelector('.tree-view');
 const card = document.querySelector('.tree-gal');
-const home = document.querySelector('.tree-home');
 const back = document.querySelector('.tree-back');
 let branch = TREE;
 
@@ -31,7 +30,6 @@ function showTrail() {
   const top = branch === TREE;
   trail.hidden = top;
   note.hidden = top;
-  home.hidden = !top;
   back.hidden = top;
   const steps = lineage(branch.id);
   trail.replaceChildren(...steps.flatMap((step, i) => {
