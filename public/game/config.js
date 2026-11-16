@@ -538,6 +538,36 @@ export const SPECIES = {
       { code: 'FLC', name: 'fluconazole', zone: 12 },
     ],
   },
+  opal: {
+    facts: [
+      "Opal is the oyster mushroom, the soft, fan-shaped mushroom sold in grocery stores.",
+      "Opal grows in overlapping tiers out of the sides of dead and dying trees.",
+      "Opal eats meat: her threads stun tiny roundworms, then grow into them.",
+      "Opal's species name, *ostreatus*, means \"oyster,\" for her shell-shaped caps.",
+      "Opal's genus name, *Pleurotus*, means \"side ear,\" for her caps growing sideways.",
+      "Opal's gills run down onto her short stem, which grows off to one side.",
+      "Opal breaks down dead wood, and can even break down some oil and plastics.",
+      "Opal is one of the easiest mushrooms to grow, even on straw or coffee grounds.",
+      "Opal is a basidiomycete, a mushroom cousin of Velma, Inka and Luna.",
+      "Opal's caps can be white, gray, blue-gray or tan, often with a pearly sheen.",
+    ],
+    scientific: 'Pleurotus ostreatus',
+    color: '#5f5660', // for her name above the dish
+    kind: 'mold',
+    // Her colonies take on a pearly sheen as they ripen (see mold.js).
+    pearly: true,
+    colors: { fill: '#f4f1ef', stroke: '#5f5660', highlight: '#ffffff', dark: '#37313a', spores: '#d9cce4' },
+    // There are no standard disk sizes for Pleurotus, so these are estimates.
+    // Like many basidiomycetes she's thought to shrug off fluconazole, so
+    // its zone is small.
+    antifungals: [
+      { code: 'AMB', name: 'amphotericin B', zone: 20 },
+      { code: 'VOR', name: 'voriconazole', zone: 22 },
+      { code: 'TRB', name: 'terbinafine', zone: 26 },
+      { code: 'ITC', name: 'itraconazole', zone: 18 },
+      { code: 'FLC', name: 'fluconazole', zone: 12 },
+    ],
+  },
   fumi: {
     facts: [
       "Fumi's species name, *fumigatus*, means \"smoky,\" for her smoky grey-green colonies.",

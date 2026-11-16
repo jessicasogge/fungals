@@ -131,4 +131,10 @@ export const QUIZ_FACTS = {
     "Luna is the bitter oyster, a little fan-shaped mushroom that grows on dead wood.",
     "Luna's name, stipticus, refers to her historical use to try to stop bleeding.",
   ],
+  opal: [
+    "Opal eats meat: her threads stun tiny roundworms, then grow into them.",
+    "Opal grows in overlapping tiers out of the sides of dead and dying trees.",
+    "Opal's species name, *ostreatus*, means \"oyster,\" for her shell-shaped caps.",
+    "Opal's genus name, *Pleurotus*, means \"side ear,\" for her caps growing sideways.",
+  ],
 };

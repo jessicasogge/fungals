@@ -495,6 +495,10 @@ a.gal-card:active {
   background: rgba(236, 247, 205, 0.9);
 }
 
+.opal {
+  background: rgba(232, 227, 226, 0.9);
+}
+
 .pick-btn {
   margin-top: 0.75rem;
   padding: 0.7rem 1rem;
@@ -1762,6 +1766,21 @@ body:not(.picker-page) .signature {
   box-shadow:
     0 0 calc(4px + var(--glow, 0) * 10px) calc(2px + var(--glow, 0) * 5px)
       color-mix(in srgb, var(--spores) calc(var(--glow, 0) * 70%), rgba(255, 255, 255, 0.9));
+}
+
+/* Opal's colonies (mold.js): thick, fluffy and white, taking on a pearly
+   sheen of pink, lilac and blue as they ripen (--sheen, 0 to 1), like the
+   inside of an oyster shell. */
+.colony.pearly {
+  background:
+    repeating-conic-gradient(rgba(95, 86, 96, 0.08) 0 1deg, transparent 1deg 14deg),
+    radial-gradient(circle, transparent 0 75%, #ffffff 100%),
+    conic-gradient(from 30deg,
+      color-mix(in srgb, #f9c8dc calc(var(--sheen, 0) * 45%), white),
+      color-mix(in srgb, #d6c8f5 calc(var(--sheen, 0) * 45%), white),
+      color-mix(in srgb, #c4def5 calc(var(--sheen, 0) * 45%), white),
+      color-mix(in srgb, #f9c8dc calc(var(--sheen, 0) * 45%), white));
+  box-shadow: 0 0 5px 2px rgba(255, 255, 255, 0.95);
 }
 
 /* Killed by an antifungal: the whole colony pops, swelling and vanishing. */
