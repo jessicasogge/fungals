@@ -368,6 +368,26 @@ describe("Luna's colonies", () => {
   });
 });
 
+describe("Opal's colonies", () => {
+  let layer;
+  beforeEach(() => {
+    layer = document.createElement('div');
+    document.querySelector('.agar').append(layer);
+  });
+
+  it('take on a pearly sheen as they ripen', () => {
+    const colonies = moldColonies({ layer, nutrients: fakeNutrients(), colors: SPECIES.opal.colors, pearly: true });
+    const colony = colonies.plant(0, 0);
+    expect(colony.el.classList).toContain('pearly');
+    const sheen = () => Number(colony.el.style.getPropertyValue('--sheen'));
+    expect(sheen()).toBe(0);
+    colonies.grow(GAME.COLONY_GROW_SECONDS / 2);
+    expect(sheen()).toBeCloseTo(0.5);
+    colonies.grow(GAME.COLONY_GROW_SECONDS);
+    expect(sheen()).toBe(1);
+  });
+});
+
 describe("Bea's pods", () => {
   let layer;
   beforeEach(() => {

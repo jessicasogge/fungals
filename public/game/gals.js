@@ -806,6 +806,34 @@ export const GALS = [
       ${face(100, 104, '#34470a')}
     `,
   },
+  // Opal: Pleurotus ostreatus, the oyster mushroom, which also catches
+  // roundworms: wide, pearly shelves growing in tiers out of the side of a
+  // tree trunk, with gills underneath and her face on the biggest one. In
+  // the dish she plays like Fumi (see mold.js), and her colonies take on a
+  // pearly sheen.
+  {
+    id: 'opal',
+    name: 'Opal',
+    looks: 'a pearly Pleurotus ostreatus mushroom, the oyster mushroom: wide shelves growing in tiers out of the side of a tree trunk',
+    motion: 'bob',
+    frames: { home: '10 10 180 180', picker: '14 14 172 172', dish: '50 50 100 100' },
+    art: `
+      <!-- the side of the tree trunk she grows from -->
+      <path d="M 24 22 Q 22 16 30 16 L 52 16 Q 58 60 53 100 Q 48 140 56 182 Q 56 188 50 188 L 30 188 Q 24 188 24 182 Z" fill="#e3ddd8" stroke="#5f5660" stroke-width="3.5" stroke-linejoin="round" />
+      <path d="M 34 32 Q 38 60 35 90 M 42 104 Q 46 130 41 160 M 31 120 L 32 142" stroke="#5f5660" stroke-width="1.6" stroke-linecap="round" fill="none" opacity="0.4" />
+      <!-- her wide, overlapping oyster shelves, in tiers -->
+      <g transform="translate(52 156)"><path d="M 2 5.7 Q 45.0 27.7 86.0 7.7 L 86.0 7.7 Z" fill="#e6dfe1" stroke="#5f5660" stroke-width="2.4" stroke-linejoin="round" /><path d="M 4 6.7 L 9.0 8.2 M 4 6.7 L 17.8 11.3 M 4 6.7 L 26.6 13.6 M 4 6.7 L 35.4 15.1 M 4 6.7 L 44.0 15.7 M 4 6.7 L 52.6 15.5 M 4 6.7 L 61.0 14.4 M 4 6.7 L 69.4 12.5 M 4 6.7 L 77.8 9.8 " stroke="#5f5660" stroke-width="1.1" stroke-linecap="round" opacity="0.45" /><path d="M 0 -3.6 C 25.0 -14.4 60.0 -27.6 96.0 -9.6 C 102.0 -1.2 96.0 7.7 86.0 7.7 Q 77.4 13.7 68.8 7.7 Q 60.2 5.7 51.6 7.7 Q 43.0 13.7 34.4 7.7 Q 25.8 5.7 17.2 7.7 Q 8.6 13.7 0.0 7.7 Z" fill="#f4f1ef" stroke="#5f5660" stroke-width="3.2" stroke-linejoin="round" /></g>
+      <g transform="translate(52 58)"><path d="M 2 5.7 Q 46.8 27.7 89.4 7.7 L 89.4 7.7 Z" fill="#e6dfe1" stroke="#5f5660" stroke-width="2.4" stroke-linejoin="round" /><path d="M 4 6.7 L 9.3 8.2 M 4 6.7 L 18.6 11.3 M 4 6.7 L 27.7 13.6 M 4 6.7 L 36.8 15.1 M 4 6.7 L 45.8 15.7 M 4 6.7 L 54.7 15.5 M 4 6.7 L 63.5 14.4 M 4 6.7 L 72.2 12.5 M 4 6.7 L 80.9 9.8 " stroke="#5f5660" stroke-width="1.1" stroke-linecap="round" opacity="0.45" /><path d="M 0 -3.6 C 26.0 -14.4 62.4 -27.6 99.8 -9.6 C 106.1 -1.2 99.8 7.7 89.4 7.7 Q 80.5 13.7 71.6 7.7 Q 62.6 5.7 53.7 7.7 Q 44.7 13.7 35.8 7.7 Q 26.8 5.7 17.9 7.7 Q 8.9 13.7 0.0 7.7 Z" fill="#f4f1ef" stroke="#5f5660" stroke-width="3.2" stroke-linejoin="round" /></g>
+      <!-- her shelf, the biggest, in the middle, with her face -->
+      <g transform="translate(52 110)"><path d="M 2 10.2 Q 57.6 34.2 110.1 12.2 L 110.1 12.2 Z" fill="#e6dfe1" stroke="#5f5660" stroke-width="2.4" stroke-linejoin="round" /><path d="M 4 11.2 L 11.5 13.0 M 4 11.2 L 22.8 16.4 M 4 11.2 L 34.1 18.9 M 4 11.2 L 45.3 20.5 M 4 11.2 L 56.3 21.2 M 4 11.2 L 67.3 20.9 M 4 11.2 L 78.1 19.7 M 4 11.2 L 88.9 17.6 M 4 11.2 L 99.5 14.6 " stroke="#5f5660" stroke-width="1.1" stroke-linecap="round" opacity="0.45" /><path d="M 0 -5.7 C 32.0 -22.8 76.8 -43.7 122.9 -15.2 C 130.6 -1.9 122.9 12.2 110.1 12.2 Q 99.1 18.2 88.1 12.2 Q 77.1 10.2 66.0 12.2 Q 55.0 18.2 44.0 12.2 Q 33.0 10.2 22.0 12.2 Q 11.0 18.2 0.0 12.2 Z" fill="#f4f1ef" stroke="#5f5660" stroke-width="3.2" stroke-linejoin="round" /></g>
+      <g class="face"><circle cx="103.2" cy="102" r="5" fill="#37313a" /><circle cx="121.2" cy="102" r="5" fill="#37313a" /><circle cx="104.9" cy="100.3" r="1.8" fill="white" /><circle cx="122.9" cy="100.3" r="1.8" fill="white" /><ellipse cx="94.2" cy="111" rx="4.6" ry="2.6" fill="#f9a8d4" opacity="0.95" /><ellipse cx="130.2" cy="111" rx="4.6" ry="2.6" fill="#f9a8d4" opacity="0.95" /><path d="M107.7 111 Q112.2 115.5 116.7 111" stroke="#37313a" stroke-width="2.7" fill="none" stroke-linecap="round" /></g>
+    `,
+    dishArt: `
+      <!-- one small, round spore -->
+      <circle cx="100" cy="100" r="42" fill="#f4f1ef" stroke="#5f5660" stroke-width="4" />
+      ${face(100, 104, '#37313a')}
+    `,
+  },
 ];
 
 // The home row shows at most HOME_MAX gals, so not every gal is on it.
