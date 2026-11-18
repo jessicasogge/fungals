@@ -3,7 +3,7 @@
 // only has to be made once.
 //
 // The home page shows them in its own order (HOME below), and the picker
-// shuffles them.
+// in A-to-Z order by scientific name.
 // Each gal has:
 //   id      her key, matching SPECIES in config.js and ?pal= in addresses
 //   name    what she's called
@@ -20,6 +20,8 @@
 // To add a gal: add her to the end of this list and to SPECIES in config.js,
 // and give her tile a color in styles.css (.<id> next to .sasha and the
 // others).
+import { SPECIES } from './config.js';
+import { plainText } from './italics.js';
 
 const SVG = 'http://www.w3.org/2000/svg';
 
@@ -855,15 +857,11 @@ export function pickerPages(gals = GALS, size = PAGE_SIZE) {
   return pages;
 }
 
-// A copy of `gals` in a random order (a Fisher-Yates shuffle, so every order
-// is equally likely). The picker uses it so no gal is always first.
-export function inRandomOrder(gals, random = Math.random) {
-  const order = [...gals];
-  for (let i = order.length - 1; i > 0; i--) {
-    const j = Math.floor(random() * (i + 1));
-    [order[i], order[j]] = [order[j], order[i]];
-  }
-  return order;
+// A copy of `gals` in A-to-Z order by scientific name (Aspergillus
+// fumigatus, Aspergillus oryzae, Batrachochytrium ...), for the picker.
+export function byScientificName(gals = GALS) {
+  const name = (gal) => plainText(SPECIES[gal.id].scientific);
+  return [...gals].sort((a, b) => name(a).localeCompare(name(b)));
 }
 
 export function galById(id) {
