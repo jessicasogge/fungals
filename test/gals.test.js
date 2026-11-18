@@ -7,7 +7,7 @@ import { resolve } from 'node:path';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { SPECIES } from '../public/game/config.js';
 import { plainText } from '../public/game/italics.js';
-import { dishGal, HOME_GALS, HOME_MAX, homeGal, inRandomOrder, PAGE_SIZE, galById, GALS, galTile, pickerPages } from '../public/game/gals.js';
+import { byScientificName, dishGal, HOME_GALS, HOME_MAX, homeGal, PAGE_SIZE, galById, GALS, galTile, pickerPages } from '../public/game/gals.js';
 
 // (jsdom changes import.meta.url to a web address, so find files from the project folder.)
 const file = (name) => readFileSync(resolve(process.cwd(), 'public', name), 'utf8');
@@ -142,27 +142,16 @@ describe('moving parts', () => {
   });
 });
 
-describe('inRandomOrder', () => {
-  it('keeps every gal, each once, and leaves GALS as it was', () => {
+describe('byScientificName', () => {
+  it('puts every gal in A-to-Z order by scientific name, and leaves GALS as it was', () => {
     const before = [...GALS];
-    const order = inRandomOrder(GALS);
-    expect(order).not.toBe(GALS);
-    expect([...order].sort((a, b) => a.id.localeCompare(b.id))).toEqual(
-      [...GALS].sort((a, b) => a.id.localeCompare(b.id)),
-    );
+    const order = byScientificName();
+    const names = order.map((gal) => SPECIES[gal.id].scientific.replaceAll('*', ''));
+    expect(names).toEqual([...names].sort((x, y) => x.localeCompare(y)));
+    expect(order).toHaveLength(GALS.length);
+    expect(new Set(order).size).toBe(GALS.length);
     expect(GALS).toEqual(before);
-  });
-
-  it('can put any gal first', () => {
-    // Over many shuffles, every gal leads at least once.
-    const firsts = new Set();
-    for (let i = 0; i < 500; i++) firsts.add(inRandomOrder(GALS)[0].id);
-    expect(firsts.size).toBe(GALS.length);
-  });
-
-  it('follows the random numbers it is given', () => {
-    expect(inRandomOrder(['a', 'b', 'c'], () => 0)).toEqual(['b', 'c', 'a']);
-    expect(inRandomOrder(['a', 'b', 'c'], () => 0.99)).toEqual(['a', 'b', 'c']);
+    expect(order[0].id).toBe('fumi'); // Aspergillus fumigatus
   });
 });
 
@@ -170,6 +159,8 @@ describe('the pages', () => {
   afterEach(() => {
     vi.doUnmock('../public/game/gals.js');
     vi.restoreAllMocks();
+    // Each visit to the picker starts fresh, with no remembered page.
+    sessionStorage.clear();
   });
 
   it('home shows up to 12 gals in its row, in order, each once', async () => {
@@ -202,14 +193,44 @@ describe('the pages', () => {
     }
   });
 
-  it('the picker shuffles all the gals together, then splits them into pages', async () => {
-    // With Math.random always 0, the shuffle moves the first gal to the end.
-    vi.spyOn(Math, 'random').mockReturnValue(0);
+  it('the picker lists the gals A to Z by scientific name, then splits them into pages', async () => {
     await open('pal-picker.html', 'game/gal-picker.js');
     const grids = [...document.querySelectorAll('.picker-grid')];
     const names = grids.map((grid) => [...grid.querySelectorAll('.gal-card h2')].map((h) => h.textContent));
-    expect(names).toEqual(pickerPages(inRandomOrder(GALS, () => 0)).map((page) => page.map((gal) => gal.name)));
-    expect(names.flat().at(-1)).toBe(GALS[0].name);
+    expect(names).toEqual(pickerPages(byScientificName()).map((page) => page.map((gal) => gal.name)));
+  });
+
+  it('the picker remembers the page you were on, and starts on page 1 without it', async () => {
+    vi.doMock('../public/game/gals.js', async (importActual) => {
+      const real = await importActual();
+      return { ...real, pickerPages: (gals) => real.pickerPages(gals, 1) };
+    });
+    const showing = () => [...document.querySelectorAll('.picker-grid')].filter((g) => !g.hidden).map((g) => g.dataset.page);
+    await open('pal-picker.html', 'game/gal-picker.js');
+    expect(showing()).toEqual(['1']);
+    document.querySelector('.pager-more').click();
+    document.querySelector('.pager-more').click();
+    expect(showing()).toEqual(['3']);
+    // Coming back to the picker: it opens on page 3 again.
+    await open('pal-picker.html', 'game/gal-picker.js');
+    expect(showing()).toEqual(['3']);
+    expect(document.querySelector('.pager-back').hidden).toBe(false);
+    // A saved page that no longer exists, or none at all, means page 1.
+    sessionStorage.setItem('fungals-picker-page', '999');
+    await open('pal-picker.html', 'game/gal-picker.js');
+    expect(showing()).toEqual(['1']);
+    sessionStorage.clear();
+    await open('pal-picker.html', 'game/gal-picker.js');
+    expect(showing()).toEqual(['1']);
+  });
+
+  it('the picker still works when storage is blocked', async () => {
+    vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => { throw new Error('blocked'); });
+    vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => { throw new Error('blocked'); });
+    await open('pal-picker.html', 'game/gal-picker.js');
+    const shown = [...document.querySelectorAll('.picker-grid')].filter((g) => !g.hidden);
+    expect(shown.map((g) => g.dataset.page)).toEqual(['1']);
+    document.querySelector('.pager-more').click();
   });
 
   it('the picker hides the pager while every gal fits on one page', async () => {
