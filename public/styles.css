@@ -499,6 +499,10 @@ a.gal-card:active {
   background: rgba(232, 227, 226, 0.9);
 }
 
+.ruthie {
+  background: rgba(244, 210, 216, 0.9);
+}
+
 .pick-btn {
   margin-top: 0.75rem;
   padding: 0.7rem 1rem;
@@ -1781,6 +1785,16 @@ body:not(.picker-page) .signature {
       color-mix(in srgb, #c4def5 calc(var(--sheen, 0) * 45%), white),
       color-mix(in srgb, #f9c8dc calc(var(--sheen, 0) * 45%), white));
   box-shadow: 0 0 5px 2px rgba(255, 255, 255, 0.95);
+}
+
+/* Ruthie's colonies (mold.js): white and fluffy, turning deep red from the
+   middle out (her --spores color), with her pigment seeping into the agar
+   around them as a soft pink-red stain (--stain, 0 to 1). */
+.colony.staining {
+  box-shadow:
+    0 0 0 1px rgba(140, 29, 58, 0.2),
+    0 0 calc(var(--stain, 0) * 26px) calc(var(--stain, 0) * 16px)
+      color-mix(in srgb, #dc5a73 calc(var(--stain, 0) * 40%), transparent);
 }
 
 /* Killed by an antifungal: the whole colony pops, swelling and vanishing. */
