@@ -571,15 +571,15 @@ export const SPECIES = {
   ruthie: {
     facts: [
       "Ruthie is the red yeast rice mold: grown on rice, she turns it deep red-purple.",
-      "People in Asia have grown Ruthie on rice for over a thousand years to color food red.",
+      "People in Asia have used Ruthie and her relatives for centuries to color food red.",
       "Ruthie's red pigments give red fermented tofu and some sausages their color.",
-      "Ruthie's red pigment seeps out of her colonies and stains the food she grows on.",
-      "Ruthie's round spore pods, called cleistothecia, hold her spores sealed inside.",
-      "Ruthie's genus name, *Monascus*, means \"one sac,\" for her single round pods.",
-      "Ruthie's species name, *purpureus*, means \"purple,\" for her deep red-purple color.",
-      "Ruthie's threads are divided into little compartments by thin cross walls.",
+      "Ruthie's pigments can seep out of her colonies and stain the food she grows on.",
+      "Ruthie's round spore pods, called cleistothecia, enclose her sexual spores.",
+      "Ruthie's genus name, *Monascus*, means \"one sac.\"",
+      "Ruthie's species name, *purpureus*, means \"purple,\" for her red-purple color.",
+      "Ruthie's threads are divided into little compartments by thin cross-walls.",
       "Ruthie is a sac fungus, a cousin of Fumi, Miri and Penelope.",
-      "Ruthie's little pear-shaped spores grow one at a time or in short chains.",
+      "Ruthie's pear-shaped asexual spores grow one at a time or in short chains.",
     ],
     scientific: 'Monascus purpureus',
     color: '#8c1d3a', // for her name above the dish
