@@ -140,7 +140,7 @@ export const QUIZ_FACTS = {
   ruthie: [
     "Ruthie is the red yeast rice mold: grown on rice, she turns it deep red-purple.",
     "Ruthie's red pigments give red fermented tofu and some sausages their color.",
-    "Ruthie's genus name, *Monascus*, means \"one sac,\" for her single round pods.",
-    "Ruthie's species name, *purpureus*, means \"purple,\" for her deep red-purple color.",
+    "Ruthie's genus name, *Monascus*, means \"one sac.\"",
+    "Ruthie's species name, *purpureus*, means \"purple,\" for her red-purple color.",
   ],
 };
