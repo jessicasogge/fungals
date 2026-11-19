@@ -39,7 +39,7 @@ export const TREE = {
                 {
                   id: 'aspergillus', name: 'Molds and more', sci: 'Eurotiomycetes',
                   note: 'Spores in chains or bunches.',
-                  kids: gals('fumi', 'miri', 'penelope', 'trixie'),
+                  kids: gals('fumi', 'miri', 'penelope', 'trixie', 'ruthie'),
                 },
                 {
                   id: 'flask', name: 'Flask fungi', sci: 'Sordariomycetes',

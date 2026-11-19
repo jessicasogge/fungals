@@ -388,6 +388,27 @@ describe("Opal's colonies", () => {
   });
 });
 
+describe("Ruthie's colonies", () => {
+  let layer;
+  beforeEach(() => {
+    layer = document.createElement('div');
+    document.querySelector('.agar').append(layer);
+  });
+
+  it('stain the agar around them as they ripen', () => {
+    const colonies = moldColonies({ layer, nutrients: fakeNutrients(), colors: SPECIES.ruthie.colors, staining: true });
+    const colony = colonies.plant(0, 0);
+    expect(colony.el.classList).toContain('staining');
+    expect(colony.el.style.getPropertyValue('--spores')).toBe(SPECIES.ruthie.colors.spores);
+    const stain = () => Number(colony.el.style.getPropertyValue('--stain'));
+    expect(stain()).toBe(0);
+    colonies.grow(GAME.COLONY_GROW_SECONDS / 2);
+    expect(stain()).toBeCloseTo(0.5);
+    colonies.grow(GAME.COLONY_GROW_SECONDS);
+    expect(stain()).toBe(1);
+  });
+});
+
 describe("Bea's pods", () => {
   let layer;
   beforeEach(() => {

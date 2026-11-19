@@ -37,7 +37,7 @@ describe('the family tree', () => {
   });
 
   it('finds the gals on any branch, however far down', () => {
-    expect(galsOn(branchById('molds'))).toEqual(['fumi', 'miri', 'penelope', 'trixie', 'rosie', 'ember', 'quinn']);
+    expect(galsOn(branchById('molds'))).toEqual(['fumi', 'miri', 'penelope', 'trixie', 'ruthie', 'rosie', 'ember', 'quinn']);
     expect(branchById('nope')).toBeNull();
   });
 });

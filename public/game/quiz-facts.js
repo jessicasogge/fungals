@@ -137,4 +137,10 @@ export const QUIZ_FACTS = {
     "Opal's species name, *ostreatus*, means \"oyster-like,\" for her shell-shaped caps.",
     "Opal's genus name, *Pleurotus*, means \"side ear,\" for her sideways-growing caps.",
   ],
+  ruthie: [
+    "Ruthie is the red yeast rice mold: grown on rice, she turns it deep red-purple.",
+    "Ruthie's red pigments give red fermented tofu and some sausages their color.",
+    "Ruthie's genus name, *Monascus*, means \"one sac.\"",
+    "Ruthie's species name, *purpureus*, means \"purple,\" for her red-purple color.",
+  ],
 };

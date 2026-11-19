@@ -836,6 +836,42 @@ export const GALS = [
       ${face(100, 104, '#37313a')}
     `,
   },
+  // Ruthie: Monascus purpureus, the red yeast rice mold: a round, wine-red
+  // spore pod (cleistothecium) on a short stalk, and side branches tipped
+  // with short chains of pear-shaped spores, on threads divided by cross
+  // walls. In the dish she plays like Fumi (see mold.js), and her colonies
+  // stain the agar red around them.
+  {
+    id: 'ruthie',
+    name: 'Ruthie',
+    looks: 'a wine-red Monascus purpureus mold: a round spore pod on a short stalk, with short chains of pear-shaped spores on side branches',
+    motion: 'bob',
+    frames: { home: '10 10 180 180', picker: '14 14 172 172', dish: '50 50 100 100' },
+    art: `
+      <!-- her thread along the agar, a short stalk up to her pod, and two little side branches -->
+      <path d="M 24 180 C 54 172 80 186 100 178 C 122 170 146 184 176 176 M 54 177 C 50 160 46 148 40 136 M 146 176 C 150 160 154 148 160 136" fill="none" stroke="#8c1d3a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M 100 174 L 100 146" fill="none" stroke="#8c1d3a" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M 24 180 C 54 172 80 186 100 178 C 122 170 146 184 176 176 M 54 177 C 50 160 46 148 40 136 M 146 176 C 150 160 154 148 160 136" fill="none" stroke="#f8dfe3" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M 100 174 L 100 146" fill="none" stroke="#f8dfe3" stroke-width="7.6" stroke-linecap="round" stroke-linejoin="round" />
+      <!-- cross walls dividing her threads into compartments, inside the thread -->
+      <path d="M 49.9 176.0 L 49.8 179.2 M 83.9 179.0 L 83.9 182.2 M 120.5 174.0 L 120.4 177.1 M 154.6 177.0 L 154.5 180.2 M 46.2 155.1 L 49.3 154.1 M 150.7 154.0 L 153.8 155.0 " stroke="#8c1d3a" stroke-width="1.6" stroke-linecap="butt" />
+      <!-- little pear-shaped spores at the branch tips, in short chains -->
+      <ellipse cx="40.0" cy="127.0" rx="6.5" ry="8" fill="#f3c7cf" stroke="#8c1d3a" stroke-width="2.4" transform="rotate(-14 40.0 127.0)" />
+      <ellipse cx="37.0" cy="112.0" rx="6.5" ry="8" fill="#f3c7cf" stroke="#8c1d3a" stroke-width="2.4" transform="rotate(-14 37.0 112.0)" />
+      <ellipse cx="34.0" cy="97.0" rx="6.5" ry="8" fill="#f3c7cf" stroke="#8c1d3a" stroke-width="2.4" transform="rotate(-14 34.0 97.0)" />
+      <ellipse cx="160.0" cy="127.0" rx="6.5" ry="8" fill="#f3c7cf" stroke="#8c1d3a" stroke-width="2.4" transform="rotate(14 160.0 127.0)" />
+      <ellipse cx="163.0" cy="112.0" rx="6.5" ry="8" fill="#f3c7cf" stroke="#8c1d3a" stroke-width="2.4" transform="rotate(14 163.0 112.0)" />
+      <ellipse cx="166.0" cy="97.0" rx="6.5" ry="8" fill="#f3c7cf" stroke="#8c1d3a" stroke-width="2.4" transform="rotate(14 166.0 97.0)" />
+      <!-- her round spore pod, with her face -->
+      <circle cx="100" cy="106" r="44" fill="#e48f9f" stroke="#8c1d3a" stroke-width="4" />
+      <g class="face"><circle cx="90" cy="104" r="5.2" fill="#4a0c1d" /><circle cx="110" cy="104" r="5.2" fill="#4a0c1d" /><circle cx="91.8" cy="102.2" r="1.9" fill="white" /><circle cx="111.8" cy="102.2" r="1.9" fill="white" /><ellipse cx="80" cy="115" rx="5" ry="2.8" fill="#f9a8d4" opacity="0.95" /><ellipse cx="120" cy="115" rx="5" ry="2.8" fill="#f9a8d4" opacity="0.95" /><path d="M95 115 Q100 120 105 115" stroke="#4a0c1d" stroke-width="2.8" fill="none" stroke-linecap="round" /></g>
+    `,
+    dishArt: `
+      <!-- one small, pear-shaped spore -->
+      <ellipse cx="100" cy="100" rx="38" ry="44" fill="#f8dfe3" stroke="#8c1d3a" stroke-width="4" />
+      ${face(100, 104, '#4a0c1d')}
+    `,
+  },
 ];
 
 // The home row shows at most HOME_MAX gals, so not every gal is on it.

@@ -568,6 +568,35 @@ export const SPECIES = {
       { code: 'FLC', name: 'fluconazole', zone: 12 },
     ],
   },
+  ruthie: {
+    facts: [
+      "Ruthie is the red yeast rice mold: grown on rice, she turns it deep red-purple.",
+      "People in Asia have used Ruthie and her relatives for centuries to color food red.",
+      "Ruthie's red pigments give red fermented tofu and some sausages their color.",
+      "Ruthie's pigments can seep out of her colonies and stain the food she grows on.",
+      "Ruthie's round spore pods, called cleistothecia, hold her spores sealed inside.",
+      "Ruthie's genus name, *Monascus*, means \"one sac.\"",
+      "Ruthie's species name, *purpureus*, means \"purple,\" for her red-purple color.",
+      "Ruthie's threads are divided into little compartments by thin cross-walls.",
+      "Ruthie is a sac fungus, a cousin of Fumi, Miri and Penelope.",
+      "Ruthie's little pear-shaped spores grow one at a time or in short chains.",
+    ],
+    scientific: 'Monascus purpureus',
+    color: '#8c1d3a', // for her name above the dish
+    kind: 'mold',
+    // Her colonies turn deep red, and her pigment stains the agar around
+    // them as they ripen (see mold.js).
+    staining: true,
+    colors: { fill: '#f8dfe3', stroke: '#8c1d3a', highlight: '#ffffff', dark: '#4a0c1d', spores: '#a3203f' },
+    // There are no standard disk sizes for Monascus, so these are estimates.
+    antifungals: [
+      { code: 'AMB', name: 'amphotericin B', zone: 20 },
+      { code: 'VOR', name: 'voriconazole', zone: 24 },
+      { code: 'ITC', name: 'itraconazole', zone: 22 },
+      { code: 'TRB', name: 'terbinafine', zone: 18 },
+      { code: 'FLC', name: 'fluconazole', zone: 12 },
+    ],
+  },
   fumi: {
     facts: [
       "Fumi's species name, *fumigatus*, means \"smoky,\" for her smoky grey-green colonies.",
