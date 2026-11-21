@@ -503,6 +503,10 @@ a.gal-card:active {
   background: rgba(244, 210, 216, 0.9);
 }
 
+.phoebe {
+  background: rgba(253, 236, 186, 0.9);
+}
+
 .pick-btn {
   margin-top: 0.75rem;
   padding: 0.7rem 1rem;
@@ -1802,6 +1806,23 @@ body:not(.picker-page) .signature {
     0 0 0 1px rgba(140, 29, 58, 0.2),
     0 0 calc(var(--stain, 0) * 26px) calc(var(--stain, 0) * 16px)
       color-mix(in srgb, #dc5a73 calc(var(--stain, 0) * 40%), transparent);
+}
+
+/* Phoebe's colonies (mold.js): white and fluffy, turning golden from her
+   beta-carotene as they ripen, with the gold gathered on the side facing
+   the light, up and to the left, the way her stalks lean toward light
+   (--lean, 0 to 1). */
+.colony.leaning {
+  background:
+    radial-gradient(circle at calc(50% - var(--lean, 0) * 11%) calc(50% - var(--lean, 0) * 11%),
+      color-mix(in srgb, var(--spores, #eba91e) 80%, white) 0 calc(var(--ripe, 0%) * 0.5),
+      color-mix(in srgb, var(--spores, #eba91e) 35%, white) calc(var(--ripe, 0%) * 0.95), transparent calc(var(--ripe, 0%) * 1.25)),
+    repeating-conic-gradient(rgba(190, 150, 80, 0.14) 0 1.5deg, transparent 1.5deg 4deg),
+    repeating-radial-gradient(circle, transparent 0 11%, rgba(200, 170, 110, 0.12) 12.5% 13.5%, transparent 15%),
+    radial-gradient(circle, #fffcf2 0 70%, #fffdf7 90%, rgba(255, 255, 255, 0.8) 100%);
+  box-shadow:
+    0 0 0 1px rgba(165, 104, 10, 0.2),
+    0 0 5px 2px rgba(255, 255, 255, 0.95);
 }
 
 /* Killed by an antifungal: the whole colony pops, swelling and vanishing. */

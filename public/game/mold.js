@@ -37,7 +37,9 @@ export function colonyRadius(seconds, { full = GAME.COLONY_FULL, grow = GAME.COL
 // pods as it ripens, and with `glowing` (Luna) it takes on a soft glow
 // (--glow, 0 to 1). With `pearly` (Opal), it takes on a pearly sheen the
 // same way (--sheen, 0 to 1). With `staining` (Ruthie), its red pigment
-// seeps out into the agar around it as it ripens (--stain, 0 to 1).
+// seeps out into the agar around it as it ripens (--stain, 0 to 1). With
+// `leaning` (Phoebe), it turns golden as it ripens, with the gold gathered
+// on the side facing the light (--lean, 0 to 1).
 // Positions and sizes use fractions of the dish radius.
 export const DROPS = [
   // Where each drop sits on the colony (percent across and down), and how
@@ -119,6 +121,7 @@ export function moldColonies({
   layer, disks = [], nutrients, colors, drops = false, wrinkled = false, powdery = false, caps = false,
   pods = false, onBurst = () => {}, fast = false, tufts = false, inky = false,
   pinheads = false, glowing = false, pearly = false, staining = false,
+  leaning = false,
 }) {
   const colonies = [];
   // How long a colony takes to reach full size, and its radius after
@@ -142,6 +145,7 @@ export function moldColonies({
     if (glowing) el.style.setProperty('--glow', ripe.toFixed(2));
     if (pearly) el.style.setProperty('--sheen', ripe.toFixed(2));
     if (staining) el.style.setProperty('--stain', ripe.toFixed(2));
+    if (leaning) el.style.setProperty('--lean', ripe.toFixed(2));
     for (const bit of colony.bits) bit.el.classList.toggle('shown', (inky ? melt : ripe) >= bit.at);
   }
 
@@ -160,7 +164,8 @@ export function moldColonies({
       const el = document.createElement('div');
       el.className = ['colony', wrinkled && 'wrinkled', powdery && 'powdery', caps && 'cottony', pods && 'pod',
         tufts && 'fiery', inky && 'inky', pinheads && 'pinned', glowing && 'glowing',
-        pearly && 'pearly', staining && 'staining'].filter(Boolean).join(' ');
+        pearly && 'pearly', staining && 'staining',
+        leaning && 'leaning'].filter(Boolean).join(' ');
       el.setAttribute('aria-hidden', 'true');
       el.style.setProperty('--spores', colors.spores);
       // A slightly uneven edge, different for each colony.
@@ -358,6 +363,7 @@ export function playMold(galEl, species, nutrients, disks, { level = 1, target =
     inky: Boolean(species.inky),
     pinheads: Boolean(species.pinheads), glowing: Boolean(species.glowing), pearly: Boolean(species.pearly),
     staining: Boolean(species.staining),
+    leaning: Boolean(species.leaning),
     pods: Boolean(species.pods), onBurst: (pod) => swimmers.release(pod.fx, pod.fy, pod.r),
   });
 

@@ -409,6 +409,27 @@ describe("Ruthie's colonies", () => {
   });
 });
 
+describe("Phoebe's colonies", () => {
+  let layer;
+  beforeEach(() => {
+    layer = document.createElement('div');
+    document.querySelector('.agar').append(layer);
+  });
+
+  it('turn golden toward the light as they ripen', () => {
+    const colonies = moldColonies({ layer, nutrients: fakeNutrients(), colors: SPECIES.phoebe.colors, leaning: true });
+    const colony = colonies.plant(0, 0);
+    expect(colony.el.classList).toContain('leaning');
+    expect(colony.el.style.getPropertyValue('--spores')).toBe(SPECIES.phoebe.colors.spores);
+    const lean = () => Number(colony.el.style.getPropertyValue('--lean'));
+    expect(lean()).toBe(0);
+    colonies.grow(GAME.COLONY_GROW_SECONDS / 2);
+    expect(lean()).toBeCloseTo(0.5);
+    colonies.grow(GAME.COLONY_GROW_SECONDS);
+    expect(lean()).toBe(1);
+  });
+});
+
 describe("Bea's pods", () => {
   let layer;
   beforeEach(() => {

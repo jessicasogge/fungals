@@ -872,6 +872,38 @@ export const GALS = [
       ${face(100, 104, '#4a0c1d')}
     `,
   },
+  // Phoebe: Phycomyces blakesleeanus, a pin mold with giant spore stalks
+  // that bend toward light: her face on a young golden pod on a tall stalk,
+  // and two even taller stalks with dark ripe pods, all leaning a little
+  // toward the light. In the dish she plays like Fumi (see mold.js), and
+  // her colonies turn golden on the side facing the light.
+  {
+    id: 'phoebe',
+    name: 'Phoebe',
+    looks: 'a golden Phycomyces blakesleeanus pin mold: a round golden spore pod on a tall stalk, with two taller stalks topped with dark ripe pods, all leaning toward the light',
+    motion: 'bob',
+    frames: { home: '10 10 180 180', picker: '14 14 172 172', dish: '50 50 100 100' },
+    art: `
+      <!-- her thread along the agar, and very tall stalks that lean a little toward the light -->
+      <path d="M 22 182 C 60 175 140 187 178 179" fill="none" stroke="#a5680a" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M 58 180 C 58 150 50 122 38 100 M 146 182 C 150 140 154 100 146 64" fill="none" stroke="#a5680a" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M 104 181 C 106 158 100 138 98 116" fill="none" stroke="#a5680a" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M 22 182 C 60 175 140 187 178 179" fill="none" stroke="#fff1cc" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M 58 180 C 58 150 50 122 38 100 M 146 182 C 150 140 154 100 146 64" fill="none" stroke="#fff1cc" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M 104 181 C 106 158 100 138 98 116" fill="none" stroke="#fff1cc" stroke-width="5.6" stroke-linecap="round" stroke-linejoin="round" />
+      <!-- ripe spore pods, dark and round, on the tall stalks -->
+      <circle cx="36" cy="90" r="11" fill="#7a4c08" stroke="#a5680a" stroke-width="3" />
+      <circle cx="144" cy="53" r="12.5" fill="#7a4c08" stroke="#a5680a" stroke-width="3" />
+      <!-- her pod: a young golden one, with her face -->
+      <circle cx="97" cy="84" r="33" fill="#f6c449" stroke="#a5680a" stroke-width="4" />
+      <g class="face"><circle cx="88" cy="82" r="5" fill="#4f3000" /><circle cx="106" cy="82" r="5" fill="#4f3000" /><circle cx="89.7" cy="80.3" r="1.8" fill="white" /><circle cx="107.7" cy="80.3" r="1.8" fill="white" /><ellipse cx="79" cy="92" rx="4.6" ry="2.6" fill="#f9a8d4" opacity="0.95" /><ellipse cx="115" cy="92" rx="4.6" ry="2.6" fill="#f9a8d4" opacity="0.95" /><path d="M92.5 92 Q97 96.5 101.5 92" stroke="#4f3000" stroke-width="2.7" fill="none" stroke-linecap="round" /></g>
+    `,
+    dishArt: `
+      <!-- one small, round spore -->
+      <circle cx="100" cy="100" r="42" fill="#fff1cc" stroke="#a5680a" stroke-width="4" />
+      ${face(100, 104, '#4f3000')}
+    `,
+  },
 ];
 
 // The home row shows at most HOME_MAX gals, so not every gal is on it.

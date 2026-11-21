@@ -597,6 +597,35 @@ export const SPECIES = {
       { code: 'FLC', name: 'fluconazole', zone: 12 },
     ],
   },
+  phoebe: {
+    facts: [
+      "Phoebe is a pin mold whose spore stalks can reach 10 cm tall, huge for a mold.",
+      "Phoebe's stalks bend toward light, helping scientists study how cells sense it.",
+      "Phoebe's stalks can bend away from nearby objects without touching them.",
+      "Phoebe makes beta-carotene, the same pigment that helps make carrots orange.",
+      "Phoebe's round spore sacs sit atop her stalks and turn dark as they mature.",
+      "Each of Phoebe's tall spore stalks is a single giant cell with many nuclei.",
+      "Phoebe grows on dung and decaying plant material in damp habitats.",
+      "Phoebe is a pin mold, outside the sac-fungus and club-fungus branches.",
+      "Phoebe's threads have few cross-walls, leaving much of their inside connected.",
+      "Phoebe's stalks sense gravity, helping them grow upward even in darkness.",
+    ],
+    scientific: 'Phycomyces blakesleeanus',
+    color: '#95600a', // for her name above the dish
+    kind: 'mold',
+    // Her colonies turn golden as they ripen, gathered on the side facing
+    // the light (see mold.js).
+    leaning: true,
+    colors: { fill: '#fff1cc', stroke: '#a5680a', highlight: '#ffffff', dark: '#4f3000', spores: '#eba91e' },
+    // There are no standard disk sizes for Phycomyces, so these are
+    // estimates. Like other pin molds she's naturally resistant to
+    // voriconazole and fluconazole, so those aren't used.
+    antifungals: [
+      { code: 'AMB', name: 'amphotericin B', zone: 24 },
+      { code: 'POS', name: 'posaconazole', zone: 20 },
+      { code: 'ITC', name: 'itraconazole', zone: 13 },
+    ],
+  },
   fumi: {
     facts: [
       "Fumi's species name, *fumigatus*, means \"smoky,\" for her smoky grey-green colonies.",

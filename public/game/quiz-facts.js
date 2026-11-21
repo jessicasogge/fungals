@@ -143,4 +143,10 @@ export const QUIZ_FACTS = {
     "Ruthie's genus name, *Monascus*, means \"one sac.\"",
     "Ruthie's species name, *purpureus*, means \"purple,\" for her red-purple color.",
   ],
+  phoebe: [
+    "Phoebe's spore stalks can grow up to 10 cm tall, huge for a mold.",
+    "Phoebe's stalks bend toward light, so scientists study her to learn how life senses it.",
+    "Phoebe can sense objects nearby and bend away from them without touching them.",
+    "Phoebe makes beta-carotene, the same golden pigment that makes carrots orange.",
+  ],
 };
