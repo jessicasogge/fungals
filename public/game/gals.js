@@ -429,28 +429,27 @@ export const GALS = [
     `,
   },
   // Esme: Ustilago esculenta, the wild rice smut, drawn as she grows on her
-  // own: one long, bean-shaped sage-green cell, gently curved, with a bud
-  // growing from her tip through a narrow neck, a bud scar at her other tip
-  // and a little vacuole inside. In the dish she plays like Maizey.
+  // own: one long, slim, sage-green yeast cell, an oval with gently tapered,
+  // rounded ends, with a long, slim bud growing from her tip through a
+  // narrow neck and a little vacuole inside. Her frames are a little wider
+  // than other gals' to fit her length. In the dish she plays like Maizey.
   {
     id: 'esme',
     name: 'Esme',
-    looks: 'a sage-green Ustilago esculenta yeast: one long, bean-shaped cell, gently curved, with a bud growing from her tip',
+    looks: 'a sage-green Ustilago esculenta yeast: one long, slim oval cell with rounded ends, and a long, slim bud growing from her tip',
     motion: 'bob',
-    frames: { home: '12 14 184 184', picker: '16 18 176 176', dish: '12 14 184 184' },
+    frames: { home: '-6 -4 216 216', picker: '-4 -2 212 212', dish: '-6 -4 216 216' },
     art: `
-      <g transform="translate(-4 2) translate(104 106) scale(0.86) translate(-104 -106) rotate(12 96 110)">
+      <g transform="translate(-19 -6) rotate(30.0 121 110)">
         <!-- one outline for her cell and the bud at her tip, so the bud grows out of her through a narrow neck: outlines first, then fills -->
-        <path d="M 160 96 C 166 88 180 84 190 88 C 198 92 196 104 186 107 C 176 110 166 108 160 104 Z" fill="#5b8a2e" stroke="#5b8a2e" stroke-width="8" stroke-linejoin="round" />
-        <path d="M 26 128 C 12 114 20 92 42 84 C 72 74 114 72 146 80 C 170 86 172 106 160 118 C 146 132 118 134 92 138 C 62 142 36 140 26 128 Z" fill="#5b8a2e" stroke="#5b8a2e" stroke-width="8" stroke-linejoin="round" />
-        <path d="M 160 96 C 166 88 180 84 190 88 C 198 92 196 104 186 107 C 176 110 166 108 160 104 Z" fill="#e3f0d2" />
-        <path d="M 26 128 C 12 114 20 92 42 84 C 72 74 114 72 146 80 C 170 86 172 106 160 118 C 146 132 118 134 92 138 C 62 142 36 140 26 128 Z" fill="#e3f0d2" />
-        <!-- a bud scar at her other tip, where she budded before -->
-        <ellipse cx="25" cy="112" rx="3.6" ry="6.5" fill="none" stroke="#86ad58" stroke-width="2.4" />
+        <path d="M 180 105 C 186 100 196 99.5 206 99.5 C 218 99.5 227 104 227 110 C 227 116 218 120.5 206 120.5 C 196 120.5 186 120 180 115 Z" fill="#5b8a2e" stroke="#5b8a2e" stroke-width="8" stroke-linejoin="round" />
+        <path d="M 18 110 C 18 93 44 85 101 85 C 158 85 184 93 184 110 C 184 127 158 135 101 135 C 44 135 18 127 18 110 Z" fill="#5b8a2e" stroke="#5b8a2e" stroke-width="8" stroke-linejoin="round" />
+        <path d="M 180 105 C 186 100 196 99.5 206 99.5 C 218 99.5 227 104 227 110 C 227 116 218 120.5 206 120.5 C 196 120.5 186 120 180 115 Z" fill="#e3f0d2" />
+        <path d="M 18 110 C 18 93 44 85 101 85 C 158 85 184 93 184 110 C 184 127 158 135 101 135 C 44 135 18 127 18 110 Z" fill="#e3f0d2" />
         <!-- a little sac of water (a vacuole) inside her -->
-        <circle cx="143" cy="98" r="5.5" fill="#f3f9ea" stroke="#9cbd74" stroke-width="1.5" />
+        <circle cx="156" cy="104" r="5.5" fill="#f3f9ea" stroke="#9cbd74" stroke-width="1.5" />
       </g>
-      ${face(92, 112, '#2d4a12')}
+      ${face(82, 89, '#2d4a12')}
     `,
   },
   // Ruby: Hydnellum peckii, the bleeding tooth fungus: a fuzzy white

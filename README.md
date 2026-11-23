@@ -62,7 +62,7 @@ The home page shows 12 of them at most (`HOME` in `public/game/gals.js`), so not
 | **Ruby** | *Hydnellum peckii* | The bleeding tooth fungus: a fuzzy white mushroom cap beaded with red drops, with little spikes underneath. In the dish, one round, warty spore |
 | **Neve** | *Cryptococcus neoformans* | A round, soft-aqua yeast in a thick, glossy, see-through capsule, with a small bud on a narrow neck |
 | **Maizey** | *Ustilago maydis* | A plum yeast: one long, cigar-shaped cell with a small bud at her tip |
-| **Esme** | *Ustilago esculenta* | A sage-green yeast: one long, bean-shaped cell, gently curved, with a bud growing from her tip, a bud scar at her other tip and a little vacuole inside |
+| **Esme** | *Ustilago esculenta* | A sage-green yeast: one long, slim oval cell with rounded ends, and a long, slim bud growing from her tip with a little vacuole beside it |
 | **Peachy** | *Komagataella phaffii* | A rose-pink yeast: one plump oval cell with round peroxisomes inside and a small bud on top |
 | **Miri** | *Aspergillus oryzae* | A golden puff of spore chains pointing every way, on a tall, bumpy stalk. In the dish, one round golden spore |
 
