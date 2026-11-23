@@ -30,10 +30,11 @@ describe('the family tree', () => {
     expect(names(lineage('club'))).toEqual(['Fungi', 'Dikarya', 'Club fungi']);
   });
 
-  it('knows the science: Neve is a club fungus, and Olive is a cousin of Maizey', () => {
+  it('knows the science: Neve is a club fungus, and Olive and Esme are cousins of Maizey', () => {
     expect(lineage('neve')).toContain(branchById('club'));
     expect(lineage('neve')).not.toContain(branchById('sac'));
     expect(lineage('olive').at(-1)).toBe(lineage('maizey').at(-1));
+    expect(lineage('esme').at(-1)).toBe(lineage('maizey').at(-1));
   });
 
   it('finds the gals on any branch, however far down', () => {

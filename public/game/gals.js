@@ -428,6 +428,31 @@ export const GALS = [
       ${face(93, 110, '#3b1f57')}
     `,
   },
+  // Esme: Ustilago esculenta, the wild rice smut, drawn as she grows on her
+  // own: one long, bean-shaped sage-green cell, gently curved, with a bud
+  // growing from her tip through a narrow neck, a bud scar at her other tip
+  // and a little vacuole inside. In the dish she plays like Maizey.
+  {
+    id: 'esme',
+    name: 'Esme',
+    looks: 'a sage-green Ustilago esculenta yeast: one long, bean-shaped cell, gently curved, with a bud growing from her tip',
+    motion: 'bob',
+    frames: { home: '12 14 184 184', picker: '16 18 176 176', dish: '12 14 184 184' },
+    art: `
+      <g transform="translate(-4 2) translate(104 106) scale(0.86) translate(-104 -106) rotate(12 96 110)">
+        <!-- one outline for her cell and the bud at her tip, so the bud grows out of her through a narrow neck: outlines first, then fills -->
+        <path d="M 160 96 C 166 88 180 84 190 88 C 198 92 196 104 186 107 C 176 110 166 108 160 104 Z" fill="#5b8a2e" stroke="#5b8a2e" stroke-width="8" stroke-linejoin="round" />
+        <path d="M 26 128 C 12 114 20 92 42 84 C 72 74 114 72 146 80 C 170 86 172 106 160 118 C 146 132 118 134 92 138 C 62 142 36 140 26 128 Z" fill="#5b8a2e" stroke="#5b8a2e" stroke-width="8" stroke-linejoin="round" />
+        <path d="M 160 96 C 166 88 180 84 190 88 C 198 92 196 104 186 107 C 176 110 166 108 160 104 Z" fill="#e3f0d2" />
+        <path d="M 26 128 C 12 114 20 92 42 84 C 72 74 114 72 146 80 C 170 86 172 106 160 118 C 146 132 118 134 92 138 C 62 142 36 140 26 128 Z" fill="#e3f0d2" />
+        <!-- a bud scar at her other tip, where she budded before -->
+        <ellipse cx="25" cy="112" rx="3.6" ry="6.5" fill="none" stroke="#86ad58" stroke-width="2.4" />
+        <!-- a little sac of water (a vacuole) inside her -->
+        <circle cx="143" cy="98" r="5.5" fill="#f3f9ea" stroke="#9cbd74" stroke-width="1.5" />
+      </g>
+      ${face(92, 112, '#2d4a12')}
+    `,
+  },
   // Ruby: Hydnellum peckii, the bleeding tooth fungus: a fuzzy white
   // mushroom cap beaded with red drops, with spikes ("teeth") underneath. In
   // the dish she plays like Fumi (see mold.js), and her colonies bead with
