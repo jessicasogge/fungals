@@ -151,8 +151,8 @@ export const QUIZ_FACTS = {
   ],
   esme: [
     "Esme is the wild rice smut, who makes wild rice stems swell into a crunchy vegetable.",
-    "People in China have eaten Esme's swollen stems, called *jiaobai*, for centuries.",
+    "People in China have eaten the stems Esme swells, called *jiaobai*, for centuries.",
     "Esme's species name, *esculenta*, means \"good to eat.\"",
-    "Esme keeps her wild rice plant from flowering, so it puts its energy into its stem.",
+    "Esme keeps her wild rice host from flowering and makes its stems swell.",
   ],
 };
