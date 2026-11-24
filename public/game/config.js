@@ -216,8 +216,7 @@ export const SPECIES = {
     // All sage green, like the vegetable she makes. Her highlight is barely
     // lighter than her fill, so her cells have no white shine.
     colors: { fill: '#e3f0d2', stroke: '#5b8a2e', highlight: '#eef6e4', dark: '#2d4a12' },
-    // There are no standard disk sizes for Ustilago, so these are estimates,
-    // the same as Maizey's.
+    // There are no standard disk sizes for Ustilago, so these are estimates
     antifungals: [
       { code: 'AMB', name: 'amphotericin B', zone: 18 },
       { code: 'VOR', name: 'voriconazole', zone: 26 },
