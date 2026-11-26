@@ -122,6 +122,20 @@ npm run test:coverage   # run them and check how much of the game they cover
 
 The tests use [Vitest](https://vitest.dev/). Most of the game logic runs in [jsdom](https://github.com/jsdom/jsdom), a simulated browser page. The coverage check fails if the tests leave game code untested (the thresholds are in [`vitest.config.js`](vitest.config.js)), and the deploy runs it, so untested code doesn't ship.
 
+### Checking the art
+
+```sh
+npx playwright install chromium   # once, to get the browser
+npm run check:art
+```
+
+jsdom can't measure drawings, so the art check ([`scripts/check-art.mjs`](scripts/check-art.mjs)) draws every gal in a real browser, in each of her three frames (home, picker and dish), and flags:
+
+- **Spills:** art reaching past a frame's edge, where it gets cut off. Art that runs off the edge on purpose, like Opal's tree trunk or a thread along the agar, is marked `class="bleed"` in `gals.js`, and Bea's tail (`class="tail"`) is meant to stick out, so those are left out.
+- **Crowded faces:** a detail, like a droplet, a spore or the edge of her body, coming within a hair of her eyes or smile, or crossing one of her cheeks. Lines hidden behind something drawn on top don't count.
+
+It lists each problem by the comment on that part of her art, saves a close-up of every crowded face, and saves a contact sheet of every gal's picker card side by side (handy for checking that a new gal's colors stand out), all in `art-check/`, which git ignores. It exits with an error if anything's wrong. Run it whenever you add or redraw a gal.
+
 ## Project layout
 
 FunGals started as a copy of the PetriPals engine (steering, nutrients, disks and zones, the loading card and the win spores), with the bacteria swapped out for fungi.
@@ -135,6 +149,7 @@ FunGals started as a copy of the PetriPals engine (steering, nutrients, disks an
 | `public/game/` | Game code: the game loop (`game.js`), a colony eating and budding (`colony.js`), the mold game, where a spore starts colonies that spread (`mold.js`), the end-of-level pop-up both games share (`banner.js`), how yeast cells bud and cluster (`yeast.js`, with the cluster math in `attach.js`), steering (`keyboard.js`, `touch.js`), antifungal disks and zones (`antifungal.js`), nutrients, physics, settings and fun facts (`config.js`), the fun-fact pop-up (`facts.js`, with italics for scientific names from `italics.js`) the win spores (`spores.js`), and Who’s That Gal? (`whos-that-gal.js`, with the facts' "this gal" swap in `guess.js` and the facts it asks about in `quiz-facts.js`) |
 | `public/game/gals.js` | Every gal's name and drawing, in one place. To add a gal, see the notes at the top. |
 | `test/` | Tests |
+| `scripts/` | The art check (`check-art.mjs`, with its geometry in `art-geometry.js`) |
 | `src/index.ts` | Small Express server for local development |
 
 ## Deployment
