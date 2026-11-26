@@ -62,7 +62,7 @@ export const TREE = {
             {
               id: 'smuts', name: 'Smuts and cousins', sci: 'Ustilaginomycotina',
               note: 'Plant smuts, and some yeasts that live on skin.',
-              kids: gals('maizey', 'olive'),
+              kids: gals('maizey', 'esme', 'olive'),
             },
           ],
         },

@@ -149,4 +149,10 @@ export const QUIZ_FACTS = {
     "Phoebe can sense objects nearby and bend away from them without touching them.",
     "Phoebe makes beta-carotene, the same golden pigment that makes carrots orange.",
   ],
+  esme: [
+    "Esme is the wild rice smut, who makes wild rice stems swell into a crunchy vegetable.",
+    "People in China have eaten the stems Esme swells, called *jiaobai*, for centuries.",
+    "Esme's species name, *esculenta*, means \"good to eat.\"",
+    "Esme keeps her wild rice host from flowering and makes its stems swell.",
+  ],
 };

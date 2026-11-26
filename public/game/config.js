@@ -195,6 +195,36 @@ export const SPECIES = {
       { code: 'CAS', name: 'caspofungin', zone: 12 },
     ],
   },
+  esme: {
+    facts: [
+      "Esme is a wild rice smut that makes her host's stems swell into a crunchy vegetable.",
+      "People in China have eaten the stems Esme swells, called *jiaobai*, for centuries.",
+      "Unlike most smuts, Esme is welcomed by farmers for the vegetable she helps create.",
+      "Esme's species name, *esculenta*, means \"good to eat.\"",
+      "The stems Esme swells are called water bamboo, but her host is not bamboo.",
+      "Esme suppresses flowering in her wild rice host and makes its stems swell.",
+      "Outside her host, Esme can grow as elongated, bean-shaped yeast cells.",
+      "Esme's yeast cells reproduce by budding, growing small daughters from larger cells.",
+      "Esme is a cousin of Maizey, the corn smut: both belong to the genus *Ustilago*.",
+      "The stems Esme swells can fill with dark spores, making them grey or black inside.",
+    ],
+    scientific: 'Ustilago esculenta',
+    color: '#4d7a24', // for her name above the dish
+    kind: 'yeast',
+    // Long cells that bud from their tips, like Maizey's (see yeast.js).
+    cigars: true,
+    // All sage green, like the vegetable she makes. Her highlight is barely
+    // lighter than her fill, so her cells have no white shine.
+    colors: { fill: '#e3f0d2', stroke: '#5b8a2e', highlight: '#eef6e4', dark: '#2d4a12' },
+    // There are no standard disk sizes for Ustilago, so these are estimates
+    antifungals: [
+      { code: 'AMB', name: 'amphotericin B', zone: 18 },
+      { code: 'VOR', name: 'voriconazole', zone: 26 },
+      { code: 'ITC', name: 'itraconazole', zone: 24 },
+      { code: 'FLC', name: 'fluconazole', zone: 17 },
+      { code: 'CAS', name: 'caspofungin', zone: 12 },
+    ],
+  },
   ruby: {
     facts: [
       "Ruby is the \"bleeding tooth fungus\": her young white cap oozes bright red drops.",
