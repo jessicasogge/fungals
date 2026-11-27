@@ -13,13 +13,16 @@
 //           page can frame her its own way: a little room around her on the
 //           home page, filling her tile on the picker, snug in the dish
 //   art     the drawing itself, in a 200 x 200 space. Wrap the face in
-//           <g class="face">.
+//           <g class="face">. Mark anything meant to run off the edge of a
+//           frame, like a tree trunk or a thread along the agar,
+//           class="bleed", so the art check leaves it be.
 //   dishArt (optional) a different drawing for the dish, framed by
 //           frames.dish: a mold plays as one of her spores
 //
 // To add a gal: add her to the end of this list and to SPECIES in config.js,
 // and give her tile a color in styles.css (.<id> next to .sasha and the
-// others).
+// others). Then run `npm run check:art` to check she fits her frames and
+// nothing crowds her face (see the README).
 import { SPECIES } from './config.js';
 import { plainText } from './italics.js';
 
@@ -120,7 +123,7 @@ export const GALS = [
     frames: { home: '20 32 160 160', picker: '29 44 142 142', dish: '50 50 100 100' },
     art: `
       <!-- the stalk (stipe) -->
-      <rect x="93" y="150" width="14" height="36" rx="6" fill="#dcebe5" stroke="#3f7a6c" stroke-width="4" />
+      <rect class="bleed" x="93" y="150" width="14" height="36" rx="6" fill="#dcebe5" stroke="#3f7a6c" stroke-width="4" />
       <!-- chains of spores on little flasks (phialides), all pointing up -->
       <ellipse cx="74" cy="97" rx="4.5" ry="7" fill="#bcd6cc" stroke="#3f7a6c" stroke-width="2.5" />
       <circle cx="74" cy="85" r="7" fill="#7fa89b" stroke="#3f7a6c" stroke-width="2.5" />
@@ -167,7 +170,7 @@ export const GALS = [
     art: `
       <!-- the handle (stipe), the bristles (chains of spores on short
            branches), and the band where they meet, with her face -->
-      <path d="M90 144 L93 188 Q100 195 107 188 L110 144 Z" fill="#dde6f0" stroke="#3d5a80" stroke-width="4" stroke-linejoin="round"/>
+      <path class="bleed" d="M90 144 L93 188 Q100 195 107 188 L110 144 Z" fill="#dde6f0" stroke="#3d5a80" stroke-width="4" stroke-linejoin="round"/>
       <circle cx="55.0" cy="80.2" r="4.6" fill="#7f9cc0" stroke="#3d5a80" stroke-width="1.8"/>
       <circle cx="49.2" cy="73.1" r="4.6" fill="#7f9cc0" stroke="#3d5a80" stroke-width="1.8"/>
       <circle cx="43.4" cy="65.9" r="4.6" fill="#7f9cc0" stroke="#3d5a80" stroke-width="1.8"/>
@@ -498,9 +501,9 @@ export const GALS = [
     art: `
       <!-- her thread (hypha) along the agar, and the short stalk (conidiophore) rising from it -->
       <g fill="none" stroke-linecap="round">
-      <path d="M 18 156 C 56 146 78 168 100 160 C 124 151 152 166 186 150" stroke="#3d3632" stroke-width="9" />
+      <path class="bleed" d="M 18 156 C 56 146 78 168 100 160 C 124 151 152 166 186 150" stroke="#3d3632" stroke-width="9" />
       <path d="M 100 160 C 96 144 104 128 100 109" stroke="#3d3632" stroke-width="9" />
-      <path d="M 18 156 C 56 146 78 168 100 160 C 124 151 152 166 186 150" stroke="#f4ece6" stroke-width="4" />
+      <path class="bleed" d="M 18 156 C 56 146 78 168 100 160 C 124 151 152 166 186 150" stroke="#f4ece6" stroke-width="4" />
       <path d="M 100 160 C 96 144 104 128 100 109" stroke="#f4ece6" stroke-width="4" />
       </g>
       <!-- dark, cocoa spores that grow straight on the thread -->
@@ -563,9 +566,9 @@ export const GALS = [
     art: `
       <!-- her stalk and a curly, springy coiled thread (a spiral hypha) -->
       <g fill="none" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M 92 186 C 88 168 96 140 92 118" stroke="#1c8a60" stroke-width="9" />
+      <path class="bleed" d="M 92 186 C 88 168 96 140 92 118" stroke="#1c8a60" stroke-width="9" />
       <path d="M 92.5 152 C 97 152 101 152 106 152 L 107.0 151.9 L 107.9 151.7 L 108.8 151.4 L 109.8 151.1 L 110.6 150.7 L 111.5 150.2 L 112.3 149.7 L 113.1 149.1 L 113.8 148.5 L 114.5 147.8 L 115.1 147.1 L 115.6 146.3 L 116.1 145.5 L 116.5 144.7 L 116.8 143.9 L 117.1 143.1 L 117.3 142.2 L 117.4 141.4 L 117.5 140.6 L 117.5 139.9 L 117.4 139.1 L 117.2 138.4 L 117.1 137.8 L 116.8 137.2 L 116.5 136.6 L 116.2 136.1 L 115.8 135.7 L 115.4 135.4 L 115.0 135.1 L 114.6 134.9 L 114.1 134.7 L 113.7 134.7 L 113.2 134.7 L 112.8 134.8 L 112.4 135.0 L 112.0 135.2 L 111.7 135.5 L 111.3 135.9 L 111.1 136.3 L 110.9 136.8 L 110.7 137.3 L 110.6 137.9 L 110.5 138.5 L 110.6 139.1 L 110.6 139.8 L 110.8 140.4 L 111.0 141.1 L 111.3 141.8 L 111.7 142.5 L 112.1 143.1 L 112.6 143.8 L 113.2 144.4 L 113.8 144.9 L 114.5 145.4 L 115.2 145.9 L 116.0 146.3 L 116.9 146.7 L 117.7 147.0 L 118.6 147.2 L 119.6 147.4 L 120.5 147.5 L 121.5 147.5 L 122.4 147.4 L 123.4 147.2 L 124.3 147.0 L 125.2 146.7 L 126.1 146.4 L 127.0 145.9 L 127.9 145.4 L 128.7 144.9 L 129.4 144.3 L 130.1 143.6 L 130.7 142.9 L 131.3 142.2 L 131.8 141.4 L 132.3 140.6 L 132.6 139.8 L 132.9 139.0 L 133.2 138.1 L 133.3 137.3 L 133.4 136.5 L 133.5 135.7 L 133.4 135.0 L 133.3 134.2 L 133.2 133.6 L 133.0 132.9 L 132.7 132.4 L 132.4 131.8 L 132.0 131.4 L 131.7 131.0 L 131.3 130.7 L 130.8 130.4 L 130.4 130.2 L 129.9 130.1 L 129.5 130.1 L 129.1 130.2 L 128.6 130.3 L 128.2 130.5 L 127.9 130.7 L 127.5 131.1 L 127.2 131.5 L 127.0 131.9 L 126.8 132.4 L 126.6 133.0 L 126.6 133.6 L 126.5 134.2 L 126.6 134.8 L 126.7 135.5 L 126.9 136.2 L 127.1 136.8 L 127.5 137.5 L 127.9 138.2 L 128.3 138.8 L 128.9 139.4 L 129.4 140.0 L 130.1 140.6 L 130.8 141.1 L 131.6 141.5 L 132.4 141.9 L 133.2 142.3 L 134.1 142.5 L 135.0 142.7 L 136.0 142.8 L 136.9 142.9 L 137.9 142.9 L 138.8 142.8 L 139.8 142.6 L 140.7 142.3 L 141.6 142.0 L 142.5 141.6 L 143.4 141.2 L 144.2 140.6 L 145.0 140.1 L 145.7 139.4 L 146.4 138.8 L 147.0 138.0 L 147.5 137.3 L 148.0 136.5 L 148.4 135.7 L 148.8 134.9 L 149.1 134.0 L 149.3 133.2 L 149.4 132.4 L 149.5 131.6 L 149.5 130.8 L 149.4 130.1 L 149.3 129.4 L 149.1 128.7 L 148.9 128.1 L 148.6 127.6 L 148.2 127.1 L 147.9 126.6 L 147.5 126.3 L 147.1 126.0 L 146.6 125.8 L 146.2 125.6 L 145.7 125.5 L 145.3 125.5 L 144.9 125.6 L 144.5 125.8 L 144.1 126.0 L 143.7 126.3 L 143.4 126.7 L 143.1 127.1 L 142.9 127.6 L 142.7 128.1 L 142.6 128.6 L 142.5 129.2 L 142.5 129.9 L 142.6 130.5 L 142.8 131.2 L 143.0 131.9 L 143.3 132.6 L 143.6 133.2 L 144.0 133.9 L 144.5 134.5 L 145.1 135.1 L 145.7 135.7 L 146.4 136.2 L 147.1 136.7 L 147.9 137.1 L 148.7 137.5 L 149.6 137.8 L 150.5 138.0 L 151.4 138.2 L 152.4 138.3 L 153.3 138.3 L 154.3 138.3 L 155.2 138.1 L 156.2 137.9 L 157.1 137.6 L 158.0 137.3 L 158.9 136.9 L 159.7 136.4 L 160.5 135.8 L 161.3 135.2 L 162.0 134.6 L 162.6 133.9 L 163.2 133.1 L 163.7 132.4 L 164.2 131.6 L 164.6 130.8 L 164.9 129.9 L 165.1 129.1 L 165.3 128.3 L 165.4 127.5 L 165.5 126.7 L 165.4 125.9 L 165.3 125.2 L 165.2 124.5 L 165.0 123.9 L 164.7 123.3 L 164.4 122.8 L 164.1 122.3 L 163.7 121.9 L 163.3 121.6 L 162.9 121.3 L 162.4 121.1 L 162.0 121.0" stroke="#1c8a60" stroke-width="6.5" />
-      <path d="M 92 186 C 88 168 96 140 92 118" stroke="#d3f3e3" stroke-width="4" />
+      <path class="bleed" d="M 92 186 C 88 168 96 140 92 118" stroke="#d3f3e3" stroke-width="4" />
       <path d="M 92.5 152 C 97 152 101 152 106 152 L 107.0 151.9 L 107.9 151.7 L 108.8 151.4 L 109.8 151.1 L 110.6 150.7 L 111.5 150.2 L 112.3 149.7 L 113.1 149.1 L 113.8 148.5 L 114.5 147.8 L 115.1 147.1 L 115.6 146.3 L 116.1 145.5 L 116.5 144.7 L 116.8 143.9 L 117.1 143.1 L 117.3 142.2 L 117.4 141.4 L 117.5 140.6 L 117.5 139.9 L 117.4 139.1 L 117.2 138.4 L 117.1 137.8 L 116.8 137.2 L 116.5 136.6 L 116.2 136.1 L 115.8 135.7 L 115.4 135.4 L 115.0 135.1 L 114.6 134.9 L 114.1 134.7 L 113.7 134.7 L 113.2 134.7 L 112.8 134.8 L 112.4 135.0 L 112.0 135.2 L 111.7 135.5 L 111.3 135.9 L 111.1 136.3 L 110.9 136.8 L 110.7 137.3 L 110.6 137.9 L 110.5 138.5 L 110.6 139.1 L 110.6 139.8 L 110.8 140.4 L 111.0 141.1 L 111.3 141.8 L 111.7 142.5 L 112.1 143.1 L 112.6 143.8 L 113.2 144.4 L 113.8 144.9 L 114.5 145.4 L 115.2 145.9 L 116.0 146.3 L 116.9 146.7 L 117.7 147.0 L 118.6 147.2 L 119.6 147.4 L 120.5 147.5 L 121.5 147.5 L 122.4 147.4 L 123.4 147.2 L 124.3 147.0 L 125.2 146.7 L 126.1 146.4 L 127.0 145.9 L 127.9 145.4 L 128.7 144.9 L 129.4 144.3 L 130.1 143.6 L 130.7 142.9 L 131.3 142.2 L 131.8 141.4 L 132.3 140.6 L 132.6 139.8 L 132.9 139.0 L 133.2 138.1 L 133.3 137.3 L 133.4 136.5 L 133.5 135.7 L 133.4 135.0 L 133.3 134.2 L 133.2 133.6 L 133.0 132.9 L 132.7 132.4 L 132.4 131.8 L 132.0 131.4 L 131.7 131.0 L 131.3 130.7 L 130.8 130.4 L 130.4 130.2 L 129.9 130.1 L 129.5 130.1 L 129.1 130.2 L 128.6 130.3 L 128.2 130.5 L 127.9 130.7 L 127.5 131.1 L 127.2 131.5 L 127.0 131.9 L 126.8 132.4 L 126.6 133.0 L 126.6 133.6 L 126.5 134.2 L 126.6 134.8 L 126.7 135.5 L 126.9 136.2 L 127.1 136.8 L 127.5 137.5 L 127.9 138.2 L 128.3 138.8 L 128.9 139.4 L 129.4 140.0 L 130.1 140.6 L 130.8 141.1 L 131.6 141.5 L 132.4 141.9 L 133.2 142.3 L 134.1 142.5 L 135.0 142.7 L 136.0 142.8 L 136.9 142.9 L 137.9 142.9 L 138.8 142.8 L 139.8 142.6 L 140.7 142.3 L 141.6 142.0 L 142.5 141.6 L 143.4 141.2 L 144.2 140.6 L 145.0 140.1 L 145.7 139.4 L 146.4 138.8 L 147.0 138.0 L 147.5 137.3 L 148.0 136.5 L 148.4 135.7 L 148.8 134.9 L 149.1 134.0 L 149.3 133.2 L 149.4 132.4 L 149.5 131.6 L 149.5 130.8 L 149.4 130.1 L 149.3 129.4 L 149.1 128.7 L 148.9 128.1 L 148.6 127.6 L 148.2 127.1 L 147.9 126.6 L 147.5 126.3 L 147.1 126.0 L 146.6 125.8 L 146.2 125.6 L 145.7 125.5 L 145.3 125.5 L 144.9 125.6 L 144.5 125.8 L 144.1 126.0 L 143.7 126.3 L 143.4 126.7 L 143.1 127.1 L 142.9 127.6 L 142.7 128.1 L 142.6 128.6 L 142.5 129.2 L 142.5 129.9 L 142.6 130.5 L 142.8 131.2 L 143.0 131.9 L 143.3 132.6 L 143.6 133.2 L 144.0 133.9 L 144.5 134.5 L 145.1 135.1 L 145.7 135.7 L 146.4 136.2 L 147.1 136.7 L 147.9 137.1 L 148.7 137.5 L 149.6 137.8 L 150.5 138.0 L 151.4 138.2 L 152.4 138.3 L 153.3 138.3 L 154.3 138.3 L 155.2 138.1 L 156.2 137.9 L 157.1 137.6 L 158.0 137.3 L 158.9 136.9 L 159.7 136.4 L 160.5 135.8 L 161.3 135.2 L 162.0 134.6 L 162.6 133.9 L 163.2 133.1 L 163.7 132.4 L 164.2 131.6 L 164.6 130.8 L 164.9 129.9 L 165.1 129.1 L 165.3 128.3 L 165.4 127.5 L 165.5 126.7 L 165.4 125.9 L 165.3 125.2 L 165.2 124.5 L 165.0 123.9 L 164.7 123.3 L 164.4 122.8 L 164.1 122.3 L 163.7 121.9 L 163.3 121.6 L 162.9 121.3 L 162.4 121.1 L 162.0 121.0" stroke="#d3f3e3" stroke-width="2.4" />
       </g>
       <!-- lots of small round spores (microconidia), bunched like grapes -->
@@ -720,9 +723,9 @@ export const GALS = [
     `,
     dishArt: `
       <!-- one curved, canoe-shaped spore, split into cells -->
-      <path d="M 52 114 Q 100 30 148 114 Q 100 94 52 114 Z" fill="#f9d6ec" stroke="#b3207f" stroke-width="4" stroke-linejoin="round" />
+      <path d="M 52 114 Q 100 30 148 114 Q 100 98 52 114 Z" fill="#f9d6ec" stroke="#b3207f" stroke-width="4" stroke-linejoin="round" />
       <g stroke="#d0569f" stroke-width="2.2" stroke-linecap="round" opacity="0.7"><line x1="66" y1="94" x2="66" y2="108" /><line x1="134" y1="94" x2="134" y2="108" /></g>
-      ${face(100, 86, '#5a0b3e')}
+      ${face(100, 85, '#5a0b3e')}
     `,
   },
   // Inka: Coprinus comatus, the shaggy ink cap: a tall, shaggy white bell
@@ -811,7 +814,7 @@ export const GALS = [
     art: `
       <circle cx="100" cy="104" r="70" fill="#d4f58a" opacity="0.2" />
       <!-- the upright bit of dead wood she grows on -->
-      <path d="M 84 186 L 86 40 Q 86 28 100 28 Q 114 28 114 40 L 116 186 Z" fill="#e3efc2" stroke="#6a8f10" stroke-width="3.5" stroke-linejoin="round" />
+      <path class="bleed" d="M 84 186 L 86 40 Q 86 28 100 28 Q 114 28 114 40 L 116 186 Z" fill="#e3efc2" stroke="#6a8f10" stroke-width="3.5" stroke-linejoin="round" />
       <ellipse cx="100" cy="36" rx="14" ry="5" fill="#e3efc2" stroke="#6a8f10" stroke-width="2.5" />
       <path d="M 94 56 L 95 92 M 106 120 L 107 160 M 93 140 L 93 172" stroke="#6a8f10" stroke-width="1.6" stroke-linecap="round" opacity="0.4" />
       <!-- little shelves sticking out from both sides at different heights -->
@@ -845,7 +848,7 @@ export const GALS = [
     frames: { home: '10 10 180 180', picker: '14 14 172 172', dish: '50 50 100 100' },
     art: `
       <!-- the side of the tree trunk she grows from -->
-      <path d="M 24 22 Q 22 16 30 16 L 52 16 Q 58 60 53 100 Q 48 140 56 182 Q 56 188 50 188 L 30 188 Q 24 188 24 182 Z" fill="#e3ddd8" stroke="#5f5660" stroke-width="3.5" stroke-linejoin="round" />
+      <path class="bleed" d="M 24 22 Q 22 16 30 16 L 52 16 Q 58 60 53 100 Q 48 140 56 182 Q 56 188 50 188 L 30 188 Q 24 188 24 182 Z" fill="#e3ddd8" stroke="#5f5660" stroke-width="3.5" stroke-linejoin="round" />
       <path d="M 34 32 Q 38 60 35 90 M 42 104 Q 46 130 41 160 M 31 120 L 32 142" stroke="#5f5660" stroke-width="1.6" stroke-linecap="round" fill="none" opacity="0.4" />
       <!-- her wide, overlapping oyster shelves, in tiers -->
       <g transform="translate(52 156)"><path d="M 2 5.7 Q 45.0 27.7 86.0 7.7 L 86.0 7.7 Z" fill="#e6dfe1" stroke="#5f5660" stroke-width="2.4" stroke-linejoin="round" /><path d="M 4 6.7 L 9.0 8.2 M 4 6.7 L 17.8 11.3 M 4 6.7 L 26.6 13.6 M 4 6.7 L 35.4 15.1 M 4 6.7 L 44.0 15.7 M 4 6.7 L 52.6 15.5 M 4 6.7 L 61.0 14.4 M 4 6.7 L 69.4 12.5 M 4 6.7 L 77.8 9.8 " stroke="#5f5660" stroke-width="1.1" stroke-linecap="round" opacity="0.45" /><path d="M 0 -3.6 C 25.0 -14.4 60.0 -27.6 96.0 -9.6 C 102.0 -1.2 96.0 7.7 86.0 7.7 Q 77.4 13.7 68.8 7.7 Q 60.2 5.7 51.6 7.7 Q 43.0 13.7 34.4 7.7 Q 25.8 5.7 17.2 7.7 Q 8.6 13.7 0.0 7.7 Z" fill="#f4f1ef" stroke="#5f5660" stroke-width="3.2" stroke-linejoin="round" /></g>
